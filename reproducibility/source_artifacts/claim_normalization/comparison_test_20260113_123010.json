@@ -1,0 +1,101 @@
+{
+  "mistral-small-24b": {
+    "n_samples": 1285,
+    "avg_meteor": 0.3066598649024151,
+    "std_meteor": 0.23087340944491047,
+    "median_meteor": 0.25555555555555554,
+    "min_meteor": 0.0,
+    "max_meteor": 0.9906187178914452,
+    "total_tokens": 480670,
+    "total_cost_usd": 0.384536,
+    "avg_latency_ms": 492.2175026506039
+  },
+  "mistral-7b-v0.3": {
+    "n_samples": 1285,
+    "avg_meteor": 0.30172599535663724,
+    "std_meteor": 0.1903643268679301,
+    "median_meteor": 0.2768640350877193,
+    "min_meteor": 0.0,
+    "max_meteor": 0.9585301062573791,
+    "total_tokens": 580078,
+    "total_cost_usd": 0.11601560000000001,
+    "avg_latency_ms": 564.0530517330071
+  },
+  "qwen-2.5-7b": {
+    "n_samples": 1285,
+    "avg_meteor": 0.2975115073190794,
+    "std_meteor": 0.21975927883473828,
+    "median_meteor": 0.2634593356242841,
+    "min_meteor": 0.0,
+    "max_meteor": 0.9906187178914452,
+    "total_tokens": 474918,
+    "total_cost_usd": 0.1424754,
+    "avg_latency_ms": 524.5166628801634
+  },
+  "mixtral-8x7b": {
+    "n_samples": 1285,
+    "avg_meteor": 0.3154350868175389,
+    "std_meteor": 0.1926342936825818,
+    "median_meteor": 0.2940613026819923,
+    "min_meteor": 0.0,
+    "max_meteor": 0.9501763668430336,
+    "total_tokens": 576108,
+    "total_cost_usd": 0.3456648,
+    "avg_latency_ms": 1098.2648341890965
+  },
+  "llama-3.3-70b": {
+    "n_samples": 1285,
+    "avg_meteor": 0.32878766287711514,
+    "std_meteor": 0.21707501043350938,
+    "median_meteor": 0.3005952380952382,
+    "min_meteor": 0.0,
+    "max_meteor": 0.9906187178914452,
+    "total_tokens": 501114,
+    "total_cost_usd": 0.44098032,
+    "avg_latency_ms": 510.0606516429295
+  },
+  "llama-3.1-70b": {
+    "n_samples": 1285,
+    "avg_meteor": 0.330892101489365,
+    "std_meteor": 0.22364011048499444,
+    "median_meteor": 0.30000000000000004,
+    "min_meteor": 0.0,
+    "max_meteor": 0.9906187178914452,
+    "total_tokens": 497577,
+    "total_cost_usd": 0.43786776,
+    "avg_latency_ms": 3868.5388419517485
+  },
+  "qwen-2.5-72b": {
+    "n_samples": 1285,
+    "avg_meteor": 0.33180240039298636,
+    "std_meteor": 0.22432026051218842,
+    "median_meteor": 0.3024326101249178,
+    "min_meteor": 0.0,
+    "max_meteor": 0.9896039603960397,
+    "total_tokens": 475855,
+    "total_cost_usd": 0.571026,
+    "avg_latency_ms": 859.9053632956013
+  },
+  "deepseek-v3": {
+    "n_samples": 1285,
+    "avg_meteor": 0.3448824186087829,
+    "std_meteor": 0.22680509919963793,
+    "median_meteor": 0.3194444444444444,
+    "min_meteor": 0.0,
+    "max_meteor": 0.9906187178914452,
+    "total_tokens": 470042,
+    "total_cost_usd": 0.5875524999999999,
+    "avg_latency_ms": 2165.187448190805
+  },
+  "llama-3.1-405b": {
+    "n_samples": 1285,
+    "avg_meteor": 0.33159988141160834,
+    "std_meteor": 0.2221556326106955,
+    "median_meteor": 0.3074380165289256,
+    "min_meteor": 0.0,
+    "max_meteor": 0.9906187178914452,
+    "total_tokens": 497632,
+    "total_cost_usd": 1.741712,
+    "avg_latency_ms": 1970.0815529531956
+  }
+}

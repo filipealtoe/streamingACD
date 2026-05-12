@@ -1,0 +1,28 @@
+{
+  "ground_truth": {
+    "viral_clusters": 500,
+    "total_clusters": 5000,
+    "viral_threshold_engagement": 1346.3000000000047,
+    "viral_percentile": 90.0
+  },
+  "detection": {
+    "detected_clusters": 4835,
+    "total_events": 41182,
+    "tp": 500,
+    "fp": 4335,
+    "fn": 0,
+    "tn": 165
+  },
+  "metrics": {
+    "f2_score": 0.36576444769568395,
+    "precision": 0.10341261633919338,
+    "detection_rate": 1.0,
+    "median_lead_hours": 46.5,
+    "mean_lead_hours": 63.207,
+    "p75_lead_hours": 97.625
+  },
+  "trigger_breakdown": {
+    "loda": 4835
+  },
+  "detector_stats": 41182
+}
