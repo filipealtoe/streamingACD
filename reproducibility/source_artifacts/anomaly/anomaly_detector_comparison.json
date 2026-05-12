@@ -1,0 +1,204 @@
+{
+  "zscore": {
+    "metrics": {
+      "total_detections": 745,
+      "unique_clusters_detected": 322,
+      "true_positives": 318,
+      "recall": 0.19862585883822612,
+      "precision": 0.9875776397515528,
+      "f1": 0.33073322932917315,
+      "recall_at_100": 0.05496564647095565,
+      "recall_at_500": 0.1717676452217364,
+      "recall_at_1000": 0.19862585883822612,
+      "sparse_cluster_detections": 0,
+      "mature_cluster_detections": 745,
+      "sparse_detection_ratio": 0.0
+    },
+    "detector_stats": {
+      "total_detections": 745,
+      "clusters_tracked": 72567
+    }
+  },
+  "residual": {
+    "metrics": {
+      "total_detections": 786,
+      "unique_clusters_detected": 375,
+      "true_positives": 363,
+      "recall": 0.22673329169269207,
+      "precision": 0.968,
+      "f1": 0.3674089068825911,
+      "recall_at_100": 0.05746408494690818,
+      "recall_at_500": 0.18988132417239226,
+      "recall_at_1000": 0.22673329169269207,
+      "sparse_cluster_detections": 0,
+      "mature_cluster_detections": 786,
+      "sparse_detection_ratio": 0.0
+    },
+    "detector_stats": {
+      "total_detections": 786,
+      "clusters_tracked": 72567
+    }
+  },
+  "ratio": {
+    "metrics": {
+      "total_detections": 1563,
+      "unique_clusters_detected": 426,
+      "true_positives": 413,
+      "recall": 0.2579637726420987,
+      "precision": 0.9694835680751174,
+      "f1": 0.40749876665022206,
+      "recall_at_100": 0.05746408494690818,
+      "recall_at_500": 0.17988757026858213,
+      "recall_at_1000": 0.2386008744534666,
+      "sparse_cluster_detections": 0,
+      "mature_cluster_detections": 1563,
+      "sparse_detection_ratio": 0.0
+    },
+    "detector_stats": {
+      "total_detections": 1563,
+      "clusters_tracked": 72567
+    }
+  },
+  "kleinberg": {
+    "metrics": {
+      "total_detections": 1522,
+      "unique_clusters_detected": 424,
+      "true_positives": 411,
+      "recall": 0.2567145534041224,
+      "precision": 0.9693396226415094,
+      "f1": 0.4059259259259259,
+      "recall_at_100": 0.03872579637726421,
+      "recall_at_500": 0.12492192379762648,
+      "recall_at_1000": 0.17926296064959402,
+      "sparse_cluster_detections": 0,
+      "mature_cluster_detections": 1522,
+      "sparse_detection_ratio": 0.0
+    },
+    "detector_stats": {
+      "total_detections": 1522,
+      "clusters_tracked": 72567
+    }
+  },
+  "velocity": {
+    "metrics": {
+      "total_detections": 13360,
+      "unique_clusters_detected": 3187,
+      "true_positives": 1590,
+      "recall": 0.9931292941911305,
+      "precision": 0.4989017885158456,
+      "f1": 0.6641604010025063,
+      "recall_at_100": 0.05933791380387258,
+      "recall_at_500": 0.2504684572142411,
+      "recall_at_1000": 0.4322298563397876,
+      "sparse_cluster_detections": 1841,
+      "mature_cluster_detections": 11519,
+      "sparse_detection_ratio": 0.13779940119760478
+    },
+    "detector_stats": {
+      "total_detections": 13360,
+      "clusters_tracked": 72567
+    }
+  },
+  "bayesian_cold_start": {
+    "metrics": {
+      "total_detections": 870,
+      "unique_clusters_detected": 476,
+      "true_positives": 436,
+      "recall": 0.2723297938788257,
+      "precision": 0.9159663865546218,
+      "f1": 0.41983630235917185,
+      "recall_at_100": 0.056214865708931916,
+      "recall_at_500": 0.19737663960024984,
+      "recall_at_1000": 0.2723297938788257,
+      "sparse_cluster_detections": 33,
+      "mature_cluster_detections": 837,
+      "sparse_detection_ratio": 0.03793103448275862
+    },
+    "detector_stats": {
+      "total_detections": 870,
+      "cold_start_detections": 201,
+      "warm_detections": 669,
+      "cold_start_ratio": 0.23103448275862068,
+      "clusters_tracked": 72567,
+      "global_observations": 342280,
+      "global_count_mean": 2.022580927895316,
+      "global_count_std": 4.741259326488854,
+      "global_engagement_mean": 20.30860698843082,
+      "global_engagement_std": 533.8649398678966
+    }
+  },
+  "ensemble_original": {
+    "metrics": {
+      "total_detections": 1586,
+      "unique_clusters_detected": 425,
+      "true_positives": 412,
+      "recall": 0.25733916302311055,
+      "precision": 0.9694117647058823,
+      "f1": 0.4067127344521224,
+      "recall_at_100": 0.05496564647095565,
+      "recall_at_500": 0.1717676452217364,
+      "recall_at_1000": 0.21798875702685822,
+      "sparse_cluster_detections": 0,
+      "mature_cluster_detections": 1586,
+      "sparse_detection_ratio": 0.0
+    },
+    "detector_stats": {
+      "total_detections": 1586,
+      "zscore_triggers": 64,
+      "kleinberg_triggers": 841,
+      "both_triggers": 681,
+      "bayesian_cold_triggers": 0,
+      "bayesian_warm_triggers": 0,
+      "clusters_tracked": 72567,
+      "config": {
+        "z_threshold": 3.0,
+        "kleinberg_enabled": true,
+        "kleinberg_trigger_state": 2,
+        "bayesian_enabled": false
+      }
+    }
+  },
+  "ensemble_with_bayesian": {
+    "metrics": {
+      "total_detections": 1837,
+      "unique_clusters_detected": 573,
+      "true_positives": 516,
+      "recall": 0.3222985633978763,
+      "precision": 0.900523560209424,
+      "f1": 0.47470101195952163,
+      "recall_at_100": 0.05496564647095565,
+      "recall_at_500": 0.1930043722673329,
+      "recall_at_1000": 0.27108057464084945,
+      "sparse_cluster_detections": 53,
+      "mature_cluster_detections": 1784,
+      "sparse_detection_ratio": 0.02885138813282526
+    },
+    "detector_stats": {
+      "total_detections": 1837,
+      "zscore_triggers": 64,
+      "kleinberg_triggers": 841,
+      "both_triggers": 681,
+      "bayesian_cold_triggers": 251,
+      "bayesian_warm_triggers": 0,
+      "clusters_tracked": 72567,
+      "config": {
+        "z_threshold": 3.0,
+        "kleinberg_enabled": true,
+        "kleinberg_trigger_state": 2,
+        "bayesian_enabled": true
+      },
+      "bayesian_detector": {
+        "total_detections": 251,
+        "cold_start_detections": 251,
+        "warm_detections": 0,
+        "cold_start_ratio": 1.0,
+        "clusters_tracked": 72567,
+        "global_observations": 163284,
+        "global_count_mean": 1.4334349966928723,
+        "global_count_std": 3.813570975516658,
+        "global_engagement_mean": 15.736998113715984,
+        "global_engagement_std": 519.4561728659593
+      }
+    }
+  }
+}

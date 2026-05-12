@@ -7,7 +7,13 @@ This directory tracks evidence for paper-facing claims without committing large 
 - `artifact_checksums_2026-05-11.md`: human-readable artifact manifest.
 - `artifact_checksums_2026-05-11.json`: machine-readable artifact manifest.
 - `runs/deberta_mtl_cikm_20260512_134553/`: reproduced four-head MTL run bundle.
+- `source_artifacts/`: small source result artifacts copied from the prior local `explainableACD` checkout for paper-claim
+  auditing. Large raw datasets, parquet tables, prediction dumps, and model checkpoints are still referenced by path and checksum
+  rather than copied into Git.
+- `source_artifacts/sha256sums.txt`: checksum manifest for the copied source result artifacts.
 - `../scripts/verify_local_artifacts.py`: read-only verifier for the local artifact set.
+- `../scripts/audit_full_paper_claims.py`: paper-level audit that checks all IJCAI result-bearing claims against packaged and
+  local evidence.
 
 ## Current Scope
 
@@ -66,3 +72,20 @@ EXPLAINABLE_ACD_ROOT=/Users/sergiopinto/explainableACD \
 ```
 
 The output is written to `results/ct24_metric_reproduction_2026-05-12.json`.
+
+## Full Paper Claim Audit
+
+Run:
+
+```bash
+EXPLAINABLE_ACD_ROOT=/Users/sergiopinto/explainableACD \
+  /Users/sergiopinto/effort/.venv/bin/python scripts/audit_full_paper_claims.py
+```
+
+The script writes:
+
+- `results/full_paper_claim_audit_2026-05-12.json`
+- `results/full_paper_claim_audit_2026-05-12.md`
+
+Expected current result: non-zero exit. That is intentional because several IJCAI paper claims are still not reproducible from the
+repo package as written. The audit separates reproduced claims from mismatches and missing exact artifacts.

@@ -57,6 +57,24 @@ Highest-risk open items:
 3. formative evaluation aggregate data and analysis;
 4. the CT24 `0.761` LLM-feature cell in Table 3 if the paper keeps that exact value.
 
+## Full Paper Claim Audit
+
+A paper-level audit script is now packaged:
+
+```bash
+EXPLAINABLE_ACD_ROOT=/Users/sergiopinto/explainableACD \
+  /Users/sergiopinto/effort/.venv/bin/python scripts/audit_full_paper_claims.py
+```
+
+The audit writes `results/full_paper_claim_audit_2026-05-12.*` and intentionally exits non-zero while exact paper claims remain
+unreproduced. The current blocking categories are not hidden:
+
+- claim normalization Table 1 does not match the available local comparison artifact;
+- anomaly detection paper values do not match the packaged EXPoSE grid-search artifact;
+- the `87% English` corpus claim conflicts with the canonical run summary and no raw language column exists;
+- Table 3 still contains exact mismatches unless the paper uses the reproduced four-head and LLM-row values;
+- the formative evaluation aggregate data and exact sample-report example are not packaged.
+
 ## Table 3 Audit
 
 The Table 3 audit is packaged at:
