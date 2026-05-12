@@ -53,17 +53,29 @@ Highest-risk open items:
 1. claim normalization Table 1 exact METEOR values;
 2. anomaly detection NAB/detection/lead-time values;
 3. formative evaluation aggregate data and analysis;
-4. Fusion Classifier and LLM-feature rows in Table 3.
+4. Fusion Classifier and LLM-feature rows in Table 3 if the paper keeps those rows.
+
+## Table 3 Audit
+
+The Table 3 audit is packaged at:
+
+`results/table3_reproduction_2026-05-12.*`
+
+Current result:
+
+- single DeBERTa: F1 `0.8214`, near the paper-facing `0.8242` value;
+- three-seed DeBERTa ensemble: F1 `0.8343`, reproduced;
+- four-head MTL retrain: F1 `0.8333`, reproduced;
+- saved local LLM-feature artifacts: F1 `0.7135` and `0.7200`, not the paper-facing `0.761` value;
+- saved local fusion artifacts: best found F1 `0.8295`, not the paper-facing `0.8362` value.
+
+The fusion and LLM-feature rows should not be used as exact final paper claims unless the documented XGBoost v4 protocol is rerun and
+packaged.
 
 ## Next Slice
 
-Build a clean Table 3 reproduction script that emits one JSON/Markdown table from declared inputs:
+Attack one of the still-unpackaged paper claims:
 
-- single DeBERTa;
-- three-seed ensemble;
-- four-head MTL rerun;
-- LLM-feature classifier;
-- Fusion Classifier;
-- CT23 and ClaimBuster cross-dataset rows where applicable.
-
-Until that script exists, keep exact non-four-head Table 3 values as draft evidence rather than final paper claims.
+- claim normalization Table 1 exact METEOR values;
+- anomaly detection NAB/detection/lead-time values;
+- formative evaluation aggregate data and analysis.
