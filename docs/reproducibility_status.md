@@ -8,7 +8,9 @@ The four-head multi-task check-worthiness result has been rerun and packaged. Th
 for the four-head architecture, provided the paper states the threshold protocol clearly.
 
 The rest of the paper should still be treated as partially reproduced. Several exact claims have local artifacts in the previous
-checkout, but not all of them are packaged into this repository with a clean command and checksum trail.
+checkout, but not all of them are packaged into this repository with a clean command and checksum trail. Table 3 is materially
+stronger now: Fusion Classifier has been rerun to the paper-facing value, while the PCA/LLM/LogReg row has been separated into the
+parts that match and the CT24 cell that does not.
 
 ## Completed
 
@@ -53,7 +55,7 @@ Highest-risk open items:
 1. claim normalization Table 1 exact METEOR values;
 2. anomaly detection NAB/detection/lead-time values;
 3. formative evaluation aggregate data and analysis;
-4. Fusion Classifier and LLM-feature rows in Table 3 if the paper keeps those rows.
+4. the CT24 `0.761` LLM-feature cell in Table 3 if the paper keeps that exact value.
 
 ## Table 3 Audit
 
@@ -66,16 +68,21 @@ Current result:
 - single DeBERTa: F1 `0.8214`, near the paper-facing `0.8242` value;
 - three-seed DeBERTa ensemble: F1 `0.8343`, reproduced;
 - four-head MTL retrain: F1 `0.8333`, reproduced;
-- saved local LLM-feature artifacts: F1 `0.7135` and `0.7200`, not the paper-facing `0.761` value;
-- saved local fusion artifacts: best found F1 `0.8295`, not the paper-facing `0.8362` value.
+- PCA-64 + LLM + text LogReg CT24 rerun: F1 `0.6936`, not the paper-facing `0.761` value;
+- Fusion Classifier rerun: F1 `0.8362`, reproduced from the saved T=`0.3` ensemble probabilities and a fresh XGBoost v4 LLM-feature component.
 
-The fusion and LLM-feature rows should not be used as exact final paper claims unless the documented XGBoost v4 protocol is rerun and
-packaged.
+The Fusion Classifier row now has a reproducible CT24 rerun. The PCA/LLM/LogReg paper row is still not clean as written: the literal
+benchmark rerun matches ClaimBuster `0.8939` and CT23 `0.8458`, but CT24 recomputes at `0.6936`.
+
+There is also a separate replacement candidate, not a reproduction of the paper row as labeled:
+`results/deberta_cls_llm_logreg_candidate_2026-05-12.md` records a targeted held-out CT24 rerun of DeBERTa CLS embeddings plus
+seven LLM features with tuned Logistic Regression at F1 `0.7929`.
 
 ## Next Slice
 
-Attack one of the still-unpackaged paper claims:
+Attack one of the still-unpackaged or still-mismatched paper claims:
 
+- the CT24 `0.761` LLM-feature cell if the row remains in the paper;
 - claim normalization Table 1 exact METEOR values;
 - anomaly detection NAB/detection/lead-time values;
 - formative evaluation aggregate data and analysis.

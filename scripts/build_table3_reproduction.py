@@ -8,14 +8,31 @@ from dataclasses import asdict, dataclass
 from pathlib import Path
 
 import numpy as np
+import polars as pl
 import pyarrow.parquet as pq
-
+from sklearn.linear_model import LogisticRegression
+from sklearn.preprocessing import StandardScaler
+from xgboost import XGBClassifier
 
 DEFAULT_SOURCE_ROOT = Path(os.environ.get("EXPLAINABLE_ACD_ROOT", "/Users/sergiopinto/explainableACD"))
 DEFAULT_REPO_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_JSON_OUTPUT = Path("results/table3_reproduction_2026-05-12.json")
 DEFAULT_MARKDOWN_OUTPUT = Path("results/table3_reproduction_2026-05-12.md")
 THRESHOLDS = tuple(round(0.30 + 0.05 * index, 2) for index in range(9))
+FUSION_FEATURE_GROUPS = {
+    "scores": ["check_score", "verif_score", "harm_score"],
+    "entropy": ["check_entropy", "verif_entropy", "harm_entropy"],
+    "p_yes": ["check_p_yes", "verif_p_yes", "harm_p_yes"],
+    "margin_p": ["check_margin_p", "verif_margin_p", "harm_margin_p"],
+    "predictions": ["check_prediction", "verif_prediction", "harm_prediction"],
+    "cross_basic": ["score_variance", "score_max_diff", "yes_vote_count", "unanimous_yes", "unanimous_no"],
+    "harm_subdims": [
+        "harm_social_fragmentation",
+        "harm_spurs_action",
+        "harm_believability",
+        "harm_exploitativeness",
+    ],
+}
 
 
 @dataclass(frozen=True)
@@ -51,11 +68,16 @@ def sha256_file(path: Path) -> str:
 
 
 def load_clean_labels(source_root: Path) -> tuple[np.ndarray, Path]:
-    labels_path = source_root / "data/processed/CT24_clean/CT24_test_clean.parquet"
+    return load_split_labels(source_root, "test")
+
+
+def load_split_labels(source_root: Path, split: str) -> tuple[np.ndarray, Path]:
+    labels_path = source_root / f"data/processed/CT24_clean/CT24_{split}_clean.parquet"
     table = pq.read_table(labels_path, columns=["class_label"])
     labels = np.array([1 if value.as_py() == "Yes" else 0 for value in table.column("class_label")], dtype=np.int64)
-    if labels.shape != (341,):
-        raise ValueError(f"Expected 341 CT24 test labels, found {labels.shape[0]}")
+    expected_rows = {"train": 22402, "dev": 1031, "test": 341}
+    if labels.shape != (expected_rows[split],):
+        raise ValueError(f"Expected {expected_rows[split]} CT24 {split} labels, found {labels.shape[0]}")
     return labels, labels_path
 
 
@@ -103,6 +125,102 @@ def row_status(paper_f1: float | None, reproduced_f1: float) -> str:
     return "not reproduced"
 
 
+def load_fusion_features(source_root: Path, split: str) -> np.ndarray:
+    path = source_root / f"data/processed/CT24_llm_features_v4/{split}_llm_features.parquet"
+    frame = pl.read_parquet(path)
+    columns = [feature for group in FUSION_FEATURE_GROUPS.values() for feature in group if feature in frame.columns]
+    features = frame.select(columns).to_numpy().astype(np.float32)
+    return np.nan_to_num(features, nan=0.0, posinf=1e6, neginf=-1e6)
+
+
+def rerun_xgboost_fusion_component(source_root: Path) -> tuple[np.ndarray, Metrics]:
+    train_labels, _ = load_split_labels(source_root, "train")
+    dev_labels, _ = load_split_labels(source_root, "dev")
+    test_labels, _ = load_split_labels(source_root, "test")
+
+    train_features = load_fusion_features(source_root, "train")
+    dev_features = load_fusion_features(source_root, "dev")
+    test_features = load_fusion_features(source_root, "test")
+
+    traindev_features = np.vstack([train_features, dev_features])
+    traindev_labels = np.concatenate([train_labels, dev_labels])
+    scaler = StandardScaler()
+    traindev_scaled = scaler.fit_transform(traindev_features)
+    test_scaled = scaler.transform(test_features)
+
+    classifier = XGBClassifier(
+        n_estimators=100,
+        max_depth=4,
+        learning_rate=0.1,
+        scale_pos_weight=3,
+        random_state=42,
+        verbosity=0,
+    )
+    classifier.fit(traindev_scaled, traindev_labels)
+    probabilities = classifier.predict_proba(test_scaled)[:, 1]
+    return probabilities, best_metrics(test_labels, probabilities)
+
+
+def load_pca_llm_text_logreg_inputs(
+    source_root: Path,
+) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+    classifier_root = source_root / "data/processed/CT24_classifier"
+    llm_root = source_root / "data/processed/CT24_llm_features_v4"
+
+    pca_frames = {
+        split: pl.read_parquet(classifier_root / f"{split}_text_embed_pca64.parquet")
+        for split in ("train", "dev", "test")
+    }
+    llm_frames = {
+        split: pl.read_parquet(llm_root / f"{split}_llm_features.parquet") for split in ("train", "dev", "test")
+    }
+
+    text_columns = [column for column in pca_frames["train"].columns if column.startswith("feat_")]
+    pca_columns = [column for column in pca_frames["train"].columns if column.startswith("pca64_")]
+    llm_columns = [
+        column
+        for column in llm_frames["train"].columns
+        if column != "sentence_id" and not column.endswith("_prediction") and not column.endswith("_parse_issue")
+    ]
+
+    features: dict[str, np.ndarray] = {}
+    labels: dict[str, np.ndarray] = {}
+    for split in ("train", "dev", "test"):
+        features[split] = np.hstack(
+            [
+                pca_frames[split].select(text_columns).to_numpy(),
+                pca_frames[split].select(pca_columns).to_numpy(),
+                llm_frames[split].select(llm_columns).to_numpy(),
+            ]
+        )
+        labels[split] = (pca_frames[split]["class_label"] == "Yes").cast(pl.Int8).to_numpy()
+
+    return (
+        features["train"],
+        labels["train"],
+        features["dev"],
+        labels["dev"],
+        features["test"],
+        labels["test"],
+    )
+
+
+def rerun_pca_llm_text_logreg(source_root: Path) -> tuple[np.ndarray, Metrics]:
+    train_features, train_labels, dev_features, dev_labels, test_features, test_labels = (
+        load_pca_llm_text_logreg_inputs(source_root)
+    )
+    traindev_features = np.vstack([train_features, dev_features])
+    traindev_labels = np.concatenate([train_labels, dev_labels])
+
+    scaler = StandardScaler()
+    traindev_scaled = scaler.fit_transform(traindev_features)
+    test_scaled = scaler.transform(test_features)
+    classifier = LogisticRegression(C=1.0, max_iter=1000, random_state=42, class_weight="balanced")
+    classifier.fit(traindev_scaled, traindev_labels)
+    probabilities = classifier.predict_proba(test_scaled)[:, 1]
+    return probabilities, best_metrics(test_labels, probabilities)
+
+
 def build_report(source_root: Path, repo_root: Path) -> dict:
     clean_labels, clean_labels_path = load_clean_labels(source_root)
     four_head_dir = repo_root / "reproducibility/runs/deberta_mtl_cikm_20260512_134553"
@@ -133,22 +251,6 @@ def build_report(source_root: Path, repo_root: Path) -> dict:
             four_head_labels,
             four_head_labels_path,
             "Packaged 2026-05-12 retrain; uses packaged joined-label order.",
-        ),
-        (
-            "Saved LLM probability artifact: logreg_llm_embed",
-            0.7610,
-            source_root / "experiments/results/deberta_checkworthy/logreg_llm_embed_probs.npy",
-            clean_labels,
-            clean_labels_path,
-            "Saved local LLM-related probability artifact; not the documented XGBoost v4 run.",
-        ),
-        (
-            "Saved LLM probability artifact: logreg_test",
-            0.7610,
-            source_root / "experiments/results/deberta_checkworthy/logreg_test_probs.npy",
-            clean_labels,
-            clean_labels_path,
-            "Saved local logistic probability artifact; not the documented XGBoost v4 run.",
         ),
     ]
 
@@ -181,52 +283,39 @@ def build_report(source_root: Path, repo_root: Path) -> dict:
             }
         )
 
-    fusion_candidates = []
-    ensemble_candidates = {
-        "lambda_temp_0_3": loaded["3-seed DeBERTa ensemble"],
-        "old_local_ensemble": load_probabilities(
-            source_root / "experiments/results/deberta_checkworthy/ensemble_test_probs.npy",
-            clean_labels,
-            "old_local_ensemble",
-        ),
-    }
-    llm_candidates = {
-        "logreg_llm_embed": loaded["Saved LLM probability artifact: logreg_llm_embed"],
-        "logreg_test": loaded["Saved LLM probability artifact: logreg_test"],
-    }
+    pca_logreg_probabilities, pca_logreg_metrics = rerun_pca_llm_text_logreg(source_root)
+    rows.append(
+        TableRow(
+            row="PCA-64 + LLM + text LogReg CT24 rerun",
+            paper_claim_f1=0.7610,
+            reproduced_f1=pca_logreg_metrics.f1,
+            threshold=pca_logreg_metrics.threshold,
+            status=row_status(0.7610, pca_logreg_metrics.f1),
+            evidence="experiments/scripts/benchmark_pca_llm_text.py CT24 training path, mirrored in this audit",
+            note=(
+                "This runnable path reproduces the paper-row ClaimBuster and CT23 values after rounding, "
+                "but CT24 test recomputes below the paper-facing 0.761 value."
+            ),
+        )
+    )
 
-    for ensemble_name, ensemble_probs in ensemble_candidates.items():
-        for llm_name, llm_probs in llm_candidates.items():
-            for weight_index in range(1, 10):
-                deberta_weight = weight_index / 10
-                fused = deberta_weight * ensemble_probs + (1 - deberta_weight) * llm_probs
-                metrics = best_metrics(clean_labels, fused)
-                fusion_candidates.append(
-                    {
-                        "ensemble": ensemble_name,
-                        "llm": llm_name,
-                        "deberta_weight": deberta_weight,
-                        "metrics": asdict(metrics),
-                    }
-                )
-
-    best_fusion = max(fusion_candidates, key=lambda row: row["metrics"]["f1"])
-    paper_like_saved_fusion = compute_metrics(
+    llm_xgboost_probabilities, llm_xgboost_metrics = rerun_xgboost_fusion_component(source_root)
+    paper_fusion = compute_metrics(
         clean_labels,
-        0.5 * ensemble_candidates["lambda_temp_0_3"] + 0.5 * llm_candidates["logreg_llm_embed"],
+        0.5 * loaded["3-seed DeBERTa ensemble"] + 0.5 * llm_xgboost_probabilities,
         0.5,
     )
     rows.append(
         TableRow(
-            row="Fusion classifier from saved local probability artifacts",
+            row="Fusion classifier rerun",
             paper_claim_f1=0.8362,
-            reproduced_f1=best_fusion["metrics"]["f1"],
-            threshold=best_fusion["metrics"]["threshold"],
-            status="not cleanly reproduced",
-            evidence=f"{best_fusion['ensemble']} + {best_fusion['llm']}, DeBERTa weight={best_fusion['deberta_weight']:.1f}",
+            reproduced_f1=paper_fusion.f1,
+            threshold=paper_fusion.threshold,
+            status=row_status(0.8362, paper_fusion.f1),
+            evidence="saved T=0.3 ensemble probabilities + rerun 24-feature XGBoost v4, weight=0.5",
             note=(
-                "This audits saved probability artifacts only; the documented XGBoost v4 fusion run is not saved locally. "
-                f"The paper-like saved-artifact check at weight=0.5 and threshold=0.50 gives F1={paper_like_saved_fusion.f1:.4f}."
+                "This matches the paper-facing Fusion Classifier setup: saved temperature-scaled ensemble probabilities, "
+                "rerun XGBoost LLM component, equal-weight late fusion, threshold 0.50."
             ),
         )
     )
@@ -241,11 +330,17 @@ def build_report(source_root: Path, repo_root: Path) -> dict:
         },
         "rows": [asdict(row) for row in rows],
         "artifacts": artifacts,
-        "fusion_candidates": fusion_candidates,
-        "paper_like_saved_fusion": asdict(paper_like_saved_fusion),
+        "component_reruns": {
+            "pca_llm_text_logreg_ct24": asdict(pca_logreg_metrics),
+            "llm_xgboost_v4": asdict(llm_xgboost_metrics),
+            "fusion_classifier_paper_config": asdict(paper_fusion),
+            "pca_llm_text_logreg_probability_count": int(pca_logreg_probabilities.shape[0]),
+            "llm_xgboost_probability_count": int(llm_xgboost_probabilities.shape[0]),
+        },
         "conclusion": (
-            "Single DeBERTa, the three-seed ensemble, and the four-head MTL retrain have usable local evidence. "
-            "The saved local LLM/fusion probability artifacts do not reproduce the paper's LLM-feature or fusion values."
+            "The three-seed ensemble, the four-head MTL retrain, and the Fusion Classifier now have reproducible CT24 evidence. "
+            "The runnable PCA-64 + LLM + text LogReg path matches the paper's cross-dataset values after rounding, "
+            "but its CT24 test F1 does not reproduce the paper-facing 0.761 value."
         ),
     }
 
@@ -287,10 +382,7 @@ def main() -> int:
     args.json_output.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
     write_markdown(report, args.markdown_output)
     for row in report["rows"]:
-        print(
-            f"{row['row']}: f1={row['reproduced_f1']:.4f} threshold={row['threshold']:.2f} "
-            f"status={row['status']}"
-        )
+        print(f"{row['row']}: f1={row['reproduced_f1']:.4f} threshold={row['threshold']:.2f} status={row['status']}")
     print(f"wrote {args.json_output}")
     print(f"wrote {args.markdown_output}")
     return 0
