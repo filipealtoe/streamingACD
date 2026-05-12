@@ -1,0 +1,242 @@
+[
+  {
+    "claim_area": "CT24 processed split",
+    "path": "/Users/sergiopinto/explainableACD/data/processed/CT24_clean/CT24_train_clean.parquet",
+    "exists": true,
+    "size_bytes": 2531596,
+    "sha256": "200d674d2187021c2376ad5ef10419cfda6421a9e325f731f0347fc76db026d4",
+    "storage_decision": "external-or-regenerate"
+  },
+  {
+    "claim_area": "CT24 processed split",
+    "path": "/Users/sergiopinto/explainableACD/data/processed/CT24_clean/CT24_dev_clean.parquet",
+    "exists": true,
+    "size_bytes": 127839,
+    "sha256": "2ff8dbb80c86e79eb1d6fbe9d5f9e994eba6ccce1304154f4d8a551f04ffc07b",
+    "storage_decision": "external-or-regenerate"
+  },
+  {
+    "claim_area": "CT24 processed split",
+    "path": "/Users/sergiopinto/explainableACD/data/processed/CT24_clean/CT24_test_clean.parquet",
+    "exists": true,
+    "size_bytes": 46816,
+    "sha256": "bfd7296b8718ed62950ebf7ffa88b1f7fb4ba890eb3088f6ed000296ca76d226",
+    "storage_decision": "external-or-regenerate"
+  },
+  {
+    "claim_area": "CT24 raw source",
+    "path": "/Users/sergiopinto/explainableACD/data/raw/CT24_checkworthy_english/CT24_checkworthy_english_train.tsv",
+    "exists": true,
+    "size_bytes": 2434889,
+    "sha256": "e6a4b76c210dfd9eaaed917d29983ac8fe68cc99b29969677335639921d6df8f",
+    "storage_decision": "external-or-regenerate"
+  },
+  {
+    "claim_area": "CT24 raw source",
+    "path": "/Users/sergiopinto/explainableACD/data/raw/CT24_checkworthy_english/CT24_checkworthy_english_dev.tsv",
+    "exists": true,
+    "size_bytes": 104212,
+    "sha256": "0714423dda9bb2d5c6370189227645757b7c019961b3f969711f05d91b844bf1",
+    "storage_decision": "external-or-regenerate"
+  },
+  {
+    "claim_area": "CT24 raw source",
+    "path": "/Users/sergiopinto/explainableACD/data/raw/CT24_checkworthy_english/CT24_checkworthy_english_dev-test.tsv",
+    "exists": true,
+    "size_bytes": 25514,
+    "sha256": "aaf9e9427545c1213465e8857da00fb9fe4d4a7c337bab2ae0a75150fa8c01f2",
+    "storage_decision": "external-or-regenerate"
+  },
+  {
+    "claim_area": "CT24 raw source",
+    "path": "/Users/sergiopinto/explainableACD/data/raw/CT24_checkworthy_english/CT24_checkworthy_english_test.tsv",
+    "exists": true,
+    "size_bytes": 29437,
+    "sha256": "19063785b06f3f7e7e9504ca3cca871d1aa9038c73695354d6e8f7ce7c288d6e",
+    "storage_decision": "external-or-regenerate"
+  },
+  {
+    "claim_area": "CT24 raw source",
+    "path": "/Users/sergiopinto/explainableACD/data/raw/CT24_checkworthy_english/CT24_checkworthy_english_test_gold.tsv",
+    "exists": true,
+    "size_bytes": 30560,
+    "sha256": "46cbd9ed9aca07e1023c274256c40d019146a3eb635ebb69cbc6ae5ad52d124a",
+    "storage_decision": "external-or-regenerate"
+  },
+  {
+    "claim_area": "CT23 raw source",
+    "path": "/Users/sergiopinto/explainableACD/data/raw/check_that_23/CT23_1B_checkworthy_english_test.tsv",
+    "exists": true,
+    "size_bytes": 23803,
+    "sha256": "cca096dbc4417ca42c25dd4011299de140d577d75d46ccb204c7c3ee27c452bf",
+    "storage_decision": "external-or-regenerate"
+  },
+  {
+    "claim_area": "ClaimBuster raw source",
+    "path": "/Users/sergiopinto/explainableACD/data/raw/claim_buster/groundtruth.csv",
+    "exists": true,
+    "size_bytes": 167741,
+    "sha256": "64890c51e1092fec0d361ca770b3efccc0c889dd569b46b35922d94c44fa99ea",
+    "storage_decision": "external-or-regenerate"
+  },
+  {
+    "claim_area": "US Election raw corpus",
+    "path": "/Users/sergiopinto/explainableACD/data/raw/us_elections_tweets.parquet",
+    "exists": true,
+    "size_bytes": 262731907,
+    "sha256": "054dc2d0fb39e5c74b2a72708b956806528b1c89bcd607a4a5a0d79fb9146e7f",
+    "storage_decision": "external-storage"
+  },
+  {
+    "claim_area": "Canonical streaming run",
+    "path": "/Users/sergiopinto/explainableACD/data/pipeline_output/streaming_full/2026-01-17_03-56/tweets.parquet",
+    "exists": true,
+    "size_bytes": 109873690,
+    "sha256": "a802d2204be37fa87ccf3be05df6e5e708a05849bb320cfa6f9f034f86530d1e",
+    "storage_decision": "external-storage"
+  },
+  {
+    "claim_area": "Canonical streaming run",
+    "path": "/Users/sergiopinto/explainableACD/data/pipeline_output/streaming_full/2026-01-17_03-56/clusters.parquet",
+    "exists": true,
+    "size_bytes": 1285206,
+    "sha256": "856efe2f34ff1bfe22f9cf3a882e484876f57e7b7c4c8c263ad34de724be4699",
+    "storage_decision": "external-storage"
+  },
+  {
+    "claim_area": "Canonical streaming run",
+    "path": "/Users/sergiopinto/explainableACD/data/pipeline_output/streaming_full/2026-01-17_03-56/claims.parquet",
+    "exists": true,
+    "size_bytes": 47902,
+    "sha256": "52a1bd50880b97dcb0d6110508588df500ce242c6ca6f7f4254507ffc928be28",
+    "storage_decision": "external-storage-or-git-lfs"
+  },
+  {
+    "claim_area": "Canonical streaming run",
+    "path": "/Users/sergiopinto/explainableACD/data/pipeline_output/streaming_full/2026-01-17_03-56/cluster_timeseries.parquet",
+    "exists": true,
+    "size_bytes": 6430173,
+    "sha256": "6539c0afbc6afb7dd3ab7f779dd630fa07f2de4d12bc1da561ef5a3673026fe8",
+    "storage_decision": "external-storage"
+  },
+  {
+    "claim_area": "Canonical streaming run",
+    "path": "/Users/sergiopinto/explainableACD/data/pipeline_output/streaming_full/2026-01-17_03-56/cluster_embeddings.npy",
+    "exists": true,
+    "size_bytes": 153600128,
+    "sha256": "514e9f44c095b1de5175cc6c76db548e9762c3e1bcdda93b8cb8f16f09bd1619",
+    "storage_decision": "external-storage"
+  },
+  {
+    "claim_area": "Canonical streaming run",
+    "path": "/Users/sergiopinto/explainableACD/data/pipeline_output/streaming_full/2026-01-17_03-56/cluster_id_to_idx.json",
+    "exists": true,
+    "size_bytes": 1777782,
+    "sha256": "e30bbf6c47936e14f153ad40df8d36ecb174e0d44d1cd4815f2e6c1126371aa1",
+    "storage_decision": "git"
+  },
+  {
+    "claim_area": "Canonical streaming run",
+    "path": "/Users/sergiopinto/explainableACD/data/pipeline_output/streaming_full/2026-01-17_03-56/cluster_ids_order.json",
+    "exists": true,
+    "size_bytes": 688890,
+    "sha256": "6aeb7c9ebdefc91e74faf8610aa2e152ff3c80619a1064898a9e1a5753254506",
+    "storage_decision": "git"
+  },
+  {
+    "claim_area": "Canonical streaming run",
+    "path": "/Users/sergiopinto/explainableACD/data/pipeline_output/streaming_full/2026-01-17_03-56/summary.json",
+    "exists": true,
+    "size_bytes": 2952,
+    "sha256": "98205c73dbf7f332289ecc1153856314eb5912e4e9d31515351383ee6751e5ee",
+    "storage_decision": "git"
+  },
+  {
+    "claim_area": "Clustering threshold ablation",
+    "path": "/Users/sergiopinto/explainableACD/experiments/results/threshold_ablation/cluster_statistics.json",
+    "exists": true,
+    "size_bytes": 2708,
+    "sha256": "fe365886750959553c8e3e8ec7ed0003f66bc2f6afb27ec98858572c1c7abc03",
+    "storage_decision": "git"
+  },
+  {
+    "claim_area": "Single DeBERTa CT24",
+    "path": "/Users/sergiopinto/explainableACD/experiments/results/deberta_checkworthy/deberta-v3-large/results.json",
+    "exists": true,
+    "size_bytes": 4046,
+    "sha256": "da718c53012051c37283663f560d77cae80ed3e15c5e1b9c07c2d667d5dd709e",
+    "storage_decision": "git"
+  },
+  {
+    "claim_area": "Single DeBERTa CT24",
+    "path": "/Users/sergiopinto/explainableACD/experiments/results/deberta_checkworthy/deberta-v3-large/test_probs.npy",
+    "exists": true,
+    "size_bytes": 1492,
+    "sha256": "f27e63143bd4fb0aa448c1bc034a4b13533544819721c75f29429a254e7d3c84",
+    "storage_decision": "external-storage-or-git-lfs"
+  },
+  {
+    "claim_area": "3-seed DeBERTa ensemble",
+    "path": "/Users/sergiopinto/explainableACD/lambda_backup/ubuntu/ensemble_results/seed_0/deberta-v3-large/results.json",
+    "exists": true,
+    "size_bytes": 4759,
+    "sha256": "63138ba4b7c79f800d0d6bc846b8104693fbafbaabda7a6409e03f03d35388b1",
+    "storage_decision": "git"
+  },
+  {
+    "claim_area": "3-seed DeBERTa ensemble",
+    "path": "/Users/sergiopinto/explainableACD/lambda_backup/ubuntu/ensemble_results/seed_0/deberta-v3-large/test_probs.npy",
+    "exists": true,
+    "size_bytes": 1492,
+    "sha256": "febabe5e211bb225eb793c03e84a5e776d3512a9a0fe38375680f14d77acabed",
+    "storage_decision": "external-storage-or-git-lfs"
+  },
+  {
+    "claim_area": "3-seed DeBERTa ensemble",
+    "path": "/Users/sergiopinto/explainableACD/lambda_backup/ubuntu/ensemble_results/seed_123/deberta-v3-large/results.json",
+    "exists": true,
+    "size_bytes": 7188,
+    "sha256": "99bf6d35f904c71e6620e565af52153f63265d56d6077178f9e4052d30b5f754",
+    "storage_decision": "git"
+  },
+  {
+    "claim_area": "3-seed DeBERTa ensemble",
+    "path": "/Users/sergiopinto/explainableACD/lambda_backup/ubuntu/ensemble_results/seed_123/deberta-v3-large/test_probs.npy",
+    "exists": true,
+    "size_bytes": 1492,
+    "sha256": "c039729e0e76e42f39ea6694938ec149f241fad825c3ca7faaf39bffe42c0f1e",
+    "storage_decision": "external-storage-or-git-lfs"
+  },
+  {
+    "claim_area": "3-seed DeBERTa ensemble",
+    "path": "/Users/sergiopinto/explainableACD/lambda_backup/ubuntu/ensemble_results/seed_456/deberta-v3-large/results.json",
+    "exists": true,
+    "size_bytes": 7111,
+    "sha256": "27eebba51eee763f261a98e353a63a50e164c587b49ba2d9433ef4f52afa916f",
+    "storage_decision": "git"
+  },
+  {
+    "claim_area": "3-seed DeBERTa ensemble",
+    "path": "/Users/sergiopinto/explainableACD/lambda_backup/ubuntu/ensemble_results/seed_456/deberta-v3-large/test_probs.npy",
+    "exists": true,
+    "size_bytes": 1492,
+    "sha256": "f1104b63b55cca76ed8bbc64f911a8a7e712416683c893bb9518f36e0f1bf7d5",
+    "storage_decision": "external-storage-or-git-lfs"
+  },
+  {
+    "claim_area": "3-seed DeBERTa ensemble",
+    "path": "/Users/sergiopinto/explainableACD/lambda_backup/ubuntu/ensemble_results/test_temp_0.3_probs.npy",
+    "exists": true,
+    "size_bytes": 1492,
+    "sha256": "95370338af64abf711ae5f23d35c11e0c6452e45e1addcf6befe8a8327227aa9",
+    "storage_decision": "external-storage-or-git-lfs"
+  },
+  {
+    "claim_area": "Virality tabular baselines",
+    "path": "/Users/sergiopinto/explainableACD/experiments/results/virality_tuned/tuned_baselines.json",
+    "exists": true,
+    "size_bytes": 6915,
+    "sha256": "70fd63c8e15064a8c302c8def679954cd4441d0b79f59d32bdf46d41df481976",
+    "storage_decision": "git"
+  }
+]

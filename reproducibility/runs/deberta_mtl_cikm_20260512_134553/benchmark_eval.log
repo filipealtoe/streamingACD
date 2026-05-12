@@ -1,0 +1,46 @@
+2026-05-12 14:27:58.841160: I tensorflow/core/util/port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2026-05-12 14:27:58.863194: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:467] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1778596078.888400    5077 cuda_dnn.cc:8579] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1778596078.896874    5077 cuda_blas.cc:1407] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+W0000 00:00:1778596078.916909    5077 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1778596078.916952    5077 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1778596078.916954    5077 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+W0000 00:00:1778596078.916956    5077 computation_placer.cc:177] computation placer already registered. Please check linkage and avoid linking the same target more than once.
+2026-05-12 14:27:58.922071: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX512F AVX512_VNNI, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+/home/ubuntu/cikm-mtl-venv/lib/python3.10/site-packages/transformers/convert_slow_tokenizer.py:559: UserWarning: The sentencepiece tokenizer that you are converting to a fast tokenizer uses the byte fallback option which is not implemented in the fast tokenizers. In practice this means that the fast version of the tokenizer can produce unknown tokens whereas the sentencepiece version would have converted these unknown tokens into a sequence of byte tokens matching the original piece of text.
+  warnings.warn(
+======================================================================
+BENCHMARK: Multi-Task DeBERTa (4 Parallel Heads)
+======================================================================
+Device: cuda
+
+Loading model from /home/ubuntu/explainableACD/experiments/results/deberta_mtl_cikm_20260512_134553/best_model.pt...
+Model loaded successfully!
+
+[1/2] Evaluating ClaimBuster...
+  Samples: 1032, Positive: 238 (23.1%)
+Inference:   0%|          | 0/33 [00:00<?, ?it/s]Inference:   3%|▎         | 1/33 [00:00<00:11,  2.87it/s]Inference:   6%|▌         | 2/33 [00:00<00:09,  3.32it/s]Inference:   9%|▉         | 3/33 [00:00<00:07,  3.77it/s]Inference:  12%|█▏        | 4/33 [00:01<00:10,  2.80it/s]Inference:  15%|█▌        | 5/33 [00:01<00:08,  3.40it/s]Inference:  18%|█▊        | 6/33 [00:01<00:06,  4.06it/s]Inference:  21%|██        | 7/33 [00:01<00:05,  4.66it/s]Inference:  24%|██▍       | 8/33 [00:01<00:04,  5.02it/s]Inference:  27%|██▋       | 9/33 [00:02<00:04,  5.43it/s]Inference:  30%|███       | 10/33 [00:02<00:04,  5.30it/s]Inference:  33%|███▎      | 11/33 [00:02<00:03,  5.71it/s]Inference:  36%|███▋      | 12/33 [00:02<00:03,  5.31it/s]Inference:  39%|███▉      | 13/33 [00:02<00:03,  5.99it/s]Inference:  42%|████▏     | 14/33 [00:02<00:03,  6.11it/s]Inference:  45%|████▌     | 15/33 [00:03<00:02,  6.30it/s]Inference:  48%|████▊     | 16/33 [00:03<00:02,  6.18it/s]Inference:  52%|█████▏    | 17/33 [00:03<00:02,  6.38it/s]Inference:  55%|█████▍    | 18/33 [00:03<00:02,  6.64it/s]Inference:  58%|█████▊    | 19/33 [00:03<00:02,  5.78it/s]Inference:  61%|██████    | 20/33 [00:03<00:02,  6.11it/s]Inference:  64%|██████▎   | 21/33 [00:04<00:01,  6.23it/s]Inference:  67%|██████▋   | 22/33 [00:04<00:02,  4.89it/s]Inference:  70%|██████▉   | 23/33 [00:04<00:01,  5.21it/s]Inference:  73%|███████▎  | 24/33 [00:04<00:01,  4.85it/s]Inference:  76%|███████▌  | 25/33 [00:05<00:01,  4.71it/s]Inference:  79%|███████▉  | 26/33 [00:05<00:01,  4.90it/s]Inference:  82%|████████▏ | 27/33 [00:05<00:01,  5.42it/s]Inference:  85%|████████▍ | 28/33 [00:05<00:00,  5.69it/s]Inference:  88%|████████▊ | 29/33 [00:05<00:00,  5.62it/s]Inference:  91%|█████████ | 30/33 [00:05<00:00,  5.32it/s]Inference:  94%|█████████▍| 31/33 [00:06<00:00,  5.31it/s]Inference:  97%|█████████▋| 32/33 [00:06<00:00,  5.64it/s]Inference: 100%|██████████| 33/33 [00:06<00:00,  5.25it/s]
+
+  ClaimBuster: F1=0.9730 @ threshold=0.60
+              Precision=0.9630, Recall=0.9832
+
+[2/2] Evaluating CT23...
+  Samples: 318, Positive: 108 (34.0%)
+Inference:   0%|          | 0/10 [00:00<?, ?it/s]Inference:  20%|██        | 2/10 [00:00<00:00,  8.55it/s]Inference:  30%|███       | 3/10 [00:00<00:00,  8.93it/s]Inference:  40%|████      | 4/10 [00:00<00:00,  8.74it/s]Inference:  50%|█████     | 5/10 [00:00<00:00,  8.60it/s]Inference:  60%|██████    | 6/10 [00:00<00:00,  8.11it/s]Inference:  70%|███████   | 7/10 [00:00<00:00,  6.67it/s]Inference:  80%|████████  | 8/10 [00:01<00:00,  5.94it/s]Inference:  90%|█████████ | 9/10 [00:01<00:00,  6.23it/s]Inference: 100%|██████████| 10/10 [00:01<00:00,  6.02it/s]Inference: 100%|██████████| 10/10 [00:01<00:00,  6.89it/s]
+
+  CT23: F1=0.9327 @ threshold=0.30
+        Precision=0.9700, Recall=0.8981
+
+======================================================================
+SUMMARY: Multi-Task DeBERTa (4 Parallel Heads, CT24 F1=0.833)
+======================================================================
+
+Benchmark       F1         Precision    Recall     Threshold 
+---------------------------------------------------------
+ClaimBuster     0.9730     0.9630       0.9832     0.60      
+CT23            0.9327     0.9700       0.8981     0.30      
+
+======================================================================
+Done!
