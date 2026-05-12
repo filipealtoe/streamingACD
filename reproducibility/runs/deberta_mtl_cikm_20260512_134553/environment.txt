@@ -1,0 +1,10 @@
+run_id=deberta_mtl_cikm_20260512_134553
+run_dir=/home/ubuntu/explainableACD/experiments/results/deberta_mtl_cikm_20260512_134553
+Tue May 12 13:45:53 UTC 2026
+129-213-210-158
+NVIDIA A10, 23028 MiB, 580.105.08
+Python 3.10.12
+torch 2.7.0 cuda True
+transformers 4.51.3
+polars 1.27.1
+sklearn 0.23.2

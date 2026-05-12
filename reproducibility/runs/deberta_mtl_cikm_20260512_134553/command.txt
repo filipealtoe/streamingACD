@@ -1,0 +1,18 @@
+source ~/cikm-mtl-venv/bin/activate
+cd ~/explainableACD
+export HF_HOME=~/hf_cache
+export TRANSFORMERS_NO_TF=1
+export TOKENIZERS_PARALLELISM=false
+export PYTHONUNBUFFERED=1
+python experiments/scripts/finetune_deberta_mtl.py \
+  --model microsoft/deberta-v3-large \
+  --phase all \
+  --batch-size 16 \
+  --grad-accum 2 \
+  --lr 1e-5 \
+  --aux-lr 1e-3 \
+  --lambda-check 0.3 \
+  --lambda-verif 0.3 \
+  --lambda-harm 0.2 \
+  --max-length 128 \
+  --output-dir /home/ubuntu/explainableACD/experiments/results/deberta_mtl_cikm_20260512_134553
