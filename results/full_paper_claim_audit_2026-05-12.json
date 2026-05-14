@@ -13,9 +13,9 @@
     "area": "Dataset",
     "paper_claim": "Corpus is approximately 87% English.",
     "status": "MISMATCH",
-    "evidence": "/Users/sergiopinto/streamingACD/results/corpus_language_share_2026-05-12.json; /Users/sergiopinto/streamingACD/reproducibility/source_artifacts/pipeline/streaming_full_2026-01-17_03-56_summary.json",
-    "checked_value": "langdetect recompute English share 0.6988; pipeline summary implies 0.699; Kaggle CSV language columns present=False",
-    "required_next_step": "Rewrite or remove the exact 87% claim; the canonical recomputation supports about 70% English."
+    "evidence": "/Users/sergiopinto/streamingACD/results/corpus_language_share_2026-05-12.json; /Users/sergiopinto/streamingACD/reproducibility/source_artifacts/pipeline/streaming_full_2026-01-17_03-56_summary.json; /Users/sergiopinto/streamingACD/results/clustering_subset_language_share_2026-05-14.json",
+    "checked_value": "langdetect recompute English share 0.6988; pipeline summary implies 0.699; Kaggle CSV language columns present=False; three-day clustering subset has seeded n=2000 langdetect English share 0.866 over 87911 source rows",
+    "required_next_step": "Rewrite the exact 87% claim with a narrowed denominator: full corpus is about 70% English, while the three-day clustering-analysis subset is 86.6% English on a seeded n=2,000 sample."
   },
   {
     "claim_id": "pipeline-535-claims",

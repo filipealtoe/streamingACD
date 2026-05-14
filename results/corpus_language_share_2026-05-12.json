@@ -1,6 +1,6 @@
 {
   "claim": "Corpus is approximately 87% English.",
-  "conclusion": "The recomputed canonical corpus language share is about 70% English, not 87%. The online Kaggle CSV headers do not expose a language column, so this result is detector-derived.",
+  "conclusion": "The recomputed canonical corpus language share is about 70% English, not 87%. The online Kaggle CSV headers do not expose a language column, so this result is detector-derived. The old ~87% value is reproduced only for the narrower three-day clustering-analysis subset documented in results/clustering_subset_language_share_2026-05-14.*.",
   "counts": {
     "af": 3529,
     "ar": 5109,

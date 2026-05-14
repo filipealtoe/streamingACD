@@ -50,7 +50,7 @@ These are not current paper blockers:
 | Note | Meaning |
 |---|---|
 | CT24 LLM feature-generation checkpoints not packaged | The feature Parquets are present, complete, and checksummed. The missing checkpoint JSON files only affect run-resume provenance. |
-| Raw corpus language column missing | The local raw corpus supports row count/date span, but not the old English-share claim, which should remain omitted. |
+| Raw corpus language column missing | The local raw corpus supports row count/date span, but not the old full-corpus English-share wording. Use `69.9%` for the full corpus detector estimate, or `86.6%` only for the three-day clustering-analysis subset documented in `results/clustering_subset_language_share_2026-05-14.*`. |
 | Single DeBERTa F1 corrected value | The saved probability artifact supports F1 `0.8214285714285715`; use `0.821` if the baseline row is retained. |
 | Four-head checkpoint omitted | `best_model.pt` is not in Git; checksum is recorded and saved predictions are packaged. |
 

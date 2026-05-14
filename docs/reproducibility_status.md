@@ -69,7 +69,8 @@ unreproduced. The current blocking categories are not hidden:
 
 - claim normalization Table 1 does not match the available local comparison artifact and needs Filipe's exact `N=300` run package;
 - anomaly detection and baseline values require the declared `min_rows=89` rewrite packet;
-- the `87% English` corpus claim conflicts with the canonical run summary and no raw language column exists;
+- the `87% English` claim requires a narrowed denominator: the full corpus recomputes to about `69.9%`, while the three-day
+  clustering-analysis subset reproduces `86.6%` English on a seeded `n=2,000` sample;
 - Table 3 still contains exact mismatches unless the paper uses the reproduced four-head and LLM-row values;
 - the formative evaluation aggregate data are not packaged.
 

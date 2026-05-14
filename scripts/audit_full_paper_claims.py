@@ -18,6 +18,7 @@ ARTIFACT_ROOT = REPO_ROOT / "reproducibility/source_artifacts"
 RESULT_JSON = REPO_ROOT / "results/full_paper_claim_audit_2026-05-12.json"
 RESULT_MD = REPO_ROOT / "results/full_paper_claim_audit_2026-05-12.md"
 CORPUS_LANGUAGE_JSON = REPO_ROOT / "results/corpus_language_share_2026-05-12.json"
+CLUSTERING_SUBSET_LANGUAGE_JSON = REPO_ROOT / "results/clustering_subset_language_share_2026-05-14.json"
 
 
 @dataclass(frozen=True)
@@ -104,12 +105,25 @@ def audit_corpus_and_pipeline(audits: list[ClaimAudit]) -> None:
             language_ratio = float(language_data["english_share"])
             kaggle_files = language_data["online_source"]["files"]
             language_columns = [file_data["has_language_column"] for file_data in kaggle_files]
+            subset_clause = ""
+            subset_evidence = ""
+            if CLUSTERING_SUBSET_LANGUAGE_JSON.exists():
+                subset_data = load_json(CLUSTERING_SUBSET_LANGUAGE_JSON)
+                subset_share = float(subset_data["grouped"]["english_share"])
+                subset_rows = int(subset_data["source"]["rows"])
+                subset_sample = int(subset_data["method"]["sample_size"])
+                subset_clause = (
+                    f"; three-day clustering subset has seeded n={subset_sample} "
+                    f"langdetect English share {subset_share:.3f} over {subset_rows} source rows"
+                )
+                subset_evidence = f"; {CLUSTERING_SUBSET_LANGUAGE_JSON}"
             checked_value = (
                 f"langdetect recompute English share {language_ratio:.4f}; "
                 f"pipeline summary implies {english_ratio:.3f}; "
                 f"Kaggle CSV language columns present={any(language_columns)}"
+                f"{subset_clause}"
             )
-            evidence = f"{CORPUS_LANGUAGE_JSON}; {summary}"
+            evidence = f"{CORPUS_LANGUAGE_JSON}; {summary}{subset_evidence}"
         else:
             language_ratio = english_ratio
             checked_value = (
@@ -125,7 +139,7 @@ def audit_corpus_and_pipeline(audits: list[ClaimAudit]) -> None:
             status,
             evidence,
             checked_value,
-            "Rewrite or remove the exact 87% claim; the canonical recomputation supports about 70% English.",
+            "Rewrite the exact 87% claim with a narrowed denominator: full corpus is about 70% English, while the three-day clustering-analysis subset is 86.6% English on a seeded n=2,000 sample.",
         )
 
         add(

@@ -1,0 +1,54 @@
+{
+  "claim": "Three-day clustering-analysis subset is approximately 87% English.",
+  "conclusion": "Reproduced for the three-day EXPoSE pipeline output only: a seeded langdetect sample estimates 86.6% English. This does not apply to the full 1.52M-tweet corpus.",
+  "source": {
+    "local_path": "/Users/sergiopinto/explainableACD/data/pipeline_output/expose_3day_full/2026-01-19_10-57/tweets.parquet",
+    "rows": 87911,
+    "language_columns": []
+  },
+  "method": {
+    "detector": "langdetect.detect",
+    "detector_seed": 0,
+    "sample_seed": 42,
+    "sample_size": 2000,
+    "input_column": "text",
+    "short_text_rule": "language=short when stripped text has fewer than 20 characters",
+    "invalid_text_rule": "language=unknown when detection raises"
+  },
+  "counts": {
+    "en": 1732,
+    "es": 61,
+    "de": 52,
+    "nl": 40,
+    "fr": 40,
+    "it": 17,
+    "id": 7,
+    "tr": 6,
+    "no": 5,
+    "da": 4,
+    "ca": 4,
+    "hi": 3,
+    "fa": 3,
+    "af": 3,
+    "pl": 3
+  },
+  "grouped": {
+    "english_count": 1732,
+    "english_share": 0.866,
+    "non_english_or_other_count": 268,
+    "non_english_or_other_share": 0.134,
+    "spanish_count": 61,
+    "spanish_share": 0.0305,
+    "other_latin_selected_count": 156,
+    "other_latin_selected_share": 0.078,
+    "non_latin_selected_count": 5,
+    "non_latin_selected_share": 0.0025,
+    "other_short_unknown_count": 46,
+    "other_short_unknown_share": 0.023
+  },
+  "paper_safe_statement": "In the three-day clustering-analysis subset, a seeded langdetect sample (n=2,000) estimated the language distribution at 86.6% English and 13.4% non-English, motivating the use of multilingual embeddings.",
+  "not_supported": [
+    "The full 1.52M-tweet corpus is 87% English.",
+    "Non-English tweets were ignored in the US Elections run."
+  ]
+}

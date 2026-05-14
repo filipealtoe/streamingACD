@@ -49,3 +49,7 @@ Status: `not_reproduced`
 ## Conclusion
 
 The recomputed canonical corpus language share is about 70% English, not 87%. The online Kaggle CSV headers do not expose a language column, so this result is detector-derived.
+
+The old `~87%` value was recovered for a narrower denominator: the three-day clustering-analysis subset in
+`/Users/sergiopinto/explainableACD/data/pipeline_output/expose_3day_full/2026-01-19_10-57/tweets.parquet`. See
+`results/clustering_subset_language_share_2026-05-14.*` for the seeded `n=2,000` sample that gives `86.6%` English.
