@@ -46,3 +46,13 @@ Use Git LFS or external artifact storage if the checkpoint needs to move with th
 The MTL training script evaluates after joining `CT24_features` with `CT24_llm_features_v4`. That join order is not the same as the
 older `CT24_clean` label order used by some single-model and ensemble artifacts. Use the packaged `test_labels.npy` when recomputing
 the four-head MTL row.
+
+## Training Recipe Note
+
+This run supports the four-head architecture claim, not the regularized single-head DeBERTa recipe. The packaged training script uses
+a shared DeBERTa encoder, one main check-worthiness head, three auxiliary regression heads, 3-phase training, weighted
+cross-entropy for the main task, MSE auxiliary losses, and entropy weighting.
+
+This run does not use Focal Loss, layer-wise learning-rate decay, R-Drop, or FGM adversarial training. Those regularizers are
+supported by the single-head DeBERTa/seed-ensemble source artifacts copied under
+`reproducibility/source_artifacts/checkworthiness/regularized_single_head/`.

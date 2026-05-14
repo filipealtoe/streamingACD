@@ -1,0 +1,251 @@
+{
+  "claim": "Corpus is approximately 87% English.",
+  "conclusion": "The recomputed canonical corpus language share is about 70% English, not 87%. The online Kaggle CSV headers do not expose a language column, so this result is detector-derived.",
+  "counts": {
+    "af": 3529,
+    "ar": 5109,
+    "bg": 62,
+    "bn": 383,
+    "ca": 7351,
+    "cs": 531,
+    "cy": 323,
+    "da": 7400,
+    "de": 68682,
+    "el": 1697,
+    "en": 1064253,
+    "es": 95260,
+    "et": 1231,
+    "fa": 2990,
+    "fi": 2991,
+    "fr": 62757,
+    "gu": 446,
+    "he": 104,
+    "hi": 4938,
+    "hr": 890,
+    "hu": 217,
+    "id": 10887,
+    "it": 40737,
+    "ja": 2502,
+    "kn": 571,
+    "ko": 169,
+    "lt": 359,
+    "lv": 742,
+    "mk": 17,
+    "ml": 635,
+    "mr": 718,
+    "ne": 183,
+    "nl": 50637,
+    "no": 4365,
+    "pa": 101,
+    "pl": 3403,
+    "pt": 15000,
+    "ro": 15472,
+    "ru": 655,
+    "sk": 176,
+    "sl": 421,
+    "so": 966,
+    "sq": 175,
+    "sv": 2870,
+    "sw": 471,
+    "ta": 2230,
+    "te": 691,
+    "th": 641,
+    "tl": 1418,
+    "tr": 22044,
+    "uk": 41,
+    "unknown": 1607,
+    "ur": 1686,
+    "vi": 8992,
+    "zh-cn": 133,
+    "zh-tw": 50
+  },
+  "elapsed_seconds": 709.8113658428192,
+  "english_count": 1064253,
+  "english_share": 0.6988290173608535,
+  "method": {
+    "batch_size": 5000,
+    "detector": "langdetect.detect",
+    "detector_seed": 0,
+    "input_column": "tweet",
+    "short_or_invalid_text_rule": "language=unknown when text is non-string or shorter than 10 stripped characters",
+    "source": "same detection rule as explainableACD src/streaming/text_preprocessor.py",
+    "workers": 8
+  },
+  "non_english_count": 458656,
+  "non_english_share": 0.30117098263914654,
+  "online_source": {
+    "files": [
+      {
+        "columns": [
+          "created_at",
+          "tweet_id",
+          "tweet",
+          "likes",
+          "retweet_count",
+          "source",
+          "user_id",
+          "user_name",
+          "user_screen_name",
+          "user_description",
+          "user_join_date",
+          "user_followers_count",
+          "user_location",
+          "lat",
+          "long",
+          "city",
+          "country",
+          "continent",
+          "state",
+          "state_code",
+          "collected_at"
+        ],
+        "has_language_column": false,
+        "name": "hashtag_donaldtrump.csv",
+        "path": "/Users/sergiopinto/.cache/kagglehub/datasets/manchunhui/us-election-2020-tweets/versions/19/hashtag_donaldtrump.csv",
+        "size_bytes": 483859793
+      },
+      {
+        "columns": [
+          "created_at",
+          "tweet_id",
+          "tweet",
+          "likes",
+          "retweet_count",
+          "source",
+          "user_id",
+          "user_name",
+          "user_screen_name",
+          "user_description",
+          "user_join_date",
+          "user_followers_count",
+          "user_location",
+          "lat",
+          "long",
+          "city",
+          "country",
+          "continent",
+          "state",
+          "state_code",
+          "collected_at"
+        ],
+        "has_language_column": false,
+        "name": "hashtag_joebiden.csv",
+        "path": "/Users/sergiopinto/.cache/kagglehub/datasets/manchunhui/us-election-2020-tweets/versions/19/hashtag_joebiden.csv",
+        "size_bytes": 380820416
+      }
+    ],
+    "kaggle_dataset": "manchunhui/us-election-2020-tweets",
+    "kaggle_url": "https://www.kaggle.com/datasets/manchunhui/us-election-2020-tweets",
+    "kagglehub_cache_dir": "/Users/sergiopinto/.cache/kagglehub/datasets/manchunhui/us-election-2020-tweets/versions/19"
+  },
+  "paper_english_share": 0.87,
+  "source_parquet": {
+    "path": "/Users/sergiopinto/explainableACD/data/raw/us_elections_tweets.parquet",
+    "rows": 1522909,
+    "sha256": null
+  },
+  "status": "not_reproduced",
+  "top_languages": [
+    {
+      "count": 1064253,
+      "language": "en",
+      "share": 0.6988290173608535
+    },
+    {
+      "count": 95260,
+      "language": "es",
+      "share": 0.06255134088773524
+    },
+    {
+      "count": 68682,
+      "language": "de",
+      "share": 0.045099214726552934
+    },
+    {
+      "count": 62757,
+      "language": "fr",
+      "share": 0.04120863426508084
+    },
+    {
+      "count": 50637,
+      "language": "nl",
+      "share": 0.033250181067942995
+    },
+    {
+      "count": 40737,
+      "language": "it",
+      "share": 0.026749464347508616
+    },
+    {
+      "count": 22044,
+      "language": "tr",
+      "share": 0.014474929230833884
+    },
+    {
+      "count": 15472,
+      "language": "ro",
+      "share": 0.010159503949349568
+    },
+    {
+      "count": 15000,
+      "language": "pt",
+      "share": 0.009849570788536937
+    },
+    {
+      "count": 10887,
+      "language": "id",
+      "share": 0.00714881847832011
+    },
+    {
+      "count": 8992,
+      "language": "vi",
+      "share": 0.00590448936870161
+    },
+    {
+      "count": 7400,
+      "language": "da",
+      "share": 0.004859121589011556
+    },
+    {
+      "count": 7351,
+      "language": "ca",
+      "share": 0.004826946324435669
+    },
+    {
+      "count": 5109,
+      "language": "ar",
+      "share": 0.003354763810575681
+    },
+    {
+      "count": 4938,
+      "language": "hi",
+      "share": 0.00324247870358636
+    },
+    {
+      "count": 4365,
+      "language": "no",
+      "share": 0.002866225099464249
+    },
+    {
+      "count": 3529,
+      "language": "af",
+      "share": 0.002317275687516457
+    },
+    {
+      "count": 3403,
+      "language": "pl",
+      "share": 0.0022345392928927467
+    },
+    {
+      "count": 2991,
+      "language": "fi",
+      "share": 0.0019640044152342655
+    },
+    {
+      "count": 2990,
+      "language": "fa",
+      "share": 0.0019633477771816964
+    }
+  ],
+  "total": 1522909
+}

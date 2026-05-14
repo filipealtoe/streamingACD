@@ -17,6 +17,7 @@ SOURCE_ROOT = Path(os.environ.get("EXPLAINABLE_ACD_ROOT", "/Users/sergiopinto/ex
 ARTIFACT_ROOT = REPO_ROOT / "reproducibility/source_artifacts"
 RESULT_JSON = REPO_ROOT / "results/full_paper_claim_audit_2026-05-12.json"
 RESULT_MD = REPO_ROOT / "results/full_paper_claim_audit_2026-05-12.md"
+CORPUS_LANGUAGE_JSON = REPO_ROOT / "results/corpus_language_share_2026-05-12.json"
 
 
 @dataclass(frozen=True)
@@ -98,16 +99,33 @@ def audit_corpus_and_pipeline(audits: list[ClaimAudit]) -> None:
         rows = int(data["total_tweets_processed"])
         non_english = int(data["text_preprocessor"]["non_english_detected"])
         english_ratio = (rows - non_english) / rows
-        status = "MISMATCH" if round(english_ratio, 2) != 0.87 else "REPRODUCED"
+        if CORPUS_LANGUAGE_JSON.exists():
+            language_data = load_json(CORPUS_LANGUAGE_JSON)
+            language_ratio = float(language_data["english_share"])
+            kaggle_files = language_data["online_source"]["files"]
+            language_columns = [file_data["has_language_column"] for file_data in kaggle_files]
+            checked_value = (
+                f"langdetect recompute English share {language_ratio:.4f}; "
+                f"pipeline summary implies {english_ratio:.3f}; "
+                f"Kaggle CSV language columns present={any(language_columns)}"
+            )
+            evidence = f"{CORPUS_LANGUAGE_JSON}; {summary}"
+        else:
+            language_ratio = english_ratio
+            checked_value = (
+                f"summary implies English share {english_ratio:.3f}; no raw language/lang column in parquet"
+            )
+            evidence = str(summary)
+        status = "MISMATCH" if round(language_ratio, 2) != 0.87 else "REPRODUCED"
         add(
             audits,
             "corpus-english-share",
             "Dataset",
             "Corpus is approximately 87% English.",
             status,
-            str(summary),
-            f"summary implies English share {english_ratio:.3f}; no raw language/lang column in parquet",
-            "Remove/recompute the 87% claim from a clear language column or detection log.",
+            evidence,
+            checked_value,
+            "Rewrite or remove the exact 87% claim; the canonical recomputation supports about 70% English.",
         )
 
         add(
@@ -215,34 +233,64 @@ def audit_anomaly(audits: list[ClaimAudit]) -> None:
     detection = float(best["detection_rate"])
     lead = float(best["median_lead"])
     status = "REPRODUCED" if rounded_match(nab, 79.2, 1) and rounded_match(detection, 97.6, 1) else "MISMATCH"
+    attempt = REPO_ROOT / "results/anomaly_expose_reproduction_attempt_2026-05-13.md"
+    anomaly_fix_note = REPO_ROOT / "results/anomaly_baseline_paper_fix_2026-05-14.md"
+    attempt_note = (
+        "; reproduction attempt found candidate NAB 79.2236 at undocumented min_rows=89, "
+        "but detection was 97.9268%, while min_rows=84 gave detection 97.6325% and NAB 78.6208"
+        if attempt.exists()
+        else ""
+    )
     add(
         audits,
         "anomaly-expose-table",
         "Anomaly Detection",
         "EXPoSE reaches NAB 79.2, 97.6% detection, and +23h median lead time.",
         status,
-        str(grid),
-        f"best packaged row: NAB={nab:.4f}, detection={detection:.4f}, median_lead={lead:.1f}",
-        "Rerun the anomaly benchmark until the paper value is matched/surpassed, or rewrite the paper to the supported value.",
+        f"{grid}; {attempt}; {anomaly_fix_note}" if attempt.exists() else f"{grid}; {anomaly_fix_note}",
+        (
+            f"best packaged row: NAB={nab:.4f}, detection={detection:.4f}, median_lead={lead:.1f}; "
+            "remote README/configs support about 72.1/94.9/+23h, and the local design-log 79.2 value is "
+            f"single-row time-series share, not NAB score{attempt_note}"
+        ),
+        "Apply results/anomaly_baseline_paper_fix_2026-05-14.md: use the declared min_rows=89 replacement table.",
     )
+
+    baseline_rerun = REPO_ROOT / "results/anomaly_baseline_rerun_min_rows89_2026-05-13.json"
+    if baseline_rerun.exists():
+        baseline_evidence = f"{baseline_rerun}; {anomaly_fix_note}"
+        baseline_checked = (
+            "min_rows=89 rerun: Random NAB=72.2276, detection=99.0244, lead=22.0; "
+            "Bayesian NAB=7.4289, detection=40.9756, lead=7.5; "
+            "Etsy NAB=8.2378, detection=47.4390, lead=6.0; "
+            "Steuber NAB=6.8232, detection=41.8293, lead=7.0"
+        )
+        baseline_next = (
+            "Apply results/anomaly_baseline_paper_fix_2026-05-14.md and do not keep the old PDF baseline values."
+        )
+    else:
+        baseline_evidence = (
+            f"{ARTIFACT_ROOT / 'anomaly/anomaly_baselines.json'}; "
+            f"{ARTIFACT_ROOT / 'anomaly/anomaly_detector_comparison.json'}"
+        )
+        baseline_checked = "packaged anomaly JSONs use different detectors/metrics and do not contain the exact paper table"
+        baseline_next = "Rerun the uniform anomaly benchmark and save one canonical table artifact."
 
     add(
         audits,
         "anomaly-baseline-table",
         "Anomaly Detection",
         "Random/Bayesian/Etsy/Steuber baselines match the IJCAI anomaly paragraph.",
-        "MISSING_EXACT_RESULT",
-        (
-            f"{ARTIFACT_ROOT / 'anomaly/anomaly_baselines.json'}; "
-            f"{ARTIFACT_ROOT / 'anomaly/anomaly_detector_comparison.json'}"
-        ),
-        "packaged anomaly JSONs use different detectors/metrics and do not contain the exact paper table",
-        "Rerun the uniform anomaly benchmark and save one canonical table artifact.",
+        "MISMATCH",
+        baseline_evidence,
+        baseline_checked,
+        baseline_next,
     )
 
 
 def audit_claim_normalization(audits: list[ClaimAudit]) -> None:
     path = ARTIFACT_ROOT / "claim_normalization/comparison_test_20260113_123010.json"
+    handoff_note = REPO_ROOT / "results/claim_normalization_handoff_2026-05-14.md"
     if not path.exists():
         add(
             audits,
@@ -250,9 +298,9 @@ def audit_claim_normalization(audits: list[ClaimAudit]) -> None:
             "Claim Normalization",
             "Table 1 reports CT2025 test N=300 and Approach 2 METEOR 0.5583/0.5463/0.5691.",
             "MISSING_ARTIFACT",
-            str(path),
+            f"{path}; {handoff_note}",
             "comparison JSON not found",
-            "Rerun claim normalization Table 1 or package the exact result artifact.",
+            "Use results/claim_normalization_handoff_2026-05-14.md for the exact Filipe artifact request.",
         )
         return
     data = load_json(path)
@@ -267,32 +315,49 @@ def audit_claim_normalization(audits: list[ClaimAudit]) -> None:
         "Claim Normalization",
         "Table 1 reports CT2025 test N=300 and Approach 2 METEOR 0.5583/0.5463/0.5691.",
         "MISMATCH",
-        str(path),
+        f"{path}; {handoff_note}",
         f"available comparison has n_samples={sample_counts}; best avg_meteor={best_row['avg_meteor']:.4f} ({best_name})",
-        "Rerun the exact Table 1 protocol and save predictions plus summary, or rewrite to supported values.",
+        (
+            "Use results/claim_normalization_handoff_2026-05-14.md: Filipe must provide the N=300 split, "
+            "per-sample predictions, summary, command, and checksums, or Table 1 must be removed/rewritten."
+        ),
     )
 
 
 def audit_virality(audits: list[ClaimAudit]) -> None:
-    labels = SOURCE_ROOT / "experiments/results/virality/psr_labels.parquet"
-    enhanced = SOURCE_ROOT / "experiments/results/virality_feature_selection/features_enhanced.parquet"
-    if labels.exists() and enhanced.exists():
+    labels = ARTIFACT_ROOT / "virality/psr_labels.parquet"
+    enhanced = ARTIFACT_ROOT / "virality/features_enhanced.parquet"
+    split_manifest = REPO_ROOT / "results/virality_split_manifest_2026-05-12.json"
+    if labels.exists() and enhanced.exists() and split_manifest.exists():
         rows = parquet_rows(labels)
         feature_count = len(pq.ParquetFile(enhanced).schema.names) - 2
-        status = "REPRODUCED_LOCAL" if rows == 529 and feature_count == 42 else "MISMATCH"
-        checked = f"psr_labels rows={rows}; features_enhanced feature columns={feature_count}"
+        split_data = load_json(split_manifest)
+        train_rows = int(split_data["counts"]["train_rows"])
+        test_rows = int(split_data["counts"]["test_rows"])
+        status = (
+            "REPRODUCED"
+            if rows == 529 and feature_count == 42 and train_rows == 423 and test_rows == 106
+            else "MISMATCH"
+        )
+        checked = (
+            f"psr_labels rows={rows}; features_enhanced feature columns={feature_count}; "
+            f"split={train_rows}/{test_rows}"
+        )
     else:
         status = "MISSING_ARTIFACT"
-        checked = f"labels exists={labels.exists()}; features_enhanced exists={enhanced.exists()}"
+        checked = (
+            f"labels exists={labels.exists()}; features_enhanced exists={enhanced.exists()}; "
+            f"split_manifest exists={split_manifest.exists()}"
+        )
     add(
         audits,
         "virality-dataset-shape",
         "Virality Prediction",
         "PSR prediction uses 529 anomalous clusters, 42 features, and a 423/106 split.",
         status,
-        f"{labels}; {enhanced}",
+        f"{labels}; {enhanced}; {split_manifest}",
         checked,
-        "Package a split manifest containing the exact 423/106 train/test IDs.",
+        "Keep the packaged split manifest with the Table 2 result artifacts.",
     )
 
     tuned = ARTIFACT_ROOT / "virality/tuned_baselines.json"
@@ -329,12 +394,13 @@ def audit_virality(audits: list[ClaimAudit]) -> None:
         "ARTIFACT_BACKED" if ok else "MISMATCH",
         f"{tuned}; {complete}; {latex}",
         "; ".join(f"{name}: {value:.4f} vs paper {target}" for name, (value, target) in checks.items()),
-        "Add the exact script command and split manifest so this becomes fully rerunnable from repo instructions.",
+        "Optional next step: rerun the packaged scripts in a matching Python environment to replace result-artifact verification with a fresh model-fit rerun.",
     )
 
 
 def audit_checkworthiness(audits: list[ClaimAudit]) -> None:
     table3 = REPO_ROOT / "results/table3_reproduction_2026-05-12.json"
+    llm_feature_fix_note = REPO_ROOT / "results/llm_feature_classifier_paper_fix_2026-05-14.md"
     if table3.exists():
         rows = {row["row"]: row for row in load_json(table3)["rows"]}
         for row_name in (
@@ -346,15 +412,23 @@ def audit_checkworthiness(audits: list[ClaimAudit]) -> None:
         ):
             row = rows[row_name]
             status = row["status"].upper().replace(" ", "_")
+            evidence = row["evidence"]
+            next_step = "Use reproduced value or rerun until the exact paper value is matched/surpassed."
+            if row_name == "PCA-64 + LLM + text LogReg CT24 rerun":
+                evidence = f"{row['evidence']}; {llm_feature_fix_note}"
+                next_step = (
+                    "Apply results/llm_feature_classifier_paper_fix_2026-05-14.md: use CT24 0.694 for the literal "
+                    "PCA-64 + LLM + text LogReg row, or rewrite the method around the separate CT24 0.793 replacement candidate."
+                )
             add(
                 audits,
                 f"table3-{re.sub('[^a-z0-9]+', '-', row_name.lower()).strip('-')}",
                 "Check-worthiness",
                 f"Table 3 row: {row_name} paper F1={row['paper_claim_f1']}",
                 status,
-                row["evidence"],
+                evidence,
                 f"recomputed F1={row['reproduced_f1']:.4f}; threshold={row['threshold']:.2f}",
-                "Use reproduced value or rerun until the exact paper value is matched/surpassed.",
+                next_step,
             )
     else:
         add(
@@ -369,46 +443,107 @@ def audit_checkworthiness(audits: list[ClaimAudit]) -> None:
         )
 
     script = REPO_ROOT / "reproducibility/runs/deberta_mtl_cikm_20260512_134553/scripts/finetune_deberta_mtl.py"
+    regularizer_fix_note = REPO_ROOT / "results/four_head_training_regularizers_paper_fix_2026-05-14.md"
+    regularized_single_head = (
+        ARTIFACT_ROOT / "checkworthiness/regularized_single_head/finetune_deberta_multimodel.py"
+    )
+    regularized_ensemble = ARTIFACT_ROOT / "checkworthiness/regularized_single_head/ensemble_deberta_seeds.py"
     if script.exists():
         text = script.read_text(encoding="utf-8")
-        missing_terms = [
+        single_head_text = (
+            regularized_single_head.read_text(encoding="utf-8") if regularized_single_head.exists() else ""
+        )
+        ensemble_text = regularized_ensemble.read_text(encoding="utf-8") if regularized_ensemble.exists() else ""
+        missing_mtl_terms = [
             term
             for term in ("Focal", "R-Drop", "FGM", "Layer-wise")
             if term.lower() not in text.lower()
         ]
+        single_head_regularizers = all(
+            term.lower() in single_head_text.lower()
+            for term in ("FocalLoss", "R-Drop", "FGM", "Layer-wise Learning Rate Decay")
+        )
+        ensemble_enables_regularizers = all(
+            term in ensemble_text for term in ('"focal_loss": True', '"llrd": True', '"rdrop": True', '"fgm": True')
+        )
         add(
             audits,
             "four-head-training-regularizers",
             "Check-worthiness",
             "Four-head training uses Focal Loss, layer-wise LR decay, R-Drop, and FGM adversarial training.",
-            "MISSING_EXACT_RESULT" if missing_terms else "REPRODUCED",
-            str(script),
-            f"packaged script is 3-phase BCE/MSE auxiliary training; missing terms={missing_terms}",
-            "Either package the exact regularized training script/run or revise the method description to match the reproduced run.",
+            "MISMATCH" if missing_mtl_terms else "REPRODUCED",
+            f"{script}; {regularized_single_head}; {regularized_ensemble}; {regularizer_fix_note}",
+            (
+                "packaged four-head MTL script is 3-phase weighted cross-entropy/MSE auxiliary training; "
+                f"missing four-head regularizer terms={missing_mtl_terms}; "
+                f"regularized single-head trainer found={single_head_regularizers}; "
+                f"ensemble launcher enables those flags={ensemble_enables_regularizers}"
+            ),
+            (
+                "Apply results/four_head_training_regularizers_paper_fix_2026-05-14.md: attach "
+                "Focal/LLRD/R-Drop/FGM to the single-head DeBERTa seed ensemble, not the reproduced four-head MTL run."
+            ),
         )
 
     add(
         audits,
         "llama2-baseline-row",
         "Check-worthiness",
-        "Llama2-7b fine-tuned baseline has CT2024/CB/CT2023 F1 0.802/0.920/0.898.",
-        "MISSING_ARTIFACT",
-        "no local prediction/result artifact found",
-        "rg found no exact Llama2 result bundle for this row",
-        "Package the baseline artifact or cite it as external prior work instead of a rerun.",
+        "Table 3 baseline row reports Llama2-7b Fine-tuned with CT2024/ClaimBuster/CT2023 F1 0.802/0.920/0.898.",
+        "MISMATCH",
+        (
+            "reproducibility/source_artifacts/checkworthiness/together_baselines_metrics_20251229_194021.json; "
+            "reproducibility/source_artifacts/checkworthiness/together_baselines/run_together_baselines.py; "
+            "results/llama2_baseline_audit_2026-05-14.md"
+        ),
+        (
+            "CT2024 value is an external FactFinders/CheckThat prior-work baseline; the local Together run contains "
+            "100-sample Llama 3.x/Mistral/Mixtral predictions and no Llama2 prediction rows; ClaimBuster 0.920 and "
+            "CT23 0.898 are separate published SOTA reference constants, not Llama2 outputs."
+        ),
+        (
+            "Rewrite Table 3 baseline label: split this into external reference rows, or label it as prior work/SOTA "
+            "rather than one reproducible Llama2-7b model across all datasets."
+        ),
     )
 
 
 def audit_formative_and_report(audits: list[ClaimAudit]) -> None:
+    study_selection = ARTIFACT_ROOT / "formative_evaluation/expose_fast_study_claims_selection.csv"
+    study_selection_3day = ARTIFACT_ROOT / "formative_evaluation/expose_3day_full_study_claims_selection.csv"
+    study_script = ARTIFACT_ROOT / "formative_evaluation/select_claims_for_study.py"
+    study_artifact_note = REPO_ROOT / "results/formative_evaluation_artifact_audit_2026-05-14.md"
+    paper_fix_note = REPO_ROOT / "results/formative_evaluation_paper_fix_2026-05-14.md"
+    sample_report = ARTIFACT_ROOT / "explainability_report/03_9dea2d0d_eng564.html"
+    sample_fix_note = REPO_ROOT / "results/sample_report_paper_fix_2026-05-14.md"
+    if study_selection.exists():
+        with study_selection.open(newline="", encoding="utf-8") as csv_file:
+            rows = list(csv.DictReader(csv_file))
+        categories: dict[str, int] = {}
+        for row in rows:
+            category = row["category"]
+            categories[category] = categories.get(category, 0) + 1
+        checked_value = (
+            "study stimulus artifacts found but no participant-response table; "
+            f"expose_fast selection rows={len(rows)}, categories={categories}; "
+            "PDF has N=7 in abstract/limitations and N=9 in body"
+        )
+        evidence = f"{study_selection}; {study_selection_3day}; {study_script}; {study_artifact_note}; {paper_fix_note}"
+    else:
+        checked_value = "no raw or aggregate participant response table is packaged"
+        evidence = "no anonymized aggregate response file found"
     add(
         audits,
         "formative-evaluation-aggregates",
         "Formative Evaluation",
         "Nine fact-checkers evaluated 27 reports; 22/27 agreement, 16/27 full agreement, component means 4.04/3.81/3.78/3.11.",
         "MISSING_ARTIFACT",
-        "no anonymized aggregate response file found",
-        "no raw or aggregate participant response table is packaged",
-        "Add anonymized aggregate data and analysis script, or remove exact participant/statistic claims.",
+        evidence,
+        checked_value,
+        (
+            "Apply results/formative_evaluation_paper_fix_2026-05-14.md to remove the exact participant/statistic claims, "
+            "or add anonymized participant-level or aggregate response data plus an analysis script."
+        ),
     )
     add(
         audits,
@@ -416,19 +551,56 @@ def audit_formative_and_report(audits: list[ClaimAudit]) -> None:
         "Formative Evaluation",
         "Paper consistently describes the formative evaluation sample size.",
         "MISMATCH",
-        "/Users/sergiopinto/Downloads/IJCAI2026 (19).pdf",
+        f"/Users/sergiopinto/Downloads/IJCAI2026 (19).pdf; {paper_fix_note}",
         "abstract/limitations say N=7; body says N=9 and 27 report pairs",
-        "Resolve the participant-count conflict before resubmission.",
+        "Apply the formative-evaluation rewrite packet, which removes the unsupported sample-size claims.",
     )
+    sample_row = None
+    if study_selection_3day.exists():
+        with study_selection_3day.open(newline="", encoding="utf-8") as csv_file:
+            for row in csv.DictReader(csv_file):
+                if row.get("claim_id") == "9dea2d0d-0604-4753-8bde-f9498ee5a2b0":
+                    sample_row = row
+                    break
+
+    if sample_report.exists() and sample_row is not None:
+        report_text = sample_report.read_text(encoding="utf-8")
+        confidence = round(float(sample_row["checkworthiness_prob"]) * 100, 1)
+        peak_engagement = int(sample_row["peak_engagement"])
+        lead_time_hours = float(sample_row["lead_time_hours"])
+        corrected_values_supported = (
+            "Confidence: 71.7%" in report_text
+            and "<div class=\"metric-value\">8.0h</div>" in report_text
+            and "<div class=\"metric-value\">564</div>" in report_text
+            and confidence == 71.7
+            and peak_engagement == 564
+            and lead_time_hours == 8.0
+        )
+        sample_status = "MISMATCH" if corrected_values_supported else "MISSING_EXACT_RESULT"
+        sample_evidence = f"{sample_report}; {study_selection_3day}; {sample_fix_note}"
+        sample_checked = (
+            "exact report artifact found for claim_id=9dea2d0d-0604-4753-8bde-f9498ee5a2b0; "
+            f"confidence={confidence:.1f}%, peak_engagement={peak_engagement}, lead_time={lead_time_hours:.1f}h; "
+            "paper says 567 engagements"
+        )
+        sample_next = (
+            "Apply results/sample_report_paper_fix_2026-05-14.md: rewrite 567 engagements to 564 peak engagements."
+        )
+    else:
+        sample_status = "MISSING_EXACT_RESULT"
+        sample_evidence = "local report HTML candidates exist, but no exact 567/71.7/8-hour artifact was found"
+        sample_checked = "exact example not tied to a local saved report"
+        sample_next = "Package the exact report HTML plus source claim ID and verifier, or remove the exact numeric example."
+
     add(
         audits,
         "sample-report-example",
         "Explainability Report",
         "Sample report was predicted viral 8 hours before peak, had 567 engagements, and 71.7% check-worthiness confidence.",
-        "MISSING_EXACT_RESULT",
-        "local report HTML candidates exist, but no exact 567/71.7/8-hour artifact was found",
-        "exact example not tied to a local saved report",
-        "Package the exact report HTML plus source claim ID and verifier, or remove the exact numeric example.",
+        sample_status,
+        sample_evidence,
+        sample_checked,
+        sample_next,
     )
 
 
