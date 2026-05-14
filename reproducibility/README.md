@@ -21,9 +21,12 @@ The current manifest covers local evidence for:
 
 - CT24 split sizes and source files;
 - CT23 and ClaimBuster source files;
+- packaged CT24 clean splits, CT24 LLM feature Parquets, CT23/ClaimBuster benchmark inputs, and benchmark LLM feature Parquets for
+  local check-worthiness reruns;
 - the US Election 2020 raw corpus count and date range;
 - corpus language-share recomputation from the recovered Kaggle-derived parquet;
-- the claim-normalization diagnostic artifact and Filipe handoff boundary for the unsupported Table 1 values;
+- the claim-normalization runner/prompts, CheckThat! 2025 CSV inputs, diagnostic artifact, and Filipe handoff boundary for the
+  unsupported Table 1 values;
 - the candidate canonical streaming run `2026-01-17_03-56`;
 - the anomaly EXPoSE and baseline replacement table under the declared `min_rows=89` rerun;
 - the clustering threshold-ablation statistics;
@@ -129,12 +132,17 @@ highest detection rate in this replacement table; the random trigger baseline ha
 The claim-normalization Table 1 values are not reproduced by the packaged artifact. The repo currently packages:
 
 - `source_artifacts/claim_normalization/comparison_test_20260113_123010.json`
+- `source_artifacts/claim_normalization/source_code/`
+- `source_artifacts/claim_normalization/check_that_25/`
 
 This artifact has `n=1285` and best average METEOR `0.3449`, not the paper's `N=300` Table 1 values around `0.5583`, `0.5463`,
 and `0.5691`.
 
 Use `../results/claim_normalization_handoff_2026-05-14.md` for the exact artifact request to Filipe. Do not restore the Table 1
 values unless the `N=300` split, per-sample predictions, summary, command, and checksums are provided.
+
+The copied source package includes its historical README and command examples. Treat those as recovery notes until an exact rerun
+produces and packages the Table 1 output artifacts.
 
 ## Formative Evaluation
 
