@@ -30,8 +30,10 @@ Run the current local verifier with:
 
 ```bash
 EXPLAINABLE_ACD_ROOT=/Users/sergiopinto/explainableACD \
-  /Users/sergiopinto/effort/.venv/bin/python scripts/verify_local_artifacts.py
+  uv run --with pyarrow python scripts/verify_local_artifacts.py
 ```
+
+The current verifier status is summarized in `results/current_reproducibility_status.md`.
 
 Recompute CT24 metrics from saved probability artifacts with:
 
