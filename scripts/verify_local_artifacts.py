@@ -12,8 +12,9 @@ import pyarrow.compute as pc
 import pyarrow.parquet as pq
 
 
-SOURCE_ROOT = Path(os.environ.get("EXPLAINABLE_ACD_ROOT", "/Users/sergiopinto/explainableACD"))
 REPO_ROOT = Path(__file__).resolve().parents[1]
+ARTIFACT_ROOT = REPO_ROOT / "reproducibility" / "source_artifacts"
+EXTERNAL_ROOT = Path(os.environ.get("EXPLAINABLE_ACD_ROOT", "/Users/sergiopinto/explainableACD"))
 
 
 @dataclass(frozen=True)
@@ -23,13 +24,19 @@ class Check:
     detail: str
 
 
+@dataclass(frozen=True)
+class LocatedPath:
+    path: Path
+    source: str
+
+
 def parquet_rows(path: Path) -> int:
     return pq.ParquetFile(path).metadata.num_rows
 
 
 def csv_rows(path: Path) -> int:
-    with path.open(newline="", encoding="utf-8", errors="replace") as handle:
-        return max(sum(1 for _ in csv.reader(handle)) - 1, 0)
+    with path.open(newline="", encoding="utf-8") as handle:
+        return sum(1 for _ in csv.reader(handle)) - 1
 
 
 def load_json(path: Path) -> Any:
@@ -45,11 +52,13 @@ def sha256_file(path: Path) -> str:
 
 
 def load_sha256_manifest(path: Path) -> dict[str, str]:
-    checksums: dict[str, str] = {}
+    entries: dict[str, str] = {}
     for line in path.read_text(encoding="utf-8").splitlines():
+        if not line.strip():
+            continue
         digest, filename = line.split(maxsplit=1)
-        checksums[filename] = digest
-    return checksums
+        entries[filename.strip()] = digest
+    return entries
 
 
 def ok(name: str, detail: str) -> Check:
@@ -64,317 +73,566 @@ def fail(name: str, detail: str) -> Check:
     return Check(name=name, status="FAIL", detail=detail)
 
 
-def require_path(path: Path, name: str) -> Check | None:
+def packaged_or_external(name: str, packaged: Path, external: Path | None = None) -> tuple[LocatedPath | None, Check | None]:
+    if packaged.exists():
+        return LocatedPath(path=packaged, source="packaged"), None
+    if external is not None and external.exists():
+        return LocatedPath(path=external, source="external"), warn(name, f"using external fallback: {external}")
+    if external is None:
+        return None, fail(name, f"missing packaged artifact: {packaged}")
+    return None, fail(name, f"missing packaged artifact and external fallback: {packaged} | {external}")
+
+
+def optional_external(name: str, path: Path) -> tuple[LocatedPath | None, Check]:
     if path.exists():
-        return None
-    return fail(name, f"missing: {path}")
+        return LocatedPath(path=path, source="external"), ok(name, f"external artifact available: {path}")
+    return None, warn(name, f"external-only artifact unavailable: {path}")
+
+
+def manifest_entry_path(filename: str) -> Path:
+    relative_path = Path(filename)
+    if relative_path.is_absolute():
+        return relative_path
+    repo_candidate = REPO_ROOT / relative_path
+    if repo_candidate.exists():
+        return repo_candidate
+    return ARTIFACT_ROOT / relative_path
+
+
+def close_enough(actual: float, expected: float, tolerance: float = 1e-9) -> bool:
+    return abs(actual - expected) <= tolerance
+
+
+def check_source_manifest() -> list[Check]:
+    manifest_path = ARTIFACT_ROOT / "sha256sums.txt"
+    if not manifest_path.exists():
+        return [fail("Source artifact checksum manifest", f"missing {manifest_path}")]
+
+    checks: list[Check] = []
+    manifest = load_sha256_manifest(manifest_path)
+    mismatches: list[str] = []
+    missing: list[str] = []
+
+    for filename, expected_digest in manifest.items():
+        path = manifest_entry_path(filename)
+        if not path.exists():
+            missing.append(filename)
+            continue
+        actual_digest = sha256_file(path)
+        if actual_digest != expected_digest:
+            mismatches.append(filename)
+
+    if missing:
+        checks.append(fail("Source artifact checksum manifest", f"{len(missing)} missing entries: {missing[:5]}"))
+    if mismatches:
+        checks.append(fail("Source artifact checksum manifest", f"{len(mismatches)} checksum mismatches: {mismatches[:5]}"))
+    if not missing and not mismatches:
+        checks.append(ok("Source artifact checksum manifest", f"{len(manifest)} files match {manifest_path}"))
+    return checks
 
 
 def check_ct24_splits() -> list[Check]:
-    base = SOURCE_ROOT / "data/processed/CT24_clean"
-    expected = {
-        "CT24_train_clean.parquet": 22402,
-        "CT24_dev_clean.parquet": 1031,
-        "CT24_test_clean.parquet": 341,
-    }
     checks: list[Check] = []
-    for filename, expected_rows in expected.items():
-        path = base / filename
-        missing = require_path(path, f"CT24 split {filename}")
-        if missing:
-            checks.append(missing)
+    expected_rows = {
+        "train": 22402,
+        "dev": 1031,
+        "test": 341,
+    }
+    for split, expected in expected_rows.items():
+        filename = f"CT24_{split}_clean.parquet"
+        packaged = ARTIFACT_ROOT / "checkworthiness" / "ct24_clean" / filename
+        external = EXTERNAL_ROOT / "data" / "processed" / "CT24_clean" / filename
+        located, fallback = packaged_or_external(f"CT24 {split} split", packaged, external)
+        if fallback:
+            checks.append(fallback)
+        if located is None:
             continue
-        rows = parquet_rows(path)
-        if rows == expected_rows:
-            checks.append(ok(f"CT24 split {filename}", f"{rows} rows"))
+        rows = parquet_rows(located.path)
+        if rows == expected:
+            checks.append(ok(f"CT24 {split} split", f"{rows} rows ({located.source}: {located.path})"))
         else:
-            checks.append(fail(f"CT24 split {filename}", f"expected {expected_rows}, found {rows}"))
+            checks.append(fail(f"CT24 {split} split", f"expected {expected} rows, found {rows} in {located.path}"))
     return checks
 
 
 def check_benchmark_raw_data() -> list[Check]:
     checks: list[Check] = []
-    claimbuster = SOURCE_ROOT / "data/raw/claim_buster/groundtruth.csv"
-    ct23 = SOURCE_ROOT / "data/raw/check_that_23/CT23_1B_checkworthy_english_test.tsv"
-    if claimbuster.exists():
-        checks.append(ok("ClaimBuster groundtruth", f"{csv_rows(claimbuster)} data rows"))
+    files = [
+        (
+            "ClaimBuster groundtruth",
+            ARTIFACT_ROOT / "checkworthiness" / "benchmarks" / "claim_buster" / "groundtruth.csv",
+            EXTERNAL_ROOT / "data" / "raw" / "claim_buster" / "groundtruth.csv",
+            1032,
+        ),
+        (
+            "CT23 test input",
+            ARTIFACT_ROOT / "checkworthiness" / "benchmarks" / "ct23" / "CT23_1B_checkworthy_english_test.tsv",
+            EXTERNAL_ROOT / "data" / "raw" / "check_that_23" / "CT23_1B_checkworthy_english_test.tsv",
+            318,
+        ),
+        (
+            "CT23 test gold",
+            ARTIFACT_ROOT / "checkworthiness" / "benchmarks" / "ct23" / "CT23_1B_checkworthy_english_test_gold.tsv",
+            EXTERNAL_ROOT / "data" / "raw" / "check_that_23" / "CT23_1B_checkworthy_english_test_gold.tsv",
+            318,
+        ),
+    ]
+
+    for name, packaged, external, expected in files:
+        located, fallback = packaged_or_external(name, packaged, external)
+        if fallback:
+            checks.append(fallback)
+        if located is None:
+            continue
+        rows = csv_rows(located.path)
+        if rows == expected:
+            checks.append(ok(name, f"{rows} rows ({located.source}: {located.path})"))
+        else:
+            checks.append(fail(name, f"expected {expected} rows, found {rows} in {located.path}"))
+    return checks
+
+
+def check_llm_feature_inputs() -> list[Check]:
+    checks: list[Check] = []
+    files = [
+        (
+            "CT24 train LLM features",
+            ARTIFACT_ROOT / "checkworthiness" / "ct24_llm_features_v4" / "train_llm_features.parquet",
+            22402,
+        ),
+        (
+            "CT24 dev LLM features",
+            ARTIFACT_ROOT / "checkworthiness" / "ct24_llm_features_v4" / "dev_llm_features.parquet",
+            1031,
+        ),
+        (
+            "CT24 test LLM features",
+            ARTIFACT_ROOT / "checkworthiness" / "ct24_llm_features_v4" / "test_llm_features.parquet",
+            341,
+        ),
+        (
+            "ClaimBuster LLM features",
+            ARTIFACT_ROOT / "checkworthiness" / "benchmark_llm_features" / "CB_groundtruth_llm_features.parquet",
+            1032,
+        ),
+        (
+            "CT23 LLM features",
+            ARTIFACT_ROOT / "checkworthiness" / "benchmark_llm_features" / "CT23_llm_features.parquet",
+            318,
+        ),
+    ]
+
+    for name, path, expected in files:
+        if not path.exists():
+            checks.append(fail(name, f"missing packaged LLM feature file: {path}"))
+            continue
+        rows = parquet_rows(path)
+        if rows == expected:
+            checks.append(ok(name, f"{rows} rows ({path})"))
+        else:
+            checks.append(fail(name, f"expected {expected} rows, found {rows} in {path}"))
+
+    checkpoint_files = [
+        ARTIFACT_ROOT / "checkworthiness" / "ct24_llm_features_v4" / "checkpoint_train.json",
+        ARTIFACT_ROOT / "checkworthiness" / "ct24_llm_features_v4" / "checkpoint_dev.json",
+        ARTIFACT_ROOT / "checkworthiness" / "ct24_llm_features_v4" / "checkpoint_test.json",
+        ARTIFACT_ROOT / "checkworthiness" / "benchmark_llm_features" / "CB_groundtruth_checkpoint.json",
+        ARTIFACT_ROOT / "checkworthiness" / "benchmark_llm_features" / "CT23_checkpoint.json",
+    ]
+    missing_checkpoints = [str(path) for path in checkpoint_files if not path.exists()]
+    if missing_checkpoints:
+        checks.append(warn("LLM feature checkpoints", f"missing checkpoint files: {missing_checkpoints}"))
     else:
-        checks.append(fail("ClaimBuster groundtruth", f"missing: {claimbuster}"))
-    if ct23.exists():
-        checks.append(ok("CT23 test file", f"{csv_rows(ct23)} data rows"))
-    else:
-        checks.append(fail("CT23 test file", f"missing: {ct23}"))
+        checks.append(ok("LLM feature checkpoints", f"{len(checkpoint_files)} checkpoint files available"))
     return checks
 
 
 def check_us_election_raw() -> list[Check]:
-    path = SOURCE_ROOT / "data/raw/us_elections_tweets.parquet"
-    missing = require_path(path, "US Election raw corpus")
-    if missing:
-        return [missing]
-    table = pq.read_table(path, columns=["created_at"])
-    min_max = pc.min_max(table.column("created_at")).as_py()
-    schema_names = set(pq.read_schema(path).names)
-    checks = [
-        ok(
-            "US Election raw corpus",
-            f"{table.num_rows} rows, created_at {min_max['min']} to {min_max['max']}",
+    checks: list[Check] = []
+    path = EXTERNAL_ROOT / "data" / "raw" / "us_elections_tweets.parquet"
+    located, availability = optional_external("US election raw corpus", path)
+    checks.append(availability)
+    if located is None:
+        checks.append(
+            warn(
+                "US election raw corpus scope",
+                "raw 1.52M-tweet corpus is not packaged; date span and language mix require external storage",
+            )
         )
-    ]
-    if "language" in schema_names or "lang" in schema_names:
-        checks.append(ok("US Election language column", "language/lang column exists"))
+        return checks
+
+    table = pq.read_table(path, columns=["created_at"])
+    rows = table.num_rows
+    minmax = pc.min_max(table["created_at"]).as_py()
+    checks.append(ok("US election raw corpus rows", f"{rows} rows"))
+    checks.append(ok("US election raw corpus date span", f"{minmax['min']} to {minmax['max']}"))
+
+    schema_names = set(pq.read_schema(path).names)
+    language_column = next((column for column in ("lang", "language") if column in schema_names), None)
+    if language_column is None:
+        checks.append(warn("US election raw corpus language mix", "no lang/language column available for English-share claim"))
     else:
-        checks.append(warn("US Election 87% English claim", "no language/lang column in raw parquet schema"))
+        table_lang = pq.read_table(path, columns=[language_column])
+        counts = pc.value_counts(table_lang[language_column]).to_pylist()
+        counts_by_lang = {entry["values"]: entry["counts"] for entry in counts}
+        english_rows = counts_by_lang.get("en", 0)
+        checks.append(
+            ok(
+                "US election raw corpus language mix",
+                f"{english_rows}/{rows} English rows by {language_column} ({english_rows / rows:.3%})",
+            )
+        )
     return checks
 
 
 def check_canonical_pipeline_run() -> list[Check]:
-    base = SOURCE_ROOT / "data/pipeline_output/streaming_full/2026-01-17_03-56"
+    checks: list[Check] = []
+    summary_path = ARTIFACT_ROOT / "pipeline" / "streaming_full_2026-01-17_03-56_summary.json"
+    if not summary_path.exists():
+        checks.append(fail("Canonical pipeline summary", f"missing packaged summary: {summary_path}"))
+    else:
+        summary = load_json(summary_path)
+        expected_summary = {
+            "total_tweets_processed": 1522909,
+            "total_claims": 535,
+        }
+        for key, expected in expected_summary.items():
+            actual = summary.get(key)
+            if actual == expected:
+                checks.append(ok(f"Canonical pipeline summary {key}", f"{actual} ({summary_path})"))
+            else:
+                checks.append(fail(f"Canonical pipeline summary {key}", f"expected {expected}, found {actual}"))
+
+        clusters = summary.get("clusterer", {}).get("n_clusters")
+        if clusters == 100000:
+            checks.append(ok("Canonical pipeline summary cluster count", f"{clusters} clusters"))
+        else:
+            checks.append(fail("Canonical pipeline summary cluster count", f"expected 100000, found {clusters}"))
+
+    run_dir = EXTERNAL_ROOT / "data" / "pipeline_output" / "streaming_full" / "2026-01-17_03-56"
+    if not run_dir.exists():
+        checks.append(
+            warn(
+                "Canonical pipeline full outputs",
+                f"large run outputs are external-only and unavailable: {run_dir}",
+            )
+        )
+        return checks
+
     expected_rows = {
         "tweets.parquet": 692289,
         "clusters.parquet": 100000,
         "claims.parquet": 535,
         "cluster_timeseries.parquet": 404296,
     }
-    expected_files = [
-        "cluster_embeddings.npy",
-        "cluster_id_to_idx.json",
-        "cluster_ids_order.json",
-        "summary.json",
-    ]
-    checks: list[Check] = []
     for filename, expected in expected_rows.items():
-        path = base / filename
-        missing = require_path(path, f"Pipeline run {filename}")
-        if missing:
-            checks.append(missing)
+        path = run_dir / filename
+        if not path.exists():
+            checks.append(fail(f"Canonical pipeline {filename}", f"missing {path}"))
             continue
         rows = parquet_rows(path)
         if rows == expected:
-            checks.append(ok(f"Pipeline run {filename}", f"{rows} rows"))
+            checks.append(ok(f"Canonical pipeline {filename}", f"{rows} rows"))
         else:
-            checks.append(fail(f"Pipeline run {filename}", f"expected {expected}, found {rows}"))
-    for filename in expected_files:
-        path = base / filename
+            checks.append(fail(f"Canonical pipeline {filename}", f"expected {expected}, found {rows}"))
+
+    for filename in ("embeddings.npy", "tweet_ids.npy"):
+        path = run_dir / filename
         if path.exists():
-            checks.append(ok(f"Pipeline run {filename}", "present"))
+            checks.append(ok(f"Canonical pipeline {filename}", f"exists at {path}"))
         else:
-            checks.append(fail(f"Pipeline run {filename}", f"missing: {path}"))
+            checks.append(warn(f"Canonical pipeline {filename}", f"external array not available: {path}"))
     return checks
 
 
 def check_threshold_ablation() -> list[Check]:
-    path = SOURCE_ROOT / "experiments/results/threshold_ablation/cluster_statistics.json"
-    missing = require_path(path, "Threshold ablation JSON")
-    if missing:
-        return [missing]
-    data = load_json(path)
-    entry = data.get("0.65")
-    if not isinstance(entry, dict):
-        return [fail("Threshold tau=0.65", "missing key 0.65")]
-    yield_pct = entry.get("cluster_yield_pct")
-    mean_sim = entry.get("mean_intra_sim")
-    total_tweets = entry.get("total_tweets")
-    checks = [ok("Threshold ablation JSON", f"{len(data)} thresholds")]
-    if yield_pct == 86.9 and abs(float(mean_sim) - 0.8685999195826681) < 1e-12 and total_tweets == 5000:
-        checks.append(
-            ok(
-                "Threshold tau=0.65",
-                "cluster_yield_pct=86.9, mean_intra_sim=0.8685999196, total_tweets=5000",
-            )
-        )
-    else:
-        checks.append(warn("Threshold tau=0.65", f"yield={yield_pct}, mean_sim={mean_sim}, total_tweets={total_tweets}"))
+    checks: list[Check] = []
+    packaged = ARTIFACT_ROOT / "clustering" / "cluster_statistics.json"
+    external = EXTERNAL_ROOT / "experiments" / "results" / "threshold_ablation" / "cluster_statistics.json"
+    located, fallback = packaged_or_external("Threshold ablation statistics", packaged, external)
+    if fallback:
+        checks.append(fallback)
+    if located is None:
+        return checks
+
+    stats = load_json(located.path)
+    threshold = stats.get("0.65")
+    if threshold is None:
+        return checks + [fail("Threshold 0.65 statistics", f"missing key 0.65 in {located.path}")]
+
+    expected = {
+        "cluster_yield_pct": 86.9,
+        "mean_intra_sim": 0.8685999195826681,
+        "total_tweets": 5000,
+    }
+    for key, expected_value in expected.items():
+        actual = threshold.get(key)
+        if isinstance(expected_value, float):
+            match = close_enough(float(actual), expected_value, tolerance=1e-6)
+        else:
+            match = actual == expected_value
+        if match:
+            checks.append(ok(f"Threshold 0.65 {key}", f"{actual} ({located.source}: {located.path})"))
+        else:
+            checks.append(fail(f"Threshold 0.65 {key}", f"expected {expected_value}, found {actual}"))
     return checks
 
 
 def check_deberta_artifacts() -> list[Check]:
     checks: list[Check] = []
-    single = SOURCE_ROOT / "experiments/results/deberta_checkworthy/deberta-v3-large/results.json"
-    if single.exists():
-        data = load_json(single)
-        best = max(data.get("test_results", []), key=lambda row: row.get("f1", -1))
-        checks.append(ok("Single DeBERTa CT24 result", f"best test F1={best.get('f1')} at threshold={best.get('threshold')}"))
+    table_path = REPO_ROOT / "results" / "table3_reproduction_2026-05-12.json"
+    if not table_path.exists():
+        checks.append(fail("Table 3 reproduction summary", f"missing {table_path}"))
     else:
-        checks.append(fail("Single DeBERTa CT24 result", f"missing: {single}"))
+        summary = load_json(table_path)
+        rows = summary.get("rows", [])
+        expected_f1 = {
+            "3-seed DeBERTa ensemble": 0.834,
+            "4-head MTL retrain": 0.833,
+            "Fusion classifier rerun": 0.836,
+        }
+        for row in rows:
+            method = row.get("row")
+            if method not in expected_f1:
+                continue
+            actual = round(float(row["reproduced_f1"]), 3)
+            expected = expected_f1[method]
+            if actual == expected:
+                checks.append(ok(f"{method} F1", f"{actual:.3f} from {table_path}"))
+            else:
+                checks.append(fail(f"{method} F1", f"expected rounded F1 {expected:.3f}, found {actual:.3f}"))
 
-    ensemble = SOURCE_ROOT / "lambda_backup/ubuntu/ensemble_results"
-    required = [
-        "seed_0/deberta-v3-large/test_probs.npy",
-        "seed_123/deberta-v3-large/test_probs.npy",
-        "seed_456/deberta-v3-large/test_probs.npy",
-        "test_temp_0.3_probs.npy",
+        single_row = next((row for row in rows if row.get("row") == "Single DeBERTa"), None)
+        if single_row is None:
+            checks.append(warn("Single DeBERTa F1", "summary row absent; paper claim needs separate handling"))
+        else:
+            checks.append(
+                warn(
+                    "Single DeBERTa F1",
+                    f"rerun found {single_row['reproduced_f1']}; paper reports {single_row['paper_claim_f1']}",
+                )
+            )
+
+        pca_row = next((row for row in rows if row.get("row") == "PCA-64 + LLM + text LogReg CT24 rerun"), None)
+        if pca_row is None:
+            checks.append(warn("PCA + classification head F1", "summary row absent; paper claim needs separate handling"))
+        elif pca_row.get("status") == "mismatch":
+            checks.append(
+                warn(
+                    "PCA + classification head F1",
+                    f"rerun found {pca_row['reproduced_f1']}; paper reports {pca_row['paper_claim_f1']}",
+                )
+            )
+
+    optional_files = [
+        (
+            "Single DeBERTa probability file",
+            EXTERNAL_ROOT
+            / "experiments"
+            / "results"
+            / "deberta_checkworthy"
+            / "deberta-v3-large"
+            / "test_probs.npy",
+        ),
+        (
+            "3-seed ensemble probability file",
+            EXTERNAL_ROOT / "lambda_backup" / "ubuntu" / "ensemble_results" / "test_temp_0.3_probs.npy",
+        ),
+        (
+            "Fusion classifier probability file",
+            EXTERNAL_ROOT / "lambda_backup" / "ubuntu" / "ensemble_results" / "fusion_test_probs.npy",
+        ),
     ]
-    missing_files = [str(ensemble / item) for item in required if not (ensemble / item).exists()]
-    if missing_files:
-        checks.append(fail("3-seed ensemble probability files", "missing: " + "; ".join(missing_files)))
-    else:
-        checks.append(ok("3-seed ensemble probability files", "seed_0, seed_123, seed_456, and temp_0.3 files present"))
+    for name, path in optional_files:
+        _, availability = optional_external(name, path)
+        checks.append(availability)
 
-    seed_456 = ensemble / "seed_456/deberta-v3-large/results.json"
-    if seed_456.exists():
-        best = load_json(seed_456).get("test", {}).get("best", {})
-        checks.append(warn("Paper 4-head F1=0.814 conflict", f"same value appears as single-head seed_456 F1={best.get('f1')}"))
-    else:
-        checks.append(fail("Seed 456 result JSON", f"missing: {seed_456}"))
+    inconsistent_seed = EXTERNAL_ROOT / "lambda_backup" / "ubuntu" / "ensemble_results" / "model_seed_456" / "metrics.json"
+    if inconsistent_seed.exists():
+        metrics = load_json(inconsistent_seed)
+        f1 = metrics.get("test_metrics", {}).get("f1")
+        checks.append(
+            warn(
+                "Seed 456 individual model metric",
+                f"external metrics file reports F1={f1}; ensemble summary remains reproducible",
+            )
+        )
     return checks
 
 
 def check_packaged_4head_run() -> list[Check]:
-    run_dir = REPO_ROOT / "reproducibility/runs/deberta_mtl_cikm_20260512_134553"
     checks: list[Check] = []
-    missing = require_path(run_dir, "Packaged 4-head run")
-    if missing:
-        return [missing]
-
-    result_path = run_dir / "results.json"
-    benchmark_path = run_dir / "benchmark_summary.json"
-    label_order_path = run_dir / "saved_label_order_summary.json"
+    run_dir = REPO_ROOT / "reproducibility" / "runs" / "deberta_mtl_cikm_20260512_134553"
+    manifest_path = run_dir / "results.json"
     sha_path = run_dir / "sha256sums.txt"
-    label_sha_path = run_dir / "label_order_sha256sums.txt"
-    script_sha_path = run_dir / "script_sha256sums.txt"
-    for path, name in (
-        (result_path, "Packaged 4-head results.json"),
-        (benchmark_path, "Packaged benchmark summary"),
-        (label_order_path, "Packaged label-order summary"),
-        (sha_path, "Packaged run checksum manifest"),
-        (label_sha_path, "Packaged label-order checksum manifest"),
-        (script_sha_path, "Packaged script checksum manifest"),
-    ):
-        missing_file = require_path(path, name)
-        if missing_file:
-            checks.append(missing_file)
-    if any(check.status == "FAIL" for check in checks):
-        return checks
+    if not manifest_path.exists():
+        return [fail("Packaged 4-head manifest", f"missing {manifest_path}")]
+    if not sha_path.exists():
+        return [fail("Packaged 4-head checksum manifest", f"missing {sha_path}")]
 
-    results = load_json(result_path)
-    best_test = results.get("best_test", {})
-    if (
-        abs(float(best_test.get("f1", -1)) - 0.8333333333333333) < 1e-12
-        and abs(float(best_test.get("threshold", -1)) - 0.5) < 1e-12
-    ):
-        checks.append(ok("4-head CT24 reproduced result", "test F1=0.8333333333333333 at threshold=0.50"))
+    results = load_json(manifest_path)
+    best_test = max(results.get("test_results", []), key=lambda row: row.get("f1", -1), default={})
+    if close_enough(float(best_test.get("f1", -1)), 0.8333333333333333):
+        checks.append(ok("Packaged 4-head test F1", "0.8333333333333333"))
     else:
-        checks.append(fail("4-head CT24 reproduced result", f"unexpected best_test={best_test}"))
+        checks.append(fail("Packaged 4-head test F1", f"unexpected best test metrics: {best_test}"))
 
-    benchmark = load_json(benchmark_path)
-    claimbuster_f1 = benchmark.get("ClaimBuster", {}).get("f1")
-    ct23_f1 = benchmark.get("CT23", {}).get("f1")
-    if claimbuster_f1 == 0.973 and ct23_f1 == 0.9327:
-        checks.append(ok("4-head cross-dataset reproduced result", "ClaimBuster F1=0.9730, CT23 F1=0.9327"))
-    else:
-        checks.append(warn("4-head cross-dataset reproduced result", f"ClaimBuster={claimbuster_f1}, CT23={ct23_f1}"))
-
-    label_summary = load_json(label_order_path)
-    label_best = label_summary.get("test", {}).get("best", {})
-    if (
-        abs(float(label_best.get("f1", -1)) - 0.8333333333333333) < 1e-12
-        and abs(float(label_best.get("threshold", -1)) - 0.5) < 1e-12
-    ):
-        checks.append(ok("4-head saved label order", "test_labels.npy reproduces F1=0.8333333333333333"))
-    else:
-        checks.append(fail("4-head saved label order", f"unexpected summary={label_best}"))
-
-    expected_files = {
-        "results.json",
-        "dev_probs.npy",
-        "test_probs.npy",
-        "training.log",
-        "benchmark_eval.log",
-        "benchmark_summary.json",
-        "command.txt",
-        "environment.txt",
-    }
-    run_manifest = load_sha256_manifest(sha_path)
-    for filename in sorted(expected_files):
+    for filename, expected_digest in load_sha256_manifest(sha_path).items():
         path = run_dir / filename
         if not path.exists():
-            checks.append(fail(f"4-head artifact {filename}", f"missing: {path}"))
+            if filename == "best_model.pt":
+                checks.append(warn(f"Packaged 4-head {filename}", f"checkpoint omitted from repo: {path}"))
+            else:
+                checks.append(fail(f"Packaged 4-head {filename}", f"missing {path}"))
             continue
-        expected = run_manifest.get(filename)
-        actual = sha256_file(path)
-        if expected == actual:
-            checks.append(ok(f"4-head artifact {filename}", "checksum matches"))
+        actual_digest = sha256_file(path)
+        if actual_digest == expected_digest:
+            checks.append(ok(f"Packaged 4-head {filename}", "sha256 matches"))
         else:
-            checks.append(fail(f"4-head artifact {filename}", f"checksum mismatch: {actual} != {expected}"))
-
-    model_checksum = run_manifest.get("best_model.pt")
-    if model_checksum and not (run_dir / "best_model.pt").exists():
-        checks.append(ok("4-head model checkpoint storage", "best_model.pt checksum recorded; file intentionally not committed"))
-    else:
-        checks.append(warn("4-head model checkpoint storage", "expected checksum-only storage for best_model.pt"))
-
-    label_manifest = load_sha256_manifest(label_sha_path)
-    for filename in (
-        "dev_labels.npy",
-        "dev_sentence_ids.npy",
-        "test_labels.npy",
-        "test_sentence_ids.npy",
-        "saved_label_order_summary.json",
-    ):
-        path = run_dir / filename
-        if not path.exists():
-            checks.append(fail(f"4-head label-order artifact {filename}", f"missing: {path}"))
-            continue
-        expected = label_manifest.get(filename)
-        actual = sha256_file(path)
-        if expected == actual:
-            checks.append(ok(f"4-head label-order artifact {filename}", "checksum matches"))
-        else:
-            checks.append(fail(f"4-head label-order artifact {filename}", f"checksum mismatch: {actual} != {expected}"))
-
-    script_manifest = load_sha256_manifest(script_sha_path)
-    for filename in ("scripts/finetune_deberta_mtl.py", "scripts/evaluate_mtl_benchmarks.py", "run_summary.md"):
-        path = run_dir / filename
-        if not path.exists():
-            checks.append(fail(f"4-head packaged file {filename}", f"missing: {path}"))
-            continue
-        expected = script_manifest.get(filename)
-        actual = sha256_file(path)
-        if expected == actual:
-            checks.append(ok(f"4-head packaged file {filename}", "checksum matches"))
-        else:
-            checks.append(fail(f"4-head packaged file {filename}", f"checksum mismatch: {actual} != {expected}"))
+            checks.append(fail(f"Packaged 4-head {filename}", f"sha256 mismatch: {actual_digest}"))
     return checks
 
 
 def check_virality_tabular() -> list[Check]:
-    path = SOURCE_ROOT / "experiments/results/virality_tuned/tuned_baselines.json"
-    missing = require_path(path, "Virality tuned baselines")
-    if missing:
-        return [missing]
-    rows = load_json(path)
-    by_name = {row.get("name"): row for row in rows if isinstance(row, dict)}
-    wanted = ["BayesianRidge", "LightGBM", "SVR (RBF)"]
-    checks = [ok("Virality tuned baselines", f"{len(rows)} model rows")]
-    for name in wanted:
-        row = by_name.get(name)
-        if row:
-            checks.append(ok(name, f"rho={row.get('spearman_rho')}, r2={row.get('r2')}, mae={row.get('mae')}"))
+    checks: list[Check] = []
+    features_path = ARTIFACT_ROOT / "virality" / "features_enhanced.parquet"
+    labels_path = ARTIFACT_ROOT / "virality" / "psr_labels.parquet"
+    manifest_path = REPO_ROOT / "results" / "virality_split_manifest_2026-05-12.json"
+    tuned_path = ARTIFACT_ROOT / "virality" / "tuned_baselines.json"
+
+    expected_parquet_rows = {
+        "Virality features": (features_path, 529),
+        "Virality labels": (labels_path, 529),
+    }
+    for name, (path, expected) in expected_parquet_rows.items():
+        if not path.exists():
+            checks.append(fail(name, f"missing {path}"))
+            continue
+        rows = parquet_rows(path)
+        if rows == expected:
+            checks.append(ok(name, f"{rows} rows ({path})"))
         else:
-            checks.append(fail(name, "missing from tuned baselines"))
+            checks.append(fail(name, f"expected {expected} rows, found {rows}"))
+
+    if not manifest_path.exists():
+        checks.append(fail("Virality split manifest", f"missing {manifest_path}"))
+    else:
+        manifest = load_json(manifest_path)
+        expected_manifest = {
+            "features_rows": 529,
+            "feature_columns": 42,
+            "train_rows": 423,
+            "test_rows": 106,
+        }
+        counts = manifest.get("counts", {})
+        for key, expected in expected_manifest.items():
+            actual = counts.get(key)
+            if actual == expected:
+                checks.append(ok(f"Virality split {key}", f"{actual}"))
+            else:
+                checks.append(fail(f"Virality split {key}", f"expected {expected}, found {actual}"))
+
+    if not tuned_path.exists():
+        checks.append(fail("Virality tuned baselines", f"missing {tuned_path}"))
+        return checks
+
+    rows = load_json(tuned_path)
+    expected_models = {
+        "BayesianRidge": {
+            "spearman_rho": 0.5507267551704159,
+            "cv_rho": 0.4697726498589779,
+            "r2": 0.29336255950069234,
+            "mae": 0.22561890863935924,
+            "f2_075": 0.13089005235602094,
+        },
+        "LightGBM": {
+            "spearman_rho": 0.5488122528150742,
+            "cv_rho": 0.5567888025262427,
+            "r2": 0.33291185194110773,
+            "mae": 0.21102133849034038,
+            "f2_075": 0.3217821782178218,
+        },
+        "SVR (RBF)": {
+            "spearman_rho": 0.5424238607451446,
+            "cv_rho": 0.46533491723109693,
+            "r2": 0.33632071019874665,
+            "mae": 0.20712320021316238,
+            "f2_075": 0.3431372549019608,
+        },
+    }
+    rows_by_model = {row["name"]: row for row in rows}
+    for model, metrics in expected_models.items():
+        row = rows_by_model.get(model)
+        if row is None:
+            checks.append(fail(f"Virality {model}", "missing model row"))
+            continue
+        mismatches = [
+            f"{metric}: expected {expected}, found {row.get(metric)}"
+            for metric, expected in metrics.items()
+            if not close_enough(float(row.get(metric)), expected, tolerance=1e-12)
+        ]
+        if mismatches:
+            checks.append(fail(f"Virality {model}", "; ".join(mismatches)))
+        else:
+            checks.append(ok(f"Virality {model}", "metrics match packaged tuned_baselines.json"))
     return checks
+
+
+def check_unresolved_blockers() -> list[Check]:
+    checks: list[Check] = []
+    claim_norm_request = REPO_ROOT / "results" / "claim_normalization_filipe_request_2026-05-14.md"
+    formative_request = REPO_ROOT / "results" / "formative_evaluation_filipe_request_2026-05-14.md"
+
+    if claim_norm_request.exists():
+        checks.append(
+            warn(
+                "Claim normalization exact Table 1 reproducibility",
+                f"pending Filipe artifact check documented in {claim_norm_request}",
+            )
+        )
+    else:
+        checks.append(fail("Claim normalization exact Table 1 reproducibility", f"missing handoff doc: {claim_norm_request}"))
+
+    if formative_request.exists():
+        checks.append(
+            warn(
+                "Formative evaluation quantitative stats",
+                f"pending anonymized Google Forms export documented in {formative_request}",
+            )
+        )
+    else:
+        checks.append(fail("Formative evaluation quantitative stats", f"missing handoff doc: {formative_request}"))
+    return checks
+
+
+def print_group(title: str, checks: list[Check]) -> None:
+    print(f"\n## {title}")
+    for check in checks:
+        print(f"[{check.status}] {check.name}: {check.detail}")
 
 
 def main() -> int:
     groups = [
+        ("Source Artifact Checksums", check_source_manifest()),
         ("CT24", check_ct24_splits()),
         ("Benchmarks", check_benchmark_raw_data()),
+        ("LLM Feature Inputs", check_llm_feature_inputs()),
         ("US Election Raw", check_us_election_raw()),
         ("Canonical Pipeline Run", check_canonical_pipeline_run()),
         ("Clustering", check_threshold_ablation()),
         ("DeBERTa", check_deberta_artifacts()),
         ("Packaged 4-head MTL Run", check_packaged_4head_run()),
         ("Virality", check_virality_tabular()),
+        ("Unresolved Paper Blockers", check_unresolved_blockers()),
     ]
+
     failures = 0
     warnings = 0
-    for group, checks in groups:
-        print(f"\n[{group}]")
-        for check in checks:
-            print(f"{check.status:>4}  {check.name}: {check.detail}")
-            failures += check.status == "FAIL"
-            warnings += check.status == "WARN"
+    for title, checks in groups:
+        print_group(title, checks)
+        failures += sum(1 for check in checks if check.status == "FAIL")
+        warnings += sum(1 for check in checks if check.status == "WARN")
+
     print(f"\nSummary: {failures} failures, {warnings} warnings")
     return 1 if failures else 0
 

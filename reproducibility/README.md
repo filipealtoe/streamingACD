@@ -57,23 +57,31 @@ The current run bundle additionally covers:
 
 ## Local Verification
 
-The verifier reads from the previous local checkout by default:
+The verifier prefers packaged artifacts in this repository. It reads from the previous local checkout only for large external
+artifacts that are intentionally not committed.
 
 ```bash
 EXPLAINABLE_ACD_ROOT=/Users/sergiopinto/explainableACD \
-  /Users/sergiopinto/effort/.venv/bin/python scripts/verify_local_artifacts.py
+  uv run --with pyarrow python scripts/verify_local_artifacts.py
 ```
 
 Expected current result:
 
 ```text
-Summary: 0 failures, 2 warnings
+Summary: 0 failures, 9 warnings
 ```
 
 The warnings are expected until resolved:
 
-- the raw election corpus file does not contain a language column for the `87% English` claim;
-- the old `0.814` value appears in single-head DeBERTa artifacts, but the new four-head run is now separately packaged.
+- CT24 LLM feature checkpoint JSON files were not packaged, although the feature Parquets are present;
+- the raw election corpus file does not contain a language column for the removed `87% English` claim;
+- `embeddings.npy` and `tweet_ids.npy` from the large pipeline run are not in the local external cache;
+- single DeBERTa recomputes near, but not exactly at, the old paper value;
+- the fusion probability file is not available as a standalone external artifact, although the reproduced summary is packaged;
+- the four-head checkpoint is omitted from Git and represented by checksum plus saved predictions;
+- claim normalization Table 1 and formative-evaluation quantitative claims are waiting on Filipe-owned artifacts.
+
+See `../results/current_reproducibility_status.md` for the latest readable status summary.
 
 ## Four-Head Training Details
 
