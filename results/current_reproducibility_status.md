@@ -12,7 +12,7 @@ EXPLAINABLE_ACD_ROOT=/Users/sergiopinto/explainableACD \
 Current result:
 
 ```text
-Summary: 0 failures, 7 warnings
+Summary: 0 failures, 4 warnings, 3 info
 ```
 
 ## What Is Now Checked From Packaged Repository Artifacts
@@ -40,13 +40,20 @@ These are warnings, not verifier failures:
 
 | Warning | Meaning |
 |---|---|
-| CT24 LLM feature checkpoints missing | The feature Parquets are present, but the CT24 checkpoint JSON files from feature generation were not packaged. |
-| Raw corpus language column missing | The local raw corpus supports row count/date span, but not the old English-share claim. |
 | Single DeBERTa F1 near mismatch | Recomputed F1 is `0.8214285714285715`; old paper-facing value is `0.8242`. |
 | Fusion standalone probability file missing | The reproduced fusion summary is packaged, but a standalone old `fusion_test_probs.npy` was not found. |
-| Four-head checkpoint omitted | `best_model.pt` is not in Git; checksum is recorded and saved predictions are packaged. |
 | Claim normalization exact Table 1 pending | Filipe needs to check/recover the exact `N=300` run artifacts. |
 | Formative evaluation quantitative stats pending | Filipe needs to provide anonymized participant responses and the analysis script if the paper keeps exact human-study numbers. |
+
+## Informational Notes
+
+These are not current paper blockers:
+
+| Note | Meaning |
+|---|---|
+| CT24 LLM feature-generation checkpoints not packaged | The feature Parquets are present, complete, and checksummed. The missing checkpoint JSON files only affect run-resume provenance. |
+| Raw corpus language column missing | The local raw corpus supports row count/date span, but not the old English-share claim, which should remain omitted. |
+| Four-head checkpoint omitted | `best_model.pt` is not in Git; checksum is recorded and saved predictions are packaged. |
 
 ## Immediate Interpretation
 
