@@ -52,10 +52,8 @@ See `docs/paper_claim_reproduction_matrix.md` for the full claim matrix.
 
 Highest-risk open items:
 
-1. claim normalization Table 1 exact METEOR values;
-2. anomaly detection NAB/detection/lead-time values;
-3. formative evaluation aggregate data and analysis;
-4. the CT24 `0.761` LLM-feature cell in Table 3 if the paper keeps that exact value.
+1. claim normalization Table 1 exact METEOR values, now handed off to Filipe;
+2. formative evaluation aggregate data and analysis if the paper restores quantitative user-study claims.
 
 ## Full Paper Claim Audit
 
@@ -69,11 +67,11 @@ EXPLAINABLE_ACD_ROOT=/Users/sergiopinto/explainableACD \
 The audit writes `results/full_paper_claim_audit_2026-05-12.*` and intentionally exits non-zero while exact paper claims remain
 unreproduced. The current blocking categories are not hidden:
 
-- claim normalization Table 1 does not match the available local comparison artifact;
-- anomaly detection paper values do not match the packaged EXPoSE grid-search artifact;
+- claim normalization Table 1 does not match the available local comparison artifact and needs Filipe's exact `N=300` run package;
+- anomaly detection and baseline values require the declared `min_rows=89` rewrite packet;
 - the `87% English` corpus claim conflicts with the canonical run summary and no raw language column exists;
 - Table 3 still contains exact mismatches unless the paper uses the reproduced four-head and LLM-row values;
-- the formative evaluation aggregate data and exact sample-report example are not packaged.
+- the formative evaluation aggregate data are not packaged.
 
 ## Table 3 Audit
 
@@ -91,6 +89,8 @@ Current result:
 
 The Fusion Classifier row now has a reproducible CT24 rerun. The PCA/LLM/LogReg paper row is still not clean as written: the literal
 benchmark rerun matches ClaimBuster `0.8939` and CT23 `0.8458`, but CT24 recomputes at `0.6936`.
+Use `results/llm_feature_classifier_paper_fix_2026-05-14.md` to rewrite this row to CT24 `0.694`, or rewrite the method around a
+separate replacement candidate before using CT24 `0.793`.
 
 There is also a separate replacement candidate, not a reproduction of the paper row as labeled:
 `results/deberta_cls_llm_logreg_candidate_2026-05-12.md` records a targeted held-out CT24 rerun of DeBERTa CLS embeddings plus
@@ -100,7 +100,7 @@ seven LLM features with tuned Logistic Regression at F1 `0.7929`.
 
 Attack one of the still-unpackaged or still-mismatched paper claims:
 
-- the CT24 `0.761` LLM-feature cell if the row remains in the paper;
 - claim normalization Table 1 exact METEOR values;
-- anomaly detection NAB/detection/lead-time values;
-- formative evaluation aggregate data and analysis.
+- formative evaluation aggregate data and analysis if quantitative user-study claims are restored.
+
+Use `results/claim_normalization_handoff_2026-05-14.md` for the exact Filipe artifact request and manuscript fallback.

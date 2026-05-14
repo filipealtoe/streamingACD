@@ -1,0 +1,147 @@
+{
+  "params": {
+    "decay": 0.005,
+    "gamma": 1.0,
+    "threshold": 0.05,
+    "fp_weight": 0.1,
+    "n_components": 20000,
+    "history_window": 6,
+    "engagement_weight": 0.3
+  },
+  "input": "/Users/sergiopinto/explainableACD/data/pipeline_output/streaming_full/2026-01-17_03-56/cluster_timeseries.parquet",
+  "runtime_seconds": 61.52240800857544,
+  "summaries": [
+    {
+      "min_rows": 10,
+      "clusters_evaluated": 5021,
+      "total_points": 275569,
+      "total_detections": 270187,
+      "total_tp": 4758,
+      "total_fp": 4287,
+      "nab_score": 45.94294805289908,
+      "detection_rate": 77.43477394941247,
+      "median_lead": 20.0,
+      "precision": 1.7610025648902428
+    },
+    {
+      "min_rows": 20,
+      "clusters_evaluated": 3200,
+      "total_points": 250651,
+      "total_detections": 247206,
+      "total_tp": 3101,
+      "total_fp": 2894,
+      "nab_score": 57.5496543175659,
+      "detection_rate": 86.875,
+      "median_lead": 21.0,
+      "precision": 1.2544193911151025
+    },
+    {
+      "min_rows": 30,
+      "clusters_evaluated": 2401,
+      "total_points": 231548,
+      "total_detections": 228973,
+      "total_tp": 2351,
+      "total_fp": 2232,
+      "nab_score": 64.12640566430655,
+      "detection_rate": 91.08704706372345,
+      "median_lead": 22.0,
+      "precision": 1.0267586134609759
+    },
+    {
+      "min_rows": 40,
+      "clusters_evaluated": 1896,
+      "total_points": 214340,
+      "total_detections": 212334,
+      "total_tp": 1866,
+      "total_fp": 1788,
+      "nab_score": 68.75175808720113,
+      "detection_rate": 93.45991561181435,
+      "median_lead": 23.0,
+      "precision": 0.8788041481816383
+    },
+    {
+      "min_rows": 50,
+      "clusters_evaluated": 1543,
+      "total_points": 198614,
+      "total_detections": 196986,
+      "total_tp": 1523,
+      "total_fp": 1469,
+      "nab_score": 72.21160077770578,
+      "detection_rate": 95.00972132209981,
+      "median_lead": 23.0,
+      "precision": 0.7731513914694446
+    },
+    {
+      "min_rows": 75,
+      "clusters_evaluated": 1003,
+      "total_points": 165674,
+      "total_detections": 164628,
+      "total_tp": 992,
+      "total_fp": 963,
+      "nab_score": 77.6287803256896,
+      "detection_rate": 97.20837487537388,
+      "median_lead": 23.0,
+      "precision": 0.602570644118862
+    },
+    {
+      "min_rows": 100,
+      "clusters_evaluated": 711,
+      "total_points": 140500,
+      "total_detections": 139755,
+      "total_tp": 707,
+      "total_fp": 686,
+      "nab_score": 80.91654946085326,
+      "detection_rate": 98.59353023909986,
+      "median_lead": 24.0,
+      "precision": 0.505885299273729
+    },
+    {
+      "min_rows": 150,
+      "clusters_evaluated": 419,
+      "total_points": 105020,
+      "total_detections": 104575,
+      "total_tp": 418,
+      "total_fp": 403,
+      "nab_score": 84.5346062052506,
+      "detection_rate": 99.52267303102626,
+      "median_lead": 24.0,
+      "precision": 0.3997131245517571
+    },
+    {
+      "min_rows": 200,
+      "clusters_evaluated": 268,
+      "total_points": 79040,
+      "total_detections": 78751,
+      "total_tp": 267,
+      "total_fp": 259,
+      "nab_score": 86.06032338308458,
+      "detection_rate": 99.6268656716418,
+      "median_lead": 24.0,
+      "precision": 0.33904331373569857
+    },
+    {
+      "min_rows": 300,
+      "clusters_evaluated": 99,
+      "total_points": 38285,
+      "total_detections": 38180,
+      "total_tp": 99,
+      "total_fp": 95,
+      "nab_score": 87.92087542087543,
+      "detection_rate": 100.0,
+      "median_lead": 24.0,
+      "precision": 0.2592980618124673
+    },
+    {
+      "min_rows": 500,
+      "clusters_evaluated": 13,
+      "total_points": 6968,
+      "total_detections": 6954,
+      "total_tp": 13,
+      "total_fp": 11,
+      "nab_score": 90.8974358974359,
+      "detection_rate": 100.0,
+      "median_lead": 24.0,
+      "precision": 0.18694276675294794
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+category,claim_id,claim_text,checkworthiness_prob,harm_score,is_viral,peak_engagement,lead_time_hours
+HIGH_CONFIDENCE_POSITIVE,c682d41a-4bed-425f-9919-90323c7eab42,10 million from the Chinese for Joe Biden through Hunter Biden,0.7201837420463562,85.0,true,814,1.0
+HIGH_CONFIDENCE_POSITIVE,3a53b852-a6aa-473f-81cf-c9be62815e7e,Trump and his enablers are tolerating or even supporting Russian disinformation trying to manipulate the American people.,0.6518497347831727,85.0,true,713,19.0
+HIGH_CONFIDENCE_POSITIVE,9dea2d0d-0604-4753-8bde-f9498ee5a2b0,"The moderators were biased because Trump got a question about QAnons but Joe Biden did not get a question about Hunter Biden's Ukraine dealings, making Biden's 16 points ahead also biased.",0.7174807906150819,85.0,true,564,8.0
+HIGH_CONFIDENCE_POSITIVE,17139caf-b9a8-406d-91ea-364060686444,die Moderatorin hat mehrfach auf die Unwahrheiten und Lügen von Trump aufmerksam gemacht,0.6611756086349487,80.0,true,394,5.0
+HIGH_CONFIDENCE_POSITIVE,80237be1-e2bb-41fc-a7b9-992823792184,"A couple of cars and trucks with a couple of people were at a Biden rally, while more than 100 Trump supporters were protesting.",0.6848511219024658,85.0,true,317,2.0
+HIGH_CONFIDENCE_POSITIVE,63ce6483-7ad0-4f18-b179-c77009105eb4,Trump was warned that Giuliani was conveying Russian disinformation.,0.7256529092788697,85.0,true,313,9.0
+HIGH_CONFIDENCE_POSITIVE,9a5247a5-79a1-4d0c-aaa6-05c4d53f6645,"If Biden would win, every American earning over $9875 a year will pay higher income tax rates.",0.7172618508338928,85.0,true,297,0.0
+HIGH_CONFIDENCE_POSITIVE,fc84606e-120b-43bc-b40a-f5848ed8ba1e,Biden is currently being investigated for selling access to China.,0.7139684915542602,85.0,true,255,3.0
+HIGH_CONFIDENCE_POSITIVE,2c81b83e-f156-41aa-a9f9-0d0549028112,Trump is the third POTUS to be impeached; the POTUS who killed the greatest number of Americans; the POTUS who lost the most jobs; likely the POTUS who lost re-election in one of the largest landslides; and the only ex-POTUS to either go to prison or flee the US.,0.7248267292976379,85.0,true,173,3.0
+HIGH_CONFIDENCE_POSITIVE,532080b8-fe36-415b-a672-c805a8b1aaa8,Trump refused to say if he had COVID test the day of the debate.,0.7284778118133545,85.0,true,155,16.0
+HIGH_CONFIDENCE_POSITIVE,d8894ecc-6541-4081-8397-c16e25b4c515,Trump said that it's a dead cert cure despite not having any of that in his own treatment.,0.7237280964851379,85.0,true,114,18.0
+HIGH_CONFIDENCE_POSITIVE,22d151a1-b71d-46c8-af52-ee864760bd60,Joe Biden takes 50% of Hunter Biden’s illicit income.,0.7699422001838685,85.0,true,98,7.0
+HIGH_CONFIDENCE_POSITIVE,17d06b9c-a821-4ba5-bf42-7691b7af8000,"Biden thinks that COVID killed 120 million Americans, which is more than one in three Americans.",0.720746374130249,95.0,true,86,9.0
+HIGH_CONFIDENCE_POSITIVE,034a85ac-ce99-4879-9ec1-43ca873bab60,"While Trump and his advisors were publicly giving rosy outlooks on the pandemic, they were privately giving dire warnings to wealthy investors behind closed doors, triggering sell offs.",0.7341153144836426,85.0,true,85,1.0
+HIGH_CONFIDENCE_POSITIVE,09e245fb-44bd-47e8-8d68-bb36720676e9,Biden raised 54.4% more money than Trump,0.7313050746917724,80.0,true,77,10.0
+HIGH_CONFIDENCE_POSITIVE,3d61ed52-5769-4798-a5df-c9a8b13244b6,"Joe Biden was asked about emails regarding his meeting with Burisma officials who had bribed his son Hunter Biden for access, and he did not deny the allegations and refused to answer the question.",0.7583340525627136,85.0,true,71,0.0
+HIGH_CONFIDENCE_POSITIVE,9a9c0e37-34c9-4f5d-a742-8ae3e08663e6,Former DHS Chief of Staff accuses Trump of helping to crowdsource domestic terrorism for refusing to denounce QAnon,0.6741919040679931,85.0,true,46,3.0
+HIGH_CONFIDENCE_POSITIVE,2fb1cd3f-7429-4b62-870c-5076347b313d,Mike Lindell's company made masks early when science was the norm but stopped when Trump said they weren't politically needed.,0.7579478740692139,85.0,true,44,3.0
+HIGH_CONFIDENCE_POSITIVE,e571e075-7ec1-463b-8d00-23d6f53ce07b,टीवी व्यूअरशिप रेटिंग में बिडेन ने डोनाल्ड ट्रंप को पीछे छोड़ा,0.7031545639038086,80.0,true,44,6.0
+HIGH_CONFIDENCE_POSITIVE,ee36ae58-0364-49ea-bf8e-88c7f32a6d72,"letting 224,252+ Americans die could end up sending Donald Trump to prison",0.6983761429786681,85.0,true,43,0.0
+NEGATIVE_RECOMMENDATION,9fafdaf5-0765-4aa1-b238-a7e5463140a0,"",0.43095396757125853,100.0,true,9105,38.0
+NEGATIVE_RECOMMENDATION,8518c6af-71d2-47ec-a3d2-598dc5d8c559,Trump is a danger to our democracy.,0.2505593627691269,85.0,true,695,5.0
+NEGATIVE_RECOMMENDATION,64ee026d-da1d-4154-bf26-f98d8660481f,"Voting for Trump is the only revolutionary act needed to ensure that it all changes, and the American Dream becomes true and spreads worldwide. Space the final frontier, begins with the Moon Colonies.",0.22545013278722764,85.0,true,275,13.0
+NEGATIVE_RECOMMENDATION,47df13f0-c837-4091-a5d7-c6ee05f52a96,Biden is corrupt,0.466217714548111,85.0,true,216,31.0
+NEGATIVE_RECOMMENDATION,b15d8a47-eca2-461a-bb02-34f6b2ee1135,Trump is very likely to win the election on November 3rd.,0.2846331149339676,80.0,true,58,13.0
+NEGATIVE_RECOMMENDATION,b9e8182a-f12d-4c8c-a35a-bb1ea00d591b,Wahrscheinlich die einzige Chance Chaos und Gewalt in Grenzen zu halten ist ein landslide Sieg von JoeBiden,0.287841385602951,85.0,true,57,4.0
+NEGATIVE_RECOMMENDATION,79f8a750-ce26-49f9-9e74-709b3694fc33,Amy Coney Barrett should recuse herself,0.30176658630371095,90.0,true,47,4.0
+NEGATIVE_RECOMMENDATION,4746d686-983c-415c-9c8c-8a3b1d69a808,Great only in the numbers of covid pandemic disaster,0.4557494819164276,85.0,true,30,14.0
+NEGATIVE_RECOMMENDATION,8b88f28e-80ad-4d08-8092-905f319fd7e2,Joe Biden won big yesterday night on ABC.,0.48771868944168084,90.0,true,18,23.0
+NEGATIVE_RECOMMENDATION,00bfd07b-9058-443d-a56f-72129fc96f20,Trump is trying to steal the election,0.4032714486122131,95.0,true,16,14.0
+NEGATIVE_RECOMMENDATION,d5c75ca8-7676-4eb1-ac3d-f9cbe3f423a7,Twitter and Facebook are a danger to democracy.,0.3374711453914643,85.0,true,13,0.0
+NEGATIVE_RECOMMENDATION,552fa89f-380f-4381-8837-1e9356722fd5,Biden is brilliant,0.20474566221237184,90.0,true,6,3.0
+NEGATIVE_RECOMMENDATION,bac2a25e-b753-408b-aea4-6ab66e80ca8b,He should know all threats that face the American people.,0.1734624132514,90.0,true,5,2.0
+NEGATIVE_RECOMMENDATION,db85a6a0-0d53-4b42-b47c-10fea32983d9,"Trump is actually considering what happens if he loses, which is now a possible scenario for him.",0.4020382821559906,90.0,true,5,3.0
+NEGATIVE_RECOMMENDATION,48649e3d-3bb6-4f74-923b-3691ea4d6f2e,the Trump presidency is over and he is going to prison,0.34920506477355956,85.0,true,4,3.0
+NEGATIVE_RECOMMENDATION,3fa838be-ad3c-4821-9916-abf5619c3ae8,Nothing gets done unless you go through Mitch McConnell.,0.30267212986946107,80.0,true,2,0.0
+NEGATIVE_RECOMMENDATION,325536d1-a9f0-4796-9ac4-411bd5c7e19f,China should become an American colony,0.18279904425144197,95.0,true,0,5.0
+NEGATIVE_RECOMMENDATION,af0d9c7a-1a71-4deb-82dd-9269774828df,Trump's head is fogged by all the drugs his doctors are pumping into him to keep him on his feet.,0.43995135426521303,85.0,true,0,0.0
+BORDERLINE_CASE,9df37f69-9858-4a7b-a042-75a9cfa9cd9e,A woman nodding behind Trump at his town hall is a Trump-supporting deportation lawyer.,0.5785526990890503,75.0,true,1985,3.0
+BORDERLINE_CASE,8d2a0c38-519b-4cab-877e-4240fa261e20,Trump could still win with a 12% chance.,0.5621338844299316,70.0,true,160,2.0
+BORDERLINE_CASE,0e12a552-9d34-4902-8332-e9bf3ec2b0b7,Joe Biden is less racist than Trump,0.5385082602500916,85.0,true,95,8.0
+BORDERLINE_CASE,a32c0953-11cf-433b-89b9-d3cbc95b1161,"Biden lashed out at CBS reporter when asked about NY Post report and said 'I have no response, another smear campaign'",0.6400045394897461,85.0,true,86,9.0
+BORDERLINE_CASE,d7c69b64-f6bc-406b-ba26-be2a8b7569d7,"Como los demócratas con ese prontuario criminal que tiene, puede influenciar en el nombramiento de juez, insólito.",0.5965270161628723,85.0,true,77,7.0
+BORDERLINE_CASE,f7769958-47e4-4e6b-87c9-7097bd536918,Rudy Giuliani said purported Hunter Biden emails will 'shock the hell out of you',0.6328185796737671,85.0,true,72,23.0
+BORDERLINE_CASE,f6e9cb19-53b8-42eb-87ad-c22e86ca3556,Another day goes by without any debunking of the Hunter story. Joe’s response of 'I have no response' last night was damning. Mainstream media has no excuse for not asking about this.,0.6310742497444153,85.0,true,52,0.0
+BORDERLINE_CASE,b834f265-8b0f-4ce0-8744-abc015617bca,Trump wrecking the economy,0.6429310798645019,85.0,true,39,7.0
+BORDERLINE_CASE,da7ace49-798b-4fe1-a84e-068836fc4f00,There is a 3 years difference between Trump's age and Joe Biden's.,0.6258316516876221,95.0,true,36,3.0
+BORDERLINE_CASE,da10a038-c613-44df-9f7a-f113d35a2aed,QAnon was labelled a conspiracy theory to make people believe that Donald Trump is a peacemaker. Oligarchy involved in criminal activities targets anyone who's been exposed as their accomplices in murder.,0.6263830065727234,90.0,true,33,11.0
+BORDERLINE_CASE,01130ca0-9d34-4213-ae2c-51c103820969,Some Republicans are turning against Trump this election.,0.5745123505592347,90.0,true,26,17.0
+BORDERLINE_CASE,dc2b7f92-001e-415f-87eb-a5e2c29c5ee6,Donald Trump declares that the only person more famous than him is Jesus.,0.6137823104858399,85.0,true,25,12.0
+BORDERLINE_CASE,f4838c99-817d-4515-a742-fa8018bf213f,Trump dice che bisogna arrestare i Biden perché sarebbero una famiglia criminale,0.5931100845336914,90.0,true,24,3.0
+BORDERLINE_CASE,d24b3d92-4241-4484-bcaf-f12593a8a60a,Twitter dice que eliminar el artículo del NYPost sobre Biden fue un error,0.6227715373039245,85.0,true,21,18.0
+BORDERLINE_CASE,5db8a1d7-22e4-4105-8c8a-8edeb63d90d7,No Trump tweets in the last 3 hours,0.6421326756477356,90.0,true,19,2.0
+BORDERLINE_CASE,1879ed4c-d3ee-4c1a-8968-71d03989fd2d,Johnson says FBI must 'come clean' on Hunter Biden laptop,0.6273297786712646,85.0,true,16,6.0
+BORDERLINE_CASE,68d0e8bb-e4d6-4889-bce2-572b74622c0d,TEJASHWI ने बिहार चुनाव में TRUMP की एंट्री करा दी,0.6102720499038696,85.0,true,10,8.0
+BORDERLINE_CASE,6992d98a-c442-4815-8ee2-e3dc3cebc9b9,民主党の集会で言葉につまらないようカンペのような画像を流しながらスピーチする大統領候補がいる,0.5943182706832886,85.0,true,7,0.0
+BORDERLINE_CASE,8f302702-f910-4430-b7cb-1d7d4feff71f,Biden is an affirmative defender of abortion while Trump is an opponent of abortion who is vulgar.,0.6401801466941833,85.0,true,6,7.0
+BORDERLINE_CASE,9c48e36d-d42f-49d8-b824-0740a06a43a5,Joe Biden outed SEAL Team 6,0.6467427730560302,85.0,true,6,11.0

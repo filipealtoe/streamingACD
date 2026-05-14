@@ -13,9 +13,9 @@
     "area": "Dataset",
     "paper_claim": "Corpus is approximately 87% English.",
     "status": "MISMATCH",
-    "evidence": "/Users/sergiopinto/streamingACD/reproducibility/source_artifacts/pipeline/streaming_full_2026-01-17_03-56_summary.json",
-    "checked_value": "summary implies English share 0.699; no raw language/lang column in parquet",
-    "required_next_step": "Remove/recompute the 87% claim from a clear language column or detection log."
+    "evidence": "/Users/sergiopinto/streamingACD/results/corpus_language_share_2026-05-12.json; /Users/sergiopinto/streamingACD/reproducibility/source_artifacts/pipeline/streaming_full_2026-01-17_03-56_summary.json",
+    "checked_value": "langdetect recompute English share 0.6988; pipeline summary implies 0.699; Kaggle CSV language columns present=False",
+    "required_next_step": "Rewrite or remove the exact 87% claim; the canonical recomputation supports about 70% English."
   },
   {
     "claim_id": "pipeline-535-claims",
@@ -49,36 +49,36 @@
     "area": "Anomaly Detection",
     "paper_claim": "EXPoSE reaches NAB 79.2, 97.6% detection, and +23h median lead time.",
     "status": "MISMATCH",
-    "evidence": "/Users/sergiopinto/streamingACD/reproducibility/source_artifacts/anomaly/expose_grid_search.csv",
-    "checked_value": "best packaged row: NAB=72.2116, detection=95.0097, median_lead=23.0",
-    "required_next_step": "Rerun the anomaly benchmark until the paper value is matched/surpassed, or rewrite the paper to the supported value."
+    "evidence": "/Users/sergiopinto/streamingACD/reproducibility/source_artifacts/anomaly/expose_grid_search.csv; /Users/sergiopinto/streamingACD/results/anomaly_expose_reproduction_attempt_2026-05-13.md; /Users/sergiopinto/streamingACD/results/anomaly_baseline_paper_fix_2026-05-14.md",
+    "checked_value": "best packaged row: NAB=72.2116, detection=95.0097, median_lead=23.0; remote README/configs support about 72.1/94.9/+23h, and the local design-log 79.2 value is single-row time-series share, not NAB score; reproduction attempt found candidate NAB 79.2236 at undocumented min_rows=89, but detection was 97.9268%, while min_rows=84 gave detection 97.6325% and NAB 78.6208",
+    "required_next_step": "Apply results/anomaly_baseline_paper_fix_2026-05-14.md: use the declared min_rows=89 replacement table."
   },
   {
     "claim_id": "anomaly-baseline-table",
     "area": "Anomaly Detection",
     "paper_claim": "Random/Bayesian/Etsy/Steuber baselines match the IJCAI anomaly paragraph.",
-    "status": "MISSING_EXACT_RESULT",
-    "evidence": "/Users/sergiopinto/streamingACD/reproducibility/source_artifacts/anomaly/anomaly_baselines.json; /Users/sergiopinto/streamingACD/reproducibility/source_artifacts/anomaly/anomaly_detector_comparison.json",
-    "checked_value": "packaged anomaly JSONs use different detectors/metrics and do not contain the exact paper table",
-    "required_next_step": "Rerun the uniform anomaly benchmark and save one canonical table artifact."
+    "status": "MISMATCH",
+    "evidence": "/Users/sergiopinto/streamingACD/results/anomaly_baseline_rerun_min_rows89_2026-05-13.json; /Users/sergiopinto/streamingACD/results/anomaly_baseline_paper_fix_2026-05-14.md",
+    "checked_value": "min_rows=89 rerun: Random NAB=72.2276, detection=99.0244, lead=22.0; Bayesian NAB=7.4289, detection=40.9756, lead=7.5; Etsy NAB=8.2378, detection=47.4390, lead=6.0; Steuber NAB=6.8232, detection=41.8293, lead=7.0",
+    "required_next_step": "Apply results/anomaly_baseline_paper_fix_2026-05-14.md and do not keep the old PDF baseline values."
   },
   {
     "claim_id": "claim-normalization-table1",
     "area": "Claim Normalization",
     "paper_claim": "Table 1 reports CT2025 test N=300 and Approach 2 METEOR 0.5583/0.5463/0.5691.",
     "status": "MISMATCH",
-    "evidence": "/Users/sergiopinto/streamingACD/reproducibility/source_artifacts/claim_normalization/comparison_test_20260113_123010.json",
+    "evidence": "/Users/sergiopinto/streamingACD/reproducibility/source_artifacts/claim_normalization/comparison_test_20260113_123010.json; /Users/sergiopinto/streamingACD/results/claim_normalization_handoff_2026-05-14.md",
     "checked_value": "available comparison has n_samples=[1285]; best avg_meteor=0.3449 (deepseek-v3)",
-    "required_next_step": "Rerun the exact Table 1 protocol and save predictions plus summary, or rewrite to supported values."
+    "required_next_step": "Use results/claim_normalization_handoff_2026-05-14.md: Filipe must provide the N=300 split, per-sample predictions, summary, command, and checksums, or Table 1 must be removed/rewritten."
   },
   {
     "claim_id": "virality-dataset-shape",
     "area": "Virality Prediction",
     "paper_claim": "PSR prediction uses 529 anomalous clusters, 42 features, and a 423/106 split.",
-    "status": "REPRODUCED_LOCAL",
-    "evidence": "/Users/sergiopinto/explainableACD/experiments/results/virality/psr_labels.parquet; /Users/sergiopinto/explainableACD/experiments/results/virality_feature_selection/features_enhanced.parquet",
-    "checked_value": "psr_labels rows=529; features_enhanced feature columns=42",
-    "required_next_step": "Package a split manifest containing the exact 423/106 train/test IDs."
+    "status": "REPRODUCED",
+    "evidence": "/Users/sergiopinto/streamingACD/reproducibility/source_artifacts/virality/psr_labels.parquet; /Users/sergiopinto/streamingACD/reproducibility/source_artifacts/virality/features_enhanced.parquet; /Users/sergiopinto/streamingACD/results/virality_split_manifest_2026-05-12.json",
+    "checked_value": "psr_labels rows=529; features_enhanced feature columns=42; split=423/106",
+    "required_next_step": "Keep the packaged split manifest with the Table 2 result artifacts."
   },
   {
     "claim_id": "virality-table2",
@@ -87,7 +87,7 @@
     "status": "ARTIFACT_BACKED",
     "evidence": "/Users/sergiopinto/streamingACD/reproducibility/source_artifacts/virality/tuned_baselines.json; /Users/sergiopinto/streamingACD/reproducibility/source_artifacts/virality/complete_baselines.json; /Users/sergiopinto/streamingACD/reproducibility/source_artifacts/virality/latex_table.tex",
     "checked_value": "Random: -0.0520 vs paper -0.052; BayesianRidge: 0.5507 vs paper 0.551; LightGBM: 0.5488 vs paper 0.549; SVR (RBF): 0.6322 vs paper 0.632; Hawkes (HIP): 0.2472 vs paper 0.247; BERTweet + Features: 0.1111 vs paper 0.111",
-    "required_next_step": "Add the exact script command and split manifest so this becomes fully rerunnable from repo instructions."
+    "required_next_step": "Optional next step: rerun the packaged scripts in a matching Python environment to replace result-artifact verification with a fresh model-fit rerun."
   },
   {
     "claim_id": "table3-single-deberta",
@@ -121,9 +121,9 @@
     "area": "Check-worthiness",
     "paper_claim": "Table 3 row: PCA-64 + LLM + text LogReg CT24 rerun paper F1=0.761",
     "status": "NOT_REPRODUCED",
-    "evidence": "experiments/scripts/benchmark_pca_llm_text.py CT24 training path, mirrored in this audit",
+    "evidence": "experiments/scripts/benchmark_pca_llm_text.py CT24 training path, mirrored in this audit; /Users/sergiopinto/streamingACD/results/llm_feature_classifier_paper_fix_2026-05-14.md",
     "checked_value": "recomputed F1=0.6936; threshold=0.55",
-    "required_next_step": "Use reproduced value or rerun until the exact paper value is matched/surpassed."
+    "required_next_step": "Apply results/llm_feature_classifier_paper_fix_2026-05-14.md: use CT24 0.694 for the literal PCA-64 + LLM + text LogReg row, or rewrite the method around the separate CT24 0.793 replacement candidate."
   },
   {
     "claim_id": "table3-fusion-classifier-rerun",
@@ -138,45 +138,45 @@
     "claim_id": "four-head-training-regularizers",
     "area": "Check-worthiness",
     "paper_claim": "Four-head training uses Focal Loss, layer-wise LR decay, R-Drop, and FGM adversarial training.",
-    "status": "MISSING_EXACT_RESULT",
-    "evidence": "/Users/sergiopinto/streamingACD/reproducibility/runs/deberta_mtl_cikm_20260512_134553/scripts/finetune_deberta_mtl.py",
-    "checked_value": "packaged script is 3-phase BCE/MSE auxiliary training; missing terms=['Focal', 'R-Drop', 'FGM', 'Layer-wise']",
-    "required_next_step": "Either package the exact regularized training script/run or revise the method description to match the reproduced run."
+    "status": "MISMATCH",
+    "evidence": "/Users/sergiopinto/streamingACD/reproducibility/runs/deberta_mtl_cikm_20260512_134553/scripts/finetune_deberta_mtl.py; /Users/sergiopinto/streamingACD/reproducibility/source_artifacts/checkworthiness/regularized_single_head/finetune_deberta_multimodel.py; /Users/sergiopinto/streamingACD/reproducibility/source_artifacts/checkworthiness/regularized_single_head/ensemble_deberta_seeds.py; /Users/sergiopinto/streamingACD/results/four_head_training_regularizers_paper_fix_2026-05-14.md",
+    "checked_value": "packaged four-head MTL script is 3-phase weighted cross-entropy/MSE auxiliary training; missing four-head regularizer terms=['Focal', 'R-Drop', 'FGM', 'Layer-wise']; regularized single-head trainer found=True; ensemble launcher enables those flags=True",
+    "required_next_step": "Apply results/four_head_training_regularizers_paper_fix_2026-05-14.md: attach Focal/LLRD/R-Drop/FGM to the single-head DeBERTa seed ensemble, not the reproduced four-head MTL run."
   },
   {
     "claim_id": "llama2-baseline-row",
     "area": "Check-worthiness",
-    "paper_claim": "Llama2-7b fine-tuned baseline has CT2024/CB/CT2023 F1 0.802/0.920/0.898.",
-    "status": "MISSING_ARTIFACT",
-    "evidence": "no local prediction/result artifact found",
-    "checked_value": "rg found no exact Llama2 result bundle for this row",
-    "required_next_step": "Package the baseline artifact or cite it as external prior work instead of a rerun."
+    "paper_claim": "Table 3 baseline row reports Llama2-7b Fine-tuned with CT2024/ClaimBuster/CT2023 F1 0.802/0.920/0.898.",
+    "status": "MISMATCH",
+    "evidence": "reproducibility/source_artifacts/checkworthiness/together_baselines_metrics_20251229_194021.json; reproducibility/source_artifacts/checkworthiness/together_baselines/run_together_baselines.py; results/llama2_baseline_audit_2026-05-14.md",
+    "checked_value": "CT2024 value is an external FactFinders/CheckThat prior-work baseline; the local Together run contains 100-sample Llama 3.x/Mistral/Mixtral predictions and no Llama2 prediction rows; ClaimBuster 0.920 and CT23 0.898 are separate published SOTA reference constants, not Llama2 outputs.",
+    "required_next_step": "Rewrite Table 3 baseline label: split this into external reference rows, or label it as prior work/SOTA rather than one reproducible Llama2-7b model across all datasets."
   },
   {
     "claim_id": "formative-evaluation-aggregates",
     "area": "Formative Evaluation",
     "paper_claim": "Nine fact-checkers evaluated 27 reports; 22/27 agreement, 16/27 full agreement, component means 4.04/3.81/3.78/3.11.",
     "status": "MISSING_ARTIFACT",
-    "evidence": "no anonymized aggregate response file found",
-    "checked_value": "no raw or aggregate participant response table is packaged",
-    "required_next_step": "Add anonymized aggregate data and analysis script, or remove exact participant/statistic claims."
+    "evidence": "/Users/sergiopinto/streamingACD/reproducibility/source_artifacts/formative_evaluation/expose_fast_study_claims_selection.csv; /Users/sergiopinto/streamingACD/reproducibility/source_artifacts/formative_evaluation/expose_3day_full_study_claims_selection.csv; /Users/sergiopinto/streamingACD/reproducibility/source_artifacts/formative_evaluation/select_claims_for_study.py; /Users/sergiopinto/streamingACD/results/formative_evaluation_artifact_audit_2026-05-14.md; /Users/sergiopinto/streamingACD/results/formative_evaluation_paper_fix_2026-05-14.md",
+    "checked_value": "study stimulus artifacts found but no participant-response table; expose_fast selection rows=59, categories={'HIGH_CONFIDENCE_POSITIVE': 20, 'NEGATIVE_RECOMMENDATION': 19, 'BORDERLINE_CASE': 20}; PDF has N=7 in abstract/limitations and N=9 in body",
+    "required_next_step": "Apply results/formative_evaluation_paper_fix_2026-05-14.md to remove the exact participant/statistic claims, or add anonymized participant-level or aggregate response data plus an analysis script."
   },
   {
     "claim_id": "formative-evaluation-count-conflict",
     "area": "Formative Evaluation",
     "paper_claim": "Paper consistently describes the formative evaluation sample size.",
     "status": "MISMATCH",
-    "evidence": "/Users/sergiopinto/Downloads/IJCAI2026 (19).pdf",
+    "evidence": "/Users/sergiopinto/Downloads/IJCAI2026 (19).pdf; /Users/sergiopinto/streamingACD/results/formative_evaluation_paper_fix_2026-05-14.md",
     "checked_value": "abstract/limitations say N=7; body says N=9 and 27 report pairs",
-    "required_next_step": "Resolve the participant-count conflict before resubmission."
+    "required_next_step": "Apply the formative-evaluation rewrite packet, which removes the unsupported sample-size claims."
   },
   {
     "claim_id": "sample-report-example",
     "area": "Explainability Report",
     "paper_claim": "Sample report was predicted viral 8 hours before peak, had 567 engagements, and 71.7% check-worthiness confidence.",
-    "status": "MISSING_EXACT_RESULT",
-    "evidence": "local report HTML candidates exist, but no exact 567/71.7/8-hour artifact was found",
-    "checked_value": "exact example not tied to a local saved report",
-    "required_next_step": "Package the exact report HTML plus source claim ID and verifier, or remove the exact numeric example."
+    "status": "MISMATCH",
+    "evidence": "/Users/sergiopinto/streamingACD/reproducibility/source_artifacts/explainability_report/03_9dea2d0d_eng564.html; /Users/sergiopinto/streamingACD/reproducibility/source_artifacts/formative_evaluation/expose_3day_full_study_claims_selection.csv; /Users/sergiopinto/streamingACD/results/sample_report_paper_fix_2026-05-14.md",
+    "checked_value": "exact report artifact found for claim_id=9dea2d0d-0604-4753-8bde-f9498ee5a2b0; confidence=71.7%, peak_engagement=564, lead_time=8.0h; paper says 567 engagements",
+    "required_next_step": "Apply results/sample_report_paper_fix_2026-05-14.md: rewrite 567 engagements to 564 peak engagements."
   }
 ]

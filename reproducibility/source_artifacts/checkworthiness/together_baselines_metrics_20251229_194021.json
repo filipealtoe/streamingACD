@@ -1,0 +1,122 @@
+{
+  "experiment_metadata": {
+    "timestamp": "20251229_194021",
+    "n_samples": 100,
+    "models_run": [
+      "llama-3.1-8b",
+      "llama-3.1-70b",
+      "llama-3.3-70b",
+      "llama-3.2-3b",
+      "mistral-7b",
+      "mixtral-8x7b"
+    ],
+    "temperature": 0.0,
+    "dataset": "CT24_checkworthy_english_test_gold.tsv"
+  },
+  "results_by_model": {
+    "llama-3.1-8b": {
+      "accuracy": 0.61,
+      "precision": 0.3409090909090909,
+      "recall": 0.6,
+      "f1": 0.43478260869565216,
+      "n_valid": 100,
+      "n_errors": 0,
+      "n_json_parse_failed": 2,
+      "n_logprobs_missing": 0
+    },
+    "llama-3.1-70b": {
+      "accuracy": 0.77,
+      "precision": 0.5357142857142857,
+      "recall": 0.6,
+      "f1": 0.5660377358490566,
+      "n_valid": 100,
+      "n_errors": 0,
+      "n_json_parse_failed": 48,
+      "n_logprobs_missing": 0
+    },
+    "llama-3.3-70b": {
+      "accuracy": 0.82,
+      "precision": 0.64,
+      "recall": 0.64,
+      "f1": 0.64,
+      "n_valid": 100,
+      "n_errors": 0,
+      "n_json_parse_failed": 73,
+      "n_logprobs_missing": 0
+    },
+    "llama-3.2-3b": {
+      "accuracy": 0.69,
+      "precision": 0.4,
+      "recall": 0.48,
+      "f1": 0.43636363636363634,
+      "n_valid": 100,
+      "n_errors": 0,
+      "n_json_parse_failed": 89,
+      "n_logprobs_missing": 42
+    },
+    "mistral-7b": {
+      "accuracy": 0.59,
+      "precision": 0.34615384615384615,
+      "recall": 0.72,
+      "f1": 0.4675324675324675,
+      "n_valid": 100,
+      "n_errors": 0,
+      "n_json_parse_failed": 100,
+      "n_logprobs_missing": 7
+    },
+    "mixtral-8x7b": {
+      "accuracy": 0.71,
+      "precision": 0.4230769230769231,
+      "recall": 0.44,
+      "f1": 0.43137254901960786,
+      "n_valid": 100,
+      "n_errors": 0,
+      "n_json_parse_failed": 95,
+      "n_logprobs_missing": 33
+    }
+  },
+  "paper_baselines": {
+    "llama-2-7b": {
+      "f1": 0.82,
+      "acc": 0.905,
+      "precision": 0.802,
+      "recall": 0.841
+    },
+    "llama-2-13b": {
+      "f1": 0.812,
+      "acc": 0.897,
+      "precision": 0.772,
+      "recall": 0.856
+    },
+    "llama-3-8b": {
+      "f1": 0.809,
+      "acc": 0.907,
+      "precision": 0.863,
+      "recall": 0.761
+    },
+    "mistral-7b": {
+      "f1": 0.799,
+      "acc": 0.889,
+      "precision": 0.747,
+      "recall": 0.86
+    },
+    "mixtral-8x7b": {
+      "f1": 0.807,
+      "acc": 0.891,
+      "precision": 0.741,
+      "recall": 0.886
+    },
+    "gemma-7b": {
+      "f1": 0.813,
+      "acc": 0.9,
+      "precision": 0.788,
+      "recall": 0.841
+    },
+    "falcon-7b": {
+      "f1": 0.793,
+      "acc": 0.891,
+      "precision": 0.78,
+      "recall": 0.806
+    }
+  }
+}

@@ -1,0 +1,385 @@
+{
+  "params": {
+    "decay": 0.005,
+    "gamma": 1.0,
+    "threshold": 0.05,
+    "fp_weight": 0.1,
+    "n_components": 20000,
+    "history_window": 6,
+    "engagement_weight": 0.3
+  },
+  "input": "/Users/sergiopinto/explainableACD/data/pipeline_output/streaming_full/2026-01-17_03-56/cluster_timeseries.parquet",
+  "runtime_seconds": 35.91202402114868,
+  "summaries": [
+    {
+      "min_rows": 70,
+      "clusters_evaluated": 1104,
+      "nab_score": 76.00166062801934,
+      "detection_rate": 96.55797101449275,
+      "median_lead": 23.0,
+      "precision": 0.6357079236451911
+    },
+    {
+      "min_rows": 71,
+      "clusters_evaluated": 1077,
+      "nab_score": 76.51268956979264,
+      "detection_rate": 96.8430826369545,
+      "median_lead": 23.0,
+      "precision": 0.6273651253258944
+    },
+    {
+      "min_rows": 72,
+      "clusters_evaluated": 1055,
+      "nab_score": 77.06951026856241,
+      "detection_rate": 97.06161137440758,
+      "median_lead": 23.0,
+      "precision": 0.6200261313695213
+    },
+    {
+      "min_rows": 73,
+      "clusters_evaluated": 1041,
+      "nab_score": 77.11415305795708,
+      "detection_rate": 97.11815561959654,
+      "median_lead": 23.0,
+      "precision": 0.6153404983660619
+    },
+    {
+      "min_rows": 74,
+      "clusters_evaluated": 1028,
+      "nab_score": 77.27626459143968,
+      "detection_rate": 97.27626459143968,
+      "median_lead": 23.0,
+      "precision": 0.6109906218646929
+    },
+    {
+      "min_rows": 75,
+      "clusters_evaluated": 1003,
+      "nab_score": 77.6287803256896,
+      "detection_rate": 97.20837487537388,
+      "median_lead": 23.0,
+      "precision": 0.602570644118862
+    },
+    {
+      "min_rows": 76,
+      "clusters_evaluated": 989,
+      "nab_score": 77.59352881698686,
+      "detection_rate": 97.16885743174925,
+      "median_lead": 23.0,
+      "precision": 0.5978287446818915
+    },
+    {
+      "min_rows": 77,
+      "clusters_evaluated": 978,
+      "nab_score": 77.63122017723244,
+      "detection_rate": 97.13701431492842,
+      "median_lead": 23.0,
+      "precision": 0.5941007698120626
+    },
+    {
+      "min_rows": 78,
+      "clusters_evaluated": 965,
+      "nab_score": 77.68911917098445,
+      "detection_rate": 97.09844559585493,
+      "median_lead": 23.0,
+      "precision": 0.5896933470969656
+    },
+    {
+      "min_rows": 79,
+      "clusters_evaluated": 952,
+      "nab_score": 77.69607843137256,
+      "detection_rate": 97.05882352941177,
+      "median_lead": 23.0,
+      "precision": 0.5852681597950007
+    },
+    {
+      "min_rows": 80,
+      "clusters_evaluated": 938,
+      "nab_score": 77.78340440653874,
+      "detection_rate": 97.01492537313433,
+      "median_lead": 23.0,
+      "precision": 0.580503353393158
+    },
+    {
+      "min_rows": 81,
+      "clusters_evaluated": 925,
+      "nab_score": 78.07117117117117,
+      "detection_rate": 97.29729729729729,
+      "median_lead": 23.0,
+      "precision": 0.5766976339640242
+    },
+    {
+      "min_rows": 82,
+      "clusters_evaluated": 914,
+      "nab_score": 78.14733770970095,
+      "detection_rate": 97.3741794310722,
+      "median_lead": 23.0,
+      "precision": 0.5729424142170844
+    },
+    {
+      "min_rows": 83,
+      "clusters_evaluated": 897,
+      "nab_score": 78.58509847640282,
+      "detection_rate": 97.5473801560758,
+      "median_lead": 23.0,
+      "precision": 0.5677567852690132
+    },
+    {
+      "min_rows": 84,
+      "clusters_evaluated": 887,
+      "nab_score": 78.62081924088689,
+      "detection_rate": 97.63246899661782,
+      "median_lead": 23.0,
+      "precision": 0.5643217533823954
+    },
+    {
+      "min_rows": 85,
+      "clusters_evaluated": 872,
+      "nab_score": 78.78344801223243,
+      "detection_rate": 97.70642201834862,
+      "median_lead": 23.0,
+      "precision": 0.5598030322664248
+    },
+    {
+      "min_rows": 86,
+      "clusters_evaluated": 866,
+      "nab_score": 78.9799846035412,
+      "detection_rate": 97.80600461893765,
+      "median_lead": 23.0,
+      "precision": 0.5577368106295015
+    },
+    {
+      "min_rows": 87,
+      "clusters_evaluated": 855,
+      "nab_score": 79.01851851851852,
+      "detection_rate": 97.77777777777777,
+      "median_lead": 23.0,
+      "precision": 0.553949588625394
+    },
+    {
+      "min_rows": 88,
+      "clusters_evaluated": 834,
+      "nab_score": 79.0697442046363,
+      "detection_rate": 97.84172661870504,
+      "median_lead": 23.0,
+      "precision": 0.5473341451792239
+    },
+    {
+      "min_rows": 89,
+      "clusters_evaluated": 820,
+      "nab_score": 79.22357723577237,
+      "detection_rate": 97.92682926829268,
+      "median_lead": 23.0,
+      "precision": 0.542441185497538
+    },
+    {
+      "min_rows": 90,
+      "clusters_evaluated": 809,
+      "nab_score": 79.35620107128142,
+      "detection_rate": 98.02224969097651,
+      "median_lead": 23.0,
+      "precision": 0.5385767337537186
+    },
+    {
+      "min_rows": 91,
+      "clusters_evaluated": 795,
+      "nab_score": 79.74528301886792,
+      "detection_rate": 98.23899371069183,
+      "median_lead": 23.0,
+      "precision": 0.5336403345410219
+    },
+    {
+      "min_rows": 92,
+      "clusters_evaluated": 788,
+      "nab_score": 79.91857021996616,
+      "detection_rate": 98.22335025380711,
+      "median_lead": 23.0,
+      "precision": 0.5311660488999218
+    },
+    {
+      "min_rows": 93,
+      "clusters_evaluated": 778,
+      "nab_score": 80.01178234790059,
+      "detection_rate": 98.32904884318766,
+      "median_lead": 23.0,
+      "precision": 0.5283147989734817
+    },
+    {
+      "min_rows": 94,
+      "clusters_evaluated": 769,
+      "nab_score": 80.20697876029475,
+      "detection_rate": 98.43953185955787,
+      "median_lead": 23.0,
+      "precision": 0.5258050529590299
+    },
+    {
+      "min_rows": 95,
+      "clusters_evaluated": 757,
+      "nab_score": 80.19484808454426,
+      "detection_rate": 98.41479524438573,
+      "median_lead": 24.0,
+      "precision": 0.5215521725560911
+    },
+    {
+      "min_rows": 96,
+      "clusters_evaluated": 752,
+      "nab_score": 80.41555851063829,
+      "detection_rate": 98.40425531914893,
+      "median_lead": 24.0,
+      "precision": 0.5197787287339526
+    },
+    {
+      "min_rows": 97,
+      "clusters_evaluated": 744,
+      "nab_score": 80.48387096774195,
+      "detection_rate": 98.38709677419355,
+      "median_lead": 24.0,
+      "precision": 0.5169458920639362
+    },
+    {
+      "min_rows": 98,
+      "clusters_evaluated": 732,
+      "nab_score": 80.80601092896175,
+      "detection_rate": 98.49726775956285,
+      "median_lead": 24.0,
+      "precision": 0.5126830885101161
+    },
+    {
+      "min_rows": 99,
+      "clusters_evaluated": 722,
+      "nab_score": 80.8264081255771,
+      "detection_rate": 98.61495844875347,
+      "median_lead": 24.0,
+      "precision": 0.509823691890395
+    },
+    {
+      "min_rows": 100,
+      "clusters_evaluated": 711,
+      "nab_score": 80.91654946085326,
+      "detection_rate": 98.59353023909986,
+      "median_lead": 24.0,
+      "precision": 0.505885299273729
+    },
+    {
+      "min_rows": 101,
+      "clusters_evaluated": 705,
+      "nab_score": 80.94562647754137,
+      "detection_rate": 98.58156028368795,
+      "median_lead": 24.0,
+      "precision": 0.5037330861376391
+    },
+    {
+      "min_rows": 102,
+      "clusters_evaluated": 693,
+      "nab_score": 81.10750360750362,
+      "detection_rate": 98.7012987012987,
+      "median_lead": 24.0,
+      "precision": 0.4994165017649916
+    },
+    {
+      "min_rows": 103,
+      "clusters_evaluated": 685,
+      "nab_score": 81.28953771289538,
+      "detection_rate": 98.68613138686132,
+      "median_lead": 24.0,
+      "precision": 0.49652577778101825
+    },
+    {
+      "min_rows": 104,
+      "clusters_evaluated": 678,
+      "nab_score": 81.4085545722714,
+      "detection_rate": 98.67256637168141,
+      "median_lead": 24.0,
+      "precision": 0.49399365284119645
+    },
+    {
+      "min_rows": 105,
+      "clusters_evaluated": 673,
+      "nab_score": 81.44749876176324,
+      "detection_rate": 98.6627043090639,
+      "median_lead": 24.0,
+      "precision": 0.4921868102763309
+    }
+  ],
+  "closest_to_paper": [
+    {
+      "min_rows": 89,
+      "clusters_evaluated": 820,
+      "nab_score": 79.22357723577237,
+      "detection_rate": 97.92682926829268,
+      "median_lead": 23.0,
+      "precision": 0.542441185497538
+    },
+    {
+      "min_rows": 87,
+      "clusters_evaluated": 855,
+      "nab_score": 79.01851851851852,
+      "detection_rate": 97.77777777777777,
+      "median_lead": 23.0,
+      "precision": 0.553949588625394
+    },
+    {
+      "min_rows": 88,
+      "clusters_evaluated": 834,
+      "nab_score": 79.0697442046363,
+      "detection_rate": 97.84172661870504,
+      "median_lead": 23.0,
+      "precision": 0.5473341451792239
+    },
+    {
+      "min_rows": 86,
+      "clusters_evaluated": 866,
+      "nab_score": 78.9799846035412,
+      "detection_rate": 97.80600461893765,
+      "median_lead": 23.0,
+      "precision": 0.5577368106295015
+    },
+    {
+      "min_rows": 85,
+      "clusters_evaluated": 872,
+      "nab_score": 78.78344801223243,
+      "detection_rate": 97.70642201834862,
+      "median_lead": 23.0,
+      "precision": 0.5598030322664248
+    },
+    {
+      "min_rows": 90,
+      "clusters_evaluated": 809,
+      "nab_score": 79.35620107128142,
+      "detection_rate": 98.02224969097651,
+      "median_lead": 23.0,
+      "precision": 0.5385767337537186
+    },
+    {
+      "min_rows": 84,
+      "clusters_evaluated": 887,
+      "nab_score": 78.62081924088689,
+      "detection_rate": 97.63246899661782,
+      "median_lead": 23.0,
+      "precision": 0.5643217533823954
+    },
+    {
+      "min_rows": 83,
+      "clusters_evaluated": 897,
+      "nab_score": 78.58509847640282,
+      "detection_rate": 97.5473801560758,
+      "median_lead": 23.0,
+      "precision": 0.5677567852690132
+    },
+    {
+      "min_rows": 91,
+      "clusters_evaluated": 795,
+      "nab_score": 79.74528301886792,
+      "detection_rate": 98.23899371069183,
+      "median_lead": 23.0,
+      "precision": 0.5336403345410219
+    },
+    {
+      "min_rows": 82,
+      "clusters_evaluated": 914,
+      "nab_score": 78.14733770970095,
+      "detection_rate": 97.3741794310722,
+      "median_lead": 23.0,
+      "precision": 0.5729424142170844
+    }
+  ]
+}

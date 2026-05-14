@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claim Explainability Report - 9dea2d0d</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --success: #27ae60;
+            --warning: #f39c12;
+            --danger: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #34495e;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--dark) 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 300;
+        }
+
+        .header .report-id {
+            font-family: monospace;
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        .claim-box {
+            background: var(--light);
+            padding: 1.5rem 2rem;
+            border-left: 4px solid var(--secondary);
+            margin: 2rem;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .claim-box h2 {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--secondary);
+            margin-bottom: 0.75rem;
+        }
+
+        .claim-text {
+            font-size: 1.25rem;
+            font-style: italic;
+            color: var(--primary);
+            line-height: 1.5;
+        }
+
+        .section {
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid var(--light);
+        }
+
+        .section:last-child {
+            border-bottom: none;
+        }
+
+        .section h3 {
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section h3::before {
+            content: '';
+            width: 4px;
+            height: 1.2em;
+            background: var(--secondary);
+            border-radius: 2px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .metric {
+            background: var(--light);
+            padding: 1rem;
+            border-radius: 8px;
+        }
+
+        .metric-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #7f8c8d;
+            margin-bottom: 0.25rem;
+        }
+
+        .metric-value {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .assessment {
+            background: var(--light);
+            padding: 1.25rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .assessment:last-child {
+            margin-bottom: 0;
+        }
+
+        .assessment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .assessment-title {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .assessment-verdict {
+            font-weight: 600;
+        }
+
+        .yes { color: var(--success); }
+        .no { color: var(--danger); }
+        .unknown { color: #95a5a6; }
+
+        .score-bar {
+            height: 8px;
+            background: #ddd;
+            border-radius: 4px;
+            position: relative;
+            margin: 0.5rem 0;
+            overflow: visible;
+        }
+
+        .score-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        .score-label {
+            position: absolute;
+            right: 0;
+            top: -1.25rem;
+            font-size: 0.75rem;
+            color: #7f8c8d;
+        }
+
+        .reasoning {
+            font-size: 0.9rem;
+            color: #555;
+            background: white;
+            padding: 0.75rem;
+            border-radius: 4px;
+            border-left: 3px solid var(--secondary);
+            margin-top: 0.5rem;
+        }
+
+        .harm-dimensions {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .harm-dim {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+
+        .harm-dim-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .harm-dim-reasoning {
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: 0.5rem;
+        }
+
+        .verdict-box {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--dark) 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            margin: 2rem;
+            border-radius: 12px;
+        }
+
+        .verdict-title {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            opacity: 0.8;
+            margin-bottom: 0.5rem;
+        }
+
+        .verdict-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+
+        .verdict-value.checkworthy {
+            color: var(--danger);
+        }
+
+        .verdict-value.not-checkworthy {
+            color: var(--success);
+        }
+
+        .verdict-prob {
+            font-size: 1rem;
+            opacity: 0.8;
+            margin-top: 0.5rem;
+        }
+
+        .verdict-reasoning {
+            text-align: left;
+            background: rgba(255,255,255,0.1);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 1.5rem;
+            background: var(--light);
+            font-size: 0.8rem;
+            color: #7f8c8d;
+        }
+
+        .model-details {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .model-detail {
+            text-align: center;
+        }
+
+        .model-detail-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.7;
+        }
+
+        .model-detail-value {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 1rem;
+            }
+
+            .harm-dimensions {
+                grid-template-columns: 1fr;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Claim Explainability Report</h1>
+            <div class="report-id">ID: 9dea2d0d-0604-4753-8bde-f9498ee5a2b0</div>
+        </div>
+
+        <div class="claim-box">
+            <h2>Detected Claim</h2>
+            <div class="claim-text">"The moderators were biased because Trump got a question about QAnons but Joe Biden did not get a question about Hunter Biden's Ukraine dealings, making Biden's 16 points ahead also biased."</div>
+        </div>
+
+        <div class="section">
+            <h3>Source & Attribution</h3>
+            <div class="grid">
+                <div class="metric">
+                    <div class="metric-label">Source User</div>
+                    <div class="metric-value"><a href="https://twitter.com/IP_ManLegacy" target="_blank" style="color: var(--secondary); text-decoration: none;">@IP_ManLegacy</a></div>
+                </div>
+                <div class="metric">
+                    <div class="metric-label">Display Name</div>
+                    <div class="metric-value">IP_Man</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-label">Source Followers</div>
+                    <div class="metric-value">536</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-label">Source Location</div>
+                    <div class="metric-value" style="font-size: 0.9rem;">America</div>
+                </div>
+            </div>
+            <div class="reasoning" style="margin-top: 1rem;"><strong>Bio:</strong> Always Use Your Enemies Force Against Them,
+I Am REPLY DEBOOTED Until November 3rd Apparently!
+Retweets Are Welcome! Thanks</div>
+            <div class="grid" style="margin-top: 1rem;">
+                <div class="metric">
+                    <div class="metric-label">Claim Target</div>
+                    <div class="metric-value">Not identified</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-label">First Tweet Time</div>
+                    <div class="metric-value" style="font-size: 0.9rem;">2020-10-16 06:23:13 UTC</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>Virality Assessment</h3>
+            <div class="grid">
+                <div class="metric">
+                    <div class="metric-label">Is Viral</div>
+                    <div class="metric-value"><span class="yes">Yes</span></div>
+                </div>
+                <div class="metric">
+                    <div class="metric-label">Viral Confidence</div>
+                    <div class="metric-value">54.6%</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-label">Peak Time</div>
+                    <div class="metric-value">2020-10-16 14:00</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-label">Peak Engagement</div>
+                    <div class="metric-value">564</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>Operational Metadata</h3>
+            <div class="grid">
+                <div class="metric">
+                    <div class="metric-label">Cluster Size</div>
+                    <div class="metric-value">73 tweets</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-label">Total Engagement</div>
+                    <div class="metric-value">1,172</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-label">Peak Engagement</div>
+                    <div class="metric-value">564</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-label">Detection Lead Time</div>
+                    <div class="metric-value">8.0h</div>
+                </div>
+            </div>
+            <div class="grid" style="margin-top: 1rem;">
+                <div class="metric">
+                    <div class="metric-label">Unique Users</div>
+                    <div class="metric-value">2</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-label">Avg Followers</div>
+                    <div class="metric-value">365.0</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>Module Assessments</h3>
+
+            <div class="assessment">
+                <div class="assessment-header">
+                    <span class="assessment-title">Checkability</span>
+                    <span class="assessment-verdict"><span class="yes">Yes</span> (80.0%)</span>
+                </div>
+                <div class="score-bar">
+        <div class="score-fill" style="width: 80.0%; background-color: #e74c3c;"></div>
+        <span class="score-label">80.0</span>
+    </div>
+                <div class="reasoning">The claim contains opinions and vague statements, such as 'biased' and 'making Biden's 16 points ahead also biased'.</div>
+            </div>
+
+            <div class="assessment">
+                <div class="assessment-header">
+                    <span class="assessment-title">Verifiability</span>
+                    <span class="assessment-verdict"><span class="yes">Yes</span> (85.0%)</span>
+                </div>
+                <div class="score-bar">
+        <div class="score-fill" style="width: 85.0%; background-color: #e74c3c;"></div>
+        <span class="score-label">85.0</span>
+    </div>
+                <div class="reasoning">The claim can be verified by checking the transcripts or recordings of the debate, as well as the list of questions asked to each candidate. Additionally, the claim about the 16 point lead can be verified by checking the available polls.</div>
+            </div>
+
+            <div class="assessment">
+                <div class="assessment-header">
+                    <span class="assessment-title">Harm Potential</span>
+                    <span class="assessment-verdict"><span class="yes">Yes</span> (85.0%)</span>
+                </div>
+                <div class="score-bar">
+        <div class="score-fill" style="width: 85.0%; background-color: #e74c3c;"></div>
+        <span class="score-label">85.0</span>
+    </div>
+                <div class="reasoning">Claim could deepen political divisions and undermine trust in moderators.</div>
+
+                <div class="harm-dimensions">
+                    <div class="harm-dim">
+                        <div class="harm-dim-title">Social Fragmentation</div>
+                        <div class="score-bar">
+        <div class="score-fill" style="width: 90.0%; background-color: #e74c3c;"></div>
+        <span class="score-label">90.0</span>
+    </div>
+                        <div class="harm-dim-reasoning">Fits polarizing narratives about political bias.</div>
+                    </div>
+                    <div class="harm-dim">
+                        <div class="harm-dim-title">Action Incitement</div>
+                        <div class="score-bar">
+        <div class="score-fill" style="width: 20.0%; background-color: #27ae60;"></div>
+        <span class="score-label">20.0</span>
+    </div>
+                        <div class="harm-dim-reasoning">No direct call to action, but may motivate further debate.</div>
+                    </div>
+                    <div class="harm-dim">
+                        <div class="harm-dim-title">Believability</div>
+                        <div class="score-bar">
+        <div class="score-fill" style="width: 80.0%; background-color: #e74c3c;"></div>
+        <span class="score-label">80.0</span>
+    </div>
+                        <div class="harm-dim-reasoning">Presented as factual, aligns with beliefs of target audience.</div>
+                    </div>
+                    <div class="harm-dim">
+                        <div class="harm-dim-title">Exploitativeness</div>
+                        <div class="score-bar">
+        <div class="score-fill" style="width: 70.0%; background-color: #f39c12;"></div>
+        <span class="score-label">70.0</span>
+    </div>
+                        <div class="harm-dim-reasoning">Exploits anger towards perceived political bias.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="verdict-box">
+            <div class="verdict-title">Final Checkworthiness Verdict</div>
+            <div class="verdict-value checkworthy">
+                CHECKWORTHY
+            </div>
+            <div class="verdict-prob">Confidence: 71.7%</div>
+            <div class="verdict-reasoning">Final verdict: CHECKWORTHY. Checkability: Yes (80%) - The claim contains opinions and vague statements, such as 'biased' and 'making Biden's 16 points ahead also biased'. | Verifiability: Yes (85%) - The claim can be verified by checking the transcripts or recordings of the debate, as well as the list of questions asked to each candidate. Additionally, the claim about the 16 point lead can be verified by checking the available polls. | Harm Potential: Yes (85%) - Claim could deepen political divisions and undermine trust in moderators.</div>
+        </div>
+
+        <div class="footer">
+            Generated by ExplainableACD Pipeline | 2026-01-19 12:34:33
+        </div>
+    </div>
+</body>
+</html>
