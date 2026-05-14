@@ -31,6 +31,7 @@ The current manifest covers local evidence for:
 - the anomaly EXPoSE and baseline replacement table under the declared `min_rows=89` rerun;
 - the clustering threshold-ablation statistics;
 - DeBERTa CT24 single-model and ensemble prediction artifacts;
+- packaged Fusion Classifier test probabilities and the rerun XGBoost LLM-component probabilities;
 - the PCA-64 + LLM + text Logistic Regression rerun and replacement-candidate boundary for the unsupported CT24 `0.761` row;
 - the Together baseline comparison metadata, including the unsupported Llama2 constants;
 - the Together baseline runner used to compare available Llama 3.x/Mistral/Mixtral models against paper baseline constants;
@@ -68,18 +69,17 @@ EXPLAINABLE_ACD_ROOT=/Users/sergiopinto/explainableACD \
 Expected current result:
 
 ```text
-Summary: 0 failures, 4 warnings, 3 info
+Summary: 0 failures, 2 warnings, 4 info
 ```
 
 The remaining warnings are expected until resolved:
 
-- single DeBERTa recomputes near, but not exactly at, the old paper value;
-- the fusion probability file is not available as a standalone external artifact, although the reproduced summary is packaged;
 - claim normalization Table 1 and formative-evaluation quantitative claims are waiting on Filipe-owned artifacts.
 
 The informational notes are not paper blockers: CT24 feature-generation checkpoints were not packaged, the raw corpus has no
 language column for the removed English-share claim, and the four-head checkpoint is represented by checksum plus saved predictions
-instead of being committed to Git.
+instead of being committed to Git. The Single DeBERTa baseline is also informational now: the saved probability artifact supports
+F1 `0.8214`, and `../results/single_deberta_paper_fix_2026-05-14.md` gives the manuscript replacement.
 
 See `../results/current_reproducibility_status.md` for the latest readable status summary.
 

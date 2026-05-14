@@ -18,6 +18,7 @@ DEFAULT_SOURCE_ROOT = Path(os.environ.get("EXPLAINABLE_ACD_ROOT", "/Users/sergio
 DEFAULT_REPO_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_JSON_OUTPUT = Path("results/table3_reproduction_2026-05-12.json")
 DEFAULT_MARKDOWN_OUTPUT = Path("results/table3_reproduction_2026-05-12.md")
+DEFAULT_FUSION_ARTIFACT_DIR = DEFAULT_REPO_ROOT / "reproducibility/source_artifacts/checkworthiness/fusion_classifier"
 THRESHOLDS = tuple(round(0.30 + 0.05 * index, 2) for index in range(9))
 FUSION_FEATURE_GROUPS = {
     "scores": ["check_score", "verif_score", "harm_score"],
@@ -113,6 +114,23 @@ def load_probabilities(path: Path, labels: np.ndarray, name: str) -> np.ndarray:
     if probabilities.shape != labels.shape:
         raise ValueError(f"{name}: probability shape {probabilities.shape} does not match labels {labels.shape}")
     return probabilities
+
+
+def display_path(path: Path, repo_root: Path) -> str:
+    try:
+        return str(path.relative_to(repo_root))
+    except ValueError:
+        return str(path)
+
+
+def save_probability_artifact(path: Path, probabilities: np.ndarray, repo_root: Path) -> dict:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    np.save(path, probabilities.astype(np.float64))
+    return {
+        "path": display_path(path, repo_root),
+        "sha256": sha256_file(path),
+        "count": int(probabilities.shape[0]),
+    }
 
 
 def row_status(paper_f1: float | None, reproduced_f1: float) -> str:
@@ -221,7 +239,7 @@ def rerun_pca_llm_text_logreg(source_root: Path) -> tuple[np.ndarray, Metrics]:
     return probabilities, best_metrics(test_labels, probabilities)
 
 
-def build_report(source_root: Path, repo_root: Path) -> dict:
+def build_report(source_root: Path, repo_root: Path, fusion_artifact_dir: Path) -> dict:
     clean_labels, clean_labels_path = load_clean_labels(source_root)
     four_head_dir = repo_root / "reproducibility/runs/deberta_mtl_cikm_20260512_134553"
     four_head_labels_path = four_head_dir / "test_labels.npy"
@@ -300,11 +318,24 @@ def build_report(source_root: Path, repo_root: Path) -> dict:
     )
 
     llm_xgboost_probabilities, llm_xgboost_metrics = rerun_xgboost_fusion_component(source_root)
+    fusion_probabilities = 0.5 * loaded["3-seed DeBERTa ensemble"] + 0.5 * llm_xgboost_probabilities
     paper_fusion = compute_metrics(
         clean_labels,
-        0.5 * loaded["3-seed DeBERTa ensemble"] + 0.5 * llm_xgboost_probabilities,
+        fusion_probabilities,
         0.5,
     )
+    fusion_probability_artifacts = {
+        "llm_xgboost_test_probs": save_probability_artifact(
+            fusion_artifact_dir / "llm_xgboost_test_probs.npy",
+            llm_xgboost_probabilities,
+            repo_root,
+        ),
+        "fusion_test_probs": save_probability_artifact(
+            fusion_artifact_dir / "fusion_test_probs.npy",
+            fusion_probabilities,
+            repo_root,
+        ),
+    }
     rows.append(
         TableRow(
             row="Fusion classifier rerun",
@@ -336,6 +367,7 @@ def build_report(source_root: Path, repo_root: Path) -> dict:
             "fusion_classifier_paper_config": asdict(paper_fusion),
             "pca_llm_text_logreg_probability_count": int(pca_logreg_probabilities.shape[0]),
             "llm_xgboost_probability_count": int(llm_xgboost_probabilities.shape[0]),
+            "fusion_probability_artifacts": fusion_probability_artifacts,
         },
         "conclusion": (
             "The three-seed ensemble, the four-head MTL retrain, and the Fusion Classifier now have reproducible CT24 evidence. "
@@ -372,12 +404,13 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--repo-root", type=Path, default=DEFAULT_REPO_ROOT)
     parser.add_argument("--json-output", type=Path, default=DEFAULT_JSON_OUTPUT)
     parser.add_argument("--markdown-output", type=Path, default=DEFAULT_MARKDOWN_OUTPUT)
+    parser.add_argument("--fusion-artifact-dir", type=Path, default=DEFAULT_FUSION_ARTIFACT_DIR)
     return parser.parse_args()
 
 
 def main() -> int:
     args = parse_args()
-    report = build_report(args.source_root, args.repo_root)
+    report = build_report(args.source_root, args.repo_root, args.fusion_artifact_dir)
     args.json_output.parent.mkdir(parents=True, exist_ok=True)
     args.json_output.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
     write_markdown(report, args.markdown_output)

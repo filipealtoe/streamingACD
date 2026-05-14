@@ -1,9 +1,11 @@
 from __future__ import annotations
 
+import ast
 import csv
 import hashlib
 import json
 import os
+import struct
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
@@ -37,6 +39,20 @@ def parquet_rows(path: Path) -> int:
 def csv_rows(path: Path) -> int:
     with path.open(newline="", encoding="utf-8") as handle:
         return sum(1 for _ in csv.reader(handle)) - 1
+
+
+def npy_shape(path: Path) -> tuple[int, ...]:
+    with path.open("rb") as handle:
+        magic = handle.read(6)
+        if magic != b"\x93NUMPY":
+            raise ValueError(f"{path} is not a NumPy .npy file")
+        major = handle.read(1)[0]
+        handle.read(1)
+        header_length_format = "<H" if major == 1 else "<I"
+        header_length_size = struct.calcsize(header_length_format)
+        header_length = struct.unpack(header_length_format, handle.read(header_length_size))[0]
+        header = ast.literal_eval(handle.read(header_length).decode("latin1").strip())
+    return tuple(int(value) for value in header["shape"])
 
 
 def load_json(path: Path) -> Any:
@@ -428,9 +444,9 @@ def check_deberta_artifacts() -> list[Check]:
             checks.append(warn("Single DeBERTa F1", "summary row absent; paper claim needs separate handling"))
         else:
             checks.append(
-                warn(
+                info(
                     "Single DeBERTa F1",
-                    f"rerun found {single_row['reproduced_f1']}; paper reports {single_row['paper_claim_f1']}",
+                    f"rerun found {single_row['reproduced_f1']}; use this value if the baseline row is retained",
                 )
             )
 
@@ -459,14 +475,25 @@ def check_deberta_artifacts() -> list[Check]:
             "3-seed ensemble probability file",
             EXTERNAL_ROOT / "lambda_backup" / "ubuntu" / "ensemble_results" / "test_temp_0.3_probs.npy",
         ),
-        (
-            "Fusion classifier probability file",
-            EXTERNAL_ROOT / "lambda_backup" / "ubuntu" / "ensemble_results" / "fusion_test_probs.npy",
-        ),
     ]
     for name, path in optional_files:
         _, availability = optional_external(name, path)
         checks.append(availability)
+
+    fusion_path = ARTIFACT_ROOT / "checkworthiness" / "fusion_classifier" / "fusion_test_probs.npy"
+    if not fusion_path.exists():
+        checks.append(warn("Fusion classifier probability file", f"missing packaged artifact: {fusion_path}"))
+    else:
+        fusion_shape = npy_shape(fusion_path)
+        if fusion_shape == (341,):
+            checks.append(ok("Fusion classifier probability file", f"341 probabilities packaged at {fusion_path}"))
+        else:
+            checks.append(
+                fail(
+                    "Fusion classifier probability file",
+                    f"expected shape (341,), found {fusion_shape} in {fusion_path}",
+                )
+            )
 
     inconsistent_seed = EXTERNAL_ROOT / "lambda_backup" / "ubuntu" / "ensemble_results" / "model_seed_456" / "metrics.json"
     if inconsistent_seed.exists():

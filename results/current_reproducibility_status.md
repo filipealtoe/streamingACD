@@ -12,7 +12,7 @@ EXPLAINABLE_ACD_ROOT=/Users/sergiopinto/explainableACD \
 Current result:
 
 ```text
-Summary: 0 failures, 4 warnings, 3 info
+Summary: 0 failures, 2 warnings, 4 info
 ```
 
 ## What Is Now Checked From Packaged Repository Artifacts
@@ -23,14 +23,14 @@ Packaged checks that pass:
 
 | Area | Current verifier evidence |
 |---|---|
-| Source artifact integrity | 54 files match `reproducibility/source_artifacts/sha256sums.txt` |
+| Source artifact integrity | 56 files match `reproducibility/source_artifacts/sha256sums.txt` |
 | CT24 splits | train `22402`, dev `1031`, test `341` rows |
 | CT23 and ClaimBuster inputs | ClaimBuster `1032`; CT23 input/gold `318` each |
 | LLM feature inputs | CT24 train/dev/test and CT23/ClaimBuster feature Parquets match expected row counts |
 | Canonical pipeline summary | `1522909` tweets processed, `535` claims, `100000` clusters |
 | Canonical pipeline external bundle | parquet row counts plus `cluster_embeddings.npy`, `cluster_id_to_idx.json`, and `cluster_ids_order.json` present in the local external cache |
 | Clustering threshold result | threshold `0.65`: yield `86.9`, mean intra-similarity `0.8685999195826681`, `5000` tweets |
-| DeBERTa Table 3 reproduced rows | ensemble `0.834`, four-head MTL `0.833`, fusion `0.836` |
+| DeBERTa Table 3 reproduced rows | ensemble `0.834`, four-head MTL `0.833`, fusion `0.836`; packaged fusion probabilities have `341` rows |
 | Four-head MTL run bundle | CT24 test F1 `0.8333333333333333`; saved dev/test predictions and labels checksum clean |
 | Virality/PSR artifacts | `529` feature rows, `529` label rows, `42` features, `423/106` split, packaged baseline metrics |
 
@@ -40,8 +40,6 @@ These are warnings, not verifier failures:
 
 | Warning | Meaning |
 |---|---|
-| Single DeBERTa F1 near mismatch | Recomputed F1 is `0.8214285714285715`; old paper-facing value is `0.8242`. |
-| Fusion standalone probability file missing | The reproduced fusion summary is packaged, but a standalone old `fusion_test_probs.npy` was not found. |
 | Claim normalization exact Table 1 pending | Filipe needs to check/recover the exact `N=300` run artifacts. |
 | Formative evaluation quantitative stats pending | Filipe needs to provide anonymized participant responses and the analysis script if the paper keeps exact human-study numbers. |
 
@@ -53,6 +51,7 @@ These are not current paper blockers:
 |---|---|
 | CT24 LLM feature-generation checkpoints not packaged | The feature Parquets are present, complete, and checksummed. The missing checkpoint JSON files only affect run-resume provenance. |
 | Raw corpus language column missing | The local raw corpus supports row count/date span, but not the old English-share claim, which should remain omitted. |
+| Single DeBERTa F1 corrected value | The saved probability artifact supports F1 `0.8214285714285715`; use `0.821` if the baseline row is retained. |
 | Four-head checkpoint omitted | `best_model.pt` is not in Git; checksum is recorded and saved predictions are packaged. |
 
 ## Immediate Interpretation
