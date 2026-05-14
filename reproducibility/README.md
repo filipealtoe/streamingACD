@@ -238,7 +238,7 @@ match the paper's reported Table 2 values. A future fresh rerun should execute t
 
 ## Corpus Language Share
 
-The paper claim that the corpus is approximately `87%` English is not reproduced. The source dataset was recovered from
+The paper claim that the corpus is approximately `87%` English needs a narrowed denominator. The source dataset was recovered from
 [Kaggle](https://www.kaggle.com/datasets/manchunhui/us-election-2020-tweets) through KaggleHub, but the CSV files do not include a
 language column. The canonical local parquet was therefore recomputed with the same `langdetect` rule used by the streaming pipeline:
 
@@ -252,5 +252,14 @@ The output is written to:
 - `results/corpus_language_share_2026-05-12.json`
 - `results/corpus_language_share_2026-05-12.md`
 
-Current result: `1,064,253 / 1,522,909 = 0.6988` English. The script intentionally exits non-zero while the paper claim remains
-unrevised.
+Current full-corpus result: `1,064,253 / 1,522,909 = 0.6988` English. The old `~87%` value was recovered separately for the
+three-day clustering-analysis subset at
+`/Users/sergiopinto/explainableACD/data/pipeline_output/expose_3day_full/2026-01-19_10-57/tweets.parquet`: a seeded
+`langdetect` sample (`n=2,000`, sample seed `42`, detector seed `0`) gives `1,732 / 2,000 = 0.866` English. The subset provenance is
+documented in:
+
+- `results/clustering_subset_language_share_2026-05-14.json`
+- `results/clustering_subset_language_share_2026-05-14.md`
+
+The manuscript should not say the full `1.52M` corpus is `87%` English. It can say the three-day clustering-analysis subset was
+estimated at `86.6%` English if that narrower denominator is explicit.

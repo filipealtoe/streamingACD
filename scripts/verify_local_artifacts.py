@@ -322,6 +322,41 @@ def check_us_election_raw() -> list[Check]:
     return checks
 
 
+def check_clustering_subset_language_share() -> list[Check]:
+    checks: list[Check] = []
+    path = REPO_ROOT / "results" / "clustering_subset_language_share_2026-05-14.json"
+    if not path.exists():
+        return [fail("Clustering subset language share", f"missing {path}")]
+
+    data = load_json(path)
+    grouped = data["grouped"]
+    source = data["source"]
+    method = data["method"]
+    english_share = float(grouped["english_share"])
+    english_count = int(grouped["english_count"])
+    sample_size = int(method["sample_size"])
+    source_rows = int(source["rows"])
+
+    if english_count == 1732 and sample_size == 2000 and source_rows == 87911 and close_enough(english_share, 0.866):
+        checks.append(
+            ok(
+                "Clustering subset language share",
+                f"{english_count}/{sample_size} English ({english_share:.1%}) over {source_rows} source rows ({path})",
+            )
+        )
+    else:
+        checks.append(
+            fail(
+                "Clustering subset language share",
+                (
+                    "expected 1732/2000 English over 87911 source rows with share 0.866; "
+                    f"found {english_count}/{sample_size}, source_rows={source_rows}, share={english_share}"
+                ),
+            )
+        )
+    return checks
+
+
 def check_canonical_pipeline_run() -> list[Check]:
     checks: list[Check] = []
     summary_path = ARTIFACT_ROOT / "pipeline" / "streaming_full_2026-01-17_03-56_summary.json"
@@ -666,6 +701,7 @@ def main() -> int:
         ("Benchmarks", check_benchmark_raw_data()),
         ("LLM Feature Inputs", check_llm_feature_inputs()),
         ("US Election Raw", check_us_election_raw()),
+        ("Clustering Subset Language", check_clustering_subset_language_share()),
         ("Canonical Pipeline Run", check_canonical_pipeline_run()),
         ("Clustering", check_threshold_ablation()),
         ("DeBERTa", check_deberta_artifacts()),
