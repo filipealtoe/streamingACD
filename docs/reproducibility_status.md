@@ -81,11 +81,11 @@ The Table 3 audit is packaged at:
 
 Current result:
 
-- single DeBERTa: F1 `0.8214`, near the paper-facing `0.8242` value;
+- single DeBERTa: F1 `0.8214`, with `results/single_deberta_paper_fix_2026-05-14.md` as the replacement for the old `0.8242` value;
 - three-seed DeBERTa ensemble: F1 `0.8343`, reproduced;
 - four-head MTL retrain: F1 `0.8333`, reproduced;
 - PCA-64 + LLM + text LogReg CT24 rerun: F1 `0.6936`, not the paper-facing `0.761` value;
-- Fusion Classifier rerun: F1 `0.8362`, reproduced from the saved T=`0.3` ensemble probabilities and a fresh XGBoost v4 LLM-feature component.
+- Fusion Classifier rerun: F1 `0.8362`, reproduced from the saved T=`0.3` ensemble probabilities and a fresh XGBoost v4 LLM-feature component, with 341 fused test probabilities now packaged.
 
 The Fusion Classifier row now has a reproducible CT24 rerun. The PCA/LLM/LogReg paper row is still not clean as written: the literal
 benchmark rerun matches ClaimBuster `0.8939` and CT23 `0.8458`, but CT24 recomputes at `0.6936`.

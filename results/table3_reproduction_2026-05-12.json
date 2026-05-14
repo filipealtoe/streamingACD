@@ -151,7 +151,19 @@
       "fn": 14
     },
     "pca_llm_text_logreg_probability_count": 341,
-    "llm_xgboost_probability_count": 341
+    "llm_xgboost_probability_count": 341,
+    "fusion_probability_artifacts": {
+      "llm_xgboost_test_probs": {
+        "path": "reproducibility/source_artifacts/checkworthiness/fusion_classifier/llm_xgboost_test_probs.npy",
+        "sha256": "8ff6bdfe9aa783c556d1546b23e203994620049b818730e9ccc198f4f2fa9a61",
+        "count": 341
+      },
+      "fusion_test_probs": {
+        "path": "reproducibility/source_artifacts/checkworthiness/fusion_classifier/fusion_test_probs.npy",
+        "sha256": "55c8721d95168112fdffe9a991b56a55f9d259b6945dee05cfb3296ddd88d6d9",
+        "count": 341
+      }
+    }
   },
   "conclusion": "The three-seed ensemble, the four-head MTL retrain, and the Fusion Classifier now have reproducible CT24 evidence. The runnable PCA-64 + LLM + text LogReg path matches the paper's cross-dataset values after rounding, but its CT24 test F1 does not reproduce the paper-facing 0.761 value."
 }
