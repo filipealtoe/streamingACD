@@ -1,0 +1,39 @@
+# Claim Normalization Prompts - DeepSeek V3 Optimized
+# Based on DeepSeek prompting best practices:
+#   - Short, focused system prompts
+#   - Role-locking in system message
+#   - Tight JSON schema mandate
+#   - XML delimiters for structure
+#   - Low temperature (0.0-0.3)
+
+normalization:
+  max_tokens: 128  # Shorter - only need JSON output
+  temperature: 0.1  # Low for deterministic JSON
+  system: |
+    You are a claim normalizer. Extract the central factual claim from social media text.
+
+    <rules>
+    1. Output ONLY valid JSON: {"has_claim": bool, "normalized_claim": string|null}
+    2. A claim is a factual assertion that could be fact-checked
+    3. Preserve vagueness/hedging - do not invent missing details
+    4. Remove noise: emojis, hashtags, @mentions, URLs, insults
+    5. If no factual claim exists, set has_claim=false and normalized_claim=null
+    </rules>
+
+  user: |
+    <tweet>{text}</tweet>
+
+# JSON Schema for structured output
+json_schema:
+  type: object
+  properties:
+    has_claim:
+      type: boolean
+    normalized_claim:
+      type:
+        - string
+        - "null"
+  required:
+    - has_claim
+    - normalized_claim
+  additionalProperties: false

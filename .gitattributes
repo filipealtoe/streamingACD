@@ -1,0 +1,4 @@
+reproducibility/source_artifacts/**/*.csv -diff
+reproducibility/source_artifacts/**/*.tsv -diff
+reproducibility/source_artifacts/**/*.parquet binary
+reproducibility/source_artifacts/**/*.npy binary
