@@ -69,6 +69,10 @@ def warn(name: str, detail: str) -> Check:
     return Check(name=name, status="WARN", detail=detail)
 
 
+def info(name: str, detail: str) -> Check:
+    return Check(name=name, status="INFO", detail=detail)
+
+
 def fail(name: str, detail: str) -> Check:
     return Check(name=name, status="FAIL", detail=detail)
 
@@ -232,18 +236,30 @@ def check_llm_feature_inputs() -> list[Check]:
         else:
             checks.append(fail(name, f"expected {expected} rows, found {rows} in {path}"))
 
-    checkpoint_files = [
+    ct24_checkpoint_files = [
         ARTIFACT_ROOT / "checkworthiness" / "ct24_llm_features_v4" / "checkpoint_train.json",
         ARTIFACT_ROOT / "checkworthiness" / "ct24_llm_features_v4" / "checkpoint_dev.json",
         ARTIFACT_ROOT / "checkworthiness" / "ct24_llm_features_v4" / "checkpoint_test.json",
+    ]
+    benchmark_checkpoint_files = [
         ARTIFACT_ROOT / "checkworthiness" / "benchmark_llm_features" / "CB_groundtruth_checkpoint.json",
         ARTIFACT_ROOT / "checkworthiness" / "benchmark_llm_features" / "CT23_checkpoint.json",
     ]
-    missing_checkpoints = [str(path) for path in checkpoint_files if not path.exists()]
-    if missing_checkpoints:
-        checks.append(warn("LLM feature checkpoints", f"missing checkpoint files: {missing_checkpoints}"))
+    missing_benchmark_checkpoints = [str(path) for path in benchmark_checkpoint_files if not path.exists()]
+    missing_ct24_checkpoints = [str(path) for path in ct24_checkpoint_files if not path.exists()]
+    if missing_benchmark_checkpoints:
+        checks.append(warn("Benchmark LLM feature checkpoints", f"missing checkpoint files: {missing_benchmark_checkpoints}"))
     else:
-        checks.append(ok("LLM feature checkpoints", f"{len(checkpoint_files)} checkpoint files available"))
+        checks.append(ok("Benchmark LLM feature checkpoints", f"{len(benchmark_checkpoint_files)} checkpoint files available"))
+    if missing_ct24_checkpoints:
+        checks.append(
+            info(
+                "CT24 LLM feature generation checkpoints",
+                f"not packaged; feature Parquets are complete and checksummed: {missing_ct24_checkpoints}",
+            )
+        )
+    else:
+        checks.append(ok("CT24 LLM feature generation checkpoints", f"{len(ct24_checkpoint_files)} checkpoint files available"))
     return checks
 
 
@@ -270,7 +286,12 @@ def check_us_election_raw() -> list[Check]:
     schema_names = set(pq.read_schema(path).names)
     language_column = next((column for column in ("lang", "language") if column in schema_names), None)
     if language_column is None:
-        checks.append(warn("US election raw corpus language mix", "no lang/language column available for English-share claim"))
+        checks.append(
+            info(
+                "US election raw corpus language mix",
+                "no lang/language column available; English-share claim should remain omitted",
+            )
+        )
     else:
         table_lang = pq.read_table(path, columns=[language_column])
         counts = pc.value_counts(table_lang[language_column]).to_pylist()
@@ -481,7 +502,7 @@ def check_packaged_4head_run() -> list[Check]:
         path = run_dir / filename
         if not path.exists():
             if filename == "best_model.pt":
-                checks.append(warn(f"Packaged 4-head {filename}", f"checkpoint omitted from repo: {path}"))
+                checks.append(info(f"Packaged 4-head {filename}", f"checkpoint omitted from repo: {path}"))
             else:
                 checks.append(fail(f"Packaged 4-head {filename}", f"missing {path}"))
             continue
@@ -628,12 +649,14 @@ def main() -> int:
 
     failures = 0
     warnings = 0
+    infos = 0
     for title, checks in groups:
         print_group(title, checks)
         failures += sum(1 for check in checks if check.status == "FAIL")
         warnings += sum(1 for check in checks if check.status == "WARN")
+        infos += sum(1 for check in checks if check.status == "INFO")
 
-    print(f"\nSummary: {failures} failures, {warnings} warnings")
+    print(f"\nSummary: {failures} failures, {warnings} warnings, {infos} info")
     return 1 if failures else 0
 
 

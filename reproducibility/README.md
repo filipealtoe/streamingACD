@@ -68,17 +68,18 @@ EXPLAINABLE_ACD_ROOT=/Users/sergiopinto/explainableACD \
 Expected current result:
 
 ```text
-Summary: 0 failures, 7 warnings
+Summary: 0 failures, 4 warnings, 3 info
 ```
 
-The warnings are expected until resolved:
+The remaining warnings are expected until resolved:
 
-- CT24 LLM feature checkpoint JSON files were not packaged, although the feature Parquets are present;
-- the raw election corpus file does not contain a language column for the removed `87% English` claim;
 - single DeBERTa recomputes near, but not exactly at, the old paper value;
 - the fusion probability file is not available as a standalone external artifact, although the reproduced summary is packaged;
-- the four-head checkpoint is omitted from Git and represented by checksum plus saved predictions;
 - claim normalization Table 1 and formative-evaluation quantitative claims are waiting on Filipe-owned artifacts.
+
+The informational notes are not paper blockers: CT24 feature-generation checkpoints were not packaged, the raw corpus has no
+language column for the removed English-share claim, and the four-head checkpoint is represented by checksum plus saved predictions
+instead of being committed to Git.
 
 See `../results/current_reproducibility_status.md` for the latest readable status summary.
 
