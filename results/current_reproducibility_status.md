@@ -12,7 +12,7 @@ EXPLAINABLE_ACD_ROOT=/Users/sergiopinto/explainableACD \
 Current result:
 
 ```text
-Summary: 0 failures, 9 warnings
+Summary: 0 failures, 7 warnings
 ```
 
 ## What Is Now Checked From Packaged Repository Artifacts
@@ -28,6 +28,7 @@ Packaged checks that pass:
 | CT23 and ClaimBuster inputs | ClaimBuster `1032`; CT23 input/gold `318` each |
 | LLM feature inputs | CT24 train/dev/test and CT23/ClaimBuster feature Parquets match expected row counts |
 | Canonical pipeline summary | `1522909` tweets processed, `535` claims, `100000` clusters |
+| Canonical pipeline external bundle | parquet row counts plus `cluster_embeddings.npy`, `cluster_id_to_idx.json`, and `cluster_ids_order.json` present in the local external cache |
 | Clustering threshold result | threshold `0.65`: yield `86.9`, mean intra-similarity `0.8685999195826681`, `5000` tweets |
 | DeBERTa Table 3 reproduced rows | ensemble `0.834`, four-head MTL `0.833`, fusion `0.836` |
 | Four-head MTL run bundle | CT24 test F1 `0.8333333333333333`; saved dev/test predictions and labels checksum clean |
@@ -41,8 +42,6 @@ These are warnings, not verifier failures:
 |---|---|
 | CT24 LLM feature checkpoints missing | The feature Parquets are present, but the CT24 checkpoint JSON files from feature generation were not packaged. |
 | Raw corpus language column missing | The local raw corpus supports row count/date span, but not the old English-share claim. |
-| Pipeline `embeddings.npy` missing | Full external pipeline arrays are not in the local cache; packaged summary and parquet row counts still pass. |
-| Pipeline `tweet_ids.npy` missing | Same as above; this is not needed for the current paper-facing count checks. |
 | Single DeBERTa F1 near mismatch | Recomputed F1 is `0.8214285714285715`; old paper-facing value is `0.8242`. |
 | Fusion standalone probability file missing | The reproduced fusion summary is packaged, but a standalone old `fusion_test_probs.npy` was not found. |
 | Four-head checkpoint omitted | `best_model.pt` is not in Git; checksum is recorded and saved predictions are packaged. |

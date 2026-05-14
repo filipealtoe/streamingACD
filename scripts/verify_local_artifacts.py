@@ -336,12 +336,12 @@ def check_canonical_pipeline_run() -> list[Check]:
         else:
             checks.append(fail(f"Canonical pipeline {filename}", f"expected {expected}, found {rows}"))
 
-    for filename in ("embeddings.npy", "tweet_ids.npy"):
+    for filename in ("cluster_embeddings.npy", "cluster_id_to_idx.json", "cluster_ids_order.json"):
         path = run_dir / filename
         if path.exists():
-            checks.append(ok(f"Canonical pipeline {filename}", f"exists at {path}"))
+            checks.append(ok(f"Canonical pipeline {filename}", f"{path.stat().st_size} bytes at {path}"))
         else:
-            checks.append(warn(f"Canonical pipeline {filename}", f"external array not available: {path}"))
+            checks.append(warn(f"Canonical pipeline {filename}", f"external artifact not available: {path}"))
     return checks
 
 

@@ -68,14 +68,13 @@ EXPLAINABLE_ACD_ROOT=/Users/sergiopinto/explainableACD \
 Expected current result:
 
 ```text
-Summary: 0 failures, 9 warnings
+Summary: 0 failures, 7 warnings
 ```
 
 The warnings are expected until resolved:
 
 - CT24 LLM feature checkpoint JSON files were not packaged, although the feature Parquets are present;
 - the raw election corpus file does not contain a language column for the removed `87% English` claim;
-- `embeddings.npy` and `tweet_ids.npy` from the large pipeline run are not in the local external cache;
 - single DeBERTa recomputes near, but not exactly at, the old paper value;
 - the fusion probability file is not available as a standalone external artifact, although the reproduced summary is packaged;
 - the four-head checkpoint is omitted from Git and represented by checksum plus saved predictions;
