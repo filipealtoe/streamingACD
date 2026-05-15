@@ -7,6 +7,9 @@ Date: 2026-05-12
 The four-head multi-task check-worthiness result has been rerun and packaged. The CIKM draft can now cite a reproduced CT24 result
 for the four-head architecture, provided the paper states the threshold protocol clearly.
 
+The CT25 English claim-normalization first-300 rerun is also packaged. It supports the approximate `0.558`/`+10.0` METEOR-point
+claim, provided the manuscript states the first-300 slice and local Lambda inference boundary.
+
 The rest of the paper should still be treated as partially reproduced. Several exact claims have local artifacts in the previous
 checkout, but not all of them are packaged into this repository with a clean command and checksum trail. Table 3 is materially
 stronger now: Fusion Classifier has been rerun to the paper-facing value, while the PCA/LLM/LogReg row has been separated into the
@@ -46,13 +49,38 @@ Important detail: the four-head MTL probabilities must be evaluated against the 
 `CT24_clean` row order. The MTL script evaluates after joining CT24 feature rows with LLM feature rows, and that join order differs
 from the older baseline artifacts.
 
+### CT25 claim normalization
+
+Packaged run:
+
+`results/ct25_claim_normalization_lambda_2026-05-15/`
+
+Main result:
+
+- CT25 English test first-300 METEOR: `0.5569184651538435`
+- Prior SOTA constant used by the script: `0.4569`
+- Delta vs prior SOTA: `+0.1000184651538435`
+- Retrieval hits: `227`
+- Local Mistral-7B generations: `73`
+
+Included artifacts:
+
+- command and truth-boundary run manifest;
+- aggregate summary JSON;
+- redacted per-sample metric/provenance JSONL with raw benchmark text and labels removed;
+- Lambda hardware/runtime inventory;
+- SHA-256 manifest.
+
+Important detail: this rerun supports the approximate first-300 `0.558` claim. It does not by itself reproduce every historical
+Table 1 approach cell if the manuscript keeps multiple exact claim-normalization rows.
+
 ## Still Open
 
 See `docs/paper_claim_reproduction_matrix.md` for the full claim matrix.
 
 Highest-risk open items:
 
-1. claim normalization Table 1 exact METEOR values, now handed off to Filipe;
+1. any remaining claim-normalization Table 1 approach cells if the manuscript keeps values beyond the packaged first-300 rerun;
 2. formative evaluation aggregate data and analysis if the paper restores quantitative user-study claims.
 
 ## Full Paper Claim Audit
@@ -67,7 +95,8 @@ EXPLAINABLE_ACD_ROOT=/Users/sergiopinto/explainableACD \
 The audit writes `results/full_paper_claim_audit_2026-05-12.*` and intentionally exits non-zero while exact paper claims remain
 unreproduced. The current blocking categories are not hidden:
 
-- claim normalization Table 1 does not match the available local comparison artifact and needs Filipe's exact `N=300` run package;
+- claim normalization now has a packaged first-300 Lambda rerun at METEOR `0.5569`, but any other exact Table 1 approach values
+  still need matching artifacts or manuscript edits;
 - anomaly detection and baseline values require the declared `min_rows=89` rewrite packet;
 - the `87% English` claim requires a narrowed denominator: the full corpus recomputes to about `69.9%`, while the three-day
   clustering-analysis subset reproduces `86.6%` English on a seeded `n=2,000` sample;
@@ -101,7 +130,7 @@ seven LLM features with tuned Logistic Regression at F1 `0.7929`.
 
 Attack one of the still-unpackaged or still-mismatched paper claims:
 
-- claim normalization Table 1 exact METEOR values;
+- any remaining claim-normalization Table 1 exact METEOR values beyond the packaged first-300 rerun, if retained;
 - formative evaluation aggregate data and analysis if quantitative user-study claims are restored.
 
 Use `results/claim_normalization_handoff_2026-05-14.md` for the exact Filipe artifact request and manuscript fallback.
