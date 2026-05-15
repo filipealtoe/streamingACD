@@ -1,0 +1,28 @@
+HOST
+129-159-65-253
+DATE_UTC
+2026-05-15T17:46:04Z
+GPU
+NVIDIA A10, 23028 MiB, 580.105.08
+UV
+uv 0.11.14 (x86_64-unknown-linux-gnu)
+PYTHON_TORCH_TRANSFORMERS
+torch 2.12.0+cu130
+torch_cuda 13.0
+cuda_available True
+transformers 5.8.1
+sentence_transformers 5.5.0
+RESULT_FILES
+Mistral-7B-Instruct-v0.3_test_summary.json	377 bytes
+contrastive_mistral-7b-v0.3_test.jsonl	1563556 bytes
+contrastive_mistral-7b-v0.3_test_summary.json	395 bytes
+local_Mistral-7B-Instruct-v0.3_test.jsonl	472806 bytes
+mistral-7b-v0.3_test.jsonl	1563364 bytes
+mistral-7b-v0.3_test_summary.json	383 bytes
+RESULT_SHA256
+0dac1bc875d0e38a975eee7270059a438d4f1f8fdeac74eac412fe3bfb733bed  ./Mistral-7B-Instruct-v0.3_test_summary.json
+9286b91ab60277c3d2b2536c38c6bb17d267508eb4f8d57955267deea4915e14  ./contrastive_mistral-7b-v0.3_test.jsonl
+b42b85fd9df232671a7dae7e4713f6b7f3c5cf26aa9733c607562d433503a157  ./contrastive_mistral-7b-v0.3_test_summary.json
+97dd5dfad3ebe5bb2955a2bdc5102d01ede3b298f302e89d511f395d19a3a678  ./local_Mistral-7B-Instruct-v0.3_test.jsonl
+008fb105b3b76f7288aab50a2b33948de3ce86b6022e6b41ac4379de3d9e568e  ./mistral-7b-v0.3_test.jsonl
+f70d2a0f4a27d888d889823b7f2a92f3f9015af0e3991108856d0d3a98870168  ./mistral-7b-v0.3_test_summary.json

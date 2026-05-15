@@ -11,6 +11,10 @@ because no editable `.tex`, `.docx`, or source archive for the paper was found i
 
 The paper's Table 1 claim is not reproduced from the artifacts currently packaged in this repo.
 
+2026-05-15 update: a Lambda rerun now reproduces the first-300 CT25 English claim-normalization result at METEOR
+`0.5569184651538435`. That supports the approximate `0.558` / `+10.0` METEOR-point claim if the manuscript states the protocol
+boundary. It does not by itself reproduce every historical Table 1 approach cell.
+
 Paper-facing claim:
 
 - CT2025 test set size: `N=300`;
@@ -28,14 +32,19 @@ What the packaged artifact supports:
 
 ## Decision
 
-Treat this as Filipe-owned until the exact Table 1 protocol and artifacts are recovered or rerun.
+Treat the first-300 approximate `0.558` claim as covered by the packaged Lambda rerun:
 
-Do not keep the Table 1 values `0.5583`, `0.5463`, or `0.5691` as reproduced unless the exact `N=300` prediction artifacts and
-summary files are provided.
+```text
+results/ct25_claim_normalization_lambda_2026-05-15/
+```
 
-## Required Filipe Artifact Package
+Do not keep any remaining Table 1 values such as `0.5463` or `0.5691` as reproduced unless matching prediction artifacts and
+summary files are provided. If the manuscript keeps a single first-300 result, report the reproduced value as METEOR `0.557` and
+state that it comes from a local Mistral-7B Lambda rerun.
 
-To restore the Table 1 claim, Filipe needs to provide or rerun:
+## Required Artifact Package For Any Remaining Table 1 Cells
+
+To restore any Table 1 cells beyond the packaged Lambda rerun, provide or rerun:
 
 1. the exact CT2025 `N=300` test split used for Table 1;
 2. the command/script used to generate Approach 1/2/3 outputs;
@@ -52,13 +61,18 @@ script + input split + per-sample predictions -> recomputed METEOR values matchi
 
 ## Manuscript Fallback
 
-If the exact Table 1 artifacts cannot be recovered before submission, remove the claim-normalization Table 1 result or rewrite it
-around the packaged result boundary:
+If the manuscript reports only the reproduced first-300 result, use the new packaged boundary:
+
+> On the first 300 English CT25 test rows, local Mistral-7B inference with retrieval support reaches METEOR `0.557`, a `+10.0`
+> point gain over the prior SOTA constant `0.4569` used by the evaluation script.
+
+If the remaining exact Table 1 artifacts cannot be recovered before submission, remove the unsupported rows or rewrite them around
+the older packaged diagnostic boundary:
 
 > In a broader `n=1285` diagnostic comparison, the best packaged claim-normalization run reaches average METEOR `0.345`; this
 > diagnostic is not the `N=300` Table 1 result from the earlier draft.
 
-Use that fallback only if the paper wants to report the diagnostic. Otherwise, delete Table 1.
+Use that diagnostic fallback only if the paper wants to report the diagnostic. Otherwise, delete unsupported Table 1 rows.
 
 ## Message To Filipe
 
@@ -76,4 +90,5 @@ Use that fallback only if the paper wants to report the diagnostic. Otherwise, d
 
 ## Remaining Blocker
 
-The exact `N=300` Table 1 run artifact is missing.
+The first-300 approximate `0.558` result is now packaged. Any other exact Table 1 approach values remain unsupported unless a
+matching artifact package is added.
