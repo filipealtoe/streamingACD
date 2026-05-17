@@ -29,3 +29,13 @@ mlruns/
 
 tmp/
 temp/
+data/._CT24_checkworthy_english
+data/._CT24_checkworthy_english_dev-test.tsv
+data/._CT24_checkworthy_english_dev.tsv
+data/._CT24_checkworthy_english_train.tsv
+data/4-heads_model/best_model.pt.sha256
+data/reviewer_artifact_full_2026-05-15/private_raw_artifacts/ct25_claim_normalization_lambda/lambda-env-and-results-inventory.txt
+data/reviewer_artifact_full_2026-05-15/private_raw_artifacts/ct25_claim_normalization_lambda/local_Mistral-7B-Instruct-v0.3_test.jsonl
+data/reviewer_artifact_full_2026-05-15/private_raw_artifacts/ct25_claim_normalization_lambda/remote-data.sha256
+data/reviewer_artifact_full_2026-05-15/private_raw_artifacts/ct25_claim_normalization_lambda/remote-results-full.sha256
+LLM_ABLATION_INVENTORY.md
