@@ -39,3 +39,9 @@ data/reviewer_artifact_full_2026-05-15/private_raw_artifacts/ct25_claim_normaliz
 data/reviewer_artifact_full_2026-05-15/private_raw_artifacts/ct25_claim_normalization_lambda/remote-data.sha256
 data/reviewer_artifact_full_2026-05-15/private_raw_artifacts/ct25_claim_normalization_lambda/remote-results-full.sha256
 LLM_ABLATION_INVENTORY.md
+
+# LLM ablation per-run outputs and local-only data
+results/llm_ablation_*/
+results/.current_run_ts
+checkworthiness/
+data/CT24_checkworthy_english_test_gold.tsv
