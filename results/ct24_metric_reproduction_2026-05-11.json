@@ -1,0 +1,748 @@
+{
+  "dataset": {
+    "name": "CT24 check-worthiness English test",
+    "default_labels_path": "/Users/sergiopinto/explainableACD/data/processed/CT24_clean/CT24_test_clean.parquet",
+    "n_samples": 341,
+    "n_positive": 88,
+    "positive_label": "Yes",
+    "thresholds": [
+      0.3,
+      0.35,
+      0.4,
+      0.45,
+      0.5,
+      0.55,
+      0.6,
+      0.65,
+      0.7
+    ],
+    "label_order_note": "The four-head MTL run uses the post-join row order from CT24_features joined with CT24_llm_features_v4. Its packaged test_labels.npy must be used when recomputing that row."
+  },
+  "artifacts": [
+    {
+      "name": "single_deberta_local",
+      "probabilities_path": "/Users/sergiopinto/explainableACD/experiments/results/deberta_checkworthy/deberta-v3-large/test_probs.npy",
+      "labels_path": "/Users/sergiopinto/explainableACD/data/processed/CT24_clean/CT24_test_clean.parquet",
+      "probabilities_sha256": "f27e63143bd4fb0aa448c1bc034a4b13533544819721c75f29429a254e7d3c84",
+      "n_samples": 341,
+      "n_positive": 88,
+      "best": {
+        "threshold": 0.5,
+        "accuracy": 0.9120234604105572,
+        "precision": 0.8625,
+        "recall": 0.7840909090909091,
+        "f1": 0.8214285714285715,
+        "tp": 69,
+        "fp": 11,
+        "tn": 242,
+        "fn": 19
+      },
+      "thresholds": [
+        {
+          "threshold": 0.3,
+          "accuracy": 0.8826979472140762,
+          "precision": 0.74,
+          "recall": 0.8409090909090909,
+          "f1": 0.7872340425531915,
+          "tp": 74,
+          "fp": 26,
+          "tn": 227,
+          "fn": 14
+        },
+        {
+          "threshold": 0.35,
+          "accuracy": 0.8885630498533724,
+          "precision": 0.7777777777777778,
+          "recall": 0.7954545454545454,
+          "f1": 0.7865168539325843,
+          "tp": 70,
+          "fp": 20,
+          "tn": 233,
+          "fn": 18
+        },
+        {
+          "threshold": 0.4,
+          "accuracy": 0.8944281524926686,
+          "precision": 0.8023255813953488,
+          "recall": 0.7840909090909091,
+          "f1": 0.7931034482758621,
+          "tp": 69,
+          "fp": 17,
+          "tn": 236,
+          "fn": 19
+        },
+        {
+          "threshold": 0.45,
+          "accuracy": 0.906158357771261,
+          "precision": 0.8414634146341463,
+          "recall": 0.7840909090909091,
+          "f1": 0.8117647058823529,
+          "tp": 69,
+          "fp": 13,
+          "tn": 240,
+          "fn": 19
+        },
+        {
+          "threshold": 0.5,
+          "accuracy": 0.9120234604105572,
+          "precision": 0.8625,
+          "recall": 0.7840909090909091,
+          "f1": 0.8214285714285715,
+          "tp": 69,
+          "fp": 11,
+          "tn": 242,
+          "fn": 19
+        },
+        {
+          "threshold": 0.55,
+          "accuracy": 0.8973607038123167,
+          "precision": 0.8533333333333334,
+          "recall": 0.7272727272727273,
+          "f1": 0.785276073619632,
+          "tp": 64,
+          "fp": 11,
+          "tn": 242,
+          "fn": 24
+        },
+        {
+          "threshold": 0.6,
+          "accuracy": 0.8885630498533724,
+          "precision": 0.8571428571428571,
+          "recall": 0.6818181818181818,
+          "f1": 0.759493670886076,
+          "tp": 60,
+          "fp": 10,
+          "tn": 243,
+          "fn": 28
+        },
+        {
+          "threshold": 0.65,
+          "accuracy": 0.8856304985337243,
+          "precision": 0.855072463768116,
+          "recall": 0.6704545454545454,
+          "f1": 0.7515923566878981,
+          "tp": 59,
+          "fp": 10,
+          "tn": 243,
+          "fn": 29
+        },
+        {
+          "threshold": 0.7,
+          "accuracy": 0.8914956011730205,
+          "precision": 0.8805970149253731,
+          "recall": 0.6704545454545454,
+          "f1": 0.7612903225806451,
+          "tp": 59,
+          "fp": 8,
+          "tn": 245,
+          "fn": 29
+        }
+      ]
+    },
+    {
+      "name": "ensemble_seed_0",
+      "probabilities_path": "/Users/sergiopinto/explainableACD/lambda_backup/ubuntu/ensemble_results/seed_0/deberta-v3-large/test_probs.npy",
+      "labels_path": "/Users/sergiopinto/explainableACD/data/processed/CT24_clean/CT24_test_clean.parquet",
+      "probabilities_sha256": "febabe5e211bb225eb793c03e84a5e776d3512a9a0fe38375680f14d77acabed",
+      "n_samples": 341,
+      "n_positive": 88,
+      "best": {
+        "threshold": 0.5,
+        "accuracy": 0.9002932551319648,
+        "precision": 0.813953488372093,
+        "recall": 0.7954545454545454,
+        "f1": 0.8045977011494252,
+        "tp": 70,
+        "fp": 16,
+        "tn": 237,
+        "fn": 18
+      },
+      "thresholds": [
+        {
+          "threshold": 0.3,
+          "accuracy": 0.7917888563049853,
+          "precision": 0.5578231292517006,
+          "recall": 0.9318181818181818,
+          "f1": 0.6978723404255318,
+          "tp": 82,
+          "fp": 65,
+          "tn": 188,
+          "fn": 6
+        },
+        {
+          "threshold": 0.35,
+          "accuracy": 0.8240469208211144,
+          "precision": 0.6076923076923076,
+          "recall": 0.8977272727272727,
+          "f1": 0.7247706422018348,
+          "tp": 79,
+          "fp": 51,
+          "tn": 202,
+          "fn": 9
+        },
+        {
+          "threshold": 0.4,
+          "accuracy": 0.8563049853372434,
+          "precision": 0.672566371681416,
+          "recall": 0.8636363636363636,
+          "f1": 0.7562189054726368,
+          "tp": 76,
+          "fp": 37,
+          "tn": 216,
+          "fn": 12
+        },
+        {
+          "threshold": 0.45,
+          "accuracy": 0.8914956011730205,
+          "precision": 0.7628865979381443,
+          "recall": 0.8409090909090909,
+          "f1": 0.8,
+          "tp": 74,
+          "fp": 23,
+          "tn": 230,
+          "fn": 14
+        },
+        {
+          "threshold": 0.5,
+          "accuracy": 0.9002932551319648,
+          "precision": 0.813953488372093,
+          "recall": 0.7954545454545454,
+          "f1": 0.8045977011494252,
+          "tp": 70,
+          "fp": 16,
+          "tn": 237,
+          "fn": 18
+        },
+        {
+          "threshold": 0.55,
+          "accuracy": 0.8856304985337243,
+          "precision": 0.8356164383561644,
+          "recall": 0.6931818181818182,
+          "f1": 0.7577639751552796,
+          "tp": 61,
+          "fp": 12,
+          "tn": 241,
+          "fn": 27
+        },
+        {
+          "threshold": 0.6,
+          "accuracy": 0.8826979472140762,
+          "precision": 0.8636363636363636,
+          "recall": 0.6477272727272727,
+          "f1": 0.7402597402597403,
+          "tp": 57,
+          "fp": 9,
+          "tn": 244,
+          "fn": 31
+        },
+        {
+          "threshold": 0.65,
+          "accuracy": 0.8592375366568915,
+          "precision": 0.8703703703703703,
+          "recall": 0.5340909090909091,
+          "f1": 0.6619718309859154,
+          "tp": 47,
+          "fp": 7,
+          "tn": 246,
+          "fn": 41
+        },
+        {
+          "threshold": 0.7,
+          "accuracy": 0.8533724340175953,
+          "precision": 0.9523809523809523,
+          "recall": 0.45454545454545453,
+          "f1": 0.6153846153846153,
+          "tp": 40,
+          "fp": 2,
+          "tn": 251,
+          "fn": 48
+        }
+      ]
+    },
+    {
+      "name": "ensemble_seed_123",
+      "probabilities_path": "/Users/sergiopinto/explainableACD/lambda_backup/ubuntu/ensemble_results/seed_123/deberta-v3-large/test_probs.npy",
+      "labels_path": "/Users/sergiopinto/explainableACD/data/processed/CT24_clean/CT24_test_clean.parquet",
+      "probabilities_sha256": "c039729e0e76e42f39ea6694938ec149f241fad825c3ca7faaf39bffe42c0f1e",
+      "n_samples": 341,
+      "n_positive": 88,
+      "best": {
+        "threshold": 0.5,
+        "accuracy": 0.906158357771261,
+        "precision": 0.8181818181818182,
+        "recall": 0.8181818181818182,
+        "f1": 0.8181818181818182,
+        "tp": 72,
+        "fp": 16,
+        "tn": 237,
+        "fn": 16
+      },
+      "thresholds": [
+        {
+          "threshold": 0.3,
+          "accuracy": 0.7976539589442815,
+          "precision": 0.5655172413793104,
+          "recall": 0.9318181818181818,
+          "f1": 0.7038626609442059,
+          "tp": 82,
+          "fp": 63,
+          "tn": 190,
+          "fn": 6
+        },
+        {
+          "threshold": 0.35,
+          "accuracy": 0.8328445747800587,
+          "precision": 0.6201550387596899,
+          "recall": 0.9090909090909091,
+          "f1": 0.7373271889400922,
+          "tp": 80,
+          "fp": 49,
+          "tn": 204,
+          "fn": 8
+        },
+        {
+          "threshold": 0.4,
+          "accuracy": 0.8709677419354839,
+          "precision": 0.6964285714285714,
+          "recall": 0.8863636363636364,
+          "f1": 0.7799999999999999,
+          "tp": 78,
+          "fp": 34,
+          "tn": 219,
+          "fn": 10
+        },
+        {
+          "threshold": 0.45,
+          "accuracy": 0.8856304985337243,
+          "precision": 0.7474747474747475,
+          "recall": 0.8409090909090909,
+          "f1": 0.7914438502673797,
+          "tp": 74,
+          "fp": 25,
+          "tn": 228,
+          "fn": 14
+        },
+        {
+          "threshold": 0.5,
+          "accuracy": 0.906158357771261,
+          "precision": 0.8181818181818182,
+          "recall": 0.8181818181818182,
+          "f1": 0.8181818181818182,
+          "tp": 72,
+          "fp": 16,
+          "tn": 237,
+          "fn": 16
+        },
+        {
+          "threshold": 0.55,
+          "accuracy": 0.9002932551319648,
+          "precision": 0.8552631578947368,
+          "recall": 0.7386363636363636,
+          "f1": 0.7926829268292682,
+          "tp": 65,
+          "fp": 11,
+          "tn": 242,
+          "fn": 23
+        },
+        {
+          "threshold": 0.6,
+          "accuracy": 0.8914956011730205,
+          "precision": 0.9047619047619048,
+          "recall": 0.6477272727272727,
+          "f1": 0.7549668874172185,
+          "tp": 57,
+          "fp": 6,
+          "tn": 247,
+          "fn": 31
+        },
+        {
+          "threshold": 0.65,
+          "accuracy": 0.8651026392961877,
+          "precision": 0.9038461538461539,
+          "recall": 0.5340909090909091,
+          "f1": 0.6714285714285714,
+          "tp": 47,
+          "fp": 5,
+          "tn": 248,
+          "fn": 41
+        },
+        {
+          "threshold": 0.7,
+          "accuracy": 0.8387096774193549,
+          "precision": 0.9230769230769231,
+          "recall": 0.4090909090909091,
+          "f1": 0.5669291338582677,
+          "tp": 36,
+          "fp": 3,
+          "tn": 250,
+          "fn": 52
+        }
+      ]
+    },
+    {
+      "name": "ensemble_seed_456",
+      "probabilities_path": "/Users/sergiopinto/explainableACD/lambda_backup/ubuntu/ensemble_results/seed_456/deberta-v3-large/test_probs.npy",
+      "labels_path": "/Users/sergiopinto/explainableACD/data/processed/CT24_clean/CT24_test_clean.parquet",
+      "probabilities_sha256": "f1104b63b55cca76ed8bbc64f911a8a7e712416683c893bb9518f36e0f1bf7d5",
+      "n_samples": 341,
+      "n_positive": 88,
+      "best": {
+        "threshold": 0.55,
+        "accuracy": 0.906158357771261,
+        "precision": 0.8333333333333334,
+        "recall": 0.7954545454545454,
+        "f1": 0.8139534883720929,
+        "tp": 70,
+        "fp": 14,
+        "tn": 239,
+        "fn": 18
+      },
+      "thresholds": [
+        {
+          "threshold": 0.3,
+          "accuracy": 0.7624633431085044,
+          "precision": 0.5217391304347826,
+          "recall": 0.9545454545454546,
+          "f1": 0.6746987951807228,
+          "tp": 84,
+          "fp": 77,
+          "tn": 176,
+          "fn": 4
+        },
+        {
+          "threshold": 0.35,
+          "accuracy": 0.7859237536656891,
+          "precision": 0.5503355704697986,
+          "recall": 0.9318181818181818,
+          "f1": 0.6919831223628692,
+          "tp": 82,
+          "fp": 67,
+          "tn": 186,
+          "fn": 6
+        },
+        {
+          "threshold": 0.4,
+          "accuracy": 0.8299120234604106,
+          "precision": 0.6136363636363636,
+          "recall": 0.9204545454545454,
+          "f1": 0.7363636363636363,
+          "tp": 81,
+          "fp": 51,
+          "tn": 202,
+          "fn": 7
+        },
+        {
+          "threshold": 0.45,
+          "accuracy": 0.8651026392961877,
+          "precision": 0.6875,
+          "recall": 0.875,
+          "f1": 0.77,
+          "tp": 77,
+          "fp": 35,
+          "tn": 218,
+          "fn": 11
+        },
+        {
+          "threshold": 0.5,
+          "accuracy": 0.8973607038123167,
+          "precision": 0.7789473684210526,
+          "recall": 0.8409090909090909,
+          "f1": 0.808743169398907,
+          "tp": 74,
+          "fp": 21,
+          "tn": 232,
+          "fn": 14
+        },
+        {
+          "threshold": 0.55,
+          "accuracy": 0.906158357771261,
+          "precision": 0.8333333333333334,
+          "recall": 0.7954545454545454,
+          "f1": 0.8139534883720929,
+          "tp": 70,
+          "fp": 14,
+          "tn": 239,
+          "fn": 18
+        },
+        {
+          "threshold": 0.6,
+          "accuracy": 0.8856304985337243,
+          "precision": 0.8181818181818182,
+          "recall": 0.7159090909090909,
+          "f1": 0.7636363636363637,
+          "tp": 63,
+          "fp": 14,
+          "tn": 239,
+          "fn": 25
+        },
+        {
+          "threshold": 0.65,
+          "accuracy": 0.8768328445747801,
+          "precision": 0.859375,
+          "recall": 0.625,
+          "f1": 0.7236842105263158,
+          "tp": 55,
+          "fp": 9,
+          "tn": 244,
+          "fn": 33
+        },
+        {
+          "threshold": 0.7,
+          "accuracy": 0.8592375366568915,
+          "precision": 0.9347826086956522,
+          "recall": 0.48863636363636365,
+          "f1": 0.6417910447761195,
+          "tp": 43,
+          "fp": 3,
+          "tn": 250,
+          "fn": 45
+        }
+      ]
+    },
+    {
+      "name": "ensemble_temp_0_3",
+      "probabilities_path": "/Users/sergiopinto/explainableACD/lambda_backup/ubuntu/ensemble_results/test_temp_0.3_probs.npy",
+      "labels_path": "/Users/sergiopinto/explainableACD/data/processed/CT24_clean/CT24_test_clean.parquet",
+      "probabilities_sha256": "95370338af64abf711ae5f23d35c11e0c6452e45e1addcf6befe8a8327227aa9",
+      "n_samples": 341,
+      "n_positive": 88,
+      "best": {
+        "threshold": 0.6,
+        "accuracy": 0.9149560117302052,
+        "precision": 0.8390804597701149,
+        "recall": 0.8295454545454546,
+        "f1": 0.8342857142857142,
+        "tp": 73,
+        "fp": 14,
+        "tn": 239,
+        "fn": 15
+      },
+      "thresholds": [
+        {
+          "threshold": 0.3,
+          "accuracy": 0.8797653958944281,
+          "precision": 0.7281553398058253,
+          "recall": 0.8522727272727273,
+          "f1": 0.7853403141361257,
+          "tp": 75,
+          "fp": 28,
+          "tn": 225,
+          "fn": 13
+        },
+        {
+          "threshold": 0.35,
+          "accuracy": 0.8856304985337243,
+          "precision": 0.7425742574257426,
+          "recall": 0.8522727272727273,
+          "f1": 0.7936507936507936,
+          "tp": 75,
+          "fp": 26,
+          "tn": 227,
+          "fn": 13
+        },
+        {
+          "threshold": 0.4,
+          "accuracy": 0.8944281524926686,
+          "precision": 0.7708333333333334,
+          "recall": 0.8409090909090909,
+          "f1": 0.8043478260869567,
+          "tp": 74,
+          "fp": 22,
+          "tn": 231,
+          "fn": 14
+        },
+        {
+          "threshold": 0.45,
+          "accuracy": 0.9032258064516129,
+          "precision": 0.7956989247311828,
+          "recall": 0.8409090909090909,
+          "f1": 0.8176795580110496,
+          "tp": 74,
+          "fp": 19,
+          "tn": 234,
+          "fn": 14
+        },
+        {
+          "threshold": 0.5,
+          "accuracy": 0.906158357771261,
+          "precision": 0.8111111111111111,
+          "recall": 0.8295454545454546,
+          "f1": 0.8202247191011237,
+          "tp": 73,
+          "fp": 17,
+          "tn": 236,
+          "fn": 15
+        },
+        {
+          "threshold": 0.55,
+          "accuracy": 0.9090909090909091,
+          "precision": 0.8202247191011236,
+          "recall": 0.8295454545454546,
+          "f1": 0.824858757062147,
+          "tp": 73,
+          "fp": 16,
+          "tn": 237,
+          "fn": 15
+        },
+        {
+          "threshold": 0.6,
+          "accuracy": 0.9149560117302052,
+          "precision": 0.8390804597701149,
+          "recall": 0.8295454545454546,
+          "f1": 0.8342857142857142,
+          "tp": 73,
+          "fp": 14,
+          "tn": 239,
+          "fn": 15
+        },
+        {
+          "threshold": 0.65,
+          "accuracy": 0.9002932551319648,
+          "precision": 0.8292682926829268,
+          "recall": 0.7727272727272727,
+          "f1": 0.7999999999999999,
+          "tp": 68,
+          "fp": 14,
+          "tn": 239,
+          "fn": 20
+        },
+        {
+          "threshold": 0.7,
+          "accuracy": 0.8944281524926686,
+          "precision": 0.825,
+          "recall": 0.75,
+          "f1": 0.7857142857142856,
+          "tp": 66,
+          "fp": 14,
+          "tn": 239,
+          "fn": 22
+        }
+      ]
+    },
+    {
+      "name": "four_head_mtl_retrain_2026_05_12",
+      "probabilities_path": "/Users/sergiopinto/streamingACD/reproducibility/runs/deberta_mtl_cikm_20260512_134553/test_probs.npy",
+      "labels_path": "/Users/sergiopinto/streamingACD/reproducibility/runs/deberta_mtl_cikm_20260512_134553/test_labels.npy",
+      "probabilities_sha256": "e6747cc253559a7b789e898d5a37f0bb3181d353df05819a257dfc8f32bdccaf",
+      "n_samples": 341,
+      "n_positive": 88,
+      "best": {
+        "threshold": 0.5,
+        "accuracy": 0.9120234604105572,
+        "precision": 0.8152173913043478,
+        "recall": 0.8522727272727273,
+        "f1": 0.8333333333333333,
+        "tp": 75,
+        "fp": 17,
+        "tn": 236,
+        "fn": 13
+      },
+      "thresholds": [
+        {
+          "threshold": 0.3,
+          "accuracy": 0.906158357771261,
+          "precision": 0.7978723404255319,
+          "recall": 0.8522727272727273,
+          "f1": 0.8241758241758241,
+          "tp": 75,
+          "fp": 19,
+          "tn": 234,
+          "fn": 13
+        },
+        {
+          "threshold": 0.35,
+          "accuracy": 0.906158357771261,
+          "precision": 0.7978723404255319,
+          "recall": 0.8522727272727273,
+          "f1": 0.8241758241758241,
+          "tp": 75,
+          "fp": 19,
+          "tn": 234,
+          "fn": 13
+        },
+        {
+          "threshold": 0.4,
+          "accuracy": 0.9090909090909091,
+          "precision": 0.8064516129032258,
+          "recall": 0.8522727272727273,
+          "f1": 0.8287292817679558,
+          "tp": 75,
+          "fp": 18,
+          "tn": 235,
+          "fn": 13
+        },
+        {
+          "threshold": 0.45,
+          "accuracy": 0.9090909090909091,
+          "precision": 0.8064516129032258,
+          "recall": 0.8522727272727273,
+          "f1": 0.8287292817679558,
+          "tp": 75,
+          "fp": 18,
+          "tn": 235,
+          "fn": 13
+        },
+        {
+          "threshold": 0.5,
+          "accuracy": 0.9120234604105572,
+          "precision": 0.8152173913043478,
+          "recall": 0.8522727272727273,
+          "f1": 0.8333333333333333,
+          "tp": 75,
+          "fp": 17,
+          "tn": 236,
+          "fn": 13
+        },
+        {
+          "threshold": 0.55,
+          "accuracy": 0.9032258064516129,
+          "precision": 0.8089887640449438,
+          "recall": 0.8181818181818182,
+          "f1": 0.8135593220338984,
+          "tp": 72,
+          "fp": 17,
+          "tn": 236,
+          "fn": 16
+        },
+        {
+          "threshold": 0.6,
+          "accuracy": 0.9002932551319648,
+          "precision": 0.813953488372093,
+          "recall": 0.7954545454545454,
+          "f1": 0.8045977011494252,
+          "tp": 70,
+          "fp": 16,
+          "tn": 237,
+          "fn": 18
+        },
+        {
+          "threshold": 0.65,
+          "accuracy": 0.9032258064516129,
+          "precision": 0.8313253012048193,
+          "recall": 0.7840909090909091,
+          "f1": 0.8070175438596491,
+          "tp": 69,
+          "fp": 14,
+          "tn": 239,
+          "fn": 19
+        },
+        {
+          "threshold": 0.7,
+          "accuracy": 0.8973607038123167,
+          "precision": 0.8354430379746836,
+          "recall": 0.75,
+          "f1": 0.7904191616766467,
+          "tp": 66,
+          "fp": 13,
+          "tn": 240,
+          "fn": 22
+        }
+      ]
+    }
+  ],
+  "paper_relevance": {
+    "single_head_conflict": "The previously reported 0.814 value is reproduced by ensemble_seed_456 at threshold 0.55, which is a single-head DeBERTa seed artifact, not a verified four-head multi-task artifact.",
+    "four_head_retrain": "The 2026-05-12 Lambda retrain packages four-head MTL test_probs.npy and reproduces CT24 F1=0.8333 at threshold 0.50.",
+    "best_ensemble": "ensemble_temp_0_3"
+  }
+}

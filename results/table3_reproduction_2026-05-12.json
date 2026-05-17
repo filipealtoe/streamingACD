@@ -1,0 +1,157 @@
+{
+  "dataset": {
+    "name": "CT24 check-worthiness English test",
+    "clean_labels_path": "/Users/sergiopinto/explainableACD/data/processed/CT24_clean/CT24_test_clean.parquet",
+    "n_samples": 341,
+    "n_positive": 88,
+    "thresholds": [
+      0.3,
+      0.35,
+      0.4,
+      0.45,
+      0.5,
+      0.55,
+      0.6,
+      0.65,
+      0.7
+    ]
+  },
+  "rows": [
+    {
+      "row": "Single DeBERTa",
+      "paper_claim_f1": 0.8242,
+      "reproduced_f1": 0.8214285714285715,
+      "threshold": 0.5,
+      "status": "near paper value",
+      "evidence": "/Users/sergiopinto/explainableACD/experiments/results/deberta_checkworthy/deberta-v3-large/test_probs.npy",
+      "note": "Saved local single-model probabilities."
+    },
+    {
+      "row": "3-seed DeBERTa ensemble",
+      "paper_claim_f1": 0.8343,
+      "reproduced_f1": 0.8342857142857142,
+      "threshold": 0.6,
+      "status": "reproduced",
+      "evidence": "/Users/sergiopinto/explainableACD/lambda_backup/ubuntu/ensemble_results/test_temp_0.3_probs.npy",
+      "note": "Saved Lambda ensemble probabilities, temperature-scaled output file."
+    },
+    {
+      "row": "4-head MTL retrain",
+      "paper_claim_f1": 0.8333,
+      "reproduced_f1": 0.8333333333333333,
+      "threshold": 0.5,
+      "status": "reproduced",
+      "evidence": "/Users/sergiopinto/streamingACD/reproducibility/runs/deberta_mtl_cikm_20260512_134553/test_probs.npy",
+      "note": "Packaged 2026-05-12 retrain; uses packaged joined-label order."
+    },
+    {
+      "row": "PCA-64 + LLM + text LogReg CT24 rerun",
+      "paper_claim_f1": 0.761,
+      "reproduced_f1": 0.6936416184971098,
+      "threshold": 0.55,
+      "status": "not reproduced",
+      "evidence": "experiments/scripts/benchmark_pca_llm_text.py CT24 training path, mirrored in this audit",
+      "note": "This runnable path reproduces the paper-row ClaimBuster and CT23 values after rounding, but CT24 test recomputes below the paper-facing 0.761 value."
+    },
+    {
+      "row": "Fusion classifier rerun",
+      "paper_claim_f1": 0.8362,
+      "reproduced_f1": 0.8361581920903954,
+      "threshold": 0.5,
+      "status": "reproduced",
+      "evidence": "saved T=0.3 ensemble probabilities + rerun 24-feature XGBoost v4, weight=0.5",
+      "note": "This matches the paper-facing Fusion Classifier setup: saved temperature-scaled ensemble probabilities, rerun XGBoost LLM component, equal-weight late fusion, threshold 0.50."
+    }
+  ],
+  "artifacts": [
+    {
+      "row": "Single DeBERTa",
+      "probabilities_path": "/Users/sergiopinto/explainableACD/experiments/results/deberta_checkworthy/deberta-v3-large/test_probs.npy",
+      "labels_path": "/Users/sergiopinto/explainableACD/data/processed/CT24_clean/CT24_test_clean.parquet",
+      "probabilities_sha256": "f27e63143bd4fb0aa448c1bc034a4b13533544819721c75f29429a254e7d3c84",
+      "metrics": {
+        "threshold": 0.5,
+        "accuracy": 0.9120234604105572,
+        "precision": 0.8625,
+        "recall": 0.7840909090909091,
+        "f1": 0.8214285714285715,
+        "tp": 69,
+        "fp": 11,
+        "tn": 242,
+        "fn": 19
+      }
+    },
+    {
+      "row": "3-seed DeBERTa ensemble",
+      "probabilities_path": "/Users/sergiopinto/explainableACD/lambda_backup/ubuntu/ensemble_results/test_temp_0.3_probs.npy",
+      "labels_path": "/Users/sergiopinto/explainableACD/data/processed/CT24_clean/CT24_test_clean.parquet",
+      "probabilities_sha256": "95370338af64abf711ae5f23d35c11e0c6452e45e1addcf6befe8a8327227aa9",
+      "metrics": {
+        "threshold": 0.6,
+        "accuracy": 0.9149560117302052,
+        "precision": 0.8390804597701149,
+        "recall": 0.8295454545454546,
+        "f1": 0.8342857142857142,
+        "tp": 73,
+        "fp": 14,
+        "tn": 239,
+        "fn": 15
+      }
+    },
+    {
+      "row": "4-head MTL retrain",
+      "probabilities_path": "/Users/sergiopinto/streamingACD/reproducibility/runs/deberta_mtl_cikm_20260512_134553/test_probs.npy",
+      "labels_path": "/Users/sergiopinto/streamingACD/reproducibility/runs/deberta_mtl_cikm_20260512_134553/test_labels.npy",
+      "probabilities_sha256": "e6747cc253559a7b789e898d5a37f0bb3181d353df05819a257dfc8f32bdccaf",
+      "metrics": {
+        "threshold": 0.5,
+        "accuracy": 0.9120234604105572,
+        "precision": 0.8152173913043478,
+        "recall": 0.8522727272727273,
+        "f1": 0.8333333333333333,
+        "tp": 75,
+        "fp": 17,
+        "tn": 236,
+        "fn": 13
+      }
+    }
+  ],
+  "component_reruns": {
+    "pca_llm_text_logreg_ct24": {
+      "threshold": 0.55,
+      "accuracy": 0.844574780058651,
+      "precision": 0.7058823529411765,
+      "recall": 0.6818181818181818,
+      "f1": 0.6936416184971098,
+      "tp": 60,
+      "fp": 25,
+      "tn": 228,
+      "fn": 28
+    },
+    "llm_xgboost_v4": {
+      "threshold": 0.35,
+      "accuracy": 0.2991202346041056,
+      "precision": 0.2676923076923077,
+      "recall": 0.9886363636363636,
+      "f1": 0.4213075060532687,
+      "tp": 87,
+      "fp": 238,
+      "tn": 15,
+      "fn": 1
+    },
+    "fusion_classifier_paper_config": {
+      "threshold": 0.5,
+      "accuracy": 0.9149560117302052,
+      "precision": 0.8314606741573034,
+      "recall": 0.8409090909090909,
+      "f1": 0.8361581920903954,
+      "tp": 74,
+      "fp": 15,
+      "tn": 238,
+      "fn": 14
+    },
+    "pca_llm_text_logreg_probability_count": 341,
+    "llm_xgboost_probability_count": 341
+  },
+  "conclusion": "The three-seed ensemble, the four-head MTL retrain, and the Fusion Classifier now have reproducible CT24 evidence. The runnable PCA-64 + LLM + text LogReg path matches the paper's cross-dataset values after rounding, but its CT24 test F1 does not reproduce the paper-facing 0.761 value."
+}
