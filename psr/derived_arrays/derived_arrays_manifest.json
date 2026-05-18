@@ -1,0 +1,43 @@
+{
+  "source": "/Users/sergiopinto/streamingACD-ct25-claimnorm-pr/reproducibility/source_artifacts/virality/features_enhanced.parquet",
+  "rows": 529,
+  "feature_columns": 42,
+  "dtype": "float64 for features and targets",
+  "feature_cleaning": "np.nan_to_num(X, nan=0.0, posinf=0.0, neginf=0.0), matching run_tuned_baselines.py and run_complete_baselines.py",
+  "raw_nonfinite_count": 4332,
+  "split": {
+    "function": "sklearn.model_selection.train_test_split",
+    "test_size": 0.2,
+    "random_state": 42,
+    "shuffle": true,
+    "stratify": null
+  },
+  "shapes": {
+    "train_features.npy": [
+      423,
+      42
+    ],
+    "test_features.npy": [
+      106,
+      42
+    ],
+    "train_targets.npy": [
+      423
+    ],
+    "test_targets.npy": [
+      106
+    ]
+  },
+  "test_cluster_ids_first_10": [
+    13771,
+    76054,
+    11948,
+    8600,
+    36417,
+    36889,
+    7778,
+    3123,
+    1926,
+    98236
+  ]
+}

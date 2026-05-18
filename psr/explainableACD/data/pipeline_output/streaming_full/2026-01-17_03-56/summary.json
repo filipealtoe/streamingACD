@@ -1,0 +1,115 @@
+{
+  "windows_processed": 600,
+  "total_tweets_processed": 1522909,
+  "total_tweets_passed_gate": 692289,
+  "total_anomalies": 1504,
+  "total_claims": 535,
+  "total_predictions": 1504,
+  "data_ingestion": {
+    "rows_processed": 1522909,
+    "id_columns_coerced": {
+      "tweet_id": 1522909,
+      "user_id": 1522909
+    },
+    "invalid_dates_nullified": {
+      "user_join_date": 1
+    },
+    "numeric_columns_coerced": {
+      "likes": 1522909,
+      "retweet_count": 1522909,
+      "user_followers_count": 1522909
+    },
+    "countries_normalized": 407706
+  },
+  "text_preprocessor": {
+    "rows_processed": 1522909,
+    "non_english_detected": 458656,
+    "sentiment_computed": 1522909
+  },
+  "claim_gate": {
+    "error": "ClaimGate not applied"
+  },
+  "clusterer": {
+    "n_clusters": 100000,
+    "total_tweets": 672359,
+    "avg_cluster_size": 6.72359,
+    "median_cluster_size": 1.0,
+    "max_cluster_size": 7054,
+    "min_cluster_size": 1,
+    "clusters_size_1": 80857,
+    "clusters_size_gte_min": 100000
+  },
+  "anomaly_detector": {
+    "total_detections": 1504,
+    "zscore_triggers": 32,
+    "kleinberg_triggers": 564,
+    "both_triggers": 522,
+    "bayesian_cold_triggers": 386,
+    "bayesian_warm_triggers": 0,
+    "clusters_tracked": 100000,
+    "config": {
+      "z_threshold": 3.0,
+      "kleinberg_enabled": true,
+      "kleinberg_trigger_state": 2,
+      "bayesian_enabled": true
+    },
+    "bayesian_detector": {
+      "total_detections": 386,
+      "cold_start_detections": 386,
+      "warm_detections": 0,
+      "cold_start_ratio": 1.0,
+      "clusters_tracked": 100000,
+      "global_observations": 229449,
+      "global_count_mean": 1.3420542255577492,
+      "global_count_std": 2.688730729173829,
+      "global_engagement_mean": 14.094770515451962,
+      "global_engagement_std": 464.0280346270086
+    }
+  },
+  "claim_registry": {
+    "total_claims": 535,
+    "total_clusters_mapped": 650,
+    "normalizations": 650,
+    "deduplications": 115,
+    "new_claims": 535,
+    "dedup_rate": 0.17692307692307693,
+    "avg_clusters_per_claim": 1.2149532710280373
+  },
+  "groq_adapter": {
+    "api_calls": 650,
+    "cache_hits": 0,
+    "cache_size": 650,
+    "errors": 0,
+    "total_tokens": 236277,
+    "model": "llama-3.1-8b-instant",
+    "rate_limit_rpm": 30
+  },
+  "virality_predictor": {
+    "model_loaded": false,
+    "model_path": "model/virality_xgboost.pkl",
+    "peek_hours": 6,
+    "horizon_hours": 48,
+    "virality_threshold": 500,
+    "feature_count": 18,
+    "feature_names": [
+      "z_score_at_detection",
+      "tweet_count",
+      "engagement_sum",
+      "tweets_per_hour",
+      "engagement_velocity",
+      "momentum",
+      "rt_ratio",
+      "like_ratio",
+      "engagement_efficiency",
+      "url_density",
+      "media_density",
+      "hashtag_avg",
+      "hour_of_day",
+      "is_weekend",
+      "avg_followers_first_50",
+      "max_followers_first_50",
+      "verified_ratio",
+      "rt_like_ratio"
+    ]
+  }
+}

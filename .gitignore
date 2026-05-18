@@ -45,3 +45,8 @@ results/llm_ablation_*/
 results/.current_run_ts
 checkworthiness/
 data/CT24_checkworthy_english_test_gold.tsv
+
+# PSR large pipeline outputs (>100MB, exceed GitHub limit)
+psr/explainableACD/data/pipeline_output/streaming_full/2026-01-17_03-56/clusterer_state.npz
+psr/explainableACD/data/pipeline_output/streaming_full/2026-01-17_03-56/cluster_embeddings.npy
+psr/explainableACD/data/pipeline_output/streaming_full/2026-01-17_03-56/tweets.parquet

@@ -1,0 +1,98 @@
+{
+  "note": "Feature-based predictions regenerated from derived arrays using best_params recorded in tuned_baselines.json. test_predictions.npy is clipped to [0, 1], matching evaluate() for reported metrics. test_predictions_raw.npy is also included. Sequence/text/Hawkes predictions are not included here.",
+  "y_test_shape": [
+    106
+  ],
+  "prediction_files": {
+    "Random": "baseline_predictions/Random/test_predictions.npy",
+    "Ridge": "baseline_predictions/Ridge/test_predictions.npy",
+    "BayesianRidge": "baseline_predictions/BayesianRidge/test_predictions.npy",
+    "RandomForest": "baseline_predictions/RandomForest/test_predictions.npy",
+    "LightGBM": "baseline_predictions/LightGBM/test_predictions.npy",
+    "SVR_RBF": "baseline_predictions/SVR_RBF/test_predictions.npy"
+  },
+  "metrics": {
+    "Random": {
+      "spearman_rho": -0.05201904426027156,
+      "spearman_p": 0.5964049662800102,
+      "pearson_r": -0.03905054255721808,
+      "pearson_p": 0.6910470623385986,
+      "r2": -1.1410211881506536,
+      "mae": 0.3811105988310363,
+      "f2_065": 0.2811244979919678,
+      "f2_075": 0.1674641148325359,
+      "f2_085": 0.07462686567164178
+    },
+    "Ridge": {
+      "spearman_rho": 0.5298989848099352,
+      "spearman_p": 5.183892029263825e-09,
+      "pearson_r": 0.5513325620316291,
+      "pearson_p": 9.094252730257616e-10,
+      "r2": 0.2931626439733531,
+      "mae": 0.22161219125459716,
+      "f2_065": 0.4098360655737705,
+      "f2_075": 0.20304568527918782,
+      "f2_085": 0.08
+    },
+    "BayesianRidge": {
+      "spearman_rho": 0.5507267551704159,
+      "spearman_p": 9.569056235195682e-10,
+      "pearson_r": 0.5639114606871393,
+      "pearson_p": 3.0881239359289186e-10,
+      "r2": 0.29336255950069234,
+      "mae": 0.22561890863935924,
+      "f2_065": 0.4132231404958678,
+      "f2_075": 0.13089005235602094,
+      "f2_085": 0.04065040650406504
+    },
+    "RandomForest": {
+      "spearman_rho": 0.5303221905937476,
+      "spearman_p": 5.014604742968254e-09,
+      "pearson_r": 0.574351928242507,
+      "pearson_p": 1.2166521260632e-10,
+      "r2": 0.3176961330141781,
+      "mae": 0.21699355494198103,
+      "f2_065": 0.5984555984555985,
+      "f2_075": 0.32178217821782173,
+      "f2_085": 0.04132231404958678
+    },
+    "LightGBM": {
+      "spearman_rho": 0.5488122528150742,
+      "spearman_p": 1.123125073740569e-09,
+      "pearson_r": 0.5920194383415005,
+      "pearson_p": 2.3298004977955034e-11,
+      "r2": 0.33291185194110773,
+      "mae": 0.21102133849034038,
+      "f2_065": 0.5813953488372093,
+      "f2_075": 0.32178217821782173,
+      "f2_085": 0.08130081300813008
+    },
+    "SVR_RBF": {
+      "spearman_rho": 0.5424238607451446,
+      "spearman_p": 1.902807785286432e-09,
+      "pearson_r": 0.5803208621350661,
+      "pearson_p": 7.037821691918666e-11,
+      "r2": 0.33632071019874654,
+      "mae": 0.20712320021316236,
+      "f2_065": 0.6321839080459771,
+      "f2_075": 0.34313725490196084,
+      "f2_085": 0.04065040650406504
+    }
+  },
+  "paper_spearman_reference": {
+    "Random": -0.052,
+    "Ridge": 0.53,
+    "BayesianRidge": 0.551,
+    "RandomForest": 0.532,
+    "LightGBM": 0.549,
+    "SVR_RBF": 0.542
+  },
+  "rounded_spearman_matches_paper_reference": {
+    "Random": true,
+    "Ridge": true,
+    "BayesianRidge": true,
+    "RandomForest": false,
+    "LightGBM": true,
+    "SVR_RBF": true
+  }
+}

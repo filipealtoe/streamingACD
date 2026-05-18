@@ -1,0 +1,37 @@
+\begin{table}[ht]
+    \centering
+    \footnotesize
+    \resizebox{\columnwidth}{!}{%
+    \begin{tabular}{lcccccc}
+    \toprule
+    \textbf{Baseline} & \textbf{Spearman $\rho$} $\uparrow$ & \textbf{R²} $\uparrow$ & \textbf{MAE} $\downarrow$ & \textbf{F2$_{\tau=0.65}$} $\uparrow$ & \textbf{F2$_{\tau=0.75}$} $\uparrow$ & \textbf{F2$_{\tau=0.85}$} $\uparrow$ \\
+    \midrule
+    \multicolumn{7}{l}{\textit{Trivial Baseline}} \\
+    Random & -0.052 & -1.141 & 0.381 & 0.281 & 0.167 & 0.075 \\
+    \midrule
+    \multicolumn{7}{l}{\textit{Linear Models}} \\
+    Ridge & 0.530 & 0.293 & 0.222 & 0.410 & 0.203 & 0.080 \\
+    BayesianRidge & \textbf{0.551} & 0.293 & 0.226 & 0.413 & 0.131 & 0.041 \\
+    \midrule
+    \multicolumn{7}{l}{\textit{Tree-Based Models}} \\
+    RandomForest & 0.532 & 0.319 & 0.217 & 0.547 & 0.322 & 0.041 \\
+    LightGBM & 0.549 & 0.333 & 0.211 & 0.581 & 0.322 & 0.081 \\
+    \midrule
+    \multicolumn{7}{l}{\textit{Kernel Methods}} \\
+    SVR (RBF) & 0.542 & \textbf{0.336} & \textbf{0.207} & \textbf{0.632} & \textbf{0.343} & 0.041 \\
+    \midrule
+    \multicolumn{7}{l}{\textit{Sequence / Point Process}} \\
+    LSTM & 0.016 & -0.021 & 0.280 & 0.263 & 0.180 & 0.041 \\
+    GRU & 0.082 & -0.023 & 0.281 & 0.335 & 0.149 & 0.041 \\
+    Hawkes (HIP) & 0.247 & -3.491 & 0.587 & 0.000 & 0.000 & 0.000 \\
+    \midrule
+    \multicolumn{7}{l}{\textit{Text-Based}} \\
+    BERTweet & -0.086 & -0.265 & 0.287 & 0.239 & 0.098 & 0.000 \\
+    BERTweet + Features & 0.510 & 0.255 & 0.222 & 0.541 & 0.256 & \textbf{0.111} \\
+    \bottomrule
+    \end{tabular}%
+    }
+    \vspace{0.3em}
+    \caption{Preventable Spread Ratio (PSR) prediction results. PSR $= (E_{\text{final}} - E_{\text{detect}}) / E_{\text{final}}$ measures the fraction of engagement occurring after anomaly detection. F2 thresholds ($\tau$) define high-PSR classification: $\tau{=}0.65$ means 65\% of spread remains preventable. Evaluated on 529 clusters (423 train / 106 test) using 42 engineered features.}
+    \label{tab:virality_results}
+\end{table}

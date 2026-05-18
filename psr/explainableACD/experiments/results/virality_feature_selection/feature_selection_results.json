@@ -1,0 +1,188 @@
+{
+  "feature_cols": [
+    "cumulative_tweets",
+    "cumulative_engagement",
+    "windows_since_start",
+    "mean_tweets_per_window",
+    "mean_engagement_per_window",
+    "growth_rate",
+    "acceleration",
+    "engagement_velocity",
+    "max_followers_seen",
+    "avg_followers_seen",
+    "total_unique_users",
+    "total_verified",
+    "verified_ratio",
+    "z_score_at_detect",
+    "max_z_score_seen",
+    "z_score_count_at_detect",
+    "z_score_engagement_at_detect",
+    "kleinberg_state_at_detect",
+    "hour_of_day",
+    "is_weekend",
+    "unique_countries_predetect",
+    "usa_ratio_predetect",
+    "geographic_entropy_predetect",
+    "has_international_spread",
+    "account_age_avg_days",
+    "account_age_std_days",
+    "account_age_min_days",
+    "avg_retweets_per_tweet",
+    "max_retweets_per_tweet",
+    "avg_likes_per_tweet",
+    "rt_like_ratio",
+    "engagement_skewness",
+    "posting_hour_entropy",
+    "cluster_similarity_avg",
+    "cluster_similarity_min"
+  ],
+  "selected_features": [
+    "is_weekend",
+    "acceleration",
+    "unique_countries_predetect",
+    "cumulative_engagement",
+    "max_followers_seen",
+    "kleinberg_state_at_detect",
+    "max_retweets_per_tweet",
+    "total_verified"
+  ],
+  "selection_scores": [
+    0.30675126758478466,
+    0.3965937944629275,
+    0.43342128098453514,
+    0.4841766712051344,
+    0.5160404807557702,
+    0.5300845480573134,
+    0.5350406335267595,
+    0.5362219790552383
+  ],
+  "results": [
+    {
+      "model": "Ridge",
+      "feature_set": "all",
+      "n_features": 35,
+      "spearman_rho": 0.4524871147884678,
+      "r2": 0.14888471364974976,
+      "mae": 0.2525210380554199,
+      "f2_065": 0.5066079295154186,
+      "f2_075": 0.10752688172043011,
+      "f2_085": 0.03875968992248062
+    },
+    {
+      "model": "RandomForest",
+      "feature_set": "all",
+      "n_features": 35,
+      "spearman_rho": 0.4854773456915296,
+      "r2": 0.24252908061579204,
+      "mae": 0.2410297846287292,
+      "f2_065": 0.48034934497816595,
+      "f2_075": 0.2393617021276596,
+      "f2_085": 0.0
+    },
+    {
+      "model": "XGBoost",
+      "feature_set": "all",
+      "n_features": 35,
+      "spearman_rho": 0.37623877109773196,
+      "r2": 0.15637695789337158,
+      "mae": 0.24585826694965363,
+      "f2_065": 0.5364806866952789,
+      "f2_075": 0.26455026455026454,
+      "f2_085": 0.07633587786259542
+    },
+    {
+      "model": "Ridge",
+      "feature_set": "selected",
+      "n_features": 8,
+      "features": [
+        "is_weekend",
+        "acceleration",
+        "unique_countries_predetect",
+        "cumulative_engagement",
+        "max_followers_seen",
+        "kleinberg_state_at_detect",
+        "max_retweets_per_tweet",
+        "total_verified"
+      ],
+      "spearman_rho": 0.3851362585404331,
+      "r2": 0.08800554275512695,
+      "mae": 0.2554731070995331,
+      "f2_065": 0.32710280373831774,
+      "f2_075": 0.0,
+      "f2_085": 0.0
+    },
+    {
+      "model": "RandomForest",
+      "feature_set": "selected",
+      "n_features": 8,
+      "features": [
+        "is_weekend",
+        "acceleration",
+        "unique_countries_predetect",
+        "cumulative_engagement",
+        "max_followers_seen",
+        "kleinberg_state_at_detect",
+        "max_retweets_per_tweet",
+        "total_verified"
+      ],
+      "spearman_rho": 0.4826660217996682,
+      "r2": 0.24960521096009436,
+      "mae": 0.23784498997730738,
+      "f2_065": 0.5579399141630901,
+      "f2_075": 0.23684210526315788,
+      "f2_085": 0.0
+    },
+    {
+      "model": "XGBoost",
+      "feature_set": "selected",
+      "n_features": 8,
+      "features": [
+        "is_weekend",
+        "acceleration",
+        "unique_countries_predetect",
+        "cumulative_engagement",
+        "max_followers_seen",
+        "kleinberg_state_at_detect",
+        "max_retweets_per_tweet",
+        "total_verified"
+      ],
+      "spearman_rho": 0.4733654771681697,
+      "r2": 0.184517502784729,
+      "mae": 0.2412717640399933,
+      "f2_065": 0.6329113924050633,
+      "f2_075": 0.3282828282828283,
+      "f2_085": 0.2517985611510791
+    },
+    {
+      "model": "XGBClassifier(\u03c4=0.65)",
+      "feature_set": "selected",
+      "threshold": 0.65,
+      "spearman_rho": 0.4659290720348589,
+      "mae": 0.25764200091362,
+      "f2": 0.6882591093117408
+    },
+    {
+      "model": "XGBClassifier(\u03c4=0.75)",
+      "feature_set": "selected",
+      "threshold": 0.75,
+      "spearman_rho": 0.44129220136962183,
+      "mae": 0.3099108338356018,
+      "f2": 0.5373831775700935
+    },
+    {
+      "model": "XGBClassifier(\u03c4=0.85)",
+      "feature_set": "selected",
+      "threshold": 0.85,
+      "spearman_rho": 0.5257729881415432,
+      "mae": 0.3766327202320099,
+      "f2": 0.4666666666666667
+    }
+  ],
+  "config": {
+    "data_dir": "data/pipeline_output/streaming_full/2026-01-17_03-56",
+    "test_size": 0.2,
+    "random_state": 42,
+    "n_samples": 529,
+    "n_features": 35
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "method": "Regenerated missing PSR baseline predictions from local raw virality artifacts.",
+  "raw_data": "/Users/sergiopinto/explainableACD/data/pipeline_output/streaming_full/2026-01-17_03-56",
+  "derived_arrays": "/Users/sergiopinto/repro/filipe_psr_virality_handoff_2026-05-18/derived_arrays",
+  "complete_feature_source_for_lstm_gru_hawkes": "/Users/sergiopinto/repro/filipe_psr_virality_handoff_2026-05-18/explainableACD/experiments/results/virality_feature_selection/features_leakfree.parquet",
+  "tuned_feature_source_for_bertweet": "/Users/sergiopinto/repro/filipe_psr_virality_handoff_2026-05-18/reproducibility/source_artifacts/virality/features_enhanced.parquet",
+  "note": "test_predictions.npy is length 106 for each baseline. It contains NaN where the original script did not evaluate a cluster. Use valid_mask.npy/test_predictions_eval_subset.npy for metric replication.",
+  "metrics": {
+    "LSTM": {
+      "valid_n": 90,
+      "spearman_rho": 0.0482117133802527,
+      "spearman_p": 0.6518125418489752,
+      "pearson_r": 0.19181807339191437,
+      "pearson_p": 0.0701150145045445,
+      "r2": -0.0006831863442053887,
+      "mae": 0.2757742702960968,
+      "f2_065": 0.36269430051813467,
+      "f2_075": 0.1785714285714286,
+      "f2_085": 0.04065040650406504
+    },
+    "GRU": {
+      "valid_n": 90,
+      "spearman_rho": 0.09728773099559615,
+      "spearman_p": 0.36165429475823274,
+      "pearson_r": 0.14266687631607056,
+      "pearson_p": 0.17978719811058919,
+      "r2": -0.028222858273932117,
+      "mae": 0.2806464433670044,
+      "f2_065": 0.36269430051813467,
+      "f2_075": 0.14792899408284022,
+      "f2_085": 0.04132231404958678
+    },
+    "HIP_Hawkes": {
+      "valid_n": 77,
+      "spearman_rho": 0.2471738787528261,
+      "spearman_p": 0.03021851053026382,
+      "pearson_r": 0.007378128357231617,
+      "pearson_p": 0.9492212826827838,
+      "r2": -3.491218063808666,
+      "mae": 0.5874402523040771,
+      "f2_065": 0.0,
+      "f2_075": 0.0,
+      "f2_085": 0.0
+    },
+    "BERTweet": {
+      "valid_n": 106,
+      "spearman_rho": -0.08577560799093278,
+      "spearman_p": 0.38197904936336646,
+      "pearson_r": -0.0786449784265746,
+      "pearson_p": 0.42293409748255795,
+      "r2": -0.2651475243278134,
+      "mae": 0.28729666574807616,
+      "f2_065": 0.23923444976076558,
+      "f2_075": 0.09803921568627451,
+      "f2_085": 0.0
+    },
+    "BERTweet_plus_features": {
+      "valid_n": 106,
+      "spearman_rho": 0.5096406241599298,
+      "spearman_p": 2.411578911910085e-08,
+      "pearson_r": 0.5065311190960277,
+      "pearson_p": 3.026756456171453e-08,
+      "r2": 0.25525928614284177,
+      "mae": 0.22190650785331298,
+      "f2_065": 0.5405405405405406,
+      "f2_075": 0.2564102564102564,
+      "f2_085": 0.11111111111111112
+    }
+  },
+  "sequence_counts": {
+    "train": 360,
+    "test": 90
+  },
+  "hawkes_counts": {
+    "train": 340,
+    "test": 77
+  },
+  "bertweet_counts": {
+    "clusters_with_text": 529,
+    "train": 423,
+    "test": 106
+  }
+}
