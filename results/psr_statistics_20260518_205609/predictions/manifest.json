@@ -1,0 +1,104 @@
+{
+  "n_test_target": 106,
+  "baselines": [
+    {
+      "name": "Random",
+      "display_name": "Random",
+      "family": "Trivial",
+      "predictions_sha256": "4fbdafd26ae173b2b481bfb02c7371f18a96a630ce4dc7d3dcb85059a9f7fc65",
+      "n_full": 106,
+      "n_finite": 106,
+      "source": "C:/StreamingACD/psr/baseline_predictions/Random/test_predictions.npy"
+    },
+    {
+      "name": "Ridge",
+      "display_name": "Ridge",
+      "family": "Linear",
+      "predictions_sha256": "f0ac58afae925012c1484b5f48d1865422eaf3802125b4d110f5f5862fada9dd",
+      "n_full": 106,
+      "n_finite": 106,
+      "source": "C:/StreamingACD/psr/baseline_predictions/Ridge/test_predictions.npy"
+    },
+    {
+      "name": "BayesianRidge",
+      "display_name": "BayesianRidge",
+      "family": "Linear",
+      "predictions_sha256": "73b2ba91d62b434aa4b295d97cc20b4eae506d3fc9e39dd21d0c1b14f58a6d83",
+      "n_full": 106,
+      "n_finite": 106,
+      "source": "C:/StreamingACD/psr/baseline_predictions/BayesianRidge/test_predictions.npy"
+    },
+    {
+      "name": "RandomForest",
+      "display_name": "RandomForest",
+      "family": "Tree-Based",
+      "predictions_sha256": "233b704699604eec1fe1e9674a177532153080869db57690733800acf0afb0a8",
+      "n_full": 106,
+      "n_finite": 106,
+      "source": "C:/StreamingACD/psr/baseline_predictions/RandomForest/test_predictions.npy"
+    },
+    {
+      "name": "LightGBM",
+      "display_name": "LightGBM",
+      "family": "Tree-Based",
+      "predictions_sha256": "78003ecd698db45b9bfda7af388ad7bdefadfc73a6b146cbfc4f556d6f975226",
+      "n_full": 106,
+      "n_finite": 106,
+      "source": "C:/StreamingACD/psr/baseline_predictions/LightGBM/test_predictions.npy"
+    },
+    {
+      "name": "SVR_RBF",
+      "display_name": "SVR (RBF)",
+      "family": "Kernel",
+      "predictions_sha256": "7f3059def376c9cd0431db2b81a059786f015f1a589eeb215c440e74af512061",
+      "n_full": 106,
+      "n_finite": 106,
+      "source": "C:/StreamingACD/psr/baseline_predictions/SVR_RBF/test_predictions.npy"
+    },
+    {
+      "name": "LSTM",
+      "display_name": "LSTM",
+      "family": "Sequence",
+      "predictions_sha256": "fc074e511f8645e1c85350c31dc4ad352601138fe56fa2fb2ebf1ec365cb1832",
+      "n_full": 106,
+      "n_finite": 90,
+      "source": "C:/StreamingACD/psr/reproduced_missing_predictions/LSTM/test_predictions.npy"
+    },
+    {
+      "name": "GRU",
+      "display_name": "GRU",
+      "family": "Sequence",
+      "predictions_sha256": "b3e604b215526422d5f2df4423fc22137ff881c887c4a67a07657797af318c1b",
+      "n_full": 106,
+      "n_finite": 90,
+      "source": "C:/StreamingACD/psr/reproduced_missing_predictions/GRU/test_predictions.npy"
+    },
+    {
+      "name": "HIP_Hawkes",
+      "display_name": "Hawkes (HIP)",
+      "family": "Point Process",
+      "predictions_sha256": "3104b36c452d88aad920beb911be87f945a7a4118fbcd962108eefe43cb3f1e6",
+      "n_full": 106,
+      "n_finite": 77,
+      "source": "C:/StreamingACD/psr/reproduced_missing_predictions/HIP_Hawkes/test_predictions.npy"
+    },
+    {
+      "name": "BERTweet",
+      "display_name": "BERTweet",
+      "family": "Text-Based",
+      "predictions_sha256": "9d025734f0c539b2afb7ebd90a8da798c0cafe157ebbd63d9cc1922d420ed11b",
+      "n_full": 106,
+      "n_finite": 106,
+      "source": "C:/StreamingACD/psr/reproduced_missing_predictions/BERTweet/test_predictions.npy"
+    },
+    {
+      "name": "BERTweet_plus_features",
+      "display_name": "BERTweet + Features",
+      "family": "Text-Based",
+      "predictions_sha256": "0b04080251bf981f00ca030593f0aaf08ad8fb5ce48e489f639034258559f51c",
+      "n_full": 106,
+      "n_finite": 106,
+      "source": "C:/StreamingACD/psr/reproduced_missing_predictions/BERTweet_plus_features/test_predictions.npy"
+    }
+  ]
+}

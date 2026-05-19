@@ -1,0 +1,28 @@
+% Option 1: compact with significance asterisks on Spearman rho
+% Column order: Baseline & rho & R^2 & MAE & F2@0.65 & F2@0.75 & F2@0.85
+Random & -0.052 & -1.141 & 0.381 & 0.281 & 0.167 & 0.075 \\
+Ridge & 0.530\textsuperscript{***} & 0.293 & 0.222 & 0.410 & 0.203 & 0.080 \\
+BayesianRidge & 0.551\textsuperscript{***} & 0.293 & 0.226 & 0.413 & 0.131 & 0.041 \\
+RandomForest & 0.530\textsuperscript{***} & 0.318 & 0.217 & 0.598 & 0.322 & 0.041 \\
+LightGBM & 0.549\textsuperscript{***} & 0.333 & 0.211 & 0.581 & 0.322 & 0.081 \\
+SVR (RBF) & 0.542\textsuperscript{***} & 0.336 & 0.207 & 0.632 & 0.343 & 0.041 \\
+LSTM & 0.048 & -0.001 & 0.276 & 0.363 & 0.179 & 0.041 \\
+GRU & 0.097 & -0.028 & 0.281 & 0.363 & 0.148 & 0.041 \\
+Hawkes (HIP) & 0.247\textsuperscript{*} & -3.491 & 0.587 & 0.000 & 0.000 & 0.000 \\
+BERTweet & -0.086 & -0.265 & 0.287 & 0.239 & 0.098 & 0.000 \\
+BERTweet + Features & 0.510\textsuperscript{***} & 0.255 & 0.222 & 0.541 & 0.256 & 0.111 \\
+% Footnote: \textsuperscript{*}$p<0.05$; \textsuperscript{**}$p<0.01$; \textsuperscript{***}$p<0.001$. 95\% CIs for all metrics in supplementary materials.
+
+% Option 2: expanded with Spearman rho 95% CI in brackets
+% Column order: Baseline & rho [CI] & R^2 & MAE & F2@0.65 & F2@0.75 & F2@0.85
+Random & -0.052\,[-0.23,0.13] & -1.141 & 0.381 & 0.281 & 0.167 & 0.075 \\
+Ridge & 0.530\,[0.37,0.67] & 0.293 & 0.222 & 0.410 & 0.203 & 0.080 \\
+BayesianRidge & 0.551\,[0.40,0.67] & 0.293 & 0.226 & 0.413 & 0.131 & 0.041 \\
+RandomForest & 0.530\,[0.37,0.66] & 0.318 & 0.217 & 0.598 & 0.322 & 0.041 \\
+LightGBM & 0.549\,[0.38,0.67] & 0.333 & 0.211 & 0.581 & 0.322 & 0.081 \\
+SVR (RBF) & 0.542\,[0.38,0.68] & 0.336 & 0.207 & 0.632 & 0.343 & 0.041 \\
+LSTM & 0.048\,[-0.14,0.26] & -0.001 & 0.276 & 0.363 & 0.179 & 0.041 \\
+GRU & 0.097\,[-0.11,0.31] & -0.028 & 0.281 & 0.363 & 0.148 & 0.041 \\
+Hawkes (HIP) & 0.247\,[0.00,0.46] & -3.491 & 0.587 & 0.000 & 0.000 & 0.000 \\
+BERTweet & -0.086\,[-0.28,0.11] & -0.265 & 0.287 & 0.239 & 0.098 & 0.000 \\
+BERTweet + Features & 0.510\,[0.36,0.63] & 0.255 & 0.222 & 0.541 & 0.256 & 0.111 \\

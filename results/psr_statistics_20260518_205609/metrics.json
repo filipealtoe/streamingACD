@@ -1,0 +1,787 @@
+{
+  "test_n": 106,
+  "n_bootstrap": 1000,
+  "bootstrap_seed": 42,
+  "thresholds": [
+    0.65,
+    0.75,
+    0.85
+  ],
+  "baselines": [
+    {
+      "name": "Random",
+      "display_name": "Random",
+      "family": "Trivial",
+      "source_predictions": "C:/StreamingACD/psr/baseline_predictions/Random/test_predictions.npy",
+      "n_test": 106,
+      "paper_spearman_rho": -0.052,
+      "sanity_check": {
+        "recomputed_rho_rounded3": -0.052,
+        "paper_rho": -0.052,
+        "abs_diff": 0.0,
+        "status": "OK"
+      },
+      "spearman_rho": {
+        "point": -0.05201904426027156,
+        "p_value": 0.5964049662800102,
+        "ci95": [
+          -0.22700954614849306,
+          0.1322966816233847
+        ]
+      },
+      "pearson_r": {
+        "point": -0.03905054255721804,
+        "p_value": 0.6910470623385998,
+        "ci95": [
+          -0.218674692188764,
+          0.142888477264134
+        ]
+      },
+      "r2": {
+        "point": -1.1410211881506536,
+        "ci95": [
+          -1.8014823924320362,
+          -0.7016248178799648
+        ]
+      },
+      "mae": {
+        "point": 0.3811105988310363,
+        "ci95": [
+          0.336694994159024,
+          0.42839316624735724
+        ]
+      },
+      "f2_at_0.65": {
+        "point": 0.28112449799196787,
+        "ci95": [
+          0.16301831723027377,
+          0.40427217560683243
+        ]
+      },
+      "f2_at_0.75": {
+        "point": 0.1674641148325359,
+        "ci95": [
+          0.07074641243688547,
+          0.27403573006754617
+        ]
+      },
+      "f2_at_0.85": {
+        "point": 0.07462686567164178,
+        "ci95": [
+          0.0,
+          0.1866378335594753
+        ]
+      },
+      "STATUS": "OK"
+    },
+    {
+      "name": "Ridge",
+      "display_name": "Ridge",
+      "family": "Linear",
+      "source_predictions": "C:/StreamingACD/psr/baseline_predictions/Ridge/test_predictions.npy",
+      "n_test": 106,
+      "paper_spearman_rho": 0.53,
+      "sanity_check": {
+        "recomputed_rho_rounded3": 0.53,
+        "paper_rho": 0.53,
+        "abs_diff": 0.0,
+        "status": "OK"
+      },
+      "spearman_rho": {
+        "point": 0.5298989848099352,
+        "p_value": 5.183892029263825e-09,
+        "ci95": [
+          0.3729697781645882,
+          0.6662719256573127
+        ]
+      },
+      "pearson_r": {
+        "point": 0.5513325620316291,
+        "p_value": 9.094252730257672e-10,
+        "ci95": [
+          0.4135004938943365,
+          0.6657275023703062
+        ]
+      },
+      "r2": {
+        "point": 0.2931626439733531,
+        "ci95": [
+          0.12877391700862667,
+          0.4187083893453826
+        ]
+      },
+      "mae": {
+        "point": 0.22161219125459716,
+        "ci95": [
+          0.19411938282661018,
+          0.24862041001466959
+        ]
+      },
+      "f2_at_0.65": {
+        "point": 0.4098360655737705,
+        "ci95": [
+          0.27192412077349315,
+          0.5339898465871192
+        ]
+      },
+      "f2_at_0.75": {
+        "point": 0.20304568527918782,
+        "ci95": [
+          0.07692307692307693,
+          0.33636074415222394
+        ]
+      },
+      "f2_at_0.85": {
+        "point": 0.08,
+        "ci95": [
+          0.0,
+          0.1953125
+        ]
+      },
+      "STATUS": "OK"
+    },
+    {
+      "name": "BayesianRidge",
+      "display_name": "BayesianRidge",
+      "family": "Linear",
+      "source_predictions": "C:/StreamingACD/psr/baseline_predictions/BayesianRidge/test_predictions.npy",
+      "n_test": 106,
+      "paper_spearman_rho": 0.551,
+      "sanity_check": {
+        "recomputed_rho_rounded3": 0.551,
+        "paper_rho": 0.551,
+        "abs_diff": 0.0,
+        "status": "OK"
+      },
+      "spearman_rho": {
+        "point": 0.5507267551704159,
+        "p_value": 9.569056235195682e-10,
+        "ci95": [
+          0.3985236913120384,
+          0.6733109563181716
+        ]
+      },
+      "pearson_r": {
+        "point": 0.5639114606871395,
+        "p_value": 3.088123935928816e-10,
+        "ci95": [
+          0.4413213970785282,
+          0.6691253365699928
+        ]
+      },
+      "r2": {
+        "point": 0.29336255950069234,
+        "ci95": [
+          0.16529502010866615,
+          0.3879248457363498
+        ]
+      },
+      "mae": {
+        "point": 0.22561890863935924,
+        "ci95": [
+          0.1987711594313936,
+          0.250836250618935
+        ]
+      },
+      "f2_at_0.65": {
+        "point": 0.4132231404958678,
+        "ci95": [
+          0.28030893042575283,
+          0.5429987212276214
+        ]
+      },
+      "f2_at_0.75": {
+        "point": 0.13089005235602094,
+        "ci95": [
+          0.02808596447178457,
+          0.23809523809523808
+        ]
+      },
+      "f2_at_0.85": {
+        "point": 0.04065040650406504,
+        "ci95": [
+          0.0,
+          0.13398944805194798
+        ]
+      },
+      "STATUS": "OK"
+    },
+    {
+      "name": "RandomForest",
+      "display_name": "RandomForest",
+      "family": "Tree-Based",
+      "source_predictions": "C:/StreamingACD/psr/baseline_predictions/RandomForest/test_predictions.npy",
+      "n_test": 106,
+      "paper_spearman_rho": 0.532,
+      "sanity_check": {
+        "recomputed_rho_rounded3": 0.53,
+        "paper_rho": 0.532,
+        "abs_diff": 0.002,
+        "status": "OK"
+      },
+      "spearman_rho": {
+        "point": 0.5303221905937476,
+        "p_value": 5.014604742968254e-09,
+        "ci95": [
+          0.37163276577780235,
+          0.6622983771425037
+        ]
+      },
+      "pearson_r": {
+        "point": 0.5743519282425071,
+        "p_value": 1.2166521260631753e-10,
+        "ci95": [
+          0.43513695078708,
+          0.6882386230859068
+        ]
+      },
+      "r2": {
+        "point": 0.3176961330141781,
+        "ci95": [
+          0.13131873243958567,
+          0.45557546308794983
+        ]
+      },
+      "mae": {
+        "point": 0.21699355494198103,
+        "ci95": [
+          0.19247846721918913,
+          0.24293666606780429
+        ]
+      },
+      "f2_at_0.65": {
+        "point": 0.5984555984555985,
+        "ci95": [
+          0.4566162678337975,
+          0.7167847833170413
+        ]
+      },
+      "f2_at_0.75": {
+        "point": 0.3217821782178218,
+        "ci95": [
+          0.17042023495827843,
+          0.45248868778280543
+        ]
+      },
+      "f2_at_0.85": {
+        "point": 0.04132231404958678,
+        "ci95": [
+          0.0,
+          0.1352614296539529
+        ]
+      },
+      "STATUS": "OK"
+    },
+    {
+      "name": "LightGBM",
+      "display_name": "LightGBM",
+      "family": "Tree-Based",
+      "source_predictions": "C:/StreamingACD/psr/baseline_predictions/LightGBM/test_predictions.npy",
+      "n_test": 106,
+      "paper_spearman_rho": 0.549,
+      "sanity_check": {
+        "recomputed_rho_rounded3": 0.549,
+        "paper_rho": 0.549,
+        "abs_diff": 0.0,
+        "status": "OK"
+      },
+      "spearman_rho": {
+        "point": 0.5488122528150742,
+        "p_value": 1.1231250737405651e-09,
+        "ci95": [
+          0.3841865798432373,
+          0.6729684435520337
+        ]
+      },
+      "pearson_r": {
+        "point": 0.5920194383415006,
+        "p_value": 2.3298004977954853e-11,
+        "ci95": [
+          0.4439854218961602,
+          0.7076001132943707
+        ]
+      },
+      "r2": {
+        "point": 0.33291185194110773,
+        "ci95": [
+          0.12624740689701447,
+          0.4817853862510173
+        ]
+      },
+      "mae": {
+        "point": 0.21102133849034038,
+        "ci95": [
+          0.18538208014939475,
+          0.23882622086578026
+        ]
+      },
+      "f2_at_0.65": {
+        "point": 0.5813953488372093,
+        "ci95": [
+          0.4457316371172001,
+          0.6972887992406265
+        ]
+      },
+      "f2_at_0.75": {
+        "point": 0.3217821782178218,
+        "ci95": [
+          0.1843046541366082,
+          0.46116504854368934
+        ]
+      },
+      "f2_at_0.85": {
+        "point": 0.08130081300813008,
+        "ci95": [
+          0.0,
+          0.2066858019498193
+        ]
+      },
+      "STATUS": "OK"
+    },
+    {
+      "name": "SVR_RBF",
+      "display_name": "SVR (RBF)",
+      "family": "Kernel",
+      "source_predictions": "C:/StreamingACD/psr/baseline_predictions/SVR_RBF/test_predictions.npy",
+      "n_test": 106,
+      "paper_spearman_rho": 0.542,
+      "sanity_check": {
+        "recomputed_rho_rounded3": 0.542,
+        "paper_rho": 0.542,
+        "abs_diff": 0.0,
+        "status": "OK"
+      },
+      "spearman_rho": {
+        "point": 0.5424238607451446,
+        "p_value": 1.902807785286432e-09,
+        "ci95": [
+          0.3759914945713247,
+          0.6810719032526721
+        ]
+      },
+      "pearson_r": {
+        "point": 0.5803208621350661,
+        "p_value": 7.03782169191867e-11,
+        "ci95": [
+          0.43692253941266274,
+          0.6991033897331644
+        ]
+      },
+      "r2": {
+        "point": 0.33632071019874654,
+        "ci95": [
+          0.1604247673430646,
+          0.47364576269826075
+        ]
+      },
+      "mae": {
+        "point": 0.20712320021316236,
+        "ci95": [
+          0.18081344233986016,
+          0.23571628180226112
+        ]
+      },
+      "f2_at_0.65": {
+        "point": 0.632183908045977,
+        "ci95": [
+          0.4965430343758077,
+          0.740758343895226
+        ]
+      },
+      "f2_at_0.75": {
+        "point": 0.3431372549019608,
+        "ci95": [
+          0.19441758747697974,
+          0.487852024138798
+        ]
+      },
+      "f2_at_0.85": {
+        "point": 0.04065040650406504,
+        "ci95": [
+          0.0,
+          0.13398944805194798
+        ]
+      },
+      "STATUS": "OK"
+    },
+    {
+      "name": "LSTM",
+      "display_name": "LSTM",
+      "family": "Sequence",
+      "source_predictions": "C:/StreamingACD/psr/reproduced_missing_predictions/LSTM/test_predictions.npy",
+      "n_test": 90,
+      "paper_spearman_rho": 0.016,
+      "sanity_check": {
+        "recomputed_rho_rounded3": 0.048,
+        "paper_rho": 0.016,
+        "abs_diff": 0.032,
+        "status": "MISMATCH"
+      },
+      "spearman_rho": {
+        "point": 0.0482117133802527,
+        "p_value": 0.6518125418489752,
+        "ci95": [
+          -0.14183545952332857,
+          0.25530966317790077
+        ]
+      },
+      "pearson_r": {
+        "point": 0.19181808395416844,
+        "p_value": 0.07011499877828041,
+        "ci95": [
+          0.003775656087608931,
+          0.36627663700576485
+        ]
+      },
+      "r2": {
+        "point": -0.0006831850068786949,
+        "ci95": [
+          -0.1411165458683579,
+          0.12280407234445435
+        ]
+      },
+      "mae": {
+        "point": 0.2757742459161414,
+        "ci95": [
+          0.2421953431175401,
+          0.3095894212011869
+        ]
+      },
+      "f2_at_0.65": {
+        "point": 0.3626943005181347,
+        "ci95": [
+          0.2121091871091871,
+          0.5122407111921586
+        ]
+      },
+      "f2_at_0.75": {
+        "point": 0.17857142857142858,
+        "ci95": [
+          0.06096637102734664,
+          0.31432330827067667
+        ]
+      },
+      "f2_at_0.85": {
+        "point": 0.04065040650406504,
+        "ci95": [
+          0.0,
+          0.13400501467710366
+        ]
+      },
+      "STATUS": "MISMATCH"
+    },
+    {
+      "name": "GRU",
+      "display_name": "GRU",
+      "family": "Sequence",
+      "source_predictions": "C:/StreamingACD/psr/reproduced_missing_predictions/GRU/test_predictions.npy",
+      "n_test": 90,
+      "paper_spearman_rho": 0.082,
+      "sanity_check": {
+        "recomputed_rho_rounded3": 0.097,
+        "paper_rho": 0.082,
+        "abs_diff": 0.015,
+        "status": "MISMATCH"
+      },
+      "spearman_rho": {
+        "point": 0.09728773099559615,
+        "p_value": 0.36165429475823274,
+        "ci95": [
+          -0.106014167653529,
+          0.3108087316040006
+        ]
+      },
+      "pearson_r": {
+        "point": 0.1426668838420237,
+        "p_value": 0.17978717491066812,
+        "ci95": [
+          -0.03181083166462762,
+          0.3376340701345099
+        ]
+      },
+      "r2": {
+        "point": -0.028222859344601448,
+        "ci95": [
+          -0.1853612734544398,
+          0.09025703483726472
+        ]
+      },
+      "mae": {
+        "point": 0.28064643686844243,
+        "ci95": [
+          0.24678293568832388,
+          0.3137302232187035
+        ]
+      },
+      "f2_at_0.65": {
+        "point": 0.3626943005181347,
+        "ci95": [
+          0.21504551751434792,
+          0.5154696962692431
+        ]
+      },
+      "f2_at_0.75": {
+        "point": 0.14792899408284024,
+        "ci95": [
+          0.033783783783783786,
+          0.2723196120981961
+        ]
+      },
+      "f2_at_0.85": {
+        "point": 0.04132231404958678,
+        "ci95": [
+          0.0,
+          0.1352289789789789
+        ]
+      },
+      "STATUS": "MISMATCH"
+    },
+    {
+      "name": "HIP_Hawkes",
+      "display_name": "Hawkes (HIP)",
+      "family": "Point Process",
+      "source_predictions": "C:/StreamingACD/psr/reproduced_missing_predictions/HIP_Hawkes/test_predictions.npy",
+      "n_test": 77,
+      "paper_spearman_rho": 0.247,
+      "sanity_check": {
+        "recomputed_rho_rounded3": 0.247,
+        "paper_rho": 0.247,
+        "abs_diff": 0.0,
+        "status": "OK"
+      },
+      "spearman_rho": {
+        "point": 0.2471738787528261,
+        "p_value": 0.03021851053026382,
+        "ci95": [
+          0.00429919610421244,
+          0.46199638431357204
+        ]
+      },
+      "pearson_r": {
+        "point": 0.007378139797987526,
+        "p_value": 0.9492212040479671,
+        "ci95": [
+          -0.09043470396019979,
+          0.36423229540696206
+        ]
+      },
+      "r2": {
+        "point": -3.4912179661912734,
+        "ci95": [
+          -5.270824083464676,
+          -2.464306540121419
+        ]
+      },
+      "mae": {
+        "point": 0.587440224504344,
+        "ci95": [
+          0.5123754938732359,
+          0.6534866852742504
+        ]
+      },
+      "f2_at_0.65": {
+        "point": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "f2_at_0.75": {
+        "point": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "f2_at_0.85": {
+        "point": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "STATUS": "OK"
+    },
+    {
+      "name": "BERTweet",
+      "display_name": "BERTweet",
+      "family": "Text-Based",
+      "source_predictions": "C:/StreamingACD/psr/reproduced_missing_predictions/BERTweet/test_predictions.npy",
+      "n_test": 106,
+      "paper_spearman_rho": -0.086,
+      "sanity_check": {
+        "recomputed_rho_rounded3": -0.086,
+        "paper_rho": -0.086,
+        "abs_diff": 0.0,
+        "status": "OK"
+      },
+      "spearman_rho": {
+        "point": -0.08577560799093278,
+        "p_value": 0.38197904936336635,
+        "ci95": [
+          -0.2829996936291005,
+          0.11004986234305071
+        ]
+      },
+      "pearson_r": {
+        "point": -0.07864497842657456,
+        "p_value": 0.42293409748255684,
+        "ci95": [
+          -0.2769511027034258,
+          0.11980788217721233
+        ]
+      },
+      "r2": {
+        "point": -0.2651475243278134,
+        "ci95": [
+          -0.46799055610967044,
+          -0.09726295281252796
+        ]
+      },
+      "mae": {
+        "point": 0.28729666574807616,
+        "ci95": [
+          0.2519337485978784,
+          0.32478062266401614
+        ]
+      },
+      "f2_at_0.65": {
+        "point": 0.23923444976076555,
+        "ci95": [
+          0.11842830375840406,
+          0.3694809341361065
+        ]
+      },
+      "f2_at_0.75": {
+        "point": 0.09803921568627451,
+        "ci95": [
+          0.0,
+          0.20833333333333334
+        ]
+      },
+      "f2_at_0.85": {
+        "point": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "STATUS": "OK"
+    },
+    {
+      "name": "BERTweet_plus_features",
+      "display_name": "BERTweet + Features",
+      "family": "Text-Based",
+      "source_predictions": "C:/StreamingACD/psr/reproduced_missing_predictions/BERTweet_plus_features/test_predictions.npy",
+      "n_test": 106,
+      "paper_spearman_rho": 0.51,
+      "sanity_check": {
+        "recomputed_rho_rounded3": 0.51,
+        "paper_rho": 0.51,
+        "abs_diff": 0.0,
+        "status": "OK"
+      },
+      "spearman_rho": {
+        "point": 0.5096406241599298,
+        "p_value": 2.4115789119100847e-08,
+        "ci95": [
+          0.355550876952927,
+          0.6311747381877876
+        ]
+      },
+      "pearson_r": {
+        "point": 0.5065311190960278,
+        "p_value": 3.026756456171395e-08,
+        "ci95": [
+          0.367892771446619,
+          0.6291438547644784
+        ]
+      },
+      "r2": {
+        "point": 0.25525928614284177,
+        "ci95": [
+          0.09683938903330482,
+          0.37461122686398557
+        ]
+      },
+      "mae": {
+        "point": 0.22190650785331298,
+        "ci95": [
+          0.19361030956142836,
+          0.25045033765690483
+        ]
+      },
+      "f2_at_0.65": {
+        "point": 0.5405405405405406,
+        "ci95": [
+          0.4086306330472103,
+          0.6681059311933895
+        ]
+      },
+      "f2_at_0.75": {
+        "point": 0.2564102564102564,
+        "ci95": [
+          0.10712386018237081,
+          0.4091095380029806
+        ]
+      },
+      "f2_at_0.85": {
+        "point": 0.1111111111111111,
+        "ci95": [
+          0.0,
+          0.2756452318460192
+        ]
+      },
+      "STATUS": "OK"
+    }
+  ],
+  "pairwise_mcnemar": {
+    "tau": 0.65,
+    "top_3_by_f2": [
+      "SVR_RBF",
+      "RandomForest",
+      "LightGBM"
+    ],
+    "tests": [
+      {
+        "baseline_a": "SVR_RBF",
+        "baseline_b": "RandomForest",
+        "tau": 0.65,
+        "n_common": 106,
+        "table_a_correct_b_correct": 60,
+        "table_a_correct_b_wrong": 13,
+        "table_a_wrong_b_correct": 11,
+        "table_a_wrong_b_wrong": 22,
+        "statistic": 11.0,
+        "p_value": 0.8388197422027588,
+        "exact": true
+      },
+      {
+        "baseline_a": "SVR_RBF",
+        "baseline_b": "LightGBM",
+        "tau": 0.65,
+        "n_common": 106,
+        "table_a_correct_b_correct": 59,
+        "table_a_correct_b_wrong": 14,
+        "table_a_wrong_b_correct": 11,
+        "table_a_wrong_b_wrong": 22,
+        "statistic": 11.0,
+        "p_value": 0.6900379657745361,
+        "exact": true
+      },
+      {
+        "baseline_a": "RandomForest",
+        "baseline_b": "LightGBM",
+        "tau": 0.65,
+        "n_common": 106,
+        "table_a_correct_b_correct": 63,
+        "table_a_correct_b_wrong": 8,
+        "table_a_wrong_b_correct": 7,
+        "table_a_wrong_b_wrong": 28,
+        "statistic": 7.0,
+        "p_value": 1.0,
+        "exact": true
+      }
+    ]
+  }
+}
