@@ -1,0 +1,131 @@
+[
+  {
+    "claim_id": "97027e06-4745-43b8-ba1a-3c12c18c50c8",
+    "claim_text": "Counting mail-in ballots in key battleground states will skew the election results in favor of Trump.",
+    "trigger_cluster_id": 23761,
+    "cluster_ids": [
+      "23761"
+    ],
+    "total_tweets": 24,
+    "total_engagement": 3509,
+    "detection_z_score": 3.367916684571306,
+    "is_viral": true,
+    "viral_confidence": 0.85,
+    "formation_ts": "2020-10-19 20:00:00",
+    "detect_ts": "2020-11-04 07:00:00",
+    "peak_ts": "2020-11-04 12:00:00",
+    "lead_time_hours": 5.0,
+    "engagement_at_detect": 30,
+    "engagement_at_peak": 3479,
+    "psr": 0.9929837518463811,
+    "e_detect": 38,
+    "e_final": 5416,
+    "sample_post_texts": [
+      "Indeed. The Math does not lie. Please vote, Pennsylvania. Vote #JoeBiden and Democrats in every race. We're all counting on you.\n\n#Voterizer #OctoberVoter\n#AmericaNeedsPennsylvania https://t.co/h5oigh8SME",
+      "Excuse my ignorance, someone explain this shit show in America..first to 270 right..? Surely count everything and the highest seats win?? How do they decifer what gets counted first? Confused \ud83e\udd37\u200d\u2642\ufe0f\ud83e\udd37\u200d\u2642\ufe0f #VoteCount #Vote2020 #Trump #binden",
+      "What???!!! Is this a sign Republican Ted Bundy is working from beyond?  \ud83d\ude02 More votes to be counted. He really isn\u2019t happy about the election results in Washington State #tedbundy #serialkillers #truecrime #Election2020 #ElectionResults2020 #JoeBiden #DonaldTrump https://t.co/g3YOurETsr",
+      "#CNN : We still don't know who the next #president will be. Here's why that shows the system is working. \nAnd this is all a) totally expected + b) totally normal.\nState-by-state counting of #votes can often drag for hours or days. #Trump #Biden #election\n\nhttps://t.co/zkTyDvIJks",
+      "President #Trump's 'digital yelling' in context:\n- Stop count in #Georgia, #Pennsylvania (shrinking lead to #Biden)\n- Continue count in #Arizona (hope to catchup to #Biden)\n\nAnother battleground is #Nevada where #Biden has narrow lead.\n\n#USElectionResults #USElection2020 https://t.co/pLrUyWUNjf"
+    ],
+    "sample_post_engagements": [
+      8,
+      0,
+      3,
+      0,
+      1
+    ],
+    "sample_post_similarities": [
+      1.0,
+      0.65159672498703,
+      0.6546297669410706,
+      0.6561046838760376,
+      0.6568608283996582
+    ]
+  },
+  {
+    "claim_id": "b30caa30-a804-42d9-8af9-fb670d242ec6",
+    "claim_text": "Joe Biden is unexpectedly leading in early vote counts in Kentucky, potentially challenging Donald Trump's expected win.",
+    "trigger_cluster_id": 25588,
+    "cluster_ids": [
+      "25588"
+    ],
+    "total_tweets": 91,
+    "total_engagement": 194,
+    "detection_z_score": 4.2932183610632215,
+    "is_viral": true,
+    "viral_confidence": 0.85,
+    "formation_ts": "2020-10-20 10:00:00",
+    "detect_ts": "2020-11-03 23:00:00",
+    "peak_ts": "2020-11-07 19:00:00",
+    "lead_time_hours": 92.0,
+    "engagement_at_detect": 46,
+    "engagement_at_peak": 322,
+    "psr": 0.886094674556213,
+    "e_detect": 77,
+    "e_final": 676,
+    "sample_post_texts": [
+      "New @MasonDixonPoll out today on #Kentucky in the 2020 presidential race shows @realDonaldTrump 56% v. @JoeBiden 39%. \n\n#Trump's 17-point margin is a landslide, but that is almost half compared to the 30-point 2016 win in the Bluegrass State v. @HillaryClinton (62.5% v. 32.7%). https://t.co/IQxgfV7j1k",
+      "Looks like #trump is winning #Kentucky with over 70% votes counted. #ElectionDay #Election2020",
+      ".@JoeBiden only leads @realDonaldTrump in the #Louisville area 55%-41%; among registered @KyDems 67%-31%; and voters age 35 and younger 53%-39%, according to @MasonDixonPoll. \n\nJust 5% of @KYGOP are voting for Biden.\n\n50% of #Kentucky independents are for #Trump v. 39% for Biden.",
+      "According to @BBCNews #Kentucky is 51% for #Trump\n\nYou think for a sourthern area he should be cleaning that up... is that a sign of the beggining of the #TrumpCollapse \n\n#VoteHimOut #Vote2020 #Vote #ElectionNight #ElectionDay #Election2020 https://t.co/W4d6QY4ZsS",
+      "#Trump getting #Kentucky and #Biden getting #Vermont early on is not a good sign for a #landslide on either side."
+    ],
+    "sample_post_engagements": [
+      18,
+      1,
+      13,
+      0,
+      0
+    ],
+    "sample_post_similarities": [
+      1.0,
+      0.6609649658203125,
+      0.6619073152542114,
+      0.6639977097511292,
+      0.6664128303527832
+    ]
+  },
+  {
+    "claim_id": "72614ee1-b470-4d6f-90a3-da78f7ccb70e",
+    "claim_text": "The legitimacy of Donald Trump's Pennsylvania win in the 2020 US presidential election is disputed due to uncounted mail-in ballots.",
+    "trigger_cluster_id": 72106,
+    "cluster_ids": [
+      "72106"
+    ],
+    "total_tweets": 88,
+    "total_engagement": 3718,
+    "detection_z_score": 3.373654895988176,
+    "is_viral": true,
+    "viral_confidence": 0.85,
+    "formation_ts": "2020-11-02 13:00:00",
+    "detect_ts": "2020-11-04 07:00:00",
+    "peak_ts": "2020-11-04 21:00:00",
+    "lead_time_hours": 14.0,
+    "engagement_at_detect": 301,
+    "engagement_at_peak": 2678,
+    "psr": 0.8495110202890089,
+    "e_detect": 1031,
+    "e_final": 6851,
+    "sample_post_texts": [
+      "PA Dem Attorney General Boasts: If They Count All PA #Votes , #Trump Will Lose\n https://t.co/0HAqfi9oCT",
+      "#Trump campaign on #Pennsyvlania : \"There are a number of pro-Trump counties with a lot of ballots still to be counted\"- 54,000 in Cumberland County, 28,000 ballots in Luzerne County #Election2020",
+      "And another, took earlier. \n\n#Trump to win PA +160 \n#YouGetNoCLV \n\n#2020Election #TrumpPA #GamblingTwtter #Freepicks #Politicsbets",
+      "See how Taiwan counts 14M votes in three hours, and no dispute. #Election2020 #Trump2020 #Biden #Pennsylvania Taiwan elections Polls close and vote counting begins https://t.co/lGlAOAhKb1 \u4f86\u81ea @YouTube",
+      "49. Off...is the general direction you need to fuck @GovernorTomWolf #tomwolf #pennsylvania. \nPatriots won Pa.\n #Election2020 #ElectionFraud #BallotHarvesting #voterfraud. #Trump n Rudy hadda come #Philadelphia to make wolfs outie an innie.\nhttps://t.co/0LmA57KSJA"
+    ],
+    "sample_post_engagements": [
+      0,
+      5,
+      0,
+      1,
+      4
+    ],
+    "sample_post_similarities": [
+      1.0,
+      0.6500252485275269,
+      0.6540976166725159,
+      0.6562790274620056,
+      0.6619859933853149
+    ]
+  }
+]

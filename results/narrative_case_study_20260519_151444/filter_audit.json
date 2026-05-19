@@ -1,0 +1,13 @@
+{
+  "filter_counts": {
+    "initial": 535,
+    "f1_procedural_include_and_not_candidate_attack": 27,
+    "f2_viral_confidence_proxy_gt_0_7": 7,
+    "f3_lead_time_hours_gte_4": 3,
+    "f4_total_tweets_gte_10": 3,
+    "f5_dimensional_variation_gte_0_1": "SKIPPED - per-claim 4-head scores not persisted",
+    "final_selected": 3
+  },
+  "filter_2_caveat": "viral_confidence is used as a proxy for the 4-head 'overall check-worthiness' score because per-claim dimensional scores from the 4-Parallel-Heads classifier were not found in any released artifact. viral_confidence is the pipeline's own is_viral probability, not the check-worthiness model output.",
+  "filter_5_caveat": "Per-claim checkability, verifiability, harm potential scores from the 4-head model are not persisted. Filter 5 cannot be applied without re-running model inference on the 535 normalized claims."
+}

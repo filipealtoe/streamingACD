@@ -1,0 +1,53 @@
+{
+  "timestamp": "2026-05-19T14:35:59Z",
+  "checkpoint_path": "C:\\StreamingACD\\data\\4-heads_model\\best_model.pt",
+  "checkpoint_sha256": "5f61837bbeb2b513ca7c49ab5901a6a107dbe275200ac0396777ce375271f081",
+  "n_claims": 535,
+  "tokenizer": "microsoft/deberta-v3-large",
+  "transformers_version": "4.57.3",
+  "torch_version": "2.8.0+cpu",
+  "max_length": 128,
+  "batch_size": 16,
+  "decision_threshold": 0.5,
+  "device": "cpu",
+  "wall_clock_seconds": 415.6,
+  "per_head_summary": {
+    "checkability": {
+      "head": "checkability",
+      "mean": 0.390943706035614,
+      "p50": 0.40664926171302795,
+      "p25": 0.11091676354408264,
+      "p75": 0.6684318780899048,
+      "pct_above_0_5": 43.55140186915888
+    },
+    "verifiability": {
+      "head": "verifiability",
+      "mean": 0.5818909406661987,
+      "p50": 0.5823989510536194,
+      "p25": 0.30729758739471436,
+      "p75": 0.8896589875221252,
+      "pct_above_0_5": 57.570093457943926
+    },
+    "harm": {
+      "head": "harm",
+      "mean": 0.2211569845676422,
+      "p50": 0.211719810962677,
+      "p25": 0.14176151156425476,
+      "p75": 0.29330313205718994,
+      "pct_above_0_5": 0.0
+    },
+    "overall": {
+      "head": "overall",
+      "mean": 0.49937185645103455,
+      "p50": 0.49787524342536926,
+      "p25": 0.09443190693855286,
+      "p75": 0.9099465012550354,
+      "pct_above_0_5": 49.90654205607476
+    }
+  },
+  "overall_decision_counts": {
+    "check_worthy": 267,
+    "not_check_worthy": 268
+  },
+  "sanity_flag": null
+}
