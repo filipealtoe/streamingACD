@@ -2,6 +2,21 @@
 
 This directory tracks evidence for paper-facing claims without committing large datasets, model checkpoints, or raw prediction dumps by default.
 
+## CIKM 2026 Public Artifact
+
+The reader-facing package for the accepted CIKM 2026 paper is documented in
+[`cikm2026/README.md`](cikm2026/README.md). Its focused verifier reads only public, committed files:
+
+```bash
+uv run scripts/verify_cikm2026_artifacts.py
+```
+
+The released feature matrix also supports fresh fits of six numeric baselines:
+
+```bash
+uv run scripts/reproduce_cikm2026_tabular_baselines.py
+```
+
 ## Contents
 
 - `artifact_checksums_2026-05-11.md`: human-readable artifact manifest.
