@@ -57,11 +57,12 @@ documented in [`SCHEMA.md`](SCHEMA.md); provenance, intended use, and limitation
 The two counts describe different artifacts and different units of analysis:
 
 - the public virality dataset has **529 rows**, one per anomaly-flagged cluster instance;
-- the canonical pipeline summary records **535 normalized claims** in a separate claim registry;
+- the canonical pipeline release contains **535 normalized claims** in a
+  [separate claim registry](../../psr/explainableACD/data/pipeline_output/streaming_full/2026-01-17_03-56/claims.parquet);
 - the 535-row claim registry is not a 535-row version of the public virality matrix.
 
-This package verifies the public 529-row cluster-level dataset. The repository contains the canonical run summary, but not the
-complete 535-row claim registry as a public dataset.
+This package verifies the public 529-row cluster-level virality dataset. The 535-row registry provides the corresponding
+pipeline-level normalized-claim release as a separate artifact with a different unit of analysis.
 
 ## Reproducibility boundary
 
@@ -73,18 +74,18 @@ Extended local audits cover sequence, Hawkes, BERTweet, anomaly detection, clust
 inputs and generated outputs are deliberately excluded from the public release boundary until the authors complete the relevant
 privacy and source-rights decisions. Dense embeddings must not be described as anonymized.
 
-Fresh full-pipeline reproduction is outside this public package because the raw Twitter/X corpus, user-level data, complete
-canonical run tables, large model checkpoint, and some prediction arrays are not redistributed. The historical scripts are
-retained as provenance snapshots; they should not be described as a one-command end-to-end reproduction from the public clone.
-Historical Table 4 rows also used incompatible splits, and the new reruns must not be presented as reproductions of those
-mixed-split numbers.
+Fresh full-pipeline reproduction is outside this public package because the raw Twitter/X corpus, raw post table, large model
+checkpoint, and some prediction arrays are not redistributed. Selected canonical run tables are retained under
+`psr/explainableACD/data/pipeline_output/`. The historical scripts are retained as provenance snapshots; they should not be
+described as a one-command end-to-end reproduction from the public clone. Historical Table 4 rows also used incompatible splits,
+and the new reruns must not be presented as reproductions of those mixed-split numbers.
 
 ## Privacy and redistribution
 
-The currently approved release-facing Parquet files contain derived cluster-level numeric fields plus the cluster detection
-timestamp. They do not contain
-raw post text, post IDs, user IDs, usernames, profile descriptions, or individual locations. Raw Twitter/X content and user-level
-data are intentionally excluded.
+The CIKM virality release-facing Parquet files contain derived cluster-level numeric fields plus the cluster detection timestamp.
+They do not contain raw post text, post IDs, user IDs, usernames, profile descriptions, or individual locations. The repository
+also retains normalized claims and aggregate cluster/time-series outputs from the canonical run. Raw Twitter/X content and the
+user-level lookup table are excluded from the current public tree.
 
 ## License status
 

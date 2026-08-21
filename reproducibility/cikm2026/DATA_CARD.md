@@ -27,8 +27,9 @@ The two Parquet files have the same 529 unique cluster IDs and exactly matching 
 
 The source stream was derived from the Kaggle
 [US Election 2020 Tweets](https://www.kaggle.com/datasets/manchunhui/us-election-2020-tweets) corpus. The canonical pipeline
-processed 1,522,909 posts and produced a separate registry of 535 normalized claims. The released virality dataset instead uses
-cluster instances as rows; these counts are not expected to match.
+processed 1,522,909 posts and produced a
+[separate registry of 535 normalized claims](../../psr/explainableACD/data/pipeline_output/streaming_full/2026-01-17_03-56/claims.parquet).
+The released virality dataset instead uses cluster instances as rows; these counts are not expected to match.
 
 The feature-generation snapshot is retained at
 `reproducibility/source_artifacts/virality/generate_enhanced_features.py`. It depends on canonical pipeline tables that are not
@@ -84,9 +85,10 @@ eight all-NaN columns as observed signals.
 
 ## Privacy and platform boundary
 
-The released Parquet files contain derived cluster-level numeric fields plus the cluster detection timestamp. They exclude raw post
-text, post IDs, user IDs, usernames, profile descriptions, and individual locations. Users remain responsible for applicable law,
-research-ethics requirements, and current Twitter/X platform terms.
+The two CIKM virality Parquet files contain derived cluster-level numeric fields plus the cluster detection timestamp. They exclude
+raw post text, post IDs, user IDs, usernames, profile descriptions, and individual locations. The current repository tree also
+excludes the canonical run's user-level lookup table. Users remain responsible for applicable law, research-ethics requirements,
+and current Twitter/X platform terms.
 
 ## Known limitations
 
@@ -97,7 +99,8 @@ research-ethics requirements, and current Twitter/X platform terms.
 - eight features are entirely unavailable and two are partially unavailable in the released matrix;
 - Random, Ridge, BayesianRidge, RandomForest, LightGBM, and SVR can be freshly fit from the approved release files; local candidate
   anomaly, temporal, and embedding artifacts support heavier reruns but are not yet approved for publication;
-- the complete 535-claim registry, raw stream, model checkpoint, and some prediction arrays are not public here.
+- the separate 535-claim registry is public, but it is not a row-aligned version of this 529-instance virality dataset;
+- the raw post table, model checkpoint, and some prediction arrays are not public here.
 
 ## License
 

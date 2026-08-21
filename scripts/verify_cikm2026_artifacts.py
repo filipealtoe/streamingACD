@@ -53,6 +53,58 @@ def count_nan(column: pa.ChunkedArray) -> int:
     return int(pc.sum(pc.cast(pc.is_nan(column), pa.int64())).as_py())
 
 
+def verify_repository_data_boundary(repo_root: Path) -> Check:
+    canonical_root = (
+        repo_root
+        / "psr"
+        / "explainableACD"
+        / "data"
+        / "pipeline_output"
+        / "streaming_full"
+        / "2026-01-17_03-56"
+    )
+    excluded_user_table = canonical_root / "users.parquet"
+    retained_scientific_tables = [
+        canonical_root / "claims.parquet",
+        canonical_root / "clusters.parquet",
+        canonical_root / "cluster_timeseries.parquet",
+        canonical_root / "window_results.parquet",
+    ]
+    restricted_user_columns = {
+        "email",
+        "handle",
+        "phone",
+        "profile_description",
+        "screen_name",
+        "user_id",
+        "username",
+    }
+    identifier_schema_hits: dict[str, list[str]] = {}
+    for parquet_path in sorted(canonical_root.rglob("*.parquet")):
+        present = sorted(
+            restricted_user_columns.intersection(pq.read_schema(parquet_path).names)
+        )
+        if present:
+            identifier_schema_hits[parquet_path.relative_to(repo_root).as_posix()] = (
+                present
+            )
+    missing_retained = [
+        path.relative_to(repo_root).as_posix()
+        for path in retained_scientific_tables
+        if not path.is_file()
+    ]
+    return Check(
+        "Repository data boundary",
+        not excluded_user_table.exists()
+        and not identifier_schema_hits
+        and not missing_retained,
+        "user-level lookup table absent="
+        f"{not excluded_user_table.exists()}; direct identifier schema hits="
+        f"{identifier_schema_hits or 'none'}; retained scientific tables missing="
+        f"{missing_retained or 'none'}",
+    )
+
+
 def verify_checksums(repo_root: Path) -> Check:
     manifest_path = repo_root / "reproducibility" / "cikm2026" / "checksums.sha256"
     missing: list[str] = []
@@ -286,6 +338,10 @@ def main() -> int:
     repo_root = args.root.resolve()
     checks = [
         *run_check_group("Checksum verification", lambda: verify_checksums(repo_root)),
+        *run_check_group(
+            "Repository data-boundary verification",
+            lambda: verify_repository_data_boundary(repo_root),
+        ),
         *run_check_group("Dataset verification", lambda: verify_dataset(repo_root)),
         *run_check_group(
             "Result-artifact verification", lambda: verify_result_artifacts(repo_root)

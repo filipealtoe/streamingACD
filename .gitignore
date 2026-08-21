@@ -51,6 +51,9 @@ psr/explainableACD/data/pipeline_output/streaming_full/2026-01-17_03-56/clustere
 psr/explainableACD/data/pipeline_output/streaming_full/2026-01-17_03-56/cluster_embeddings.npy
 psr/explainableACD/data/pipeline_output/streaming_full/2026-01-17_03-56/tweets.parquet
 
+# Public release boundary: do not distribute account identifiers or handles.
+psr/explainableACD/data/pipeline_output/streaming_full/2026-01-17_03-56/users.parquet
+
 # CIKM 2026 local-only review inputs and outputs.
 # These files are not approved for public release.
 /reproducibility/cikm2026/anomaly_timeseries.parquet

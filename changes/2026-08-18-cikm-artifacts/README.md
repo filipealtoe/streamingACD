@@ -20,7 +20,7 @@ protected from accidental staging.
 ## Non-goals
 
 - no raw posts or user-level data;
-- no complete 535-claim registry;
+- no conflation of the separate 535-claim registry with the 529-row virality dataset;
 - no reconstructed Opus responses, participant responses, or omitted model checkpoint;
 - no publication of temporal, anomaly, or embedding candidates without author privacy and source-rights approval;
 - no repository license selection on behalf of the authors;
