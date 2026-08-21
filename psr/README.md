@@ -103,9 +103,9 @@ Truth status for the five regenerated baselines:
 
 `explainableACD/experiments/scripts/` contains the relevant old baseline scripts.
 
-## Raw Upstream Folder
+## Selected Upstream Artifacts
 
-The raw upstream pipeline folder is included at:
+Selected artifacts from the upstream pipeline folder are included at:
 
 `explainableACD/data/pipeline_output/streaming_full/2026-01-17_03-56`
 
@@ -113,17 +113,18 @@ Original local source path:
 
 `/Users/sergiopinto/explainableACD/data/pipeline_output/streaming_full/2026-01-17_03-56`
 
-This folder contains:
+The public tree retains:
 
 - `cluster_timeseries.parquet`
-- `tweets.parquet`
 - `clusters.parquet`
 - `claims.parquet`
-- `users.parquet`
+- `window_results.parquet`
 - registry files
-- clustering state files
+- run summaries and cluster-index metadata
 
-This is the folder used to regenerate `LSTM`, `GRU`, `HIP_Hawkes`, `BERTweet`, and `BERTweet_plus_features`.
+These selected artifacts support the recovered `LSTM`, `GRU`, `HIP_Hawkes`, `BERTweet`, and
+`BERTweet_plus_features` reproduction workspace. Raw post tables and user-level lookup tables from this canonical run are
+excluded from the public tree; aggregate user statistics remain available in the cluster and time-series artifacts.
 
 ## Truth Status
 
