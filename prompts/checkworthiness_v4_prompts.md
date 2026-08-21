@@ -141,12 +141,16 @@ Respond ONLY with valid JSON. Output confidence FIRST. Keep reasoning under 20 w
 ## Notes on usage
 
 - `{claim}` is a Python format-string placeholder. The user message must escape the JSON braces by doubling them (`{{` and `}}`) when used as a Python `.format()` template.
-- Assistant prefill is sent as the last message in the `messages` array (role=assistant). The model continues from this prefix.
+- The original soft-label generation path uses the YAML assistant prefill. The Opus
+  ablation omits assistant prefill because that endpoint does not accept it; the
+  system/user prompts still require confidence-first JSON.
 - Output max_tokens: 512 for checkability and verifiability, 1024 for harm potential.
 - All three system prompts are cached with 1-hour TTL via `cache_control: {"type": "ephemeral", "ttl": "1h"}`.
 
 ## Provenance
 
-These prompts are taken verbatim from the v4 zero-shot configuration that produced the LLM-features baseline in the IJCAI submission (F1=0.761 on CT24 via PCA+LogReg over LLM-derived features). For the CIKM ablation, the same prompts are run against Claude Opus 4.7 in zero-shot to address Reviewer 1's question regarding frontier-LLM viability for end-to-end check-worthiness assessment.
+These prompts are taken verbatim from the v4 zero-shot configuration used for the
+LLM-feature path. For the CIKM ablation, the same system/user prompt content is run
+against Claude Opus 4.7 in zero-shot for end-to-end check-worthiness assessment.
 
 The "v4" designation refers to the binary-output design (Yes/No) versus the earlier ternary v1-v3 versions that returned probability distributions over Yes/No/Uncertain.

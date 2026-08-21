@@ -37,6 +37,12 @@ This command fits Random, Ridge, BayesianRidge, RandomForest, LightGBM, and SVR 
 recomputes every reported metric, and compares the full-precision values with `tuned_baselines.json`. Its expected final line is
 also `VERDICT: PASS`.
 
+To verify the downloaded four-head model checkpoint at the same time:
+
+```bash
+uv run scripts/verify_cikm2026_artifacts.py --checkpoint /path/to/best_model.pt
+```
+
 ## What is public
 
 | Artifact | Location | Publicly verifiable claim |
@@ -48,9 +54,17 @@ also `VERDICT: PASS`.
 | Additional baseline results | [`complete_baselines.json`](../source_artifacts/virality/complete_baselines.json) | Paper-facing LSTM, GRU, and Hawkes result artifacts |
 | Table rendering | [`latex_table.tex`](../source_artifacts/virality/latex_table.tex) | Rounded values used for the paper table |
 | Historical source scripts | [`source_artifacts/virality/`](../source_artifacts/virality/) | Source snapshots used to generate features and baselines in the original workspace |
+| Claim-normalization source | [`source_code/`](../source_artifacts/claim_normalization/source_code/) | Retrieval-augmented few-shot implementation used by the retained CT25 run |
+| Claim-normalization result | [`ct25_claim_normalization_lambda_2026-05-15/`](../../results/ct25_claim_normalization_lambda_2026-05-15/) | Exact command, environment, aggregate score, and text-free per-sample metrics for 300 CT25 English test rows |
+| Check-worthiness soft-label source | [`source_code/`](../source_artifacts/checkworthiness/source_code/) | Exact v4 feature-extraction runner and prompt configuration used by the four-head training path |
+| Check-worthiness prompts | [`prompts/`](../../prompts/) | Original v4 soft-label configuration, ablation rendering, and claim-normalization prompt |
+| Model parameters | [`MODEL_PARAMETERS.json`](MODEL_PARAMETERS.json) | Machine-readable parameters transcribed from retained executable sources |
+| Four-head checkpoint | [`CHECKPOINT.md`](CHECKPOINT.md) | Release asset name, URL, byte size, and SHA-256 |
 
 Checksums for the release-facing files are in [`checksums.sha256`](checksums.sha256). Column-level details and missingness are
 documented in [`SCHEMA.md`](SCHEMA.md); provenance, intended use, and limitations are in [`DATA_CARD.md`](DATA_CARD.md).
+The [paper-to-artifact index](PAPER_ARTIFACT_INDEX.md) links every major method and
+evaluation component to its implementation, inputs, and evidence.
 
 ## 529 cluster instances versus 535 normalized claims
 
@@ -64,21 +78,17 @@ The two counts describe different artifacts and different units of analysis:
 This package verifies the public 529-row cluster-level virality dataset. The 535-row registry provides the corresponding
 pipeline-level normalized-claim release as a separate artifact with a different unit of analysis.
 
-## Reproducibility boundary
+## Reproducibility levels
 
-The focused verifier establishes that the committed dataset, split, checksums, documented missingness, and paper-facing result
-files are internally consistent. The dedicated numeric reproducer additionally performs fresh fits for Random, Ridge,
-BayesianRidge, RandomForest, LightGBM, and SVR.
+The focused verifier establishes that the committed dataset, split, checksums,
+documented missingness, source snapshots, prompts, parameters, and paper-facing result
+files are internally consistent. The dedicated numeric reproducer performs fresh fits
+for Random, Ridge, BayesianRidge, RandomForest, LightGBM, and SVR. The optional
+`--checkpoint` check binds a downloaded release asset to the packaged four-head run.
 
-Extended local audits cover sequence, Hawkes, BERTweet, anomaly detection, clustering, and threshold selection. Their candidate
-inputs and generated outputs are deliberately excluded from the public release boundary until the authors complete the relevant
-privacy and source-rights decisions. Dense embeddings must not be described as anonymized.
-
-Fresh full-pipeline reproduction is outside this public package because the raw Twitter/X corpus, raw post table, large model
-checkpoint, and some prediction arrays are not redistributed. Selected canonical run tables are retained under
-`psr/explainableACD/data/pipeline_output/`. The historical scripts are retained as provenance snapshots; they should not be
-described as a one-command end-to-end reproduction from the public clone. Historical Table 4 rows also used incompatible splits,
-and the new reruns must not be presented as reproductions of those mixed-split numbers.
+The canonical normalized-claim and aggregate cluster tables are retained under
+`psr/explainableACD/data/pipeline_output/`. Raw Twitter/X posts and user-level data are
+not needed for the public dataset checks or the fresh numeric-baseline reproduction.
 
 ## Privacy and redistribution
 
@@ -86,9 +96,3 @@ The CIKM virality release-facing Parquet files contain derived cluster-level num
 They do not contain raw post text, post IDs, user IDs, usernames, profile descriptions, or individual locations. The repository
 also retains normalized claims and aggregate cluster/time-series outputs from the canonical run. Raw Twitter/X content and the
 user-level lookup table are excluded from the current public tree.
-
-## License status
-
-No repository or dataset license was present when this camera-ready artifact package was prepared. The authors must select and
-add an explicit license before describing the files as licensed for reuse. Source-corpus licensing and Twitter/X platform terms do
-not automatically grant a license for this derived release.

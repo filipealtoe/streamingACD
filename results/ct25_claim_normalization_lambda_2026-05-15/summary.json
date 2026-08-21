@@ -1,0 +1,15 @@
+{
+  "model": "Mistral-7B-Instruct-v0.3",
+  "split": "test",
+  "sota": 0.4569,
+  "delta_sota": 0.1000184651538435,
+  "n_samples": 300,
+  "avg_meteor": 0.5569184651538435,
+  "std_meteor": 0.3839572205119229,
+  "median_meteor": 0.4830508131069928,
+  "min_meteor": 0.0,
+  "max_meteor": 0.999968,
+  "total_tokens": 0,
+  "total_cost_usd": 0.0,
+  "avg_latency_ms": 448.1201458599958
+}

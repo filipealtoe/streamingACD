@@ -3,7 +3,7 @@
 Per the LLM-ablation spec:
 
   - 341 samples x 3 dimensions (checkability, verifiability, harm) = 1023 calls
-  - temperature=0, deterministic
+  - temperature parameter omitted because this model endpoint does not support it
   - prompt caching with 1-hour TTL on each system prompt
   - cost ceiling: $10 hard abort (expected ~$4.30)
   - resumable: skips (sentence_id, dimension) already present in raw_responses.jsonl

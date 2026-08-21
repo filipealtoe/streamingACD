@@ -6,10 +6,10 @@
 #   "pyarrow==25.0.1",
 # ]
 # ///
-"""Verify the public CIKM 2026 dataset and result artifacts.
+"""Verify the public CIKM 2026 dataset and reproducibility artifacts.
 
-This verifier intentionally uses only files committed to the public repository.
-It checks integrity and artifact consistency; it does not claim a fresh model fit.
+The default verification uses only files committed to the public repository. An
+optional checkpoint path also verifies the external release asset by size and SHA-256.
 """
 
 from __future__ import annotations
@@ -26,6 +26,14 @@ import numpy as np
 import pyarrow as pa
 import pyarrow.compute as pc
 import pyarrow.parquet as pq
+
+
+CHECKPOINT_SHA256 = "5f61837bbeb2b513ca7c49ab5901a6a107dbe275200ac0396777ce375271f081"
+CHECKPOINT_SIZE_BYTES = 1_739_380_133
+CHECKPOINT_RELEASE_URL = (
+    "https://github.com/filipealtoe/streamingACD/releases/download/"
+    "cikm-2026-artifact-v1/best_model.pt"
+)
 
 
 @dataclass(frozen=True)
@@ -126,6 +134,319 @@ def verify_checksums(repo_root: Path) -> Check:
         passed,
         f"{entries} entries; missing={missing or 'none'}; mismatched={mismatched or 'none'}",
     )
+
+
+def verify_code_checksums(repo_root: Path) -> Check:
+    manifest_path = repo_root / "reproducibility" / "cikm2026" / "code_checksums.sha256"
+    missing: list[str] = []
+    mismatched: list[str] = []
+    entries = 0
+    for line in manifest_path.read_text(encoding="utf-8").splitlines():
+        if not line.strip():
+            continue
+        expected, relative = line.split(maxsplit=1)
+        path = repo_root / relative.strip()
+        entries += 1
+        if not path.is_file():
+            missing.append(relative.strip())
+        elif sha256_file(path) != expected:
+            mismatched.append(relative.strip())
+    return Check(
+        "Source and configuration checksums",
+        entries >= 10 and not missing and not mismatched,
+        f"{entries} entries; missing={missing or 'none'}; "
+        f"mismatched={mismatched or 'none'}",
+    )
+
+
+def value_at(document: dict[str, Any], dotted_path: str) -> Any:
+    value: Any = document
+    for part in dotted_path.split("."):
+        value = value[part]
+    return value
+
+
+def verify_parameter_manifest(repo_root: Path) -> Check:
+    manifest_path = repo_root / "reproducibility" / "cikm2026" / "MODEL_PARAMETERS.json"
+    parameters = load_json(manifest_path)
+    expected = {
+        "artifact_version": "cikm-2026-artifact-v1",
+        "claim_normalization.model": "mistralai/Mistral-7B-Instruct-v0.3",
+        "claim_normalization.split": "test",
+        "claim_normalization.row_selection.start": 0,
+        "claim_normalization.row_selection.stop_exclusive": 300,
+        "claim_normalization.prompt_version": "v1",
+        "claim_normalization.max_new_tokens": 256,
+        "claim_normalization.temperature": 0.0,
+        "claim_normalization.do_sample": False,
+        "claim_normalization.num_examples": 5,
+        "claim_normalization.topic_clusters": 10,
+        "claim_normalization.retrieval_threshold": 0.85,
+        "claim_normalization.claim_verify_threshold": 0.5,
+        "claim_normalization.batch_size": 8,
+        "checkworthiness_soft_labels.model": (
+            "mistralai/Mistral-Small-24B-Instruct-2501"
+        ),
+        "checkworthiness_soft_labels.max_tokens": 2048,
+        "checkworthiness_soft_labels.temperature": 0.0,
+        "checkworthiness_soft_labels.logprobs": True,
+        "checkworthiness_soft_labels.top_logprobs": 5,
+        "four_head_deberta.model": "microsoft/deberta-v3-large",
+        "four_head_deberta.max_length": 128,
+        "four_head_deberta.batch_size": 16,
+        "four_head_deberta.gradient_accumulation_steps": 2,
+        "four_head_deberta.learning_rate": 0.00001,
+        "four_head_deberta.aux_learning_rate": 0.001,
+        "four_head_deberta.lambda_checkability": 0.3,
+        "four_head_deberta.lambda_verifiability": 0.3,
+        "four_head_deberta.lambda_harm": 0.2,
+        "four_head_deberta.entropy_weighting": True,
+        "four_head_deberta.seed": 42,
+        "frontier_llm_ablation.model": "claude-opus-4-7",
+        "frontier_llm_ablation.samples": 341,
+        "frontier_llm_ablation.calls": 1023,
+        "frontier_llm_ablation.temperature_parameter": "omitted",
+        "virality_tabular_baselines.split.test_size": 0.2,
+        "virality_tabular_baselines.split.random_state": 42,
+        "virality_tabular_baselines.models.Ridge.alpha": 0.01,
+        "virality_tabular_baselines.models.RandomForest.n_estimators": 100,
+        "virality_tabular_baselines.models.LightGBM.learning_rate": 0.05,
+        "virality_tabular_baselines.models.SVR (RBF).C": 0.1,
+    }
+    mismatched: dict[str, dict[str, Any]] = {}
+    for dotted_path, expected_value in expected.items():
+        try:
+            actual = value_at(parameters, dotted_path)
+        except (KeyError, TypeError):
+            actual = "<missing>"
+        if actual != expected_value:
+            mismatched[dotted_path] = {
+                "actual": actual,
+                "expected": expected_value,
+            }
+    source_paths = [
+        parameters["claim_normalization"]["source_path"],
+        parameters["claim_normalization"]["prompt_path"],
+        parameters["checkworthiness_soft_labels"]["source_path"],
+        parameters["checkworthiness_soft_labels"]["prompt_path"],
+        parameters["four_head_deberta"]["source_path"],
+        parameters["frontier_llm_ablation"]["source_path"],
+        parameters["frontier_llm_ablation"]["prompt_path"],
+        parameters["virality_tabular_baselines"]["source_path"],
+    ]
+    missing_paths = [
+        relative for relative in source_paths if not (repo_root / relative).is_file()
+    ]
+    return Check(
+        "Model parameter manifest",
+        not mismatched and not missing_paths,
+        f"{len(expected)} values checked; mismatched={mismatched or 'none'}; "
+        f"missing source paths={missing_paths or 'none'}",
+    )
+
+
+def verify_prompt_and_source_provenance(repo_root: Path) -> list[Check]:
+    claim_prompt_path = repo_root / "prompts" / "claim_normalization_cikm2026.md"
+    soft_label_prompt_path = (
+        repo_root / "prompts" / "checkworthiness_prompts_zeroshot_v4.yaml"
+    )
+    soft_label_source_path = (
+        repo_root
+        / "reproducibility"
+        / "source_artifacts"
+        / "checkworthiness"
+        / "source_code"
+        / "scripts"
+        / "runners"
+        / "run_llm_checkworthiness_v4.py"
+    )
+    claim_source_path = (
+        repo_root
+        / "reproducibility"
+        / "source_artifacts"
+        / "claim_normalization"
+        / "source_code"
+        / "scripts"
+        / "run_claim_normalization_ct25.py"
+    )
+    claim_prompt = claim_prompt_path.read_text(encoding="utf-8")
+    soft_label_prompt = soft_label_prompt_path.read_text(encoding="utf-8")
+    soft_label_source = soft_label_source_path.read_text(encoding="utf-8")
+    claim_source = claim_source_path.read_text(encoding="utf-8")
+
+    claim_fragments = [
+        "You are a claim normalization specialist.",
+        "Extract the main factual assertion from the post",
+        "Preserve the original meaning exactly",
+        "Here are some examples of claim normalization:",
+        "Normalized claim:",
+    ]
+    prompt_matches_source = all(
+        fragment in claim_prompt and fragment in claim_source
+        for fragment in claim_fragments
+    )
+    soft_label_fragments = [
+        "checkability:",
+        "verifiability:",
+        "harm_potential:",
+        "max_tokens: 2048",
+        "assistant: '{\"confidence\":'",
+    ]
+    soft_label_complete = all(
+        fragment in soft_label_prompt for fragment in soft_label_fragments
+    )
+    soft_label_source_fragments = [
+        'MODEL_NAME = "mistralai/Mistral-Small-24B-Instruct-2501"',
+        "temperature=0.0",
+        "logprobs=True",
+        "top_logprobs=5",
+        'response_format={"type": "json_object"}',
+        'messages.append({"role": "assistant", "content": prompt_config["assistant"]})',
+    ]
+    soft_label_source_complete = all(
+        fragment in soft_label_source for fragment in soft_label_source_fragments
+    )
+    credential_diagnostic_safe = (
+        "OPENAI_API_KEY configured=" in claim_source
+        and "TOGETHER_API_KEY configured=" in claim_source
+        and "OPENAI_API_KEY[:30]" not in claim_source
+        and "TOGETHER_API_KEY[:30]" not in claim_source
+    )
+    return [
+        Check(
+            "Claim-normalization prompt provenance",
+            prompt_matches_source,
+            f"{len(claim_fragments)} exact prompt fragments match the executable source",
+        ),
+        Check(
+            "Check-worthiness prompt provenance",
+            soft_label_complete
+            and soft_label_source_complete
+            and sha256_file(soft_label_prompt_path)
+            == "ac167033361da470b3ce3f811f2eaa38a0b23e678e69c3a2c17a22df0e867f66",
+            "v4 runner, three dimensions, 2048-token limits, assistant prefix, "
+            "generation settings, and source hash checked",
+        ),
+        Check(
+            "Claim-normalization credential diagnostics",
+            credential_diagnostic_safe,
+            "diagnostic reports configured status without printing credential fragments",
+        ),
+    ]
+
+
+def verify_claim_normalization_result(repo_root: Path) -> list[Check]:
+    result_root = repo_root / "results" / "ct25_claim_normalization_lambda_2026-05-15"
+    summary = load_json(result_root / "summary.json")
+    rows = [
+        json.loads(line)
+        for line in (result_root / "per_sample_metrics.jsonl")
+        .read_text(encoding="utf-8")
+        .splitlines()
+        if line.strip()
+    ]
+    expected_fields = {
+        "idx",
+        "meteor",
+        "model",
+        "latency_ms",
+        "input_tokens",
+        "output_tokens",
+    }
+    text_or_identifier_fields = {
+        "post",
+        "text",
+        "raw_text",
+        "predicted_claim",
+        "gold_claim",
+        "post_id",
+        "tweet_id",
+        "user_id",
+        "username",
+    }
+    retrieval_count = sum(str(row["model"]).startswith("retrieval@") for row in rows)
+    generated_count = len(rows) - retrieval_count
+    mean_meteor = sum(float(row["meteor"]) for row in rows) / len(rows)
+    return [
+        Check(
+            "Claim-normalization retained result",
+            summary["n_samples"] == len(rows) == 300
+            and sorted(row["idx"] for row in rows) == list(range(300))
+            and retrieval_count == 227
+            and generated_count == 73
+            and math.isclose(
+                mean_meteor,
+                float(summary["avg_meteor"]),
+                rel_tol=0.0,
+                abs_tol=1e-12,
+            ),
+            f"rows={len(rows)}; retrieval={retrieval_count}; "
+            f"generation={generated_count}; mean METEOR={mean_meteor:.15f}",
+        ),
+        Check(
+            "Claim-normalization result data boundary",
+            all(set(row) == expected_fields for row in rows)
+            and not any(text_or_identifier_fields.intersection(row) for row in rows),
+            "per-sample rows contain only index, metric, route, latency, and token counts",
+        ),
+    ]
+
+
+def verify_claim_result_checksums(repo_root: Path) -> Check:
+    result_root = repo_root / "results" / "ct25_claim_normalization_lambda_2026-05-15"
+    manifest_path = result_root / "checksums.sha256"
+    missing: list[str] = []
+    mismatched: list[str] = []
+    entries = 0
+    for line in manifest_path.read_text(encoding="utf-8").splitlines():
+        if not line.strip():
+            continue
+        expected, filename = line.split(maxsplit=1)
+        path = result_root / filename.strip()
+        entries += 1
+        if not path.is_file():
+            missing.append(filename.strip())
+        elif sha256_file(path) != expected:
+            mismatched.append(filename.strip())
+    return Check(
+        "Claim-normalization result checksums",
+        entries == 4 and not missing and not mismatched,
+        f"{entries} entries; missing={missing or 'none'}; "
+        f"mismatched={mismatched or 'none'}",
+    )
+
+
+def verify_checkpoint_manifest(repo_root: Path, checkpoint: Path | None) -> list[Check]:
+    artifact_root = repo_root / "reproducibility" / "cikm2026"
+    checksum_line = (
+        (artifact_root / "checkpoint.sha256").read_text(encoding="utf-8").strip()
+    )
+    checkpoint_doc = (artifact_root / "CHECKPOINT.md").read_text(encoding="utf-8")
+    checks = [
+        Check(
+            "Checkpoint release manifest",
+            checksum_line == f"{CHECKPOINT_SHA256}  best_model.pt"
+            and str(CHECKPOINT_SIZE_BYTES) in checkpoint_doc.replace(",", "")
+            and CHECKPOINT_SHA256 in checkpoint_doc
+            and CHECKPOINT_RELEASE_URL in checkpoint_doc,
+            f"best_model.pt; bytes={CHECKPOINT_SIZE_BYTES}; sha256={CHECKPOINT_SHA256}",
+        )
+    ]
+    if checkpoint is not None:
+        resolved = checkpoint.expanduser().resolve()
+        exists = resolved.is_file()
+        actual_size = resolved.stat().st_size if exists else None
+        actual_hash = sha256_file(resolved) if exists else None
+        checks.append(
+            Check(
+                "Downloaded checkpoint identity",
+                exists
+                and actual_size == CHECKPOINT_SIZE_BYTES
+                and actual_hash == CHECKPOINT_SHA256,
+                f"path={resolved}; exists={exists}; bytes={actual_size}; sha256={actual_hash}",
+            )
+        )
+    return checks
 
 
 def verify_dataset(repo_root: Path) -> list[Check]:
@@ -322,6 +643,12 @@ def parse_args() -> argparse.Namespace:
         default=default_root,
         help="Repository root to verify (defaults to the parent of this script's directory).",
     )
+    parser.add_argument(
+        "--checkpoint",
+        type=Path,
+        default=None,
+        help="Optional downloaded best_model.pt release asset to verify.",
+    )
     return parser.parse_args()
 
 
@@ -339,8 +666,32 @@ def main() -> int:
     checks = [
         *run_check_group("Checksum verification", lambda: verify_checksums(repo_root)),
         *run_check_group(
+            "Source checksum verification",
+            lambda: verify_code_checksums(repo_root),
+        ),
+        *run_check_group(
             "Repository data-boundary verification",
             lambda: verify_repository_data_boundary(repo_root),
+        ),
+        *run_check_group(
+            "Parameter-manifest verification",
+            lambda: verify_parameter_manifest(repo_root),
+        ),
+        *run_check_group(
+            "Prompt and source verification",
+            lambda: verify_prompt_and_source_provenance(repo_root),
+        ),
+        *run_check_group(
+            "Claim-normalization result verification",
+            lambda: verify_claim_normalization_result(repo_root),
+        ),
+        *run_check_group(
+            "Claim-normalization result checksum verification",
+            lambda: verify_claim_result_checksums(repo_root),
+        ),
+        *run_check_group(
+            "Checkpoint-manifest verification",
+            lambda: verify_checkpoint_manifest(repo_root, args.checkpoint),
         ),
         *run_check_group("Dataset verification", lambda: verify_dataset(repo_root)),
         *run_check_group(

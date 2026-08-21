@@ -100,7 +100,8 @@ and current Twitter/X platform terms.
 - Random, Ridge, BayesianRidge, RandomForest, LightGBM, and SVR can be freshly fit from the approved release files; local candidate
   anomaly, temporal, and embedding artifacts support heavier reruns but are not yet approved for publication;
 - the separate 535-claim registry is public, but it is not a row-aligned version of this 529-instance virality dataset;
-- the raw post table, model checkpoint, and some prediction arrays are not public here.
+- the raw post table and some prediction arrays are not redistributed; the four-head
+  model checkpoint is distributed separately through the documented GitHub release.
 
 ## License
 
