@@ -2,6 +2,36 @@
 
 Reproducibility workspace for the streaming automated claim detection experiments.
 
+## CIKM 2026 Artifact
+
+This repository accompanies the accepted CIKM 2026 paper
+**“Predicting Narrative Virality on Social Media Streams for Pre-Peak Misinformation Triage”** by Filipe Altoe,
+Sérgio Miguel Gonçalves Pinto, and H. Sofia Pinto.
+
+- Paper: reserved [ACM DOI 10.1145/3799682.3840688](https://doi.org/10.1145/3799682.3840688) (expected to resolve after ACM publication)
+- Conference: [35th ACM International Conference on Information and Knowledge Management (CIKM 2026)](https://cikm2026.diag.uniroma1.it/)
+- Artifact guide: [`reproducibility/cikm2026/README.md`](reproducibility/cikm2026/README.md)
+- Dataset: [`reproducibility/source_artifacts/virality/`](reproducibility/source_artifacts/virality/)
+
+Verify the public CIKM artifact from a fresh clone with:
+
+```bash
+uv run scripts/verify_cikm2026_artifacts.py
+```
+
+The focused verifier checks dataset integrity, the deterministic split, documented missingness, and the paper-facing result
+artifacts. It does not claim to rerun the full streaming pipeline or models whose raw inputs or checkpoints are not public.
+
+Freshly fit the six numeric baselines that depend only on the released matrix with:
+
+```bash
+uv run scripts/reproduce_cikm2026_tabular_baselines.py
+```
+
+This reproduces Random, Ridge, BayesianRidge, RandomForest, LightGBM, and SVR metrics and compares them with the committed result
+artifact. Extended audit inputs and outputs remain local-only until the authors complete the relevant privacy and source-rights
+decisions.
+
 Current focus:
 
 - rebuild the CT24 check-worthiness baselines from source data;

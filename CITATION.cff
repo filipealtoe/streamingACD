@@ -1,0 +1,28 @@
+cff-version: 1.2.0
+message: "If you use this dataset or artifact package, please cite the CIKM 2026 paper."
+type: dataset
+title: "Streaming ACD: CIKM 2026 Reproducibility Artifacts"
+authors:
+  - family-names: Altoe
+    given-names: Filipe
+  - family-names: Pinto
+    given-names: Sérgio Miguel Gonçalves
+  - family-names: Pinto
+    given-names: H. Sofia
+repository-code: "https://github.com/filipealtoe/streamingACD"
+url: "https://github.com/filipealtoe/streamingACD"
+preferred-citation:
+  type: conference-paper
+  title: "Predicting Narrative Virality on Social Media Streams for Pre-Peak Misinformation Triage"
+  authors:
+    - family-names: Altoe
+      given-names: Filipe
+    - family-names: Pinto
+      given-names: Sérgio Miguel Gonçalves
+    - family-names: Pinto
+      given-names: H. Sofia
+  collection-title: "Proceedings of the 35th ACM International Conference on Information and Knowledge Management"
+  conference:
+    name: "35th ACM International Conference on Information and Knowledge Management (CIKM 2026)"
+  year: 2026
+  doi: "10.1145/3799682.3840688"
