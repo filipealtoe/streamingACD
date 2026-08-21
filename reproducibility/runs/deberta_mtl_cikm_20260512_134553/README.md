@@ -31,15 +31,17 @@ This run reproduces the four-head multi-task check-worthiness result for the CIK
 - `scripts/finetune_deberta_mtl.py`: training script used for the run.
 - `scripts/evaluate_mtl_benchmarks.py`: cross-dataset evaluation script used for the run.
 
-## Not Included
+## Checkpoint release
 
-`best_model.pt` is not committed because it is 1.7 GB. Its SHA-256 is recorded in `sha256sums.txt`:
+`best_model.pt` is distributed as the `cikm-2026-artifact-v1` GitHub release asset
+rather than inside the repository clone. Its SHA-256 is recorded in `sha256sums.txt`:
 
 ```text
 5f61837bbeb2b513ca7c49ab5901a6a107dbe275200ac0396777ce375271f081  best_model.pt
 ```
 
-Use Git LFS or external artifact storage if the checkpoint needs to move with the repository.
+The release URL, byte size, and verification command are documented in
+`reproducibility/cikm2026/CHECKPOINT.md`.
 
 ## Label Order Note
 

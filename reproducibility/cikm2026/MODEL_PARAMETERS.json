@@ -1,0 +1,153 @@
+{
+  "artifact_version": "cikm-2026-artifact-v1",
+  "claim_normalization": {
+    "benchmark": "CheckThat! 2025 Task 2 English",
+    "batch_size": 8,
+    "claim_verify_threshold": 0.5,
+    "do_sample": false,
+    "inference": "local_hugging_face",
+    "max_new_tokens": 256,
+    "model": "mistralai/Mistral-7B-Instruct-v0.3",
+    "num_examples": 5,
+    "prompt_path": "prompts/claim_normalization_cikm2026.md",
+    "prompt_version": "v1",
+    "resume": false,
+    "row_selection": {
+      "start": 0,
+      "stop_exclusive": 300
+    },
+    "source_path": "reproducibility/source_artifacts/claim_normalization/source_code/scripts/run_claim_normalization_ct25.py",
+    "split": "test",
+    "temperature": 0.0,
+    "topic_clusters": 10,
+    "retrieval_threshold": 0.85
+  },
+  "checkworthiness_soft_labels": {
+    "assistant_prefill": true,
+    "logprobs": true,
+    "max_tokens": 2048,
+    "model": "mistralai/Mistral-Small-24B-Instruct-2501",
+    "prompt_path": "prompts/checkworthiness_prompts_zeroshot_v4.yaml",
+    "provider": "Together",
+    "response_format": "json",
+    "source_path": "reproducibility/source_artifacts/checkworthiness/source_code/scripts/runners/run_llm_checkworthiness_v4.py",
+    "temperature": 0.0,
+    "top_logprobs": 5
+  },
+  "four_head_deberta": {
+    "architecture": {
+      "auxiliary_heads": [
+        "checkability",
+        "verifiability",
+        "harm"
+      ],
+      "auxiliary_hidden_size": 256,
+      "auxiliary_output": "sigmoid",
+      "dropout": 0.1,
+      "main_labels": 2
+    },
+    "aux_learning_rate": 0.001,
+    "batch_size": 16,
+    "early_stopping_patience": 3,
+    "entropy_weighting": true,
+    "fp16": true,
+    "gradient_accumulation_steps": 2,
+    "lambda_checkability": 0.3,
+    "lambda_harm": 0.2,
+    "lambda_verifiability": 0.3,
+    "learning_rate": 0.00001,
+    "max_length": 128,
+    "model": "microsoft/deberta-v3-large",
+    "optimizer": "AdamW",
+    "phase_sequence": [
+      {
+        "epochs": 3,
+        "phase": 1,
+        "trainable": "auxiliary_heads"
+      },
+      {
+        "epochs": 5,
+        "phase": 2,
+        "trainable": "all_parameters"
+      },
+      {
+        "epochs": 2,
+        "phase": 3,
+        "trainable": "encoder_and_main_head"
+      }
+    ],
+    "scheduler": "linear_with_warmup",
+    "seed": 42,
+    "source_path": "reproducibility/runs/deberta_mtl_cikm_20260512_134553/scripts/finetune_deberta_mtl.py",
+    "warmup_ratio": 0.1,
+    "weight_decay": 0.01
+  },
+  "frontier_llm_ablation": {
+    "assistant_prefill": false,
+    "calls": 1023,
+    "dimensions": {
+      "checkability": {
+        "max_tokens": 512
+      },
+      "harm": {
+        "max_tokens": 1024
+      },
+      "verifiability": {
+        "max_tokens": 512
+      }
+    },
+    "model": "claude-opus-4-7",
+    "prompt_cache_ttl": "1h",
+    "prompt_path": "prompts/checkworthiness_v4_prompts.md",
+    "samples": 341,
+    "source_path": "scripts/run_llm_ablation.py",
+    "temperature_parameter": "omitted"
+  },
+  "virality_tabular_baselines": {
+    "missing_value_rule": "NaN and positive/negative infinity replaced with 0",
+    "models": {
+      "BayesianRidge": {
+        "alpha_1": 0.000001,
+        "lambda_1": 0.000001,
+        "standardize": true
+      },
+      "LightGBM": {
+        "learning_rate": 0.05,
+        "max_depth": 6,
+        "n_estimators": 100,
+        "random_state": 42,
+        "standardize": false
+      },
+      "Random": {
+        "distribution": "uniform_0_1",
+        "random_state": 42
+      },
+      "RandomForest": {
+        "max_depth": 10,
+        "min_samples_split": 2,
+        "n_estimators": 100,
+        "random_state": 42,
+        "standardize": false
+      },
+      "Ridge": {
+        "alpha": 0.01,
+        "standardize": true
+      },
+      "SVR (RBF)": {
+        "C": 0.1,
+        "epsilon": 0.05,
+        "gamma": "auto",
+        "kernel": "rbf",
+        "standardize": true
+      }
+    },
+    "preprocessor": "StandardScaler for Ridge, BayesianRidge, and SVR",
+    "source_path": "scripts/reproduce_cikm2026_tabular_baselines.py",
+    "split": {
+      "random_state": 42,
+      "shuffle": true,
+      "stratify": null,
+      "test_size": 0.2
+    }
+  }
+}
