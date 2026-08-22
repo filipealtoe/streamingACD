@@ -17,10 +17,9 @@ from typing import Any
 import pyarrow.parquet as pq
 
 # CAMERA-READY ARTIFACT CHANGE | Author: Sérgio Pinto | Timestamp:
-# 2026-08-21 23:47 PDT | Reason: distinguish the scientifically useful public
-# aggregate package from the broader artifact set promised in the manuscript,
-# including large assets distributed through the checksum-verified GitHub
-# release without reintroducing post-level or user-level identifiers.
+# 2026-08-22 00:53 PDT | Reason: align this audit with the exact final PDF,
+# whose release statement covers the 529-row virality dataset, source code,
+# model parameters, prompts, schema, and accompanying reproducibility artifacts.
 
 
 def inspect_parquet(path: Path) -> dict[str, Any]:
@@ -100,7 +99,7 @@ def audit(repo_root: Path) -> dict[str, Any]:
         repo_root
         / "psr/explainableACD/data/pipeline_output/streaming_full/2026-01-17_03-56"
     )
-    expected_artifacts = {
+    pipeline_inventory = {
         "tweets.parquet": inspect_parquet(canonical_root / "tweets.parquet"),
         "users.parquet": inspect_parquet(canonical_root / "users.parquet"),
         "clusters.parquet": inspect_parquet(canonical_root / "clusters.parquet"),
@@ -112,119 +111,132 @@ def audit(repo_root: Path) -> dict[str, Any]:
             repo_root, canonical_root
         ),
     }
-    for name, artifact in expected_artifacts.items():
+    for name, artifact in pipeline_inventory.items():
         if name != "cluster_embeddings.npy":
             artifact["distribution"] = "git" if artifact["present"] else "not_public"
 
-    claims_columns = set(expected_artifacts["claims.parquet"]["columns"])
-    promised_claim_columns = {
-        "checkability_score",
-        "verifiability_score",
-        "harm_score",
-    }
-    missing_claim_columns = sorted(promised_claim_columns - claims_columns)
     virality = inspect_parquet(
         repo_root
         / "reproducibility/source_artifacts/virality/features_enhanced.parquet"
     )
-    four_head_scores = inspect_parquet(
+    virality_labels = inspect_parquet(
         repo_root
-        / "results/four_heads_inference_20260519_152747/claim_scores.parquet"
+        / "reproducibility/source_artifacts/virality/psr_labels.parquet"
     )
-    claims_ids = set(
-        pq.read_table(canonical_root / "claims.parquet", columns=["claim_id"])[
-            "claim_id"
-        ].to_pylist()
+    feature_path = (
+        repo_root
+        / "reproducibility/source_artifacts/virality/features_enhanced.parquet"
     )
-    score_path = (
-        repo_root / "results/four_heads_inference_20260519_152747/claim_scores.parquet"
+    label_path = (
+        repo_root / "reproducibility/source_artifacts/virality/psr_labels.parquet"
     )
-    score_ids = set(
-        pq.read_table(score_path, columns=["claim_id"])["claim_id"].to_pylist()
+    feature_ids = set(
+        pq.read_table(feature_path, columns=["cluster_id"])["cluster_id"].to_pylist()
     )
-    score_columns = set(four_head_scores["columns"])
-    required_score_columns = {
-        "checkability_score",
-        "verifiability_score",
-        "harm_score",
-        "overall_score",
-    }
-    separate_scores_complete = (
-        required_score_columns.issubset(score_columns)
-        and claims_ids == score_ids
-        and len(score_ids) == 535
+    label_ids = set(
+        pq.read_table(label_path, columns=["cluster_id"])["cluster_id"].to_pylist()
+    )
+    engineered_feature_columns = sorted(
+        set(virality["columns"]) - {"cluster_id", "psr"}
+    )
+    dataset_complete = (
+        virality["present"]
+        and virality_labels["present"]
+        and virality["rows"] == 529
+        and virality_labels["rows"] == 529
+        and len(engineered_feature_columns) == 42
+        and "psr" in virality["columns"]
+        and "psr" in virality_labels["columns"]
+        and feature_ids == label_ids
+        and len(feature_ids) == 529
     )
 
-    promises = {
-        "six_interlinked_artifacts": {
-            "expected": list(expected_artifacts),
-            "present": [
-                name for name, value in expected_artifacts.items() if value["present"]
-            ],
-        },
-        "original_tweet_ids": {
-            "present": False,
-            "reason": "Post-level identifiers are excluded from the public tree.",
-        },
-        "full_post_level_membership": {
-            "present": expected_artifacts["tweets.parquet"]["present"],
-        },
-        "claim_checkworthiness_decomposition": {
-            "present_in_claims_table": not missing_claim_columns,
-            "missing_claim_columns": missing_claim_columns,
-            "separate_score_artifact_rows": four_head_scores["rows"],
-            "present_in_separate_score_artifact": separate_scores_complete,
-            "separate_score_artifact_claim_ids_match": claims_ids == score_ids,
-            "separate_score_columns": sorted(required_score_columns & score_columns),
-        },
-        "natural_language_rationales": {
-            "present": False,
-        },
-        "opus_raw_json_records": {
-            "paper_count": 1023,
-            "public_count": 0,
-        },
-    }
-    complete_promises = {
-        "six_interlinked_artifacts": len(
-            promises["six_interlinked_artifacts"]["present"]
+    release_manifest = json.loads(
+        (repo_root / "reproducibility/cikm2026/RELEASE_ASSETS.json").read_text(
+            encoding="utf-8"
         )
-        == 6,
-        "original_tweet_ids": promises["original_tweet_ids"]["present"],
-        "full_post_level_membership": promises["full_post_level_membership"][
-            "present"
-        ],
-        "claim_checkworthiness_decomposition": separate_scores_complete,
-        "natural_language_rationales": promises["natural_language_rationales"][
-            "present"
-        ],
-        "opus_raw_json_records": promises["opus_raw_json_records"]["public_count"]
-        == promises["opus_raw_json_records"]["paper_count"],
+    )
+    checkpoint = next(
+        (asset for asset in release_manifest["assets"] if asset["name"] == "best_model.pt"),
+        None,
+    )
+    checkpoint_accounted = bool(
+        checkpoint
+        and checkpoint["required"] is True
+        and checkpoint["bytes"] == 1_739_380_133
+        and checkpoint["digest"]
+        == "sha256:5f61837bbeb2b513ca7c49ab5901a6a107dbe275200ac0396777ce375271f081"
+        and release_manifest["release"]["draft"] is False
+    )
+    required_source_paths = [
+        "scripts/reproduce_cikm2026_tabular_baselines.py",
+        "scripts/verify_cikm2026_artifacts.py",
+        "reproducibility/source_artifacts/checkworthiness/source_code/README.md",
+        "reproducibility/source_artifacts/claim_normalization/source_code/README.md",
+    ]
+    required_prompt_paths = [
+        "prompts/checkworthiness_prompts_zeroshot_v4.yaml",
+        "prompts/claim_normalization_cikm2026.md",
+    ]
+    required_reproducibility_paths = [
+        "reproducibility/cikm2026/PAPER_ARTIFACT_INDEX.md",
+        "reproducibility/cikm2026/PAPER_VALUE_MANIFEST.json",
+        "reproducibility/cikm2026/checksums.sha256",
+    ]
+    promise_checks = {
+        "virality_dataset_529_rows_42_features_and_labels": dataset_complete,
+        "source_code": all((repo_root / path).is_file() for path in required_source_paths),
+        "model_parameters_and_checkpoint": (
+            (repo_root / "reproducibility/cikm2026/MODEL_PARAMETERS.json").is_file()
+            and checkpoint_accounted
+        ),
+        "llm_prompts": all((repo_root / path).is_file() for path in required_prompt_paths),
+        "reproducibility_artifacts": all(
+            (repo_root / path).is_file() for path in required_reproducibility_paths
+        ),
+        "pipeline_schema": (
+            repo_root / "reproducibility/cikm2026/SCHEMA.md"
+        ).is_file(),
     }
 
     return {
         "artifact": "CIKM 2026 public artifact-release coverage audit",
         "author": "Sérgio Pinto",
-        "timestamp": "2026-08-21 23:47 PDT (-0700)",
-        "reason": "Measure the public package against the release promises in Sections 3.2, 4.3, and 4.4.",
-        "paper_expected_artifacts": expected_artifacts,
-        "paper_release_promises": promises,
+        "timestamp": "2026-08-22 00:53 PDT (-0700)",
+        "paper_pdf_sha256": "4d82abd01d66de5e04d7107e8c4bb21d3b3d1a7148aa235e95b78b803df78b9c",
+        "reason": "Measure the public package against the exact availability statements in Sections 3 and 4.4 of the final camera-ready PDF.",
+        "paper_release_scope": {
+            "dataset": "529 cluster instances with detection-time engineered features and virality labels",
+            "method_artifacts": "source code, model parameters, LLM prompts, pipeline schema, and accompanying reproducibility artifacts",
+        },
+        "dataset": {
+            "features": virality,
+            "labels": virality_labels,
+            "engineered_feature_columns": len(engineered_feature_columns),
+            "cluster_ids_match": feature_ids == label_ids,
+            "unique_cluster_ids": len(feature_ids),
+        },
+        "release_checkpoint": {
+            "accounted_for": checkpoint_accounted,
+            "asset": checkpoint,
+            "release_tag": release_manifest["release"]["tag"],
+        },
+        "pipeline_output_inventory": pipeline_inventory,
         "public_scientific_core": {
-            "canonical_claims": expected_artifacts["claims.parquet"]["rows"],
-            "aggregate_clusters": expected_artifacts["clusters.parquet"]["rows"],
-            "aggregate_cluster_timeseries_rows": expected_artifacts[
+            "canonical_claims": pipeline_inventory["claims.parquet"]["rows"],
+            "aggregate_clusters": pipeline_inventory["clusters.parquet"]["rows"],
+            "aggregate_cluster_timeseries_rows": pipeline_inventory[
                 "cluster_timeseries.parquet"
             ]["rows"],
             "virality_cluster_instances": virality["rows"],
-            "four_head_score_rows": four_head_scores["rows"],
             "raw_post_text_present": False,
             "post_or_user_identifier_tables_present": False,
         },
-        "promise_checks": complete_promises,
+        "promise_checks": promise_checks,
         "summary": {
-            "promises_satisfied": sum(complete_promises.values()),
-            "promises_checked": len(complete_promises),
-            "verdict": "PASS" if all(complete_promises.values()) else "PARTIAL",
+            "promises_satisfied": sum(promise_checks.values()),
+            "promises_checked": len(promise_checks),
+            "verdict": "PASS" if all(promise_checks.values()) else "FAIL",
         },
     }
 
@@ -240,7 +252,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--output",
         type=Path,
-        default=Path("results/artifact_release_coverage_audit_2026-08-21.json"),
+        default=Path("results/artifact_release_coverage_audit_2026-08-22.json"),
         help="Output path relative to the repository root unless absolute.",
     )
     return parser.parse_args()
@@ -264,7 +276,7 @@ def main() -> int:
         f"claims={core['canonical_claims']}; clusters={core['aggregate_clusters']}; "
         f"time-series rows={core['aggregate_cluster_timeseries_rows']}; "
         f"virality rows={core['virality_cluster_instances']}; "
-        f"four-head rows={core['four_head_score_rows']}"
+        f"engineered features={result['dataset']['engineered_feature_columns']}"
     )
     # CAMERA-READY ARTIFACT CHANGE | Author: Sérgio Pinto | Timestamp:
     # 2026-08-21 23:51 PDT | Reason: honor the documented absolute --output
@@ -276,7 +288,7 @@ def main() -> int:
     )
     print(f"Result: {display_path}")
     print(f"VERDICT: {result['summary']['verdict']}")
-    return 0 if result["summary"]["verdict"] in {"PASS", "PARTIAL"} else 1
+    return 0 if result["summary"]["verdict"] == "PASS" else 1
 
 
 if __name__ == "__main__":

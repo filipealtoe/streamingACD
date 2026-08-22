@@ -32,8 +32,8 @@ import pyarrow.parquet as pq
 
 CHECKPOINT_SHA256 = "5f61837bbeb2b513ca7c49ab5901a6a107dbe275200ac0396777ce375271f081"
 CHECKPOINT_SIZE_BYTES = 1_739_380_133
-PAPER_PDF_SHA256 = "b9d0d127979b66acfd71ab280678a635b379673ef75fa984859c209f5639328e"
-PAPER_PDF_SIZE_BYTES = 641_070
+PAPER_PDF_SHA256 = "4d82abd01d66de5e04d7107e8c4bb21d3b3d1a7148aa235e95b78b803df78b9c"
+PAPER_PDF_SIZE_BYTES = 620_920
 CLUSTER_EMBEDDINGS_SHA256 = (
     "514e9f44c095b1de5175cc6c76db548e9762c3e1bcdda93b8cb8f16f09bd1619"
 )
@@ -49,7 +49,6 @@ CHECKPOINT_RELEASE_URL = (
 # and machine-readable, with known unresolved checks separated from unexpected
 # artifact-integrity failures.
 KNOWN_FAILURE_CATEGORIES = {
-    "Paper artifact-release coverage": "release_scope_mismatch",
     "Claim-normalization Table 2 internal completeness": "external_historical_evidence",
     "Claim-normalization prose-value completeness": "external_historical_evidence",
     "Encoder Only ClaimBuster direct completeness": "external_historical_evidence",
@@ -67,7 +66,6 @@ KNOWN_FAILURE_CATEGORIES = {
     "Four-head training-seed consistency": "manuscript_artifact_mismatch",
     "Four-head training-schedule consistency": "manuscript_artifact_mismatch",
     "Fusion ensemble seed-scope consistency": "manuscript_artifact_mismatch",
-    "Cluster-embedding dimensionality consistency": "manuscript_artifact_mismatch",
     "Check-worthiness side-claim completeness": "manuscript_artifact_mismatch",
     "Virality single-run statistical consistency": "manuscript_artifact_mismatch",
     "CT24 shared-error 86 percent direct reproduction": "manuscript_artifact_mismatch",
@@ -154,14 +152,15 @@ def verify_repository_data_boundary(repo_root: Path) -> Check:
 def verify_artifact_release_coverage(repo_root: Path) -> Check:
     """Compare the public package with the manuscript's release promises."""
     # CAMERA-READY ARTIFACT CHANGE | Author: Sérgio Pinto | Timestamp:
-    # 2026-08-21 21:46 PDT | Reason: keep the privacy-safe aggregate package
-    # while making the broader manuscript release promises machine-auditable.
+    # 2026-08-22 00:53 PDT | Reason: verify the availability statements in the
+    # exact final PDF rather than promises that belonged to an earlier draft.
     audit = load_json(
-        repo_root / "results/artifact_release_coverage_audit_2026-08-21.json"
+        repo_root / "results/artifact_release_coverage_audit_2026-08-22.json"
     )
     core = audit["public_scientific_core"]
     promises = audit["promise_checks"]
-    embeddings = audit["paper_expected_artifacts"]["cluster_embeddings.npy"]
+    dataset = audit["dataset"]
+    embeddings = audit["pipeline_output_inventory"]["cluster_embeddings.npy"]
     embedding_release_accounted = (
         embeddings["present"] is True
         and embeddings["present_in_git"] is False
@@ -173,7 +172,11 @@ def verify_artifact_release_coverage(repo_root: Path) -> Check:
         and int(core["aggregate_clusters"]) == 100_000
         and int(core["aggregate_cluster_timeseries_rows"]) == 404_296
         and int(core["virality_cluster_instances"]) == 529
-        and int(core["four_head_score_rows"]) == 535
+        and int(dataset["features"]["rows"]) == 529
+        and int(dataset["labels"]["rows"]) == 529
+        and int(dataset["engineered_feature_columns"]) == 42
+        and dataset["cluster_ids_match"] is True
+        and int(dataset["unique_cluster_ids"]) == 529
     )
     complete = all(bool(value) for value in promises.values())
     unresolved = [name for name, value in promises.items() if not value]
@@ -223,7 +226,7 @@ def verify_checksums(repo_root: Path) -> Check:
         "results/anomaly_table_reproduction_2026-08-21/checksums.sha256",
         "results/virality_tabular_reproduction_2026-08-21.json",
         "results/virality_statistics_reproduction_2026-08-21.json",
-        "results/artifact_release_coverage_audit_2026-08-21.json",
+        "results/artifact_release_coverage_audit_2026-08-22.json",
         "results/psr_statistics_20260518_205609/README.md",
         "results/psr_statistics_20260518_205609/metrics.json",
         "results/psr_statistics_20260518_205609/predictions/manifest.json",
@@ -766,14 +769,14 @@ def verify_checkpoint_manifest(repo_root: Path, checkpoint: Path | None) -> list
 def verify_paper_pdf_manifest(repo_root: Path, paper_pdf: Path | None) -> list[Check]:
     """Bind the paper-value inventory to the exact camera-ready PDF."""
     # CAMERA-READY ARTIFACT CHANGE | Author: Sérgio Pinto | Timestamp:
-    # 2026-08-21 22:08 PDT | Reason: prevent values from different manuscript
-    # revisions from being treated as one verification target.
+    # 2026-08-22 00:53 PDT | Reason: bind the inventory to the exact final build
+    # rather than the superseded August 13 camera-ready draft.
     manifest = load_json(
         repo_root / "reproducibility/cikm2026/PAPER_VALUE_MANIFEST.json"
     )
     metadata = manifest["paper_pdf"]
     manifest_ok = (
-        metadata["file_name"] == "CIKM2026.pdf"
+        metadata["file_name"] == "CIKM2026-camera-ready-2026-08-22.pdf"
         and int(metadata["bytes"]) == PAPER_PDF_SIZE_BYTES
         and int(metadata["pages"]) == 12
         and metadata["sha256"] == PAPER_PDF_SHA256
@@ -782,7 +785,7 @@ def verify_paper_pdf_manifest(repo_root: Path, paper_pdf: Path | None) -> list[C
         Check(
             "Camera-ready PDF manifest",
             manifest_ok,
-            f"CIKM2026.pdf; pages={metadata['pages']}; bytes={metadata['bytes']}; "
+            f"{metadata['file_name']}; pages={metadata['pages']}; bytes={metadata['bytes']}; "
             f"sha256={metadata['sha256']}",
         )
     ]
@@ -809,8 +812,8 @@ def verify_cluster_embeddings_manifest(
 ) -> list[Check]:
     """Verify the recovered canonical embedding asset metadata and optional file."""
     # CAMERA-READY ARTIFACT CHANGE | Author: Sérgio Pinto | Timestamp:
-    # 2026-08-21 21:55 PDT | Reason: authenticate the recovered 153.6 MB matrix
-    # as an external release candidate and expose its 384-versus-768 mismatch.
+    # 2026-08-22 00:53 PDT | Reason: authenticate the released 384-dimensional
+    # matrix without carrying forward a dimension claim absent from the final PDF.
     artifact_root = repo_root / "reproducibility/cikm2026"
     metadata = load_json(artifact_root / "cluster_embeddings.metadata.json")
     checksum_line = (
@@ -826,7 +829,7 @@ def verify_cluster_embeddings_manifest(
         == CLUSTER_EMBEDDINGS_SHAPE
         and metadata["dtype"] == "float32"
         and metadata["finite_values"] is True
-        and int(metadata["paper_dimensions"]) == 768
+        and metadata["paper_dimensions"] is None
         and sha256_file(index_path) == metadata["index"]["sha256"]
         and int(metadata["index"]["entries"]) == CLUSTER_EMBEDDINGS_SHAPE[0]
     )
@@ -1306,9 +1309,10 @@ def verify_paper_protocol_consistency(repo_root: Path) -> list[Check]:
     embedding_metadata = load_json(
         repo_root / "reproducibility/cikm2026/cluster_embeddings.metadata.json"
     )
-    embedding_dimensions_match = int(
-        embedding_metadata["paper_dimensions"]
-    ) == int(embedding_metadata["retained_dimensions"])
+    embedding_dimension_provenance_matches = (
+        embedding_metadata["paper_dimensions"] is None
+        and int(embedding_metadata["retained_dimensions"]) == 384
+    )
     llm_feature_summary = load_json(
         repo_root / "results/llm_features_table_reproduction_2026-08-21.json"
     )
@@ -1486,9 +1490,9 @@ def verify_paper_protocol_consistency(repo_root: Path) -> list[Check]:
             f"historical ClaimBuster/CT23 loaded seeds={fusion_loaded_seeds}",
         ),
         Check(
-            "Cluster-embedding dimensionality consistency",
-            embedding_dimensions_match,
-            f"paper={embedding_metadata['paper_dimensions']}; retained="
+            "Cluster-embedding final-paper provenance",
+            embedding_dimension_provenance_matches,
+            f"paper dimension stated={embedding_metadata['paper_dimensions']}; retained="
             f"{embedding_metadata['retained_dimensions']}; rows="
             f"{embedding_metadata['rows']}; bytes={embedding_metadata['bytes']}",
         ),
@@ -2464,7 +2468,7 @@ def parse_args() -> argparse.Namespace:
         "--paper-pdf",
         type=Path,
         default=None,
-        help="Optional exact CIKM2026.pdf camera-ready manuscript to verify.",
+        help="Optional exact final camera-ready PDF to verify.",
     )
     parser.add_argument(
         "--embeddings",

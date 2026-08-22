@@ -14,6 +14,7 @@ the CIKM 2026 paper “Predicting Narrative Virality on Social Media Streams for
 <!-- Sérgio Pinto, 2026-08-21 21:46 PDT — linked the consolidated manuscript-to-public-package release-coverage audit. -->
 <!-- Sérgio Pinto, 2026-08-21 20:44 PDT — clarified the actual pre-detection feature scope and retained split protocol. -->
 <!-- Sérgio Pinto, 2026-08-21 20:29 PDT — replaced the ambiguous day count with the exact replay range and window count. -->
+<!-- Sérgio Pinto, 2026-08-22 00:53 PDT — aligned release coverage and the embedding publication state with the exact final PDF. -->
 - **Domain:** a US political-event Twitter/X stream drawn from the US Election 2020 corpus, replayed in 600 hourly windows from
   2020-10-15 00:00 through 2020-11-08 23:00 (25 calendar dates).
 
@@ -29,13 +30,12 @@ The two Parquet files have the same 529 unique cluster IDs and exactly matching 
 
 The public repository also contains a 535-row normalized-claim registry,
 aggregate cluster and time-series tables, and a separate 535-row four-head score
-artifact. The [release-coverage audit](../../results/artifact_release_coverage_audit_2026-08-21.json)
-distinguishes these present scientific artifacts from the broader post-level,
-rationale, embedding, and raw-response bundle described in the manuscript.
-The canonical cluster-embedding matrix has since been recovered as a 153.6 MB
-external-release candidate; its verified 100,000 × 384 shape and checksum are
-documented in [`CLUSTER_EMBEDDINGS.md`](CLUSTER_EMBEDDINGS.md), but the matrix is
-not yet uploaded.
+artifact. The [release-coverage audit](../../results/artifact_release_coverage_audit_2026-08-22.json)
+verifies the dataset, source, parameter, prompt, schema, and reproducibility
+availability statements in the exact final PDF. The canonical 153.6 MB
+cluster-embedding matrix is published as a GitHub release asset; its verified
+100,000 × 384 shape and checksum are documented in
+[`CLUSTER_EMBEDDINGS.md`](CLUSTER_EMBEDDINGS.md).
 
 ## Source and derivation
 

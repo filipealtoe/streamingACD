@@ -2,6 +2,7 @@
 
 <!-- Sérgio Pinto, 2026-08-21 21:53 PDT — replaced machine-local commands with the public camera-ready verification entry points. -->
 <!-- Sérgio Pinto, 2026-08-21 22:08 PDT — documented optional identity verification for the exact audited camera-ready PDF. -->
+<!-- Sérgio Pinto, 2026-08-22 00:53 PDT — rebound verification and release coverage to the exact final camera-ready PDF. -->
 
 Reproducibility workspace for the streaming automated claim detection experiments.
 
@@ -37,7 +38,8 @@ or release promise remains unsupported.
 To confirm that the inventory targets the same camera-ready file, pass the PDF:
 
 ```bash
-uv run scripts/verify_cikm2026_artifacts.py --paper-pdf /path/to/CIKM2026.pdf
+uv run scripts/verify_cikm2026_artifacts.py \
+  --paper-pdf /path/to/CIKM2026-camera-ready-2026-08-22.pdf
 ```
 
 Reproduce all 66 Table 3 numeric cells and the complete statistical annotations:
@@ -70,8 +72,8 @@ The `reproducibility/` directory contains the public manifests, source snapshots
 retained run artifacts, and checksums. Large model files are distributed as release
 assets and bound to the repository by byte size and SHA-256.
 
-Audit the exact boundary between the public scientific core and the broader
-artifact set described in the manuscript with:
+Verify that the public package satisfies the dataset, source, parameter, prompt,
+schema, and reproducibility availability statements in the final paper with:
 
 ```bash
 uv run scripts/audit_cikm2026_release_coverage.py
