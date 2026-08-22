@@ -88,7 +88,7 @@ psr/explainableACD/data/pipeline_output/streaming_full/2026-01-17_03-56/users.pa
 /scripts/recompute_cikm2026_hawkes_corrected.py
 /scripts/recompute_mtl_cross_dataset_fixed_threshold.py
 /scripts/reproduce_cikm2026_all.py
-/scripts/reproduce_cikm2026_anomaly_table.py
+# Sérgio Pinto, 2026-08-21 19:18 PDT — the public CIKM anomaly-table reproducer is intentionally tracked.
 /scripts/reproduce_cikm2026_bertweet_baselines.py
 /scripts/reproduce_cikm2026_clustering_ablation.py
 /scripts/reproduce_cikm2026_hawkes_baseline.py

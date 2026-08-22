@@ -1,0 +1,33 @@
+{
+  "change_note": "S\u00e9rgio Pinto, 2026-08-21 19:38 PDT \u2014 Recomputed all three four-head F1 cells from checksum-bound prediction arrays.",
+  "inference": "committed prediction arrays",
+  "paper_f1": {
+    "CT23": 0.933,
+    "CT24": 0.833,
+    "ClaimBuster": 0.973
+  },
+  "results": {
+    "CT23": {
+      "accuracy": 0.9559748427672956,
+      "f1": 0.9326923076923077,
+      "precision": 0.97,
+      "recall": 0.8981481481481481,
+      "threshold": 0.3
+    },
+    "CT24": {
+      "accuracy": 0.9120234604105572,
+      "f1": 0.8333333333333334,
+      "precision": 0.8152173913043478,
+      "recall": 0.8522727272727273,
+      "threshold": 0.5
+    },
+    "ClaimBuster": {
+      "accuracy": 0.9874031007751938,
+      "f1": 0.972972972972973,
+      "precision": 0.9629629629629629,
+      "recall": 0.9831932773109243,
+      "threshold": 0.5999999999999999
+    }
+  },
+  "status": "PASS"
+}

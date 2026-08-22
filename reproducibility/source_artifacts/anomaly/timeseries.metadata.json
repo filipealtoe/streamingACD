@@ -1,0 +1,26 @@
+{
+  "change_note": "Sérgio Pinto, 2026-08-21 19:08 PDT — Added the aggregate numeric time series required to execute every CIKM anomaly-table row without raw post or user data.",
+  "artifact": "timeseries.parquet",
+  "clusters": 100000,
+  "clusters_with_at_least_50_rows": 1543,
+  "clusters_with_at_least_89_rows": 820,
+  "columns": [
+    "cluster_id",
+    "hour_offset",
+    "tweet_count",
+    "engagement"
+  ],
+  "max_rows_per_cluster": 595,
+  "min_rows_per_cluster": 1,
+  "output_sha256": "2279fbdde729b5a90d94f5b01e844ac01995df921b5cdbe7af3b7ea271211832",
+  "release_boundary": {
+    "absolute_timestamps_removed": true,
+    "aggregate_numeric_series_only": true,
+    "post_and_user_identifiers_removed": true,
+    "profiles_and_locations_removed": true,
+    "raw_text_removed": true
+  },
+  "rows": 404296,
+  "source_sha256": "6539c0afbc6afb7dd3ab7f779dd630fa07f2de4d12bc1da561ef5a3673026fe8",
+  "scope": "Aggregate cluster-level hourly counts and engagement values used by the anomaly-table reproducer."
+}

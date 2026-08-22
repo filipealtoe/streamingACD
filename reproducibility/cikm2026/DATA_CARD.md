@@ -11,7 +11,11 @@ the CIKM 2026 paper “Predicting Narrative Virality on Social Media Streams for
   `(e_final - e_detect) / e_final`.
 - **Inputs:** 42 numeric features measured or derived at the retrospective detection-window boundary.
 - **Stored split:** 423 training and 106 test instances.
-- **Domain:** a 24-day US political-event Twitter/X stream drawn from the US Election 2020 corpus.
+<!-- Sérgio Pinto, 2026-08-21 21:46 PDT — linked the consolidated manuscript-to-public-package release-coverage audit. -->
+<!-- Sérgio Pinto, 2026-08-21 20:44 PDT — clarified the actual pre-detection feature scope and retained split protocol. -->
+<!-- Sérgio Pinto, 2026-08-21 20:29 PDT — replaced the ambiguous day count with the exact replay range and window count. -->
+- **Domain:** a US political-event Twitter/X stream drawn from the US Election 2020 corpus, replayed in 600 hourly windows from
+  2020-10-15 00:00 through 2020-11-08 23:00 (25 calendar dates).
 
 ## Files
 
@@ -23,6 +27,16 @@ the CIKM 2026 paper “Predicting Narrative Virality on Social Media Streams for
 
 The two Parquet files have the same 529 unique cluster IDs and exactly matching `psr` values after joining by `cluster_id`.
 
+The public repository also contains a 535-row normalized-claim registry,
+aggregate cluster and time-series tables, and a separate 535-row four-head score
+artifact. The [release-coverage audit](../../results/artifact_release_coverage_audit_2026-08-21.json)
+distinguishes these present scientific artifacts from the broader post-level,
+rationale, embedding, and raw-response bundle described in the manuscript.
+The canonical cluster-embedding matrix has since been recovered as a 153.6 MB
+external-release candidate; its verified 100,000 × 384 shape and checksum are
+documented in [`CLUSTER_EMBEDDINGS.md`](CLUSTER_EMBEDDINGS.md), but the matrix is
+not yet uploaded.
+
 ## Source and derivation
 
 The source stream was derived from the Kaggle
@@ -31,9 +45,13 @@ processed 1,522,909 posts and produced a
 [separate registry of 535 normalized claims](../../psr/explainableACD/data/pipeline_output/streaming_full/2026-01-17_03-56/claims.parquet).
 The released virality dataset instead uses cluster instances as rows; these counts are not expected to match.
 
+<!-- Sérgio Pinto, 2026-08-21 17:52 PDT — Corrected the generator path so the data card points to the tracked source snapshot. -->
 The feature-generation snapshot is retained at
-`reproducibility/source_artifacts/virality/generate_enhanced_features.py`. It depends on canonical pipeline tables that are not
+`psr/reproducibility/source_artifacts/virality/generate_enhanced_features.py`. It depends on the raw post-level table, which is not
 redistributed, so it documents the derivation but is not a public end-to-end regeneration path.
+The source filters every aggregate and post-level input to timestamps at or before
+detection; it uses all retained pre-detection history rather than a fixed six-hour
+slice.
 
 ## Split
 
@@ -44,7 +62,8 @@ train_test_split(row_indices, test_size=0.2, random_state=42, shuffle=True, stra
 ```
 
 This yields 423 training and 106 test instances. The focused verifier independently rebuilds the equivalent
-`RandomState(42)` permutation and checks every stored cluster ID.
+`RandomState(42)` permutation and checks every stored cluster ID. The split is
+shuffled but is not stratified.
 
 ## Missing values
 
@@ -92,7 +111,7 @@ and current Twitter/X platform terms.
 
 ## Known limitations
 
-- one political-event stream over 24 contiguous days;
+- one political-event stream covering 600 hourly windows across 25 calendar dates;
 - retrospective replay rather than a live no-lookahead deployment proof: likes and retweets are single collection-time snapshots,
   and the stored `detection_time` is the start of the triggering 60-minute window;
 - temporal and platform-specific engagement features;

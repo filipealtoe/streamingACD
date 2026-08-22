@@ -1,5 +1,8 @@
 # Streaming ACD
 
+<!-- Sérgio Pinto, 2026-08-21 21:53 PDT — replaced machine-local commands with the public camera-ready verification entry points. -->
+<!-- Sérgio Pinto, 2026-08-21 22:08 PDT — documented optional identity verification for the exact audited camera-ready PDF. -->
+
 Reproducibility workspace for the streaming automated claim detection experiments.
 
 ## CIKM 2026 Artifact
@@ -13,8 +16,10 @@ Sérgio Miguel Gonçalves Pinto, and H. Sofia Pinto.
 - Artifact guide: [`reproducibility/cikm2026/README.md`](reproducibility/cikm2026/README.md)
 - Paper-to-artifact index: [`reproducibility/cikm2026/PAPER_ARTIFACT_INDEX.md`](reproducibility/cikm2026/PAPER_ARTIFACT_INDEX.md)
 - Model parameters: [`reproducibility/cikm2026/MODEL_PARAMETERS.json`](reproducibility/cikm2026/MODEL_PARAMETERS.json)
+- Paper-value manifest: [`reproducibility/cikm2026/PAPER_VALUE_MANIFEST.json`](reproducibility/cikm2026/PAPER_VALUE_MANIFEST.json)
 - Dataset: [`reproducibility/source_artifacts/virality/`](reproducibility/source_artifacts/virality/)
 - Four-head checkpoint: [`reproducibility/cikm2026/CHECKPOINT.md`](reproducibility/cikm2026/CHECKPOINT.md)
+- Cluster-embedding asset manifest: [`reproducibility/cikm2026/CLUSTER_EMBEDDINGS.md`](reproducibility/cikm2026/CLUSTER_EMBEDDINGS.md)
 
 Verify the public CIKM artifact from a fresh clone with:
 
@@ -22,19 +27,29 @@ Verify the public CIKM artifact from a fresh clone with:
 uv run scripts/verify_cikm2026_artifacts.py
 ```
 
-The focused verifier checks dataset integrity, the deterministic split, documented
+The global verifier checks dataset integrity, the deterministic split, documented
 missingness, paper-facing results, source and prompt provenance, exact parameter
 values, and checkpoint release metadata. Pass `--checkpoint` with the downloaded
-release asset to verify its size and SHA-256 as well.
+release asset to verify its size and SHA-256 as well. It reports every supported
+and unresolved claim separately and exits non-zero while any audited paper claim
+or release promise remains unsupported.
 
-Freshly fit the six numeric baselines that depend only on the released matrix with:
+To confirm that the inventory targets the same camera-ready file, pass the PDF:
 
 ```bash
-uv run scripts/reproduce_cikm2026_tabular_baselines.py
+uv run scripts/verify_cikm2026_artifacts.py --paper-pdf /path/to/CIKM2026.pdf
 ```
 
-This reproduces Random, Ridge, BayesianRidge, RandomForest, LightGBM, and SVR metrics
-and compares them with the committed full-precision result artifact.
+Reproduce all 66 Table 3 numeric cells and the complete statistical annotations:
+
+```bash
+uv run scripts/verify_cikm2026_virality_table.py
+uv run scripts/reproduce_cikm2026_virality_statistics.py
+```
+
+The first command checks all 11 rows and 66 cells. The second recomputes all
+Spearman p-values, 95% bootstrap confidence intervals, significance marks, and
+the three exact McNemar tests from retained per-example arrays.
 
 ## Current Reproduced Run
 
@@ -55,18 +70,12 @@ The `reproducibility/` directory contains the public manifests, source snapshots
 retained run artifacts, and checksums. Large model files are distributed as release
 assets and bound to the repository by byte size and SHA-256.
 
-Run the current local verifier with:
+Audit the exact boundary between the public scientific core and the broader
+artifact set described in the manuscript with:
 
 ```bash
-EXPLAINABLE_ACD_ROOT=/Users/sergiopinto/explainableACD \
-  /Users/sergiopinto/effort/.venv/bin/python scripts/verify_local_artifacts.py
+uv run scripts/audit_cikm2026_release_coverage.py
 ```
 
-Recompute CT24 metrics from saved probability artifacts with:
-
-```bash
-EXPLAINABLE_ACD_ROOT=/Users/sergiopinto/explainableACD \
-  /Users/sergiopinto/effort/.venv/bin/python scripts/recompute_ct24_metrics.py
-```
-
-The paper-claim status matrix is tracked in `docs/paper_claim_reproduction_matrix.md`.
+The detailed public commands, evidence boundaries, and paper-to-artifact links
+are maintained in the [artifact guide](reproducibility/cikm2026/README.md).

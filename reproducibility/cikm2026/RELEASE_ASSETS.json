@@ -1,0 +1,25 @@
+{
+  "change_note": "Sérgio Pinto, 2026-08-21 22:29 PDT — Defined the exact public release identities for the external CIKM assets so their availability can be checked without downloading multi-gigabyte files.",
+  "repository": "filipealtoe/streamingACD",
+  "release": {
+    "draft": false,
+    "prerelease": false,
+    "tag": "cikm-2026-artifact-v1"
+  },
+  "assets": [
+    {
+      "bytes": 1739380133,
+      "digest": "sha256:5f61837bbeb2b513ca7c49ab5901a6a107dbe275200ac0396777ce375271f081",
+      "name": "best_model.pt",
+      "purpose": "Four-head DeBERTa checkpoint",
+      "required": true
+    },
+    {
+      "bytes": 153600128,
+      "digest": "sha256:514e9f44c095b1de5175cc6c76db548e9762c3e1bcdda93b8cb8f16f09bd1619",
+      "name": "cluster_embeddings.npy",
+      "purpose": "Canonical 100000 x 384 cluster-embedding matrix",
+      "required": true
+    }
+  ]
+}

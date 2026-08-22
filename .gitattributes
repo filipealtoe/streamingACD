@@ -1,0 +1,2 @@
+# CAMERA-READY ARTIFACT CHANGE | Author: Sérgio Pinto | Timestamp: 2026-08-21 23:59 PDT | Reason: preserve the checksum-bound official CT23 gold file byte-for-byte across platforms.
+reproducibility/source_artifacts/checkworthiness/benchmarks/ct23/CT23_1B_checkworthy_english_test_gold.tsv -text whitespace=cr-at-eol

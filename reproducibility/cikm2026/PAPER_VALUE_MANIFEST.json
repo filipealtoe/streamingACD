@@ -1,0 +1,563 @@
+{
+  "change_notes": [
+    "Sérgio Pinto, 2026-08-21 18:13 PDT — Recorded the current camera-ready virality table values so every published cell can be checked against executable evidence.",
+    "Sérgio Pinto, 2026-08-21 19:21 PDT — Added the four paper-facing anomaly rows after a fresh exact reproduction from the aggregate public time series.",
+    "Sérgio Pinto, 2026-08-21 19:12 PDT — Linked the four-head paper values to both direct metric recomputation and fresh inference from the checksum-identified checkpoint.",
+    "Sérgio Pinto, 2026-08-21 19:21 PDT — Linked the LLM-feature row to a fresh fit from the text-free numerical feature bundle.",
+    "Sérgio Pinto, 2026-08-21 19:27 PDT — Recorded the historical per-benchmark threshold rule and added a fixed CT24-development-threshold diagnostic.",
+    "Sérgio Pinto, 2026-08-21 19:45 PDT — Linked the exact CT24 Fusion reproduction and recorded the missing January 17 cross-benchmark prediction boundary.",
+    "Sérgio Pinto, 2026-08-21 19:58 PDT — Linked the Encoder Only row to direct CT24 and CT23 probability reproduction and the exact aggregate ClaimBuster rederivation.",
+    "Sérgio Pinto, 2026-08-21 20:10 PDT — Corrected the ClaimBuster public input size to 1,032 and marked its historical aggregate reconstruction as unresolved evidence rather than direct reproduction.",
+    "Sérgio Pinto, 2026-08-21 20:13 PDT — Added all claim-normalization Table 2 values, linked the exact Approach 2 / Model A reproduction, and marked the eight unrecovered internal cells unresolved.",
+    "Sérgio Pinto, 2026-08-21 20:18 PDT — Added the Frontier-LLM Table 5 values, unique aggregate reconstruction, and explicit missing-response boundary.",
+    "Sérgio Pinto, 2026-08-21 20:23 PDT — Bound the Table 3 metrics and exact McNemar tests to one executable audit, exposing the retained-versus-fresh RandomForest prediction difference.",
+    "Sérgio Pinto, 2026-08-21 20:29 PDT — Added exact corpus, pipeline, claim/cluster mapping, and scoped clustering-ablation values from the public artifacts.",
+    "Sérgio Pinto, 2026-08-21 20:34 PDT — Added a direct worked-example reproduction for cluster 72106 and exposed the 80-versus-88 detection-boundary count.",
+    "Sérgio Pinto, 2026-08-21 20:40 PDT — Corrected the claim-normalization evidence boundary after finding that the retained 0.5569 numerical recovery used a different protocol from the accepted paper.",
+    "Sérgio Pinto, 2026-08-21 20:40 PDT — Audited the reported 86% shared-error claim and recorded the missing row identities required for a direct three-model comparison.",
+    "Sérgio Pinto, 2026-08-21 20:44 PDT — Added protocol-level checks for stream duration, pipeline units, anomaly parameters and detection-rate definitions, the virality feature window and split, and the retained MTL seed.",
+    "Sérgio Pinto, 2026-08-21 20:51 PDT — Added the clustering-ablation endpoint values and made the two unsupported claim-normalization prose scores part of the executable completeness verdict.",
+    "Sérgio Pinto, 2026-08-21 20:58 PDT — Mapped every RandomForest paper cell to its actual checksum-bound source and kept the mixed-run row inconsistency separate from numeric reproduction.",
+    "Sérgio Pinto, 2026-08-21 21:11 PDT — Added a fresh single-item benchmark for PSR prediction over the released 42-feature matrix and kept the separate four-head GPU latency claim unresolved.",
+    "Sérgio Pinto, 2026-08-21 21:14 PDT — Classified the worked-example value 88 as directly reproduced from the registry snapshot while retaining the separate 80-versus-88 temporal-boundary inconsistency.",
+    "Sérgio Pinto, 2026-08-21 21:20 PDT — Verified the CT24 English dev-test file against the official archive: it contains 318 data rows rather than the paper's 317, while the retained four-head run selected on the separate 1,031-row development split.",
+    "Sérgio Pinto, 2026-08-21 21:26 PDT — Recovered the official CT24 test sentence-ID order and directly aligned all three error vectors; explicit shared-error definitions yield 27.69%, 46.15%, 69.03%, or at most 80%, not 86%.",
+    "Sérgio Pinto, 2026-08-21 21:31 PDT — Recomputed the retained CT24 threshold sweeps: the development-selected threshold shifts test F1 by -0.0287, supporting the approximate 0.03 magnitude while exposing that the reported 0.833 is the test-sweep optimum.",
+    "Sérgio Pinto, 2026-08-21 21:31 PDT — Bound the four-head latency claim to the retained CUDA benchmark trace: 6.09 ms/claim on ClaimBuster and 4.56 ms/claim on CT23 as batch-amortized inference with batch size 32.",
+    "Sérgio Pinto, 2026-08-21 21:36 PDT — Traced the published-baseline row to primary sources: CT24 0.802 is Llama2-7b, ClaimBuster 0.920 is G2CW, and CT23 0.898 is OpenFact GPT-3, so the three cells are not one model row.",
+    "Sérgio Pinto, 2026-08-21 21:36 PDT — Added an explicit protocol mismatch for the LLM-feature row, whose table values optimize the threshold separately on each evaluation set rather than selecting it on development data.",
+    "Sérgio Pinto, 2026-08-21 21:40 PDT — Recomputed all 11 Table 3 Spearman p-values and 95% bootstrap intervals from the retained predictions and reproduced all three exact McNemar tests.",
+    "Sérgio Pinto, 2026-08-21 21:46 PDT — Audited the public package against the manuscript's six-artifact, post-membership, rationale, and 1,023-response release promises while preserving the no-identifiers boundary.",
+    "Sérgio Pinto, 2026-08-21 21:46 PDT — Recorded the retained three-phase linear-schedule MTL protocol and the two-seed historical cross-benchmark Fusion scope alongside the corresponding manuscript descriptions.",
+    "Sérgio Pinto, 2026-08-21 21:55 PDT — Recovered and authenticated the canonical 100,000 by 384 cluster-embedding matrix as a 153.6 MB external-release candidate and recorded the manuscript's 768-dimensional mismatch.",
+    "Sérgio Pinto, 2026-08-21 22:08 PDT — Bound the numerical inventory to the exact 12-page camera-ready PDF by file size and SHA-256."
+  ],
+  "paper": "CIKM 2026 camera-ready manuscript",
+  "paper_pdf": {
+    "file_name": "CIKM2026.pdf",
+    "bytes": 641070,
+    "pages": 12,
+    "sha256": "b9d0d127979b66acfd71ab280678a635b379673ef75fa984859c209f5639328e",
+    "creation_timestamp_from_pdf_metadata": "2026-08-13 08:38:23 PDT",
+    "scope": "Exact camera-ready PDF used to transcribe and audit the paper-facing values in this manifest; the PDF itself is not redistributed in the repository."
+  },
+  "rounding_decimals": 3,
+  "pipeline_narrative_values": {
+    "stream": {
+      "posts_processed": 1522909,
+      "paper_short_form": "1.52M",
+      "hourly_windows": 600,
+      "first_window": "2020-10-15T00:00:00",
+      "last_window": "2020-11-08T23:00:00",
+      "calendar_dates_inclusive": 25
+    },
+    "canonical_pipeline": {
+      "posts_passed_gate": 692289,
+      "clusters": 100000,
+      "anomaly_detections": 1504,
+      "normalized_claims": 535,
+      "cluster_to_claim_mappings": 650
+    },
+    "released_virality_artifact": {
+      "cluster_instances": 529,
+      "feature_columns": 42,
+      "mapped_cluster_instances": 529,
+      "mapped_unique_canonical_claims": 447,
+      "train_rows": 423,
+      "test_rows": 106
+    },
+    "clustering_threshold_ablation": {
+      "scope": "retained 5,000-post sample, not the full 1.52M-post run",
+      "sample_posts": 5000,
+      "threshold": 0.65,
+      "clusters": 845,
+      "cluster_yield_percent": 86.9,
+      "mean_intra_cluster_similarity": 0.8685999195826681,
+      "paper_rounded_yield_percent": 87,
+      "paper_rounded_similarity": 0.87,
+      "endpoint_values": {
+        "0.55": {
+          "cluster_yield_percent": 97.16,
+          "mean_intra_cluster_similarity": 0.8184182861272027,
+          "paper_rounded_yield_percent": 97.2,
+          "paper_rounded_similarity": 0.82
+        },
+        "0.80": {
+          "cluster_yield_percent": 27.700000000000003,
+          "mean_intra_cluster_similarity": 0.9480317541956902,
+          "paper_rounded_yield_percent": 27.7,
+          "paper_rounded_similarity": 0.95
+        }
+      }
+    }
+  },
+  "worked_example": {
+    "cluster_id": 72106,
+    "claim_id": "72614ee1-b470-4d6f-90a3-da78f7ccb70e",
+    "reproduction_command": "uv run scripts/reproduce_cikm2026_case_study.py",
+    "full_precision_evidence": "results/case_study_reproduction_2026-08-21.json",
+    "paper_values_reproduced": [
+      "formation time",
+      "detection time",
+      "detection z-score",
+      "engagement at detection",
+      "peak time and peak-window engagement",
+      "detection-to-peak hours",
+      "final engagement",
+      "PSR",
+      "four four-head confidence scores",
+      "harm-score upper-quartile threshold",
+      "535-row score-table size",
+      "claim/cluster/checkpoint linkage"
+    ],
+    "detection_member_count": {
+      "paper": 88,
+      "claim_registry_snapshot": 88,
+      "cluster_timeseries_through_detection_timestamp": 80,
+      "numeric_status": "reproduced directly from the claim registry snapshot",
+      "temporal_status": "mismatch: the paper describes the registry snapshot count as the count at the detection timestamp"
+    }
+  },
+  "claim_normalization_prose_values": {
+    "pure_retrieval_meteor": {
+      "paper_value": 0.3937,
+      "status": "unresolved; no matching retained result or per-example output was recovered"
+    },
+    "fine_tuned_model_a_meteor": {
+      "paper_value": 0.4427,
+      "status": "unresolved; no matching retained result or per-example output was recovered"
+    },
+    "training_rows": {
+      "paper_value": 11374,
+      "status": "verified from the retained run record and official input checksum"
+    }
+  },
+  "checkworthiness_shared_error_analysis": {
+    "paper_value_percent": 86,
+    "evaluation_rows": 341,
+    "audit_command": "uv run scripts/audit_cikm2026_shared_errors.py",
+    "audit_evidence": "results/checkworthiness_shared_error_audit_2026-08-21.json",
+    "status": "mismatch; exact sentence-ID alignment is available, but no explicit shared-error denominator reproduces 86%"
+  },
+  "artifact_release_coverage": {
+    "audit_command": "uv run scripts/audit_cikm2026_release_coverage.py",
+    "audit_evidence": "results/artifact_release_coverage_audit_2026-08-21.json",
+    "paper_promises": "six interlinked artifacts, original tweet IDs, full post-level membership, claim-level dimensional scores and natural-language rationales, and 1,023 raw Opus JSON records",
+    "public_package": "535 normalized claims, 100,000 aggregate clusters, 404,296 aggregate cluster-time-series rows, 529 virality feature rows, and a separate 535-row four-head score table; no post/user identifier tables, post membership, rationales, embedding matrix, or raw Opus response log",
+    "status": "partial coverage"
+  },
+  "protocol_consistency": {
+    "stream_duration": {
+      "paper_value": "24 contiguous days",
+      "artifact_value": "600 hourly windows spanning 25 calendar dates",
+      "status": "mismatch"
+    },
+    "pipeline_units": {
+      "paper_value": "529 flagged clusters, 529 normalization invocations, and 535 released narratives",
+      "artifact_value": "1,504 anomaly detections and 650 cluster-to-claim mappings in the canonical run; 535 normalized claims; the separate 529-row virality release maps to 447 claims",
+      "status": "mismatch between canonical-run and released-subset units"
+    },
+    "anomaly_expose_parameters": {
+      "paper_method": {
+        "decay": 0.01,
+        "gamma": 0.5,
+        "threshold": 0.1,
+        "warmup": 30
+      },
+      "retained_table_run": {
+        "decay": 0.005,
+        "gamma": 1.0,
+        "threshold": 0.05,
+        "warmup": 0
+      },
+      "status": "mismatch"
+    },
+    "anomaly_detection_rate": {
+      "paper_definition": "strictly before peak",
+      "expose_table_source": "strictly before peak",
+      "baseline_table_source": "inclusive of detection at peak",
+      "status": "mixed definition"
+    },
+    "virality_feature_observation_scope": {
+      "paper_value": "42 features from a 6-hour observation window following detection",
+      "artifact_value": "42 features computed from all retained observations up to and including detection time",
+      "status": "mismatch"
+    },
+    "virality_split": {
+      "paper_value": "423/106 stratified",
+      "artifact_value": "423/106 shuffled RandomState(42), stratify=None",
+      "status": "mismatch"
+    },
+    "llm_feature_threshold_selection": {
+      "paper_value": "threshold and model selection on the dev-test split, followed by final test-gold reporting",
+      "artifact_value": "maximum F1 selected separately on CT24 test, ClaimBuster, and CT23 labels",
+      "development_threshold_diagnostic": "threshold 0.65 selected on CT24 development gives F1 0.687 on CT24, 0.881 on ClaimBuster, and 0.802 on CT23",
+      "evidence": "results/llm_features_table_reproduction_2026-08-21.json",
+      "status": "mismatch"
+    },
+    "published_baseline_row_provenance": {
+      "paper_value": "one Llama2-7b Fine-tuned row with CT24 0.802, ClaimBuster 0.920, and CT23 0.898",
+      "artifact_value": "CT24 0.802 is FactFinders Llama2-7b; ClaimBuster 0.920 is G2CW; CT23 0.898 is OpenFact GPT-3",
+      "evidence": "reproducibility/source_artifacts/checkworthiness/published_baseline/PUBLISHED_BASELINE_AUDIT.json",
+      "status": "mismatch"
+    },
+    "four_head_training_seed": {
+      "paper_value": [0, 123, 456],
+      "retained_run_value": [42],
+      "status": "mismatch"
+    },
+    "four_head_training_schedule": {
+      "paper_value": {
+        "epochs": 5,
+        "effective_batch_size": "16-32",
+        "learning_rate": 0.00002,
+        "scheduler": "cosine annealing"
+      },
+      "retained_run_value": {
+        "phase_epochs": [3, 5, 2],
+        "effective_batch_size": 32,
+        "encoder_learning_rate": 0.00001,
+        "auxiliary_learning_rate": 0.001,
+        "scheduler": "linear with warmup"
+      },
+      "status": "mismatch; effective batch size agrees, while total phase schedule, learning rate, and scheduler do not"
+    },
+    "fusion_ensemble_scope": {
+      "paper_value": "three-seed DeBERTa ensemble",
+      "ct24_artifact_value": "retained temperature-scaled three-seed ensemble probabilities",
+      "cross_benchmark_historical_value": "historical ClaimBuster/CT23 run loaded seeds 0 and 456",
+      "evidence": "reproducibility/source_artifacts/checkworthiness/fusion_classifier/FUSION_RECOVERY_AUDIT.json",
+      "status": "mixed: CT24 has three-seed evidence; the retained cross-benchmark run used two seeds"
+    },
+    "cluster_embedding_dimensions": {
+      "paper_value": 768,
+      "retained_canonical_value": 384,
+      "rows": 100000,
+      "bytes": 153600128,
+      "sha256": "514e9f44c095b1de5175cc6c76db548e9762c3e1bcdda93b8cb8f16f09bd1619",
+      "evidence": "reproducibility/cikm2026/cluster_embeddings.metadata.json",
+      "status": "mismatch"
+    },
+    "frontier_llm_side_claims": {
+      "naive_aggregation_f1": {
+        "paper_value": 0.410,
+        "status": "unresolved; no retained per-example Opus outputs"
+      },
+      "development_rows": {
+        "paper_value": 317,
+        "official_ct24_dev_test_rows": 318,
+        "retained_four_head_selection_rows": 1031,
+        "evidence": "reproducibility/source_artifacts/checkworthiness/benchmarks/ct24_devtest_metadata.json",
+        "status": "mismatch; the official CT24 dev-test has 318 data rows and the retained four-head run selected on the separate 1,031-row development split"
+      },
+      "calibration_f1_shift": {
+        "paper_value": "approximately 0.03 in either direction",
+        "evidence": "results/mtl_threshold_calibration_audit_2026-08-21.json",
+        "observed_signed_shift": -0.028735632183908066,
+        "status": "partially verified; the retained sweep reproduces a -0.0287 shift, but not the positive direction, and the reported 0.833 is test-optimized rather than selected at the 0.60 development threshold"
+      }
+    },
+    "latency_side_claims": {
+      "psr_prediction": {
+        "paper_value": "sub-millisecond per item",
+        "evidence": "results/psr_latency_benchmark_2026-08-21.json",
+        "scope": "single-row StandardScaler.transform plus model.predict for BayesianRidge and SVR; excludes feature generation, fitting, file I/O, and batching",
+        "status": "reproduced by fresh benchmark; mean and p95 below 1 ms for both paper-leading numeric baselines"
+      },
+    "four_head_gpu": {
+      "paper_value": "less than 10 ms per claim",
+      "evidence": "results/mtl_gpu_latency_audit_2026-08-21.json",
+      "scope": "retained CUDA benchmark, batch size 32, batch-amortized per claim; not single-request latency",
+      "status": "verified from retained CUDA trace; 6.09 ms/claim on ClaimBuster and 4.56 ms/claim on CT23 under the measured batch-amortized boundary"
+    }
+    }
+  },
+  "tables": {
+    "anomaly_detection": {
+      "paper_table_number": 1,
+      "reproduction_command": "uv run scripts/reproduce_cikm2026_anomaly_table.py",
+      "full_precision_evidence": "results/anomaly_table_reproduction_2026-08-21/summary.json",
+      "table_value_status": "all four rows reproduce after rounding",
+      "protocol_status": "the retained table run differs from the method-paragraph EXPoSE parameters and uses mixed detection-rate definitions",
+      "metrics": [
+        "nab_style_score",
+        "historical_detection_rate_percent",
+        "median_lead_hours"
+      ],
+      "rows": {
+        "EXPoSE": {
+          "metrics": [79.2, 97.9, 23.0]
+        },
+        "Bayesian Changept": {
+          "metrics": [7.4, 41.0, 7.5]
+        },
+        "Etsy Skyline": {
+          "metrics": [8.2, 47.4, 6.0]
+        },
+        "Steuber Z-score": {
+          "metrics": [6.8, 41.8, 7.0]
+        }
+      }
+    },
+    "claim_normalization": {
+      "paper_table_number": 2,
+      "metric": "meteor",
+      "models": {
+        "A": "Mistral-7B-Instruct-v0.3",
+        "B": "Mixtral-8x7B",
+        "C": "DeepSeek-3.1v"
+      },
+      "reproduction_command": "uv run --no-project scripts/reproduce_cikm2026_claim_normalization_table.py",
+      "full_precision_evidence": "results/claim_normalization_table_reproduction_2026-08-21.json",
+      "paper_model_a_protocol": {
+        "topic_clusters": 10,
+        "retrieval_threshold": 0.85,
+        "claim_verify_threshold": 0.65,
+        "positive_examples": 4,
+        "negative_examples": 2
+      },
+      "recovery_model_a_protocol": {
+        "topic_clusters": 10,
+        "retrieval_threshold": 0.85,
+        "claim_verify_threshold": 0.5,
+        "positive_examples": 5,
+        "negative_examples": 0
+      },
+      "rows": {
+        "Baseline 1": {
+          "metrics": [0.4569],
+          "evidence_status": "external citation"
+        },
+        "Baseline 2": {
+          "metrics": [0.4521],
+          "evidence_status": "external citation"
+        },
+        "LLM Only": {
+          "metrics": [0.3423, 0.3875, 0.3997],
+          "evidence_status": "unresolved; exact 300-row paper-run outputs not recovered"
+        },
+        "Approach 1": {
+          "metrics": [0.4679, 0.4745, 0.4838],
+          "evidence_status": "unresolved; exact 300-row paper-run outputs not recovered"
+        },
+        "Approach 2": {
+          "metrics": [0.5569, 0.5463, 0.5691],
+          "evidence_status": "Model A has a checksum-bound 300-row numerical match under a different protocol; exact paper-protocol reproduction for Models A, B, and C remains unresolved"
+        }
+      }
+    },
+    "claim_checkworthiness": {
+      "paper_table_number": 4,
+      "metrics": [
+        "ct24_f1",
+        "claimbuster_f1",
+        "ct23_f1"
+      ],
+      "rows": {
+        "Published baseline": {
+          "metrics": [0.802, 0.920, 0.898],
+          "evidence_status": "valid external references from three systems: FactFinders Llama2-7b on CT24, G2CW on ClaimBuster, and OpenFact GPT-3 on CT23",
+          "provenance_audit": "reproducibility/source_artifacts/checkworthiness/published_baseline/PUBLISHED_BASELINE_AUDIT.json",
+          "row_provenance_status": "mismatch: only the CT24 cell is a Llama2-7b result"
+        },
+        "Encoder": {
+          "metrics": [0.821, 0.970, 0.928],
+          "evidence_status": "CT24 and CT23 directly reproduced from checksum-bound per-example probabilities; ClaimBuster has a checksum-bound historical aggregate extract and consistent confusion matrix but remains unresolved as direct reproduction because the per-example vector was not retained",
+          "reproduction_command": "uv run scripts/reproduce_cikm2026_encoder_only.py",
+          "full_precision_evidence": "results/encoder_only_table_reproduction_2026-08-21.json",
+          "numerical_input": "reproducibility/source_artifacts/checkworthiness/encoder_only/",
+          "claimbuster_recovery_audit": "reproducibility/source_artifacts/checkworthiness/encoder_only/ENCODER_RECOVERY_AUDIT.json",
+          "claimbuster_historical_extract": "reproducibility/source_artifacts/checkworthiness/encoder_only/HISTORICAL_RUN_EXTRACT.md",
+          "claimbuster_per_example_evidence_status": "unresolved; the historical aggregate extract is public, but the per-example probability vector was not retained"
+        },
+        "LLM features": {
+          "metrics": [0.694, 0.894, 0.846],
+          "evidence_status": "fresh fit from checksum-bound numerical features reproduced all three cells under the retained per-benchmark threshold sweep; the result also records a fixed development-selected threshold diagnostic",
+          "reproduction_command": "uv run scripts/reproduce_cikm2026_llm_features.py",
+          "full_precision_evidence": "results/llm_features_table_reproduction_2026-08-21.json",
+          "numerical_input": "reproducibility/source_artifacts/checkworthiness/llm_features_classifier/matrices.npz",
+          "reported_threshold_selection": "maximum F1 selected separately on each evaluation set, matching the retained paper source",
+          "transfer_diagnostic_threshold_selection": "one threshold selected on CT24 development labels and held fixed across the three evaluation sets"
+        },
+        "4 Parallel Heads": {
+          "metrics": [0.833, 0.973, 0.933],
+          "evidence_status": "exact from retained arrays and independently reproduced by fresh checkpoint inference",
+          "metric_reproduction_command": "uv run scripts/reproduce_cikm2026_mtl_table.py",
+          "checkpoint_inference_command": "uv run scripts/reproduce_cikm2026_mtl_table.py --checkpoint /path/to/best_model.pt",
+          "metric_evidence": "results/mtl_table_reproduction_2026-08-21.json",
+          "checkpoint_inference_evidence": "results/mtl_table_checkpoint_inference_2026-08-21.json"
+        },
+        "Fusion": {
+          "metrics": [0.836, 0.961, 0.915],
+          "evidence_status": "CT24 exactly reproduced from retained component probabilities; ClaimBuster and CT23 have a checksum-bound historical aggregate extract but remain unresolved as direct reproduction because their per-sample predictions and original checkpoint bytes were not retained",
+          "ct24_reproduction_command": "uv run scripts/reproduce_cikm2026_fusion_ct24.py",
+          "ct24_full_precision_evidence": "results/fusion_ct24_reproduction_2026-08-21.json",
+          "ct24_numerical_input": "reproducibility/source_artifacts/checkworthiness/fusion_classifier/",
+          "cross_benchmark_evidence_status": "checksum-bound historical aggregate extract; exact metric reproduction requires the original checkpoint bytes or corresponding prediction arrays",
+          "cross_benchmark_historical_extract": "reproducibility/source_artifacts/checkworthiness/fusion_classifier/HISTORICAL_RUN_EXTRACT.md",
+          "cross_benchmark_recovery_audit": "reproducibility/source_artifacts/checkworthiness/fusion_classifier/FUSION_RECOVERY_AUDIT.json"
+        }
+      }
+    },
+    "frontier_llm_ablation": {
+      "paper_table_number": 5,
+      "audit_command": "uv run scripts/audit_cikm2026_frontier_llm_ablation.py",
+      "audit_evidence": "results/frontier_llm_ablation_audit_2026-08-21.json",
+      "evaluation_rows": 341,
+      "rows": {
+        "4-Parallel-Heads MTL": {
+          "f1": 0.833,
+          "latency_per_claim": "<10 ms (GPU)",
+          "cost_per_1000_claims_usd": "approximately 0 amortized",
+          "evidence_status": "F1 directly reproduced; retained CUDA trace verifies 6.09 and 4.56 ms/claim as batch-amortized inference with batch size 32",
+          "latency_audit": "results/mtl_gpu_latency_audit_2026-08-21.json"
+        },
+        "Claude Opus 4.7 zero-shot": {
+          "f1": 0.722,
+          "precision": 0.707,
+          "recall": 0.739,
+          "accuracy": 0.853,
+          "latency_per_claim_seconds": 9.9,
+          "mean_latency_per_call_seconds": 3.3,
+          "cost_per_1000_claims_usd_approximate": 18.07,
+          "observed_total_cost_usd_rounded": 6.16,
+          "api_calls": 1023,
+          "evidence_status": "aggregate arithmetic uniquely reconstructable; direct reproduction unresolved because the per-example outputs and API response log were not retained"
+        }
+      },
+      "paired_test": {
+        "mcnemar_exact_p": 0.00779,
+        "mcnemar_statistic": 16
+      },
+      "dimension_agreement_percent": {
+        "checkability": 82.4,
+        "verifiability": 77.4,
+        "harm": 90.6
+      }
+    },
+    "virality_prediction": {
+      "paper_table_number": 3,
+      "reproduction_command": "uv run scripts/reproduce_cikm2026_tabular_baselines.py",
+      "full_precision_evidence": "results/virality_tabular_reproduction_2026-08-21.json",
+      "statistics_reproduction_command": "uv run scripts/reproduce_cikm2026_virality_statistics.py",
+      "statistics_full_precision_evidence": "results/virality_statistics_reproduction_2026-08-21.json",
+      "statistical_annotations": {
+        "spearman_p_value_test": "two-tailed scipy.stats.spearmanr",
+        "bootstrap_resamples": 1000,
+        "bootstrap_seed": 42,
+        "spearman_significance_codes": {
+          "Random": "",
+          "Ridge": "***",
+          "BayesianRidge": "***",
+          "RandomForest": "***",
+          "LightGBM": "***",
+          "SVR_RBF": "***",
+          "LSTM": "",
+          "GRU": "",
+          "HIP_Hawkes": "*",
+          "BERTweet": "",
+          "BERTweet_plus_features": "***"
+        },
+        "spearman_ci95_rounded_2": {
+          "Random": [-0.23, 0.13],
+          "Ridge": [0.37, 0.67],
+          "BayesianRidge": [0.40, 0.67],
+          "RandomForest": [0.37, 0.66],
+          "LightGBM": [0.38, 0.67],
+          "SVR_RBF": [0.38, 0.68],
+          "LSTM": [-0.14, 0.26],
+          "GRU": [-0.11, 0.31],
+          "HIP_Hawkes": [0.00, 0.46],
+          "BERTweet": [-0.28, 0.11],
+          "BERTweet_plus_features": [0.36, 0.63]
+        }
+      },
+      "metrics": [
+        "spearman_rho",
+        "r2",
+        "mae",
+        "f2_065",
+        "f2_075",
+        "f2_085"
+      ],
+      "paired_mcnemar_exact_at_065": [
+        {
+          "baseline_a": "SVR (RBF)",
+          "baseline_b": "RandomForest",
+          "paper_p_rounded_2": 0.84,
+          "retained_prediction_p_full_precision": 0.8388197422027588,
+          "fresh_table_fit_p_full_precision": 0.42435622215270996
+        },
+        {
+          "baseline_a": "SVR (RBF)",
+          "baseline_b": "LightGBM",
+          "paper_p_rounded_2": 0.69,
+          "retained_prediction_p_full_precision": 0.6900379657745361,
+          "fresh_table_fit_p_full_precision": 0.6900379657745361
+        },
+        {
+          "baseline_a": "RandomForest",
+          "baseline_b": "LightGBM",
+          "paper_p_rounded_2": 1.0,
+          "retained_prediction_p_full_precision": 1.0,
+          "fresh_table_fit_p_full_precision": 0.803619384765625
+        }
+      ],
+      "rows": {
+        "Random": {
+          "n_test": 106,
+          "metrics": [-0.052, -1.141, 0.381, 0.281, 0.167, 0.075]
+        },
+        "Ridge": {
+          "n_test": 106,
+          "metrics": [0.530, 0.293, 0.222, 0.410, 0.203, 0.080]
+        },
+        "BayesianRidge": {
+          "n_test": 106,
+          "metrics": [0.551, 0.293, 0.226, 0.413, 0.131, 0.041]
+        },
+        "RandomForest": {
+          "n_test": 106,
+          "metrics": [0.530, 0.319, 0.217, 0.547, 0.322, 0.041],
+          "evidence_by_metric": {
+            "spearman_rho": "psr/baseline_predictions/RandomForest/test_predictions.npy",
+            "r2": "reproducibility/source_artifacts/virality/tuned_baselines.json",
+            "mae": "reproducibility/source_artifacts/virality/tuned_baselines.json",
+            "f2_065": "reproducibility/source_artifacts/virality/tuned_baselines.json",
+            "f2_075": "reproducibility/source_artifacts/virality/tuned_baselines.json",
+            "f2_085": "reproducibility/source_artifacts/virality/tuned_baselines.json"
+          },
+          "single_run_consistent": false
+        },
+        "LightGBM": {
+          "n_test": 106,
+          "metrics": [0.549, 0.333, 0.211, 0.581, 0.322, 0.081]
+        },
+        "SVR (RBF)": {
+          "n_test": 106,
+          "metrics": [0.542, 0.336, 0.207, 0.632, 0.343, 0.041]
+        },
+        "LSTM": {
+          "n_test": 90,
+          "metrics": [0.048, -0.001, 0.276, 0.363, 0.179, 0.041]
+        },
+        "GRU": {
+          "n_test": 90,
+          "metrics": [0.097, -0.028, 0.281, 0.363, 0.148, 0.041]
+        },
+        "Hawkes (HIP)": {
+          "n_test": 77,
+          "metrics": [0.247, -3.491, 0.587, 0.000, 0.000, 0.000]
+        },
+        "BERTweet": {
+          "n_test": 106,
+          "metrics": [-0.086, -0.265, 0.287, 0.239, 0.098, 0.000]
+        },
+        "BERTweet + Features": {
+          "n_test": 106,
+          "metrics": [0.510, 0.255, 0.222, 0.541, 0.256, 0.111]
+        }
+      }
+    }
+  }
+}

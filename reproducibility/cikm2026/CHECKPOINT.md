@@ -1,5 +1,7 @@
 # Four-head DeBERTa checkpoint
 
+<!-- Sérgio Pinto, 2026-08-21 22:29 PDT — added a live metadata-only verification path for the public checkpoint asset. -->
+
 The trained checkpoint for the packaged CIKM 2026 four-head run is published as a
 GitHub release asset so the repository remains lightweight.
 
@@ -16,6 +18,12 @@ After downloading the asset, verify its byte identity:
 
 ```bash
 uv run scripts/verify_cikm2026_artifacts.py --checkpoint /path/to/best_model.pt
+```
+
+Verify the live GitHub release identity without downloading the checkpoint:
+
+```bash
+uv run --no-project scripts/verify_cikm2026_release_assets.py
 ```
 
 The training command, source snapshot, predictions, saved label order, evaluation

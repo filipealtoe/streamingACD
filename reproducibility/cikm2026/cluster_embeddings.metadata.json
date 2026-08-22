@@ -1,0 +1,22 @@
+{
+  "change_note": "Sérgio Pinto, 2026-08-21 23:43 PDT — Recorded the completed GitHub release upload after verifying the remote byte size and SHA-256 digest.",
+  "artifact_name": "cluster_embeddings.npy",
+  "availability": "published as cluster_embeddings.npy on the cikm-2026-artifact-v1 GitHub release; not committed as a normal Git blob",
+  "bytes": 153600128,
+  "dtype": "float32",
+  "finite_values": true,
+  "index": {
+    "entries": 100000,
+    "path": "psr/explainableACD/data/pipeline_output/streaming_full/2026-01-17_03-56/cluster_id_to_idx.json",
+    "sha256": "e30bbf6c47936e14f153ad40df8d36ecb174e0d44d1cd4815f2e6c1126371aa1",
+    "unique_contiguous_indices": true
+  },
+  "paper_dimensions": 768,
+  "release_asset_url": "https://github.com/filipealtoe/streamingACD/releases/download/cikm-2026-artifact-v1/cluster_embeddings.npy",
+  "release_tag": "cikm-2026-artifact-v1",
+  "retained_dimensions": 384,
+  "rows": 100000,
+  "sha256": "514e9f44c095b1de5175cc6c76db548e9762c3e1bcdda93b8cb8f16f09bd1619",
+  "source_run": "streaming_full/2026-01-17_03-56",
+  "status": "published release asset verified by remote state, byte size, and SHA-256; dimensionality mismatch with manuscript"
+}

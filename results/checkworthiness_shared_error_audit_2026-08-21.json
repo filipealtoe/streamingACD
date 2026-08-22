@@ -1,0 +1,69 @@
+{
+  "change_note": "S\u00e9rgio Pinto, 2026-08-21 21:26 PDT \u2014 Recovered the official CT24 sentence-ID order, joined all three retained prediction vectors, and evaluated explicit shared-error denominators.",
+  "paper_value_percent": 86,
+  "evaluation_rows": 341,
+  "retained_sources": {
+    "llm_features": "labels and probabilities in official CT24 test-gold order",
+    "encoder_only": "probabilities in the same label and sentence-ID order as the LLM-feature bundle",
+    "four_parallel_heads": "labels, probabilities, and sentence IDs in its retained joined evaluation order"
+  },
+  "alignment_audit": {
+    "same_vector_length": true,
+    "unique_sentence_ids_in_both_orders": true,
+    "same_sentence_id_set": true,
+    "labels_match_after_sentence_id_join": true,
+    "mtl_unique_sentence_ids": 341,
+    "direct_alignment_available": true,
+    "llm_order_sentence_ids_sha256": "21b09d72487801edfcd89ed8b73e9560394855a1e9ac7f519d57865e871d58b7",
+    "official_ct24_test_gold_sha256": "46cbd9ed9aca07e1023c274256c40d019146a3eb635ebb69cbc6ae5ad52d124a"
+  },
+  "thresholds": {
+    "llm_features": 0.55,
+    "encoder_only": 0.5,
+    "four_parallel_heads": 0.5
+  },
+  "error_counts": {
+    "llm_features": 53,
+    "encoder_only": 30,
+    "four_parallel_heads": 30
+  },
+  "shared_error_counts": {
+    "any_model_error": 65,
+    "at_least_two_models": 30,
+    "all_three_models": 18,
+    "shared_model_error_assignments": 78,
+    "total_model_error_assignments": 113
+  },
+  "pairwise_overlap": {
+    "llm_features__encoder_only": {
+      "intersection": 22,
+      "union": 61,
+      "intersection_over_union_percent": 36.0655737704918,
+      "intersection_over_first_errors_percent": 41.509433962264154,
+      "intersection_over_second_errors_percent": 73.33333333333333
+    },
+    "llm_features__four_parallel_heads": {
+      "intersection": 20,
+      "union": 63,
+      "intersection_over_union_percent": 31.746031746031747,
+      "intersection_over_first_errors_percent": 37.735849056603776,
+      "intersection_over_second_errors_percent": 66.66666666666667
+    },
+    "encoder_only__four_parallel_heads": {
+      "intersection": 24,
+      "union": 36,
+      "intersection_over_union_percent": 66.66666666666667,
+      "intersection_over_first_errors_percent": 80.0,
+      "intersection_over_second_errors_percent": 80.0
+    }
+  },
+  "observed_percentages": {
+    "all_three_errors_over_any_model_error": 27.692307692307693,
+    "errors_from_at_least_two_models_over_any_model_error": 46.15384615384615,
+    "model_error_assignments_shared_with_another_model": 69.02654867256638,
+    "maximum_pairwise_overlap_over_either_models_errors": 80.0
+  },
+  "paper_value_reproduced": false,
+  "status": "MISMATCH",
+  "reason": "The paper does not define the denominator behind 86%. After an exact sentence-ID join, none of the explicit all-model, at-least-two, error-assignment, or pairwise overlap definitions rounds to 86%."
+}
