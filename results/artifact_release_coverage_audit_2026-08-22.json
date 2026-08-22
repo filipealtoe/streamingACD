@@ -1,9 +1,91 @@
 {
   "artifact": "CIKM 2026 public artifact-release coverage audit",
   "author": "S\u00e9rgio Pinto",
-  "timestamp": "2026-08-21 23:47 PDT (-0700)",
-  "reason": "Measure the public package against the release promises in Sections 3.2, 4.3, and 4.4.",
-  "paper_expected_artifacts": {
+  "timestamp": "2026-08-22 00:53 PDT (-0700)",
+  "paper_pdf_sha256": "4d82abd01d66de5e04d7107e8c4bb21d3b3d1a7148aa235e95b78b803df78b9c",
+  "reason": "Measure the public package against the exact availability statements in Sections 3 and 4.4 of the final camera-ready PDF.",
+  "paper_release_scope": {
+    "dataset": "529 cluster instances with detection-time engineered features and virality labels",
+    "method_artifacts": "source code, model parameters, LLM prompts, pipeline schema, and accompanying reproducibility artifacts"
+  },
+  "dataset": {
+    "features": {
+      "present": true,
+      "rows": 529,
+      "columns": [
+        "cluster_id",
+        "cumulative_tweets",
+        "cumulative_engagement",
+        "windows_since_start",
+        "mean_tweets_per_window",
+        "mean_engagement_per_window",
+        "growth_rate",
+        "acceleration",
+        "engagement_velocity",
+        "engagement_jerk",
+        "burstiness",
+        "inter_arrival_mean",
+        "inter_arrival_std",
+        "inter_arrival_cv",
+        "early_velocity_ratio",
+        "final_window_ratio",
+        "is_post_peak",
+        "peak_position_ratio",
+        "max_followers_seen",
+        "avg_followers_seen",
+        "total_unique_users",
+        "engagement_per_follower",
+        "amplification_factor",
+        "z_score_at_detect",
+        "max_z_score_seen",
+        "z_score_count_at_detect",
+        "z_score_engagement_at_detect",
+        "kleinberg_state_at_detect",
+        "geographic_entropy_predetect",
+        "unique_countries_predetect",
+        "hour_of_day",
+        "is_weekend",
+        "is_morning",
+        "is_evening",
+        "posting_hour_entropy",
+        "max_retweets_per_tweet",
+        "avg_likes_per_tweet",
+        "rt_like_ratio",
+        "engagement_skewness",
+        "engagement_gini",
+        "account_age_avg_days",
+        "user_gini",
+        "top_user_ratio",
+        "psr"
+      ]
+    },
+    "labels": {
+      "present": true,
+      "rows": 529,
+      "columns": [
+        "cluster_id",
+        "detection_time",
+        "e_detect",
+        "e_final",
+        "psr"
+      ]
+    },
+    "engineered_feature_columns": 42,
+    "cluster_ids_match": true,
+    "unique_cluster_ids": 529
+  },
+  "release_checkpoint": {
+    "accounted_for": true,
+    "asset": {
+      "bytes": 1739380133,
+      "digest": "sha256:5f61837bbeb2b513ca7c49ab5901a6a107dbe275200ac0396777ce375271f081",
+      "name": "best_model.pt",
+      "purpose": "Four-head DeBERTa checkpoint",
+      "required": true
+    },
+    "release_tag": "cikm-2026-artifact-v1"
+  },
+  "pipeline_output_inventory": {
     "tweets.parquet": {
       "present": false,
       "rows": 0,
@@ -101,75 +183,25 @@
       }
     }
   },
-  "paper_release_promises": {
-    "six_interlinked_artifacts": {
-      "expected": [
-        "tweets.parquet",
-        "users.parquet",
-        "clusters.parquet",
-        "claims.parquet",
-        "cluster_timeseries.parquet",
-        "cluster_embeddings.npy"
-      ],
-      "present": [
-        "clusters.parquet",
-        "claims.parquet",
-        "cluster_timeseries.parquet",
-        "cluster_embeddings.npy"
-      ]
-    },
-    "original_tweet_ids": {
-      "present": false,
-      "reason": "Post-level identifiers are excluded from the public tree."
-    },
-    "full_post_level_membership": {
-      "present": false
-    },
-    "claim_checkworthiness_decomposition": {
-      "present_in_claims_table": false,
-      "missing_claim_columns": [
-        "checkability_score",
-        "harm_score",
-        "verifiability_score"
-      ],
-      "separate_score_artifact_rows": 535,
-      "present_in_separate_score_artifact": true,
-      "separate_score_artifact_claim_ids_match": true,
-      "separate_score_columns": [
-        "checkability_score",
-        "harm_score",
-        "overall_score",
-        "verifiability_score"
-      ]
-    },
-    "natural_language_rationales": {
-      "present": false
-    },
-    "opus_raw_json_records": {
-      "paper_count": 1023,
-      "public_count": 0
-    }
-  },
   "public_scientific_core": {
     "canonical_claims": 535,
     "aggregate_clusters": 100000,
     "aggregate_cluster_timeseries_rows": 404296,
     "virality_cluster_instances": 529,
-    "four_head_score_rows": 535,
     "raw_post_text_present": false,
     "post_or_user_identifier_tables_present": false
   },
   "promise_checks": {
-    "six_interlinked_artifacts": false,
-    "original_tweet_ids": false,
-    "full_post_level_membership": false,
-    "claim_checkworthiness_decomposition": true,
-    "natural_language_rationales": false,
-    "opus_raw_json_records": false
+    "virality_dataset_529_rows_42_features_and_labels": true,
+    "source_code": true,
+    "model_parameters_and_checkpoint": true,
+    "llm_prompts": true,
+    "reproducibility_artifacts": true,
+    "pipeline_schema": true
   },
   "summary": {
-    "promises_satisfied": 1,
+    "promises_satisfied": 6,
     "promises_checked": 6,
-    "verdict": "PARTIAL"
+    "verdict": "PASS"
   }
 }

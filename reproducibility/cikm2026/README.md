@@ -25,6 +25,7 @@
 <!-- Sérgio Pinto, 2026-08-21 21:46 PDT — added one consolidated audit of the manuscript's artifact-release promises and exact MTL/Fusion protocol scope. -->
 <!-- Sérgio Pinto, 2026-08-21 21:55 PDT — added the recovered canonical cluster-embedding asset manifest and optional identity verifier. -->
 <!-- Sérgio Pinto, 2026-08-21 22:08 PDT — bound the paper-value inventory to the exact camera-ready PDF. -->
+<!-- Sérgio Pinto, 2026-08-22 00:53 PDT — rebound the inventory and release coverage to the exact final camera-ready PDF. -->
 
 This package supports the dataset and baseline evidence for the accepted paper:
 
@@ -55,7 +56,7 @@ and SHA-256. Verify a local copy without adding it to the repository:
 
 ```bash
 uv run --no-project scripts/verify_cikm2026_artifacts.py \
-  --paper-pdf /path/to/CIKM2026.pdf
+  --paper-pdf /path/to/CIKM2026-camera-ready-2026-08-22.pdf
 ```
 
 It also verifies the prose-level dataset values: 1,522,909 posts over 600
@@ -232,7 +233,7 @@ uv run scripts/reproduce_cikm2026_fusion_ct24.py
 | Table rendering | [`latex_table.tex`](../source_artifacts/virality/latex_table.tex) | Rounded values used for the paper table |
 | Virality table audit | [`virality_tabular_reproduction_2026-08-21.json`](../../results/virality_tabular_reproduction_2026-08-21.json) | Fresh six-model metrics, exact retained-prediction McNemar tests, prediction hashes, and the one-run consistency result |
 | Virality statistical audit | [`virality_statistics_reproduction_2026-08-21.json`](../../results/virality_statistics_reproduction_2026-08-21.json) | All 11 Spearman p-values and bootstrap intervals plus all three exact McNemar tests recomputed from checksum-bound prediction vectors |
-| Artifact-release coverage audit | [`artifact_release_coverage_audit_2026-08-21.json`](../../results/artifact_release_coverage_audit_2026-08-21.json) | Compares the public scientific core with the broader artifact set promised in the manuscript, while preserving the no-post/user-identifiers boundary |
+| Artifact-release coverage audit | [`artifact_release_coverage_audit_2026-08-22.json`](../../results/artifact_release_coverage_audit_2026-08-22.json) | Verifies the final paper's 529-row dataset, source, parameter, prompt, schema, and reproducibility availability statements while preserving the no-post/user-identifiers boundary |
 | PSR latency benchmark | [`psr_latency_benchmark_2026-08-21.json`](../../results/psr_latency_benchmark_2026-08-21.json) | Single-item scaling plus prediction timings for the checksum-matched BayesianRidge and SVR fits over 42 features |
 | Historical source scripts | [`source_artifacts/virality/`](../source_artifacts/virality/) | Source snapshots used to generate features and baselines in the original workspace |
 | Claim-normalization source | [`source_code/`](../source_artifacts/claim_normalization/source_code/) | Retrieval-augmented few-shot implementation used by the retained CT25 run |
@@ -288,10 +289,10 @@ The canonical normalized-claim and aggregate cluster tables are retained under
 `psr/explainableACD/data/pipeline_output/`. Raw Twitter/X posts and user-level data are
 not needed for the public dataset checks or the fresh numeric-baseline reproduction.
 
-The consolidated [release-coverage audit](../../results/artifact_release_coverage_audit_2026-08-21.json)
-records the exact boundary between that reproducible aggregate scientific core
-and the broader release description in the manuscript. It does not reintroduce
-post-level or user-level identifiers.
+The consolidated [release-coverage audit](../../results/artifact_release_coverage_audit_2026-08-22.json)
+confirms that the public package satisfies the availability statements in the
+exact final PDF. It also records the aggregate pipeline inventory without
+reintroducing post-level or user-level identifiers.
 
 ## Privacy and redistribution
 

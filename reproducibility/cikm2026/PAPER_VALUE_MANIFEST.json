@@ -27,18 +27,18 @@
     "Sérgio Pinto, 2026-08-21 21:36 PDT — Traced the published-baseline row to primary sources: CT24 0.802 is Llama2-7b, ClaimBuster 0.920 is G2CW, and CT23 0.898 is OpenFact GPT-3, so the three cells are not one model row.",
     "Sérgio Pinto, 2026-08-21 21:36 PDT — Added an explicit protocol mismatch for the LLM-feature row, whose table values optimize the threshold separately on each evaluation set rather than selecting it on development data.",
     "Sérgio Pinto, 2026-08-21 21:40 PDT — Recomputed all 11 Table 3 Spearman p-values and 95% bootstrap intervals from the retained predictions and reproduced all three exact McNemar tests.",
-    "Sérgio Pinto, 2026-08-21 21:46 PDT — Audited the public package against the manuscript's six-artifact, post-membership, rationale, and 1,023-response release promises while preserving the no-identifiers boundary.",
+    "Sérgio Pinto, 2026-08-22 00:53 PDT — Realigned release coverage with the exact final PDF: the stated 529-row dataset, source code, model parameters, prompts, schema, and reproducibility artifacts are present.",
     "Sérgio Pinto, 2026-08-21 21:46 PDT — Recorded the retained three-phase linear-schedule MTL protocol and the two-seed historical cross-benchmark Fusion scope alongside the corresponding manuscript descriptions.",
-    "Sérgio Pinto, 2026-08-21 21:55 PDT — Recovered and authenticated the canonical 100,000 by 384 cluster-embedding matrix as a 153.6 MB external-release candidate and recorded the manuscript's 768-dimensional mismatch.",
-    "Sérgio Pinto, 2026-08-21 22:08 PDT — Bound the numerical inventory to the exact 12-page camera-ready PDF by file size and SHA-256."
+    "Sérgio Pinto, 2026-08-22 00:53 PDT — Confirmed that the exact final PDF does not state an embedding dimension; retained the authenticated 100,000 by 384 matrix without a stale manuscript-mismatch claim.",
+    "Sérgio Pinto, 2026-08-22 00:53 PDT — Rebound the numerical inventory to the exact final 12-page camera-ready PDF by file size and SHA-256."
   ],
   "paper": "CIKM 2026 camera-ready manuscript",
   "paper_pdf": {
-    "file_name": "CIKM2026.pdf",
-    "bytes": 641070,
+    "file_name": "CIKM2026-camera-ready-2026-08-22.pdf",
+    "bytes": 620920,
     "pages": 12,
-    "sha256": "b9d0d127979b66acfd71ab280678a635b379673ef75fa984859c209f5639328e",
-    "creation_timestamp_from_pdf_metadata": "2026-08-13 08:38:23 PDT",
+    "sha256": "4d82abd01d66de5e04d7107e8c4bb21d3b3d1a7148aa235e95b78b803df78b9c",
+    "creation_timestamp_from_pdf_metadata": "2026-08-22 00:19:28 PDT",
     "scope": "Exact camera-ready PDF used to transcribe and audit the paper-facing values in this manifest; the PDF itself is not redistributed in the repository."
   },
   "rounding_decimals": 3,
@@ -141,10 +141,10 @@
   },
   "artifact_release_coverage": {
     "audit_command": "uv run scripts/audit_cikm2026_release_coverage.py",
-    "audit_evidence": "results/artifact_release_coverage_audit_2026-08-21.json",
-    "paper_promises": "six interlinked artifacts, original tweet IDs, full post-level membership, claim-level dimensional scores and natural-language rationales, and 1,023 raw Opus JSON records",
-    "public_package": "535 normalized claims, 100,000 aggregate clusters, 404,296 aggregate cluster-time-series rows, 529 virality feature rows, and a separate 535-row four-head score table; no post/user identifier tables, post membership, rationales, embedding matrix, or raw Opus response log",
-    "status": "partial coverage"
+    "audit_evidence": "results/artifact_release_coverage_audit_2026-08-22.json",
+    "paper_promises": "529 cluster instances with detection-time engineered features and virality labels, plus source code, model parameters, LLM prompts, pipeline schema, and accompanying reproducibility artifacts",
+    "public_package": "529 aligned virality rows with 42 engineered features and labels; source snapshots; model-parameter manifest and public checkpoint; prompts; schema; executable reproducers, checksums, and evidence indices",
+    "status": "complete for the availability statements in the exact final PDF"
   },
   "protocol_consistency": {
     "stream_duration": {
@@ -230,13 +230,14 @@
       "status": "mixed: CT24 has three-seed evidence; the retained cross-benchmark run used two seeds"
     },
     "cluster_embedding_dimensions": {
-      "paper_value": 768,
+      "paper_value": null,
+      "paper_statement": "The exact final camera-ready PDF does not state an embedding dimension.",
       "retained_canonical_value": 384,
       "rows": 100000,
       "bytes": 153600128,
       "sha256": "514e9f44c095b1de5175cc6c76db548e9762c3e1bcdda93b8cb8f16f09bd1619",
       "evidence": "reproducibility/cikm2026/cluster_embeddings.metadata.json",
-      "status": "mismatch"
+      "status": "retained asset verified; no final-manuscript dimension mismatch"
     },
     "frontier_llm_side_claims": {
       "naive_aggregation_f1": {

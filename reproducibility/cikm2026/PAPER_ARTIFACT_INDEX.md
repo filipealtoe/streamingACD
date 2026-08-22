@@ -26,13 +26,14 @@
 <!-- Sérgio Pinto, 2026-08-21 22:08 PDT — linked the paper-value inventory to the exact camera-ready PDF identity. -->
 <!-- Sérgio Pinto, 2026-08-21 22:29 PDT — linked the expected external assets to a live GitHub release-metadata verifier. -->
 <!-- Sérgio Pinto, 2026-08-21 22:32 PDT — documented the portable JSON verification report and its explicit failure categories. -->
+<!-- Sérgio Pinto, 2026-08-22 00:53 PDT — rebound the index to the exact final PDF and removed superseded release-scope and embedding-dimension claims. -->
 
 This index connects the CIKM 2026 paper components to their public implementation,
 parameters, prompts, and evidence. Paths are relative to the repository root.
 
 | Paper component | Implementation and parameters | Prompt or data input | Result or verification evidence |
 |---|---|---|---|
-| Camera-ready paper identity | [paper-value manifest](PAPER_VALUE_MANIFEST.json) and [main verifier](../../scripts/verify_cikm2026_artifacts.py) | Exact 12-page `CIKM2026.pdf`; the manuscript itself is not redistributed here | Optional `--paper-pdf` verification checks byte size and SHA-256 before treating the manifest as the paper's numerical inventory |
+| Camera-ready paper identity | [paper-value manifest](PAPER_VALUE_MANIFEST.json) and [main verifier](../../scripts/verify_cikm2026_artifacts.py) | Exact 12-page `CIKM2026-camera-ready-2026-08-22.pdf`; the manuscript itself is not redistributed here | Optional `--paper-pdf` verification checks byte size and SHA-256 before treating the manifest as the paper's numerical inventory |
 | Claim normalization | [source snapshot](../source_artifacts/claim_normalization/source_code/), [parameters](MODEL_PARAMETERS.json), and [table audit command](../../scripts/reproduce_cikm2026_claim_normalization_table.py) | [v1 recovery prompt](../../prompts/claim_normalization_cikm2026.md); official CheckThat! 2025 Task 2 English files identified by checksum in the run record | [retained CT25 run](../../results/ct25_claim_normalization_lambda_2026-05-15/) numerically matches Approach 2 / Model A `0.5569` under a different protocol; the [cell-by-cell recovery audit](../source_artifacts/claim_normalization/TABLE2_RECOVERY_AUDIT.json) keeps all nine exact paper protocols unresolved |
 | Check-worthiness soft-label features | [exact v4 extraction runner](../source_artifacts/checkworthiness/source_code/scripts/runners/run_llm_checkworthiness_v4.py), [original v4 configuration](../../prompts/checkworthiness_prompts_zeroshot_v4.yaml), and [parameters](MODEL_PARAMETERS.json) | The three v4 checkability, verifiability, and harm prompts | [four-head training results and saved predictions](../runs/deberta_mtl_cikm_20260512_134553/) |
 | Encoder-only DeBERTa | [training and evaluation sources](../source_artifacts/checkworthiness/source_code/scripts/) and [table reproducer](../../scripts/reproduce_cikm2026_encoder_only.py) | [text-free CT24 and CT23 probability vectors plus retained CT24 results](../source_artifacts/checkworthiness/encoder_only/) | [full-precision result](../../results/encoder_only_table_reproduction_2026-08-21.json), directly reproducing CT24 `0.821` and CT23 `0.928`; the [recovery audit](../source_artifacts/checkworthiness/encoder_only/ENCODER_RECOVERY_AUDIT.json) records that ClaimBuster `0.970` is arithmetically consistent with the author-recorded aggregate but remains unresolved without the historical probability vector |
@@ -52,9 +53,9 @@ parameters, prompts, and evidence. Paths are relative to the repository root.
 | PSR prediction latency | [single-item benchmark](../../scripts/benchmark_cikm2026_psr_latency.py) | Released 42-feature matrix and exact BayesianRidge/SVR fits verified by prediction hashes | [Fresh benchmark result](../../results/psr_latency_benchmark_2026-08-21.json) measures scaling plus prediction for one item, excluding feature generation, fitting, file I/O, and batching |
 | Sequence, Hawkes, and BERTweet virality rows | [historical experiment scripts](../../psr/explainableACD/experiments/scripts/) | Derived cluster-level inputs | [complete baselines](../source_artifacts/virality/complete_baselines.json), [tuned baselines](../source_artifacts/virality/tuned_baselines.json), and [paper table rendering](../source_artifacts/virality/latex_table.tex) |
 | Cross-section protocol consistency | [main verifier](../../scripts/verify_cikm2026_artifacts.py) | Retained stream, pipeline, anomaly, feature-generation, split, and MTL-run sources | [paper-value manifest](PAPER_VALUE_MANIFEST.json) separates reproduced numbers from duration, unit, parameter, metric-definition, feature-window, split, seed, and unsupported side-claim gaps |
-| Artifact-release coverage | [coverage audit](../../scripts/audit_cikm2026_release_coverage.py) | Public aggregate tables, virality matrix, four-head score table, and repository file inventory | [Machine-readable result](../../results/artifact_release_coverage_audit_2026-08-21.json) verifies the 535-claim/100,000-cluster/404,296-timeseries-row/529-virality-row scientific core and identifies which broader manuscript release promises are not present in the public package |
+| Artifact-release coverage | [coverage audit](../../scripts/audit_cikm2026_release_coverage.py) | 529-row virality dataset, source snapshots, model parameters and checkpoint, prompts, schema, and repository evidence inventory | [Machine-readable result](../../results/artifact_release_coverage_audit_2026-08-22.json) verifies all six availability statements in the exact final PDF and the privacy-safe aggregate scientific core |
 | External release assets | [expected asset manifest](RELEASE_ASSETS.json) and [live metadata verifier](../../scripts/verify_cikm2026_release_assets.py) | Public `cikm-2026-artifact-v1` GitHub release metadata | Checks asset presence, uploaded state, byte size, and GitHub SHA-256 digest without downloading either large binary |
-| Canonical cluster embeddings | [asset manifest](CLUSTER_EMBEDDINGS.md), [metadata](cluster_embeddings.metadata.json), and [checksum](cluster_embeddings.sha256) | Recovered 100,000 × 384 float32 matrix and the committed 100,000-entry cluster-index mapping | Optional `--embeddings` verification checks byte size, SHA-256, shape, dtype, finiteness, and index identity; the live release verifier checks publication. The manuscript's 768-dimensional description does not match the retained 384-dimensional matrix |
+| Canonical cluster embeddings | [asset manifest](CLUSTER_EMBEDDINGS.md), [metadata](cluster_embeddings.metadata.json), and [checksum](cluster_embeddings.sha256) | Recovered 100,000 × 384 float32 matrix and the committed 100,000-entry cluster-index mapping | Optional `--embeddings` verification checks byte size, SHA-256, shape, dtype, finiteness, and index identity; the live release verifier checks publication. The exact final PDF states no embedding dimension |
 
 ## Verification entry points
 
@@ -80,7 +81,8 @@ uv run --no-project scripts/verify_cikm2026_release_assets.py
 Bind the inventory to a local copy of the audited camera-ready PDF:
 
 ```bash
-uv run --no-project scripts/verify_cikm2026_artifacts.py --paper-pdf /path/to/CIKM2026.pdf
+uv run --no-project scripts/verify_cikm2026_artifacts.py \
+  --paper-pdf /path/to/CIKM2026-camera-ready-2026-08-22.pdf
 ```
 
 Audit every claim-normalization table cell and recompute the retained
