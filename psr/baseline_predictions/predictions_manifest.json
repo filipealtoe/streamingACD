@@ -1,5 +1,6 @@
 {
-  "note": "Feature-based predictions regenerated from derived arrays using best_params recorded in tuned_baselines.json. test_predictions.npy is clipped to [0, 1], matching evaluate() for reported metrics. test_predictions_raw.npy is also included. Sequence/text/Hawkes predictions are not included here.",
+  "change_note": "Sérgio Pinto, 2026-08-21 20:58 PDT — corrected the RandomForest provenance after confirming that its retained vector does not match the current best_params fit.",
+  "note": "The six feature-based vectors were delivered in repository commit 7319d4402f233a810ce5dbae3b705ab3b8f8654f. Five reproduce from the public matrix and recorded parameters. The retained RandomForest vector is checksum-bound historical evidence, but its exact generating command was not retained and it must not be described as the current best_params fit. test_predictions.npy is clipped to [0, 1], matching evaluate(); test_predictions_raw.npy is also included.",
   "y_test_shape": [
     106
   ],
@@ -83,7 +84,7 @@
     "Random": -0.052,
     "Ridge": 0.53,
     "BayesianRidge": 0.551,
-    "RandomForest": 0.532,
+    "RandomForest": 0.53,
     "LightGBM": 0.549,
     "SVR_RBF": 0.542
   },
@@ -91,8 +92,16 @@
     "Random": true,
     "Ridge": true,
     "BayesianRidge": true,
-    "RandomForest": false,
+    "RandomForest": true,
     "LightGBM": true,
     "SVR_RBF": true
+  },
+  "random_forest_provenance_boundary": {
+    "first_repository_commit": "7319d4402f233a810ce5dbae3b705ab3b8f8654f",
+    "retained_prediction_sha256": "233b704699604eec1fe1e9674a177532153080869db57690733800acf0afb0a8",
+    "paper_spearman_rounded_3": 0.53,
+    "retained_spearman_full_precision": 0.5303221905937476,
+    "current_best_params_spearman_full_precision": 0.5317328765397888,
+    "exact_generator_status": "not recovered"
   }
 }

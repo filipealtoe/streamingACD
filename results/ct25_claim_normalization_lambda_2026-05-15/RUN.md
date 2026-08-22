@@ -1,5 +1,8 @@
 # CT25 Claim Normalization Lambda Reproduction
 
+<!-- Sérgio Pinto, 2026-08-21 20:40 PDT — clarified that this recovery run matches the rounded score but not the paper's full Model A protocol. -->
+<!-- Sérgio Pinto, 2026-08-21 23:43 PDT — removed a machine-specific private archive path from the public run record. -->
+
 Date: 2026-05-15
 
 ## Purpose
@@ -26,7 +29,7 @@ This folder records the Lambda rerun used to verify the paper claim that the CT2
 - Source repository: `https://github.com/filipealtoe/explainableACD`
 - Source commit: `aa4864c299bbcd0b6dd60c13ace7742a2d0644a1`
 - Remote run directory: `/home/ubuntu/claimnorm-repro/claim_norm`
-- Local private archive: `/Users/sergiopinto/repro/claimnorm-lambda-20260515`
+- Private source archive: retained outside this public repository
 
 ## Dataset Inputs
 
@@ -65,6 +68,25 @@ PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True \
 - `lambda_environment.txt`: Lambda hardware/runtime inventory and remote result-file hashes.
 - `checksums.sha256`: checksums for the committed artifacts in this folder.
 
+## Protocol Comparison
+
+The rounded numerical result matches the paper's `0.5569`, but this recovery run
+is not the original paper protocol:
+
+| Parameter | Paper Model A | Recovery run |
+|---|---:|---:|
+| Topic clusters | 10 | 10 |
+| Retrieval threshold | 0.85 | 0.85 |
+| Claim-verification threshold | 0.65 | 0.5 |
+| Positive examples | 4 | 5 |
+| Negative examples | 2 | 0 |
+
+The recovery run therefore provides a checksum-bound numerical recovery result,
+not direct reproduction of the paper's complete Model A configuration.
+
 ## Truth Boundary
 
-This reproduces the approximate first-300 CT25 claim-normalization result using local Lambda inference, not the Together API. It is not a full 1285-row CT25 test run. The score is close to the previously cited 0.558 value, but not byte-identical because the original exact prediction artifact was not present in the source repository.
+This recovers the approximate first-300 CT25 claim-normalization score using local
+Lambda inference, not the Together API. It is not a full 1,285-row CT25 test run
+and does not use the paper's full Model A parameter tuple. The original exact
+paper-run prediction artifact was not present in the source repository.

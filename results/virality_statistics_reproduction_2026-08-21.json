@@ -1,0 +1,301 @@
+{
+  "artifact": "CIKM 2026 Table 3 significance and confidence-interval reproduction",
+  "author": "S\u00e9rgio Pinto",
+  "timestamp": "2026-08-21 21:40 PDT (-0700)",
+  "reason": "Recompute the paper's statistical annotations from retained per-example arrays.",
+  "protocol": {
+    "spearman_p_value": "scipy.stats.spearmanr two-tailed",
+    "bootstrap_resamples": 1000,
+    "bootstrap_seed": 42,
+    "bootstrap_interval": "2.5th and 97.5th percentiles",
+    "paired_test": "exact two-sided McNemar",
+    "paired_threshold": 0.65
+  },
+  "rows": {
+    "Random": {
+      "n_test": 106,
+      "spearman_rho": -0.05201904426027156,
+      "two_tailed_p_value": 0.5964049662800102,
+      "significance_code": "",
+      "bootstrap_ci95": [
+        -0.22700954614849306,
+        0.1322966816233847
+      ],
+      "bootstrap_ci95_rounded_2": [
+        -0.23,
+        0.13
+      ],
+      "prediction_sha256": "4fbdafd26ae173b2b481bfb02c7371f18a96a630ce4dc7d3dcb85059a9f7fc65",
+      "checks": {
+        "n_test": true,
+        "spearman_point": true,
+        "spearman_p_value": true,
+        "bootstrap_ci95": true,
+        "prediction_copy": true
+      },
+      "status": "PASS"
+    },
+    "Ridge": {
+      "n_test": 106,
+      "spearman_rho": 0.5298989848099352,
+      "two_tailed_p_value": 5.183892029263825e-09,
+      "significance_code": "***",
+      "bootstrap_ci95": [
+        0.3729697781645882,
+        0.6662719256573127
+      ],
+      "bootstrap_ci95_rounded_2": [
+        0.37,
+        0.67
+      ],
+      "prediction_sha256": "f0ac58afae925012c1484b5f48d1865422eaf3802125b4d110f5f5862fada9dd",
+      "checks": {
+        "n_test": true,
+        "spearman_point": true,
+        "spearman_p_value": true,
+        "bootstrap_ci95": true,
+        "prediction_copy": true
+      },
+      "status": "PASS"
+    },
+    "BayesianRidge": {
+      "n_test": 106,
+      "spearman_rho": 0.5507267551704159,
+      "two_tailed_p_value": 9.569056235195682e-10,
+      "significance_code": "***",
+      "bootstrap_ci95": [
+        0.3985236913120384,
+        0.6733109563181716
+      ],
+      "bootstrap_ci95_rounded_2": [
+        0.4,
+        0.67
+      ],
+      "prediction_sha256": "73b2ba91d62b434aa4b295d97cc20b4eae506d3fc9e39dd21d0c1b14f58a6d83",
+      "checks": {
+        "n_test": true,
+        "spearman_point": true,
+        "spearman_p_value": true,
+        "bootstrap_ci95": true,
+        "prediction_copy": true
+      },
+      "status": "PASS"
+    },
+    "RandomForest": {
+      "n_test": 106,
+      "spearman_rho": 0.5303221905937476,
+      "two_tailed_p_value": 5.014604742968254e-09,
+      "significance_code": "***",
+      "bootstrap_ci95": [
+        0.37163276577780235,
+        0.6622983771425037
+      ],
+      "bootstrap_ci95_rounded_2": [
+        0.37,
+        0.66
+      ],
+      "prediction_sha256": "233b704699604eec1fe1e9674a177532153080869db57690733800acf0afb0a8",
+      "checks": {
+        "n_test": true,
+        "spearman_point": true,
+        "spearman_p_value": true,
+        "bootstrap_ci95": true,
+        "prediction_copy": true
+      },
+      "status": "PASS"
+    },
+    "LightGBM": {
+      "n_test": 106,
+      "spearman_rho": 0.5488122528150742,
+      "two_tailed_p_value": 1.123125073740569e-09,
+      "significance_code": "***",
+      "bootstrap_ci95": [
+        0.3841865798432373,
+        0.6729684435520337
+      ],
+      "bootstrap_ci95_rounded_2": [
+        0.38,
+        0.67
+      ],
+      "prediction_sha256": "78003ecd698db45b9bfda7af388ad7bdefadfc73a6b146cbfc4f556d6f975226",
+      "checks": {
+        "n_test": true,
+        "spearman_point": true,
+        "spearman_p_value": true,
+        "bootstrap_ci95": true,
+        "prediction_copy": true
+      },
+      "status": "PASS"
+    },
+    "SVR_RBF": {
+      "n_test": 106,
+      "spearman_rho": 0.5424238607451446,
+      "two_tailed_p_value": 1.902807785286432e-09,
+      "significance_code": "***",
+      "bootstrap_ci95": [
+        0.3759914945713247,
+        0.6810719032526721
+      ],
+      "bootstrap_ci95_rounded_2": [
+        0.38,
+        0.68
+      ],
+      "prediction_sha256": "7f3059def376c9cd0431db2b81a059786f015f1a589eeb215c440e74af512061",
+      "checks": {
+        "n_test": true,
+        "spearman_point": true,
+        "spearman_p_value": true,
+        "bootstrap_ci95": true,
+        "prediction_copy": true
+      },
+      "status": "PASS"
+    },
+    "LSTM": {
+      "n_test": 90,
+      "spearman_rho": 0.0482117133802527,
+      "two_tailed_p_value": 0.6518125418489752,
+      "significance_code": "",
+      "bootstrap_ci95": [
+        -0.14183545952332857,
+        0.25530966317790077
+      ],
+      "bootstrap_ci95_rounded_2": [
+        -0.14,
+        0.26
+      ],
+      "prediction_sha256": "fc074e511f8645e1c85350c31dc4ad352601138fe56fa2fb2ebf1ec365cb1832",
+      "checks": {
+        "n_test": true,
+        "spearman_point": true,
+        "spearman_p_value": true,
+        "bootstrap_ci95": true,
+        "prediction_copy": true
+      },
+      "status": "PASS"
+    },
+    "GRU": {
+      "n_test": 90,
+      "spearman_rho": 0.09728773099559615,
+      "two_tailed_p_value": 0.36165429475823274,
+      "significance_code": "",
+      "bootstrap_ci95": [
+        -0.106014167653529,
+        0.3108087316040006
+      ],
+      "bootstrap_ci95_rounded_2": [
+        -0.11,
+        0.31
+      ],
+      "prediction_sha256": "b3e604b215526422d5f2df4423fc22137ff881c887c4a67a07657797af318c1b",
+      "checks": {
+        "n_test": true,
+        "spearman_point": true,
+        "spearman_p_value": true,
+        "bootstrap_ci95": true,
+        "prediction_copy": true
+      },
+      "status": "PASS"
+    },
+    "HIP_Hawkes": {
+      "n_test": 77,
+      "spearman_rho": 0.2471738787528261,
+      "two_tailed_p_value": 0.03021851053026382,
+      "significance_code": "*",
+      "bootstrap_ci95": [
+        0.00429919610421244,
+        0.46199638431357204
+      ],
+      "bootstrap_ci95_rounded_2": [
+        0.0,
+        0.46
+      ],
+      "prediction_sha256": "3104b36c452d88aad920beb911be87f945a7a4118fbcd962108eefe43cb3f1e6",
+      "checks": {
+        "n_test": true,
+        "spearman_point": true,
+        "spearman_p_value": true,
+        "bootstrap_ci95": true,
+        "prediction_copy": true
+      },
+      "status": "PASS"
+    },
+    "BERTweet": {
+      "n_test": 106,
+      "spearman_rho": -0.08577560799093278,
+      "two_tailed_p_value": 0.38197904936336646,
+      "significance_code": "",
+      "bootstrap_ci95": [
+        -0.2829996936291005,
+        0.11004986234305071
+      ],
+      "bootstrap_ci95_rounded_2": [
+        -0.28,
+        0.11
+      ],
+      "prediction_sha256": "9d025734f0c539b2afb7ebd90a8da798c0cafe157ebbd63d9cc1922d420ed11b",
+      "checks": {
+        "n_test": true,
+        "spearman_point": true,
+        "spearman_p_value": true,
+        "bootstrap_ci95": true,
+        "prediction_copy": true
+      },
+      "status": "PASS"
+    },
+    "BERTweet_plus_features": {
+      "n_test": 106,
+      "spearman_rho": 0.5096406241599298,
+      "two_tailed_p_value": 2.411578911910085e-08,
+      "significance_code": "***",
+      "bootstrap_ci95": [
+        0.355550876952927,
+        0.6311747381877876
+      ],
+      "bootstrap_ci95_rounded_2": [
+        0.36,
+        0.63
+      ],
+      "prediction_sha256": "0b04080251bf981f00ca030593f0aaf08ad8fb5ce48e489f639034258559f51c",
+      "checks": {
+        "n_test": true,
+        "spearman_point": true,
+        "spearman_p_value": true,
+        "bootstrap_ci95": true,
+        "prediction_copy": true
+      },
+      "status": "PASS"
+    }
+  },
+  "paired_tests": [
+    {
+      "baseline_a": "SVR_RBF",
+      "baseline_b": "RandomForest",
+      "discordant_a_only": 13,
+      "discordant_b_only": 11,
+      "exact_p_value": 0.8388197422027588,
+      "status": "PASS"
+    },
+    {
+      "baseline_a": "SVR_RBF",
+      "baseline_b": "LightGBM",
+      "discordant_a_only": 14,
+      "discordant_b_only": 11,
+      "exact_p_value": 0.6900379657745361,
+      "status": "PASS"
+    },
+    {
+      "baseline_a": "RandomForest",
+      "baseline_b": "LightGBM",
+      "discordant_a_only": 8,
+      "discordant_b_only": 7,
+      "exact_p_value": 1.0,
+      "status": "PASS"
+    }
+  ],
+  "summary": {
+    "row_count": 11,
+    "row_failures": [],
+    "paired_test_failures": [],
+    "verdict": "PASS"
+  }
+}

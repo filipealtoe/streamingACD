@@ -1,0 +1,46 @@
+{
+  "change_note": "S\u00e9rgio Pinto, 2026-08-21 21:31 PDT \u2014 Recomputed the retained CT24 development and test threshold sweeps to test the approximately 0.03 sensitivity statement and its selection protocol.",
+  "checks": {
+    "approximately_0_03_magnitude": "PASS",
+    "either_direction": "PARTIAL: the retained sweep directly shows the negative direction only",
+    "retained_sweep_recomputed": "PASS",
+    "selection_protocol": "MISMATCH: the reported 0.833 value is the test-sweep optimum at 0.50; the development-selected threshold is 0.60 and yields 0.8046 on test"
+  },
+  "inputs": {
+    "development_rows": 1031,
+    "sha256": {
+      "dev_labels.npy": "1256cca0c3ec9fd9d9d27b4c24d9f327a67015d2a20d0357d18e2e10e572a4e5",
+      "dev_probs.npy": "17a4621ff9a1eec0c92b3f2e3d9e737670628c00cadc875e03a3d82afa1064f5",
+      "results.json": "020edd3fb56a5f3f89cfb84fe7d87396f33d627db6e4e0cc10a62127fab4e0d1",
+      "test_labels.npy": "cecca28f987776b7b8d76acb66b35b1addcb73d0fe01b78c8180ace416058822",
+      "test_probs.npy": "e6747cc253559a7b789e898d5a37f0bb3181d353df05819a257dfc8f32bdccaf"
+    },
+    "test_rows": 341,
+    "thresholds": [
+      0.3,
+      0.35,
+      0.39999999999999997,
+      0.44999999999999996,
+      0.49999999999999994,
+      0.5499999999999999,
+      0.5999999999999999,
+      0.6499999999999999,
+      0.7
+    ]
+  },
+  "observed": {
+    "absolute_f1_shift": 0.028735632183908066,
+    "development_f1": 0.972972972972973,
+    "development_selected_threshold": 0.5999999999999999,
+    "signed_f1_shift": -0.028735632183908066,
+    "test_f1_at_development_threshold": 0.8045977011494253,
+    "test_optimized_f1": 0.8333333333333334,
+    "test_optimized_threshold": 0.49999999999999994
+  },
+  "paper_claim": {
+    "reported_f1": 0.833,
+    "sensitivity": "a different calibration could shift F1 by approximately 0.03 in either direction",
+    "threshold_selection": "development selection, final test reporting"
+  },
+  "verdict": "PARTIAL"
+}

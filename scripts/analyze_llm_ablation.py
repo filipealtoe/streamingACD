@@ -23,7 +23,6 @@ from __future__ import annotations
 
 import argparse
 import json
-import math
 from pathlib import Path
 from typing import Any
 
@@ -251,7 +250,8 @@ def main(out_dir: Path) -> int:
 **Run date:** {timestamp}
 **Model:** {metrics["model"]}
 **Test set:** CheckThat! 2024 English test-gold, N={metrics["n_samples"]}
-**Configuration:** zero-shot, deterministic (temperature default), prompt-caching headers set (cache did not activate — prompts <1024 token cache-minimum)
+<!-- Sérgio Pinto, 2026-08-21 22:18 PDT — corrected the generated report so it matches the actual Opus request, which omits the unsupported temperature parameter. -->
+**Configuration:** zero-shot, temperature parameter omitted because the endpoint does not support it, prompt-caching headers set (cache did not activate — prompts <1024 token cache-minimum)
 
 ## Headline result
 

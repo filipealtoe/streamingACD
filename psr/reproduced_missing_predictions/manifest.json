@@ -1,9 +1,10 @@
 {
+  "change_note": "Sérgio Pinto, 2026-08-21 17:52 PDT — Replaced machine-local paths with repository-relative artifact paths so the public provenance record is portable.",
   "method": "Regenerated missing PSR baseline predictions from local raw virality artifacts.",
-  "raw_data": "/Users/sergiopinto/explainableACD/data/pipeline_output/streaming_full/2026-01-17_03-56",
-  "derived_arrays": "/Users/sergiopinto/repro/filipe_psr_virality_handoff_2026-05-18/derived_arrays",
-  "complete_feature_source_for_lstm_gru_hawkes": "/Users/sergiopinto/repro/filipe_psr_virality_handoff_2026-05-18/explainableACD/experiments/results/virality_feature_selection/features_leakfree.parquet",
-  "tuned_feature_source_for_bertweet": "/Users/sergiopinto/repro/filipe_psr_virality_handoff_2026-05-18/reproducibility/source_artifacts/virality/features_enhanced.parquet",
+  "raw_data": "psr/explainableACD/data/pipeline_output/streaming_full/2026-01-17_03-56",
+  "derived_arrays": "psr/derived_arrays",
+  "complete_feature_source_for_lstm_gru_hawkes": "psr/explainableACD/experiments/results/virality_feature_selection/features_leakfree.parquet",
+  "tuned_feature_source_for_bertweet": "reproducibility/source_artifacts/virality/features_enhanced.parquet",
   "note": "test_predictions.npy is length 106 for each baseline. It contains NaN where the original script did not evaluate a cluster. Use valid_mask.npy/test_predictions_eval_subset.npy for metric replication.",
   "metrics": {
     "LSTM": {

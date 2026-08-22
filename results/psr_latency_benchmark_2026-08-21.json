@@ -1,0 +1,60 @@
+{
+  "change_note": "S\u00e9rgio Pinto, 2026-08-21 21:11 PDT \u2014 Benchmarked single-item PSR prediction for the two strongest reported numeric baselines on the released 42-feature matrix.",
+  "claim": "PSR prediction over 42 features operates at sub-millisecond cost per item",
+  "measurement_boundary": {
+    "included": "StandardScaler.transform plus model.predict for one feature row",
+    "excluded": [
+      "feature generation",
+      "model fitting",
+      "file I/O",
+      "batching"
+    ],
+    "rows": 529,
+    "features": 42,
+    "train_rows": 423,
+    "test_rows": 106,
+    "split_random_state": 42,
+    "warmup_calls_per_model": 1000,
+    "timed_calls_per_model": 20000,
+    "acceptance": "both mean and p95 single-item latency are below 1.0 ms"
+  },
+  "environment": {
+    "hardware": "Apple M2",
+    "machine": "arm64",
+    "operating_system": "macOS-15.6.1-arm64-arm-64bit",
+    "logical_cpu_count": 8,
+    "python": "3.11.11",
+    "numpy": "1.26.4",
+    "scikit_learn": "1.8.0",
+    "clock": "time.perf_counter_ns"
+  },
+  "models": {
+    "BayesianRidge": {
+      "calls": 20000,
+      "mean_ms": 0.04333496575,
+      "min_ms": 0.037208,
+      "p50_ms": 0.03925,
+      "p95_ms": 0.048166,
+      "p99_ms": 0.124417,
+      "max_ms": 2.707542,
+      "sub_millisecond_mean": true,
+      "sub_millisecond_p95": true,
+      "status": "PASS",
+      "prediction_sha256_float64_little_endian": "833de4f41d9d0ad2e66c1529e869f668a95fd9b77d407bfa09d7e87d9a7d58c1"
+    },
+    "SVR (RBF)": {
+      "calls": 20000,
+      "mean_ms": 0.0724109558,
+      "min_ms": 0.066542,
+      "p50_ms": 0.070375,
+      "p95_ms": 0.08329105,
+      "p99_ms": 0.104,
+      "max_ms": 0.291166,
+      "sub_millisecond_mean": true,
+      "sub_millisecond_p95": true,
+      "status": "PASS",
+      "prediction_sha256_float64_little_endian": "5798bf884d4753617e16f9a655b5a5d059ef5868d936f3a0f323e654cf1e6e0c"
+    }
+  },
+  "verdict": "PASS"
+}

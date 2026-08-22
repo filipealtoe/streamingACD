@@ -1,0 +1,34 @@
+{
+  "change_note": "Sérgio Pinto, 2026-08-21 21:36 PDT — Traced each Table 4 published-baseline value to its primary source and separated the three underlying systems.",
+  "paper_row": {
+    "label": "Baseline Llama2-7b Fine-tuned",
+    "metrics": {
+      "CT24": 0.802,
+      "ClaimBuster": 0.92,
+      "CT23": 0.898
+    }
+  },
+  "cell_provenance": {
+    "CT24": {
+      "value": 0.802,
+      "source_method": "FactFinders fine-tuned Llama2-7b leaderboard submission",
+      "primary_source": "https://ceur-ws.org/Vol-3740/paper-47.pdf",
+      "official_leaderboard": "https://checkthat.gitlab.io/clef2024/task1/",
+      "status": "the row label applies to this cell"
+    },
+    "ClaimBuster": {
+      "value": 0.92,
+      "source_method": "G2CW with GloVe embeddings and a GRU",
+      "primary_source": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9916500/",
+      "status": "external state-of-the-art reference; not a Llama2 result"
+    },
+    "CT23": {
+      "value": 0.898,
+      "source_method": "OpenFact fine-tuned GPT-3 submission",
+      "primary_source": "https://ceur-ws.org/Vol-3497/paper-040.pdf",
+      "status": "external CheckThat! 2023 winner; not a Llama2 result"
+    }
+  },
+  "status": "MISMATCH",
+  "conclusion": "The three values are valid external reference numbers, but they do not form one Llama2-7b cross-dataset result row. The Llama2 label is supported only for CT24."
+}

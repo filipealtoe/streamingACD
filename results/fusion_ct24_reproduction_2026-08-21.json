@@ -1,0 +1,25 @@
+{
+  "change_note": "S\u00e9rgio Pinto, 2026-08-21 19:45 PDT \u2014 Recomputed the CT24 Fusion probabilities and paper-facing F1 from the retained temperature-0.3 encoder and XGBoost components.",
+  "configuration": {
+    "encoder_temperature": 0.3,
+    "encoder_weight": 0.5,
+    "llm_xgboost_weight": 0.5,
+    "threshold": 0.5
+  },
+  "max_probability_delta_from_retained_fusion": 2.9802322387695312e-08,
+  "metrics": {
+    "accuracy": 0.9149560117302052,
+    "f1": 0.8361581920903954,
+    "false_negative": 14,
+    "false_positive": 15,
+    "precision": 0.8314606741573034,
+    "recall": 0.8409090909090909,
+    "threshold": 0.5,
+    "true_negative": 238,
+    "true_positive": 74
+  },
+  "n": 341,
+  "paper_f1": 0.836,
+  "rounded_match": true,
+  "status": "PASS"
+}

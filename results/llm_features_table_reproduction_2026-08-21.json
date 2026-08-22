@@ -1,0 +1,111 @@
+{
+  "change_note": "S\u00e9rgio Pinto, 2026-08-21 19:21 PDT \u2014 Freshly fitted the PCA-64 + LLM + text-feature classifier from the text-free numerical bundle.",
+  "development_selected_threshold_diagnostic": {
+    "development_selection_metrics": {
+      "accuracy": 0.9466537342386033,
+      "f1": 0.8865979381443299,
+      "precision": 0.8704453441295547,
+      "recall": 0.9033613445378151,
+      "threshold": 0.6499999999999999
+    },
+    "evaluation_model_training_split": "CT24 training plus development",
+    "results": {
+      "CT23": {
+        "accuracy": 0.8710691823899371,
+        "f1": 0.8019323671497585,
+        "precision": 0.8383838383838383,
+        "recall": 0.7685185185185185,
+        "threshold": 0.6499999999999999
+      },
+      "CT24": {
+        "accuracy": 0.8504398826979472,
+        "f1": 0.6871165644171779,
+        "precision": 0.7466666666666667,
+        "recall": 0.6363636363636364,
+        "threshold": 0.6499999999999999
+      },
+      "ClaimBuster": {
+        "accuracy": 0.9418604651162791,
+        "f1": 0.8814229249011858,
+        "precision": 0.832089552238806,
+        "recall": 0.9369747899159664,
+        "threshold": 0.6499999999999999
+      }
+    },
+    "selection_split": "CT24 development",
+    "selection_training_split": "CT24 training",
+    "threshold": 0.6499999999999999
+  },
+  "feature_partition": {
+    "llm": 54,
+    "pca64": 64,
+    "text": 35
+  },
+  "method": {
+    "C": 1.0,
+    "class_weight": "balanced",
+    "classifier": "LogisticRegression",
+    "max_iter": 1000,
+    "random_state": 42,
+    "reported_threshold_selection": "maximum F1 selected separately on each evaluation set, matching the retained paper source",
+    "scaler": "StandardScaler fitted on CT24 train+dev",
+    "thresholds": [
+      0.3,
+      0.35,
+      0.39999999999999997,
+      0.44999999999999996,
+      0.49999999999999994,
+      0.5499999999999999,
+      0.5999999999999999,
+      0.6499999999999999,
+      0.7,
+      0.7499999999999999
+    ]
+  },
+  "results": {
+    "CT23": {
+      "accuracy": 0.889937106918239,
+      "f1": 0.8458149779735683,
+      "max_probability_delta_from_reference": 1.0495390601050758e-05,
+      "n": 318,
+      "paper_f1": 0.846,
+      "precision": 0.8067226890756303,
+      "recall": 0.8888888888888888,
+      "reference_decisions_match": true,
+      "rounded_match": true,
+      "threshold": 0.44999999999999996
+    },
+    "CT24": {
+      "accuracy": 0.844574780058651,
+      "f1": 0.6936416184971098,
+      "max_probability_delta_from_reference": 3.0692709238611116e-06,
+      "n": 341,
+      "paper_f1": 0.694,
+      "precision": 0.7058823529411765,
+      "recall": 0.6818181818181818,
+      "reference_decisions_match": true,
+      "rounded_match": true,
+      "threshold": 0.5499999999999999
+    },
+    "ClaimBuster": {
+      "accuracy": 0.9496124031007752,
+      "f1": 0.8938775510204081,
+      "max_probability_delta_from_reference": 1.2634078881246236e-05,
+      "n": 1032,
+      "paper_f1": 0.894,
+      "precision": 0.8690476190476191,
+      "recall": 0.9201680672268907,
+      "reference_decisions_match": true,
+      "rounded_match": true,
+      "threshold": 0.7
+    }
+  },
+  "shape_checks": {
+    "X_claimbuster": true,
+    "X_ct23": true,
+    "X_ct24": true,
+    "X_dev": true,
+    "X_train": true
+  },
+  "status": "PASS"
+}

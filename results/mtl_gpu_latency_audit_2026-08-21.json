@@ -1,0 +1,37 @@
+{
+  "benchmarks": {
+    "CT23": {
+      "batch_amortized_ms_per_claim": 4.5640843077653335,
+      "batch_size": 32,
+      "batches": 10,
+      "completed_batches": 10,
+      "elapsed_seconds_derived_from_final_rate": 1.451378809869376,
+      "final_tqdm_rate_batches_per_second": 6.89,
+      "samples": 318,
+      "status": "PASS"
+    },
+    "ClaimBuster": {
+      "batch_amortized_ms_per_claim": 6.0908084163898115,
+      "batch_size": 32,
+      "batches": 33,
+      "completed_batches": 33,
+      "elapsed_seconds_derived_from_final_rate": 6.285714285714286,
+      "final_tqdm_rate_batches_per_second": 5.25,
+      "samples": 1032,
+      "status": "PASS"
+    }
+  },
+  "boundary": "This retained trace verifies throughput per claim in batched CUDA inference; it is not a single-request latency measurement. The GPU model is not recorded.",
+  "change_note": "S\u00e9rgio Pinto, 2026-08-21 21:31 PDT \u2014 Parsed the retained CUDA benchmark trace and its exact evaluation source to verify the batch-amortized four-head latency boundary.",
+  "device": "cuda",
+  "paper_claim": "less than 10 ms per claim on a single GPU",
+  "scope": "batch-amortized benchmark loop with batch size 32; includes tokenization, host-to-device copies, model forward pass, softmax, GPU-to-CPU transfer, NumPy conversion, and progress-loop overhead; excludes model loading and dataset file reading",
+  "source": {
+    "default_batch_size_used": true,
+    "evaluation_script": "reproducibility/runs/deberta_mtl_cikm_20260512_134553/scripts/evaluate_mtl_benchmarks.py",
+    "evaluation_script_sha256": "bc0d898eff34ba270ebc21d87ded061c9a8c7060c95d60f93b502eca765fc04a",
+    "log": "reproducibility/runs/deberta_mtl_cikm_20260512_134553/benchmark_eval.log",
+    "log_sha256": "c16d21dd4907c4e20375cbb9bfe55b664dce25dd5896fab208121d8110f2b6ae"
+  },
+  "verdict": "PASS"
+}

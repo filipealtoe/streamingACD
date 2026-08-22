@@ -1,0 +1,175 @@
+{
+  "artifact": "CIKM 2026 public artifact-release coverage audit",
+  "author": "S\u00e9rgio Pinto",
+  "timestamp": "2026-08-21 23:47 PDT (-0700)",
+  "reason": "Measure the public package against the release promises in Sections 3.2, 4.3, and 4.4.",
+  "paper_expected_artifacts": {
+    "tweets.parquet": {
+      "present": false,
+      "rows": 0,
+      "columns": [],
+      "distribution": "not_public"
+    },
+    "users.parquet": {
+      "present": false,
+      "rows": 0,
+      "columns": [],
+      "distribution": "not_public"
+    },
+    "clusters.parquet": {
+      "present": true,
+      "rows": 100000,
+      "columns": [
+        "cluster_id",
+        "claim_id",
+        "first_seen",
+        "last_seen",
+        "tweet_count_total",
+        "unique_users_total",
+        "unique_countries",
+        "unique_us_states",
+        "usa_ratio",
+        "has_international_spread",
+        "dominant_country",
+        "geographic_entropy",
+        "sentiment_mean",
+        "sentiment_one_vote",
+        "sentiment_std",
+        "tweets_per_user"
+      ],
+      "distribution": "git"
+    },
+    "claims.parquet": {
+      "present": true,
+      "rows": 535,
+      "columns": [
+        "claim_id",
+        "claim_text",
+        "first_seen",
+        "last_seen",
+        "trigger_type",
+        "trigger_cluster_id",
+        "detection_z_score",
+        "kleinberg_state",
+        "total_clusters",
+        "total_tweets",
+        "total_engagement",
+        "keywords",
+        "is_viral",
+        "viral_confidence",
+        "peak_engagement",
+        "peak_time",
+        "lead_time_hours",
+        "cluster_ids"
+      ],
+      "distribution": "git"
+    },
+    "cluster_timeseries.parquet": {
+      "present": true,
+      "rows": 404296,
+      "columns": [
+        "cluster_id",
+        "timestamp",
+        "claim_id",
+        "window_size_minutes",
+        "tweet_count",
+        "engagement",
+        "unique_users",
+        "avg_followers",
+        "max_followers",
+        "verified_count",
+        "z_score",
+        "z_score_count",
+        "z_score_engagement",
+        "kleinberg_state",
+        "is_anomaly_trigger"
+      ],
+      "distribution": "git"
+    },
+    "cluster_embeddings.npy": {
+      "present": true,
+      "present_in_git": false,
+      "index_present": true,
+      "published_as_release_asset": true,
+      "distribution": "github_release",
+      "release": {
+        "repository": "filipealtoe/streamingACD",
+        "tag": "cikm-2026-artifact-v1",
+        "asset_url": "https://github.com/filipealtoe/streamingACD/releases/download/cikm-2026-artifact-v1/cluster_embeddings.npy",
+        "bytes": 153600128,
+        "sha256": "514e9f44c095b1de5175cc6c76db548e9762c3e1bcdda93b8cb8f16f09bd1619"
+      }
+    }
+  },
+  "paper_release_promises": {
+    "six_interlinked_artifacts": {
+      "expected": [
+        "tweets.parquet",
+        "users.parquet",
+        "clusters.parquet",
+        "claims.parquet",
+        "cluster_timeseries.parquet",
+        "cluster_embeddings.npy"
+      ],
+      "present": [
+        "clusters.parquet",
+        "claims.parquet",
+        "cluster_timeseries.parquet",
+        "cluster_embeddings.npy"
+      ]
+    },
+    "original_tweet_ids": {
+      "present": false,
+      "reason": "Post-level identifiers are excluded from the public tree."
+    },
+    "full_post_level_membership": {
+      "present": false
+    },
+    "claim_checkworthiness_decomposition": {
+      "present_in_claims_table": false,
+      "missing_claim_columns": [
+        "checkability_score",
+        "harm_score",
+        "verifiability_score"
+      ],
+      "separate_score_artifact_rows": 535,
+      "present_in_separate_score_artifact": true,
+      "separate_score_artifact_claim_ids_match": true,
+      "separate_score_columns": [
+        "checkability_score",
+        "harm_score",
+        "overall_score",
+        "verifiability_score"
+      ]
+    },
+    "natural_language_rationales": {
+      "present": false
+    },
+    "opus_raw_json_records": {
+      "paper_count": 1023,
+      "public_count": 0
+    }
+  },
+  "public_scientific_core": {
+    "canonical_claims": 535,
+    "aggregate_clusters": 100000,
+    "aggregate_cluster_timeseries_rows": 404296,
+    "virality_cluster_instances": 529,
+    "four_head_score_rows": 535,
+    "raw_post_text_present": false,
+    "post_or_user_identifier_tables_present": false
+  },
+  "promise_checks": {
+    "six_interlinked_artifacts": false,
+    "original_tweet_ids": false,
+    "full_post_level_membership": false,
+    "claim_checkworthiness_decomposition": true,
+    "natural_language_rationales": false,
+    "opus_raw_json_records": false
+  },
+  "summary": {
+    "promises_satisfied": 1,
+    "promises_checked": 6,
+    "verdict": "PARTIAL"
+  }
+}

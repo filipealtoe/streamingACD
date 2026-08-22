@@ -1,6 +1,8 @@
 {
+  "change_note": "Sérgio Pinto, 2026-08-21 22:09 PDT — Consolidated the paper-facing and retained-run parameter values with their executable source paths for camera-ready artifact verification.",
   "artifact_version": "cikm-2026-artifact-v1",
   "claim_normalization": {
+    "evidence_role": "numeric recovery run; not the complete paper Model A protocol",
     "benchmark": "CheckThat! 2025 Task 2 English",
     "batch_size": 8,
     "claim_verify_threshold": 0.5,
@@ -9,6 +11,7 @@
     "max_new_tokens": 256,
     "model": "mistralai/Mistral-7B-Instruct-v0.3",
     "num_examples": 5,
+    "negative_examples": 0,
     "prompt_path": "prompts/claim_normalization_cikm2026.md",
     "prompt_version": "v1",
     "resume": false,
@@ -21,6 +24,14 @@
     "temperature": 0.0,
     "topic_clusters": 10,
     "retrieval_threshold": 0.85
+  },
+  "claim_normalization_paper_model_a": {
+    "evidence_role": "parameter tuple stated in the accepted paper; exact per-example paper-run outputs not recovered",
+    "topic_clusters": 10,
+    "retrieval_threshold": 0.85,
+    "claim_verify_threshold": 0.65,
+    "positive_examples": 4,
+    "negative_examples": 2
   },
   "checkworthiness_soft_labels": {
     "assistant_prefill": true,
@@ -78,6 +89,15 @@
     ],
     "scheduler": "linear_with_warmup",
     "seed": 42,
+    "training_data_counts": {
+      "train_total": 22402,
+      "train_negative": 17003,
+      "train_positive": 5399,
+      "dev_rows": 1031,
+      "test_rows": 341,
+      "positive_class_weight_exact": 3.149286904982404,
+      "positive_class_weight_paper_rounded": 3.15
+    },
     "source_path": "reproducibility/runs/deberta_mtl_cikm_20260512_134553/scripts/finetune_deberta_mtl.py",
     "warmup_ratio": 0.1,
     "weight_decay": 0.01
@@ -149,5 +169,18 @@
       "stratify": null,
       "test_size": 0.2
     }
+  },
+  "virality_statistics": {
+    "bootstrap_interval_percentiles": [
+      2.5,
+      97.5
+    ],
+    "bootstrap_resamples": 1000,
+    "bootstrap_seed": 42,
+    "paired_test": "exact two-sided McNemar",
+    "paired_threshold": 0.65,
+    "source_path": "scripts/reproduce_cikm2026_virality_statistics.py",
+    "spearman_p_value_test": "scipy.stats.spearmanr two-tailed",
+    "statistical_source_snapshot": "results/psr_statistics_20260518_205609/scripts/run_psr_statistics.py"
   }
 }
