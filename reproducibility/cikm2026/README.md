@@ -26,6 +26,7 @@
 <!-- Sérgio Pinto, 2026-08-21 21:55 PDT — added the recovered canonical cluster-embedding asset manifest and optional identity verifier. -->
 <!-- Sérgio Pinto, 2026-08-21 22:08 PDT — bound the paper-value inventory to the exact camera-ready PDF. -->
 <!-- Sérgio Pinto, 2026-08-22 00:53 PDT — rebound the inventory and release coverage to the exact final camera-ready PDF. -->
+<!-- Sérgio Pinto, 2026-08-25 14:18 WEST — added direct public Encoder inference and corrected sentence-ID-aligned LLM/Fusion replications while preserving the historical paper results separately. -->
 
 This package supports the dataset and baseline evidence for the accepted paper:
 
@@ -204,6 +205,19 @@ audit the unresolved ClaimBuster aggregate reconstruction:
 uv run scripts/reproduce_cikm2026_encoder_only.py
 ```
 
+Run the three immutable public Encoder checkpoints on ClaimBuster and CT23, then
+recompute both the retained positional and corrected sentence-ID-aligned Fusion
+paths:
+
+```bash
+uv run scripts/reproduce_cikm2026_public_encoder_fusion.py --inference
+```
+
+The output contains direct per-example evidence. It reproduces the CT23 Encoder
+cell after rounding; the public models do not exactly reproduce the historical
+ClaimBuster Encoder or cross-benchmark Fusion cells, and the result records that
+difference without altering the paper values.
+
 Freshly fit the PCA-64 + LLM + text-feature classifier and reproduce its three
 paper-facing F1 cells:
 
@@ -211,8 +225,10 @@ paper-facing F1 cells:
 uv run scripts/reproduce_cikm2026_llm_features.py
 ```
 
-The result reproduces the retained per-benchmark threshold sweep and also reports
-the three benchmarks with one threshold selected on CT24 development data.
+The result reproduces the retained positional per-benchmark threshold sweep and
+also reports the three benchmarks after joining all 54 recovered LLM features
+one-to-one by sentence ID. Fixed source-development thresholds and
+evaluation-set threshold diagnostics are labelled separately.
 
 Recompute the CT24 Fusion probability vector from its retained encoder and
 XGBoost components and reproduce F1 `0.836`:

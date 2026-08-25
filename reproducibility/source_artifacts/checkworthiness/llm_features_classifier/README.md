@@ -2,6 +2,7 @@
 
 <!-- Sérgio Pinto, 2026-08-21 19:21 PDT — packaged the exact numerical inputs needed to reproduce the three paper-facing F1 values without redistributing source text. -->
 <!-- Sérgio Pinto, 2026-08-21 19:27 PDT — documented the historical per-benchmark threshold sweep and added a fixed development-selected threshold diagnostic. -->
+<!-- Sérgio Pinto, 2026-08-25 14:18 WEST — documented the recovered row-order mismatch and linked the corrected sentence-ID-aligned LLM partition. -->
 
 `matrices.npz` contains the CT24 train, development, and test feature matrices
 and the ClaimBuster and CT23 evaluation matrices used by the paper's
@@ -31,6 +32,13 @@ using a training-only model, then holds that threshold fixed when evaluating the
 final train-plus-development model on CT24, ClaimBuster, and CT23.
 
 The matrices were reconstructed with the retained feature-extraction,
-embedding/PCA, and benchmark scripts under `source_code/`. PCA was fitted on
-the CT24 training split only; the scaler and classifier are fitted on CT24
+embedding/PCA, and benchmark scripts under `source_code/`. That source combined
+the 54 LLM columns by row position even though their stored order differs from
+the text/PCA and label order. Consequently, `matrices.npz` is retained as the
+exact historical numerical input, not as a corrected alignment.
+
+The reproducer now also replaces the LLM partition after complete one-to-one
+`sentence_id` joins using the recovered feature files and the text-free CT24
+label tables. It reports this corrected replication separately. PCA was fitted
+on the CT24 training split only; the scaler and classifier are fitted on CT24
 train plus development data.
