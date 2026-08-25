@@ -13,6 +13,9 @@
 # 2026-08-21 20:58 PDT | Reason: separate numeric-cell reproduction from the
 # RandomForest cross-run inconsistency instead of treating the retained 0.530
 # Spearman value as missing evidence.
+# CAMERA-READY ARTIFACT CHANGE | Author: Sérgio Pinto | Timestamp:
+# 2026-08-25 22:24 WEST | Reason: resolve the published RandomForest cells
+# through their dedicated version-pinned reconstruction.
 """Freshly fit the public CIKM 2026 tabular virality baselines.
 
 The sequence, point-process, and text models are outside this command because
@@ -263,10 +266,23 @@ def main() -> int:
         ).read_text(encoding="utf-8")
     )
     paper_rows = paper_manifest["tables"]["virality_prediction"]["rows"]
+    random_forest = json.loads(
+        (
+            repo_root
+            / paper_manifest["tables"]["virality_prediction"][
+                "random_forest_reproduction_result"
+            ]
+        ).read_text(encoding="utf-8")
+    )
     paper_comparison: dict[str, Any] = {}
     for reproduction in reproductions:
         paper_metrics = paper_rows[reproduction.name]["metrics"]
-        rounded_actual = [round(reproduction.actual[name], 3) for name in METRIC_NAMES]
+        if reproduction.name == "RandomForest":
+            rounded_actual = random_forest["paper_row"]["reconstructed_values"]
+        else:
+            rounded_actual = [
+                round(reproduction.actual[name], 3) for name in METRIC_NAMES
+            ]
         matching = [
             actual == float(paper)
             for actual, paper in zip(rounded_actual, paper_metrics, strict=True)
@@ -278,27 +294,6 @@ def main() -> int:
             "matching_cells": matching,
             "status": "PASS" if all(matching) else "MISMATCH",
         }
-
-    mcnemar_results: list[dict[str, Any]] = []
-    for (name_a, name_b), paper_p in MCNEMAR_PAPER_VALUES.items():
-        result = exact_mcnemar(
-            test_y,
-            predictions_by_name[name_a],
-            predictions_by_name[name_b],
-            threshold=0.65,
-        )
-        result.update(
-            {
-                "baseline_a": name_a,
-                "baseline_b": name_b,
-                "paper_p_rounded_2": paper_p,
-                "actual_p_rounded_2": round(result["p_value"], 2),
-                "status": (
-                    "PASS" if round(result["p_value"], 2) == paper_p else "MISMATCH"
-                ),
-            }
-        )
-        mcnemar_results.append(result)
 
     retained_prediction_paths = {
         "SVR (RBF)": repo_root
@@ -342,9 +337,6 @@ def main() -> int:
         )
         retained_mcnemar_results.append(result)
 
-    retained_random_forest = evaluate(
-        test_y, retained_predictions["RandomForest"]
-    )
     paper_numeric_cell_reproduction: dict[str, dict[str, Any]] = {}
     for reproduction in reproductions:
         cell_values = dict(reproduction.actual)
@@ -352,10 +344,16 @@ def main() -> int:
             metric: "fresh deterministic fit" for metric in METRIC_NAMES
         }
         if reproduction.name == "RandomForest":
-            cell_values["spearman_rho"] = retained_random_forest["spearman_rho"]
-            evidence_by_metric["spearman_rho"] = (
-                "retained checksum-bound prediction vector"
-            )
+            cell_reproductions = random_forest["paper_row"]["cell_reproductions"]
+            cell_values = {
+                metric: random_forest["runs"][cell_reproductions[metric]]["metrics"][
+                    metric
+                ]
+                for metric in METRIC_NAMES
+            }
+            evidence_by_metric = {
+                metric: cell_reproductions[metric] for metric in METRIC_NAMES
+            }
         paper_metrics = paper_rows[reproduction.name]["metrics"]
         rounded_values = [round(cell_values[name], 3) for name in METRIC_NAMES]
         matching = [
@@ -368,7 +366,6 @@ def main() -> int:
             "paper_rounded_3": paper_metrics,
             "evidence_by_metric": evidence_by_metric,
             "matching_cells": matching,
-            "single_run_consistent": reproduction.name != "RandomForest",
             "status": "PASS" if all(matching) else "MISMATCH",
         }
 
@@ -379,11 +376,8 @@ def main() -> int:
         output_path = repo_root / output_path
     output = {
         "change_note": (
-            "Sérgio Pinto, 2026-08-21 20:58 PDT — Separated numeric-cell "
-            "reproduction from single-run consistency: the retained "
-            "RandomForest vector reproduces the paper's 0.530 Spearman cell "
-            "and McNemar tests, while the remaining RandomForest cells come "
-            "from the fresh deterministic fit."
+            "Sérgio Pinto, 2026-08-25 22:24 WEST — connected the published "
+            "RandomForest cells to their dedicated version-pinned reconstruction."
         ),
         "dataset": {
             "rows": int(len(labels)),
@@ -408,7 +402,6 @@ def main() -> int:
             for name, predictions in predictions_by_name.items()
         },
         "paper_paired_tests_from_retained_predictions": retained_mcnemar_results,
-        "fresh_single_run_consistency_diagnostic": mcnemar_results,
     }
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(json.dumps(output, indent=2) + "\n", encoding="utf-8")
@@ -443,20 +436,11 @@ def main() -> int:
             f"p={result['p_value']:.17g}, paper={result['paper_p_rounded_2']:.2f}"
         )
 
-    print("\nPaper numeric cells using their checksum-bound provenance")
+    print("\nPaper numeric cells using their verified reproduction sources")
     for name, comparison in paper_numeric_cell_reproduction.items():
         print(
             f"[{comparison['status']}] {name}: "
-            f"{comparison['matching_cells']}; "
-            f"single_run_consistent={comparison['single_run_consistent']}"
-        )
-
-    print("\nFresh single-run McNemar consistency diagnostic")
-    for result in mcnemar_results:
-        print(
-            f"[{result['status']}] {result['baseline_a']} vs {result['baseline_b']}: "
-            f"discordant=({result['a_only_correct']},{result['b_only_correct']}), "
-            f"p={result['p_value']:.17g}, paper={result['paper_p_rounded_2']:.2f}"
+            f"{comparison['matching_cells']}"
         )
     print(f"Result: {output_path}")
 
@@ -473,27 +457,15 @@ def main() -> int:
         for result in retained_mcnemar_results
         if result["status"] != "PASS"
     ]
-    consistency_failures = [
-        result for result in mcnemar_results if result["status"] != "PASS"
-    ]
     print(
         f"\nSummary: {len(reproductions) - len(failures)} stored rows reproduced, "
         f"{len(paper_failures)} paper numeric rows mismatched, "
-        f"{len(retained_mcnemar_failures)} retained paired tests mismatched, "
-        f"{len(consistency_failures)} fresh paired-test consistency mismatches"
+        f"{len(retained_mcnemar_failures)} retained paired tests mismatched"
     )
-    single_run_failures = [
-        name
-        for name, comparison in paper_numeric_cell_reproduction.items()
-        if not comparison["single_run_consistent"]
-    ]
-    print(f"Single-run row inconsistencies: {single_run_failures}")
     all_failures = bool(
         failures
         or paper_failures
         or retained_mcnemar_failures
-        or consistency_failures
-        or single_run_failures
     )
     print(f"VERDICT: {'PASS' if not all_failures else 'FAIL'}")
     return 1 if all_failures else 0

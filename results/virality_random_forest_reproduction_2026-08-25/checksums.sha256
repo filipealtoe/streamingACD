@@ -1,0 +1,5 @@
+# Sérgio Pinto, 2026-08-25 21:56 WEST — binds the two version-pinned RandomForest paper-cell vectors and their summary.
+e983159830ef13f0a8045794c69c9635a8e8fe14866d67d2b8482d64ec37319d  results/virality_random_forest_reproduction_2026-08-25/environment.json
+c376f5734dda63fdfb738393ad6c99113364f1bcaf03fff0abcaa9f7fa8cd080  results/virality_random_forest_reproduction_2026-08-25/predictions_sklearn_1_3_2.npy
+9e040a83d9f4ac80378f2363273e59048489b2cb78fe82965f2e79b90a8be4f7  results/virality_random_forest_reproduction_2026-08-25/predictions_sklearn_1_5_2.npy
+497510df8830d1145b4c161730ededc0b09862be28d4388226cc43ed901d109a  results/virality_random_forest_reproduction_2026-08-25/summary.json

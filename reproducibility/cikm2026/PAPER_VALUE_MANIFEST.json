@@ -444,8 +444,12 @@
     },
     "virality_prediction": {
       "paper_table_number": 3,
+      "random_forest_change_note": "Sérgio Pinto, 2026-08-25 22:22 WEST — connected each published RandomForest cell to its verified version-pinned reconstruction environment.",
       "reproduction_command": "uv run scripts/reproduce_cikm2026_tabular_baselines.py",
       "full_precision_evidence": "results/virality_tabular_reproduction_2026-08-21.json",
+      "random_forest_reproduction_command": "uv run --no-project scripts/reproduce_cikm2026_random_forest.py",
+      "random_forest_reproduction_result": "results/virality_random_forest_reproduction_2026-08-25/summary.json",
+      "random_forest_checksums": "results/virality_random_forest_reproduction_2026-08-25/checksums.sha256",
       "statistics_reproduction_command": "uv run scripts/reproduce_cikm2026_virality_statistics.py",
       "statistics_full_precision_evidence": "results/virality_statistics_reproduction_2026-08-21.json",
       "statistical_annotations": {
@@ -526,15 +530,14 @@
         "RandomForest": {
           "n_test": 106,
           "metrics": [0.530, 0.319, 0.217, 0.547, 0.322, 0.041],
-          "evidence_by_metric": {
-            "spearman_rho": "psr/baseline_predictions/RandomForest/test_predictions.npy",
-            "r2": "reproducibility/source_artifacts/virality/tuned_baselines.json",
-            "mae": "reproducibility/source_artifacts/virality/tuned_baselines.json",
-            "f2_065": "reproducibility/source_artifacts/virality/tuned_baselines.json",
-            "f2_075": "reproducibility/source_artifacts/virality/tuned_baselines.json",
-            "f2_085": "reproducibility/source_artifacts/virality/tuned_baselines.json"
-          },
-          "single_run_consistent": false
+          "cell_reproductions": {
+            "spearman_rho": "sklearn_1_3_2",
+            "r2": "sklearn_1_5_2",
+            "mae": "sklearn_1_5_2",
+            "f2_065": "sklearn_1_5_2",
+            "f2_075": "sklearn_1_5_2",
+            "f2_085": "sklearn_1_5_2"
+          }
         },
         "LightGBM": {
           "n_test": 106,

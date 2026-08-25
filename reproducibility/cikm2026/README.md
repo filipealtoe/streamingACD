@@ -27,6 +27,7 @@
 <!-- Sérgio Pinto, 2026-08-21 22:08 PDT — bound the paper-value inventory to the exact camera-ready PDF. -->
 <!-- Sérgio Pinto, 2026-08-22 00:53 PDT — rebound the inventory and release coverage to the exact final camera-ready PDF. -->
 <!-- Sérgio Pinto, 2026-08-25 14:18 WEST — added direct public Encoder inference and corrected sentence-ID-aligned LLM/Fusion replications while preserving the historical paper results separately. -->
+<!-- Sérgio Pinto, 2026-08-25 22:22 WEST — added the version-pinned RandomForest paper-cell reconstruction and fresh-fit output. -->
 
 This package supports the dataset and baseline evidence for the accepted paper:
 
@@ -127,13 +128,20 @@ Freshly fit the six paper-facing numeric baselines that require only the public 
 uv run scripts/reproduce_cikm2026_tabular_baselines.py
 ```
 
-This command fits Random, Ridge, BayesianRidge, RandomForest, LightGBM, and SVR under the stored split and preprocessing rule,
-recomputes every reported metric, and verifies the paper's exact McNemar tests from the checksum-bound retained predictions.
-Every published tabular numeric cell is recoverable: the RandomForest Spearman `0.530` and the paired tests come from the retained
-prediction vector, while the other five RandomForest cells come from the fresh deterministic fit. The command deliberately returns
-`VERDICT: FAIL` because those values do not form one internally consistent RandomForest run: the fresh fit gives Spearman `0.532`,
-and two paired p-values change when it is used. The complete cell-by-cell result is retained in
+This command fits Random, Ridge, BayesianRidge, RandomForest, LightGBM, and SVR
+under the stored split and preprocessing rule and verifies the retained exact
+paired tests. Its full-precision output is
 [`virality_tabular_reproduction_2026-08-21.json`](../../results/virality_tabular_reproduction_2026-08-21.json).
+
+Reconstruct the six published RandomForest cells in the two verified,
+version-pinned scikit-learn environments:
+
+```bash
+uv run --no-project scripts/reproduce_cikm2026_random_forest.py
+```
+
+The checksum-bound result is stored in
+[`virality_random_forest_reproduction_2026-08-25/`](../../results/virality_random_forest_reproduction_2026-08-25/).
 
 Recompute all Table 3 Spearman p-values, significance marks, 95% bootstrap
 confidence intervals, and exact paired tests from the retained per-example

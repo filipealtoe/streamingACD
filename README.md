@@ -3,6 +3,7 @@
 <!-- Sérgio Pinto, 2026-08-21 21:53 PDT — replaced machine-local commands with the public camera-ready verification entry points. -->
 <!-- Sérgio Pinto, 2026-08-21 22:08 PDT — documented optional identity verification for the exact audited camera-ready PDF. -->
 <!-- Sérgio Pinto, 2026-08-22 00:53 PDT — rebound verification and release coverage to the exact final camera-ready PDF. -->
+<!-- Sérgio Pinto, 2026-08-25 22:22 WEST — added the version-pinned RandomForest paper-cell reconstruction command. -->
 
 Reproducibility workspace for the streaming automated claim detection experiments.
 
@@ -52,6 +53,13 @@ uv run scripts/reproduce_cikm2026_virality_statistics.py
 The first command checks all 11 rows and 66 cells. The second recomputes all
 Spearman p-values, 95% bootstrap confidence intervals, significance marks, and
 the three exact McNemar tests from retained per-example arrays.
+
+Reconstruct the six published RandomForest cells in their verified,
+version-pinned environments:
+
+```bash
+uv run --no-project scripts/reproduce_cikm2026_random_forest.py
+```
 
 ## Current Reproduced Run
 

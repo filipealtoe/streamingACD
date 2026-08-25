@@ -1,0 +1,16 @@
+{
+  "change_note": "S\u00e9rgio Pinto, 2026-08-25 21:56 WEST \u2014 records the exact package identities used by the two RandomForest paper-cell reconstruction fits.",
+  "python": "3.11",
+  "shared_packages": {
+    "numpy": "1.26.4",
+    "scipy": "1.11.4"
+  },
+  "runs": {
+    "sklearn_1_3_2": {
+      "scikit_learn": "1.3.2"
+    },
+    "sklearn_1_5_2": {
+      "scikit_learn": "1.5.2"
+    }
+  }
+}

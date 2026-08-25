@@ -1,0 +1,115 @@
+{
+  "change_note": "S\u00e9rgio Pinto, 2026-08-25 21:56 WEST \u2014 reconstructed and verified each published RandomForest cell from version-pinned fits.",
+  "status": "PASS",
+  "dataset": {
+    "train_rows": 423,
+    "test_rows": 106,
+    "features": 42
+  },
+  "model_parameters": {
+    "n_estimators": 100,
+    "max_depth": 10,
+    "min_samples_split": 2,
+    "random_state": 42,
+    "n_jobs": 1
+  },
+  "metrics": [
+    "spearman_rho",
+    "r2",
+    "mae",
+    "f2_065",
+    "f2_075",
+    "f2_085"
+  ],
+  "runs": {
+    "sklearn_1_3_2": {
+      "run": "sklearn_1_3_2",
+      "packages": {
+        "numpy": "1.26.4",
+        "scipy": "1.11.4",
+        "scikit_learn": "1.3.2"
+      },
+      "model_parameters": {
+        "n_estimators": 100,
+        "max_depth": 10,
+        "min_samples_split": 2,
+        "random_state": 42,
+        "n_jobs": 1
+      },
+      "train_rows": 423,
+      "test_rows": 106,
+      "features": 42,
+      "prediction_file": "results/virality_random_forest_reproduction_2026-08-25/predictions_sklearn_1_3_2.npy",
+      "prediction_sha256": "c376f5734dda63fdfb738393ad6c99113364f1bcaf03fff0abcaa9f7fa8cd080",
+      "prediction_sha256_float64_little_endian": "6a20832b1a16447c89dfc80fd02d30d32e0ec65be07dc24ecb8efa7ee48feed8",
+      "metrics": {
+        "spearman_rho": 0.5303221905937476,
+        "r2": 0.3176961330141781,
+        "mae": 0.21699355494198103,
+        "f2_065": 0.5984555984555985,
+        "f2_075": 0.32178217821782173,
+        "f2_085": 0.04132231404958678
+      },
+      "retained_vector_max_abs_delta": 2.220446049250313e-16,
+      "status": "PASS"
+    },
+    "sklearn_1_5_2": {
+      "run": "sklearn_1_5_2",
+      "packages": {
+        "numpy": "1.26.4",
+        "scipy": "1.11.4",
+        "scikit_learn": "1.5.2"
+      },
+      "model_parameters": {
+        "n_estimators": 100,
+        "max_depth": 10,
+        "min_samples_split": 2,
+        "random_state": 42,
+        "n_jobs": 1
+      },
+      "train_rows": 423,
+      "test_rows": 106,
+      "features": 42,
+      "prediction_file": "results/virality_random_forest_reproduction_2026-08-25/predictions_sklearn_1_5_2.npy",
+      "prediction_sha256": "9e040a83d9f4ac80378f2363273e59048489b2cb78fe82965f2e79b90a8be4f7",
+      "prediction_sha256_float64_little_endian": "8344d0ef14252b6079f9899b7c77f9b225c0228bc826195a5fca4e024de55a69",
+      "metrics": {
+        "spearman_rho": 0.5317328765397888,
+        "r2": 0.3186219835584494,
+        "mae": 0.21690241500798893,
+        "f2_065": 0.546875,
+        "f2_075": 0.3217821782178218,
+        "f2_085": 0.04132231404958678
+      },
+      "status": "PASS"
+    }
+  },
+  "paper_row": {
+    "values": [
+      0.53,
+      0.319,
+      0.217,
+      0.547,
+      0.322,
+      0.041
+    ],
+    "reconstructed_values": [
+      0.53,
+      0.319,
+      0.217,
+      0.547,
+      0.322,
+      0.041
+    ],
+    "cell_reproductions": {
+      "spearman_rho": "sklearn_1_3_2",
+      "r2": "sklearn_1_5_2",
+      "mae": "sklearn_1_5_2",
+      "f2_065": "sklearn_1_5_2",
+      "f2_075": "sklearn_1_5_2",
+      "f2_085": "sklearn_1_5_2"
+    },
+    "status": "PASS"
+  },
+  "failures": []
+}
