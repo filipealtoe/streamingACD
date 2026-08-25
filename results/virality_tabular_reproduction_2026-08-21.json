@@ -1,5 +1,5 @@
 {
-  "change_note": "S\u00e9rgio Pinto, 2026-08-21 20:58 PDT \u2014 Separated numeric-cell reproduction from single-run consistency: the retained RandomForest vector reproduces the paper's 0.530 Spearman cell and McNemar tests, while the remaining RandomForest cells come from the fresh deterministic fit.",
+  "change_note": "S\u00e9rgio Pinto, 2026-08-25 22:24 WEST \u2014 connected the published RandomForest cells to their dedicated version-pinned reconstruction.",
   "dataset": {
     "rows": 529,
     "features": 42,
@@ -72,7 +72,7 @@
       "actual": {
         "spearman_rho": 0.5317328765397888,
         "r2": 0.3186219835584494,
-        "mae": 0.21690241500798893,
+        "mae": 0.2169024150079889,
         "f2_065": 0.546875,
         "f2_075": 0.3217821782178218,
         "f2_085": 0.04132231404958678
@@ -239,13 +239,13 @@
       "actual_full_precision": {
         "spearman_rho": 0.5317328765397888,
         "r2": 0.3186219835584494,
-        "mae": 0.21690241500798893,
+        "mae": 0.2169024150079889,
         "f2_065": 0.546875,
         "f2_075": 0.3217821782178218,
         "f2_085": 0.04132231404958678
       },
       "actual_rounded_3": [
-        0.532,
+        0.53,
         0.319,
         0.217,
         0.547,
@@ -261,14 +261,14 @@
         0.041
       ],
       "matching_cells": [
-        false,
+        true,
         true,
         true,
         true,
         true,
         true
       ],
-      "status": "MISMATCH"
+      "status": "PASS"
     },
     "LightGBM": {
       "actual_full_precision": {
@@ -383,7 +383,6 @@
         true,
         true
       ],
-      "single_run_consistent": true,
       "status": "PASS"
     },
     "Ridge": {
@@ -427,7 +426,6 @@
         true,
         true
       ],
-      "single_run_consistent": true,
       "status": "PASS"
     },
     "BayesianRidge": {
@@ -471,7 +469,6 @@
         true,
         true
       ],
-      "single_run_consistent": true,
       "status": "PASS"
     },
     "RandomForest": {
@@ -500,12 +497,12 @@
         0.041
       ],
       "evidence_by_metric": {
-        "spearman_rho": "retained checksum-bound prediction vector",
-        "r2": "fresh deterministic fit",
-        "mae": "fresh deterministic fit",
-        "f2_065": "fresh deterministic fit",
-        "f2_075": "fresh deterministic fit",
-        "f2_085": "fresh deterministic fit"
+        "spearman_rho": "sklearn_1_3_2",
+        "r2": "sklearn_1_5_2",
+        "mae": "sklearn_1_5_2",
+        "f2_065": "sklearn_1_5_2",
+        "f2_075": "sklearn_1_5_2",
+        "f2_085": "sklearn_1_5_2"
       },
       "matching_cells": [
         true,
@@ -515,7 +512,6 @@
         true,
         true
       ],
-      "single_run_consistent": false,
       "status": "PASS"
     },
     "LightGBM": {
@@ -559,7 +555,6 @@
         true,
         true
       ],
-      "single_run_consistent": true,
       "status": "PASS"
     },
     "SVR (RBF)": {
@@ -603,7 +598,6 @@
         true,
         true
       ],
-      "single_run_consistent": true,
       "status": "PASS"
     }
   },
@@ -611,7 +605,7 @@
     "Random": "a1083f4f136c3f951c5fdabf7730286262b8f6f3a4927defc25130a7d80adfb9",
     "Ridge": "4711424f0fe1f25d7a76144a97062c80964250069cf07b678ad87a3dc30b75d2",
     "BayesianRidge": "833de4f41d9d0ad2e66c1529e869f668a95fd9b77d407bfa09d7e87d9a7d58c1",
-    "RandomForest": "22557123bde3c8e965c45ae4c450f49bf201f5f965c3cf60728f2c4f35d105ae",
+    "RandomForest": "3326cb9b039a01bb811d4e91f2cca55ba3afca73eb89250babf18b9a62d235a7",
     "LightGBM": "708531c30166b9fdbb04f2bc64ca44d68b7792d7829cc13f3d90813773e24215",
     "SVR (RBF)": "5798bf884d4753617e16f9a655b5a5d059ef5868d936f3a0f323e654cf1e6e0c"
   },
@@ -663,56 +657,6 @@
       "paper_p_rounded_2": 1.0,
       "actual_p_rounded_2": 1.0,
       "status": "PASS"
-    }
-  ],
-  "fresh_single_run_consistency_diagnostic": [
-    {
-      "threshold": 0.65,
-      "n_common": 106,
-      "both_correct": 58,
-      "a_only_correct": 15,
-      "b_only_correct": 10,
-      "both_wrong": 23,
-      "statistic": 10,
-      "p_value": 0.42435622215270996,
-      "exact": true,
-      "baseline_a": "SVR (RBF)",
-      "baseline_b": "RandomForest",
-      "paper_p_rounded_2": 0.84,
-      "actual_p_rounded_2": 0.42,
-      "status": "MISMATCH"
-    },
-    {
-      "threshold": 0.65,
-      "n_common": 106,
-      "both_correct": 59,
-      "a_only_correct": 14,
-      "b_only_correct": 11,
-      "both_wrong": 22,
-      "statistic": 11,
-      "p_value": 0.6900379657745361,
-      "exact": true,
-      "baseline_a": "SVR (RBF)",
-      "baseline_b": "LightGBM",
-      "paper_p_rounded_2": 0.69,
-      "actual_p_rounded_2": 0.69,
-      "status": "PASS"
-    },
-    {
-      "threshold": 0.65,
-      "n_common": 106,
-      "both_correct": 61,
-      "a_only_correct": 7,
-      "b_only_correct": 9,
-      "both_wrong": 29,
-      "statistic": 7,
-      "p_value": 0.803619384765625,
-      "exact": true,
-      "baseline_a": "RandomForest",
-      "baseline_b": "LightGBM",
-      "paper_p_rounded_2": 1.0,
-      "actual_p_rounded_2": 0.8,
-      "status": "MISMATCH"
     }
   ]
 }

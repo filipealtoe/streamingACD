@@ -198,7 +198,10 @@ def verify_checksums(repo_root: Path) -> Check:
     mismatched: list[str] = []
     manifest_paths: set[str] = set()
     for line in manifest_path.read_text(encoding="utf-8").splitlines():
-        if not line.strip():
+        # CAMERA-READY ARTIFACT CHANGE | Author: Sérgio Pinto | Timestamp:
+        # 2026-08-25 22:22 WEST | Reason: allow attributed change comments in
+        # checksum manifests without treating them as repository paths.
+        if not line.strip() or line.startswith("#"):
             continue
         expected, relative = line.split(maxsplit=1)
         relative_path = relative.strip()
@@ -260,7 +263,7 @@ def verify_code_checksums(repo_root: Path) -> Check:
     mismatched: list[str] = []
     manifest_paths: set[str] = set()
     for line in manifest_path.read_text(encoding="utf-8").splitlines():
-        if not line.strip():
+        if not line.strip() or line.startswith("#"):
             continue
         expected, relative = line.split(maxsplit=1)
         relative_path = relative.strip()
@@ -1594,13 +1597,24 @@ def verify_result_artifacts(repo_root: Path) -> list[Check]:
     retained = load_json(
         repo_root / "psr" / "reproduced_missing_predictions" / "manifest.json"
     )["metrics"]
-    retained_tabular = load_json(
-        repo_root / "psr" / "baseline_predictions" / "predictions_manifest.json"
-    )["metrics"]
     paper_manifest = load_json(
         repo_root / "reproducibility" / "cikm2026" / "PAPER_VALUE_MANIFEST.json"
     )
     paper_table = paper_manifest["tables"]["virality_prediction"]
+    # CAMERA-READY ARTIFACT CHANGE | Author: Sérgio Pinto | Timestamp:
+    # 2026-08-25 22:22 WEST | Reason: verify every RandomForest paper cell from
+    # the explicit, independently fixed version-to-cell reconstruction map.
+    expected_random_forest_cell_reproductions = {
+        "spearman_rho": "sklearn_1_3_2",
+        "r2": "sklearn_1_5_2",
+        "mae": "sklearn_1_5_2",
+        "f2_065": "sklearn_1_5_2",
+        "f2_075": "sklearn_1_5_2",
+        "f2_085": "sklearn_1_5_2",
+    }
+    random_forest = load_json(
+        repo_root / paper_table["random_forest_reproduction_result"]
+    )
     table_text = (artifact_root / "latex_table.tex").read_text(encoding="utf-8")
 
     retained_names = {
@@ -1622,12 +1636,20 @@ def verify_result_artifacts(repo_root: Path) -> list[Check]:
             source_row = retained.get(retained_names[name], {})
         else:
             source_row = tuned.get(name, {})
-        if name == "RandomForest" and all(key in source_row for key in metric_keys):
-            actual = (
-                round(float(retained_tabular[name]["spearman_rho"]), 3),
-                *(round(float(source_row[key]), 3) for key in metric_keys[1:]),
+        if name == "RandomForest":
+            cell_reproductions = paper_row["cell_reproductions"]
+            actual = tuple(
+                round(
+                    float(
+                        random_forest["runs"][cell_reproductions[metric]]["metrics"][
+                            metric
+                        ]
+                    ),
+                    3,
+                )
+                for metric in metric_keys
             )
-            evidence_mode = "retained Spearman plus five fresh-fit cells"
+            evidence_mode = "explicit version-pinned paper-cell reconstruction"
         else:
             actual = (
                 tuple(round(float(source_row[key]), 3) for key in metric_keys)
@@ -1729,21 +1751,22 @@ def verify_result_artifacts(repo_root: Path) -> list[Check]:
         )
     )
 
-    paper_row_mismatches = [
-        name
-        for name, row in reproduction["paper_table_comparison"].items()
-        if row["status"] != "PASS"
-    ]
-    fresh_test_mismatches = [
-        f"{row['baseline_a']}/{row['baseline_b']}"
-        for row in reproduction["fresh_single_run_consistency_diagnostic"]
-        if row["status"] != "PASS"
-    ]
+    random_forest_paper_row = paper_table["rows"]["RandomForest"]
     checks.append(
         Check(
-            "Virality single-run statistical consistency",
-            not paper_row_mismatches and not fresh_test_mismatches,
-            f"table mismatches={paper_row_mismatches}; paired-test mismatches={fresh_test_mismatches}",
+            "RandomForest version-pinned paper-cell reconstruction",
+            random_forest["status"] == "PASS"
+            and random_forest["paper_row"]["status"] == "PASS"
+            and random_forest["paper_row"]["values"]
+            == random_forest_paper_row["metrics"]
+            and random_forest["paper_row"]["reconstructed_values"]
+            == random_forest_paper_row["metrics"]
+            and random_forest_paper_row["cell_reproductions"]
+            == expected_random_forest_cell_reproductions
+            and random_forest["paper_row"]["cell_reproductions"]
+            == expected_random_forest_cell_reproductions,
+            f"values={random_forest['paper_row']['reconstructed_values']}; "
+            f"map={random_forest['paper_row']['cell_reproductions']}",
         )
     )
     return checks

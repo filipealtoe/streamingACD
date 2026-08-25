@@ -1,5 +1,7 @@
 # Reproducibility Package
 
+<!-- Sérgio Pinto, 2026-08-25 22:22 WEST — linked the version-pinned RandomForest paper-cell reconstruction. -->
+
 This directory tracks evidence for paper-facing claims without committing large datasets, model checkpoints, or raw prediction dumps by default.
 
 ## CIKM 2026 Public Artifact
@@ -15,6 +17,12 @@ The released feature matrix also supports fresh fits of six numeric baselines:
 
 ```bash
 uv run scripts/reproduce_cikm2026_tabular_baselines.py
+```
+
+The published RandomForest cells have a dedicated version-pinned entry point:
+
+```bash
+uv run --no-project scripts/reproduce_cikm2026_random_forest.py
 ```
 
 ## Contents
