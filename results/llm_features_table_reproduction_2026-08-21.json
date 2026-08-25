@@ -1,5 +1,104 @@
 {
   "change_note": "S\u00e9rgio Pinto, 2026-08-21 19:21 PDT \u2014 Freshly fitted the PCA-64 + LLM + text-feature classifier from the text-free numerical bundle.",
+  "corrected_sentence_id_replication": {
+    "alignment_audit": {
+      "CT23": {
+        "one_to_one_id_set_match": true,
+        "rows": 318,
+        "source_feature_order_differed": true,
+        "unique_sentence_ids": 318
+      },
+      "CT24 dev": {
+        "one_to_one_id_set_match": true,
+        "rows": 1031,
+        "source_feature_order_differed": true,
+        "unique_sentence_ids": 1031
+      },
+      "CT24 test": {
+        "one_to_one_id_set_match": true,
+        "rows": 341,
+        "source_feature_order_differed": true,
+        "unique_sentence_ids": 341
+      },
+      "CT24 train": {
+        "one_to_one_id_set_match": true,
+        "rows": 22402,
+        "source_feature_order_differed": true,
+        "unique_sentence_ids": 22402
+      },
+      "ClaimBuster": {
+        "one_to_one_id_set_match": true,
+        "rows": 1032,
+        "source_feature_order_differed": true,
+        "unique_sentence_ids": 1032
+      }
+    },
+    "change_note": "S\u00e9rgio Pinto, 2026-08-25 14:18 WEST \u2014 joined the recovered LLM partition one-to-one by sentence_id and retained the positionally combined paper-run result separately.",
+    "correction": "the 54 recovered LLM feature columns are joined one-to-one by sentence_id before combination with the retained 35 text and 64 PCA columns",
+    "development_selection_metrics": {
+      "accuracy": 0.9641125121241513,
+      "f1": 0.921443736730361,
+      "precision": 0.9313304721030042,
+      "recall": 0.9117647058823529,
+      "threshold": 0.7
+    },
+    "development_threshold": 0.7,
+    "results": {
+      "CT23": {
+        "evaluation_oracle_diagnostic": {
+          "accuracy": 0.8647798742138365,
+          "f1": 0.7860696517412935,
+          "precision": 0.8494623655913979,
+          "recall": 0.7314814814814815,
+          "threshold": 0.3
+        },
+        "fixed_source_development_threshold": {
+          "accuracy": 0.8018867924528302,
+          "f1": 0.6086956521739131,
+          "precision": 0.9245283018867925,
+          "recall": 0.4537037037037037,
+          "threshold": 0.7
+        },
+        "paper_f1": 0.846
+      },
+      "CT24": {
+        "evaluation_oracle_diagnostic": {
+          "accuracy": 0.8680351906158358,
+          "f1": 0.7457627118644068,
+          "precision": 0.7415730337078652,
+          "recall": 0.75,
+          "threshold": 0.49999999999999994
+        },
+        "fixed_source_development_threshold": {
+          "accuracy": 0.8651026392961877,
+          "f1": 0.7012987012987013,
+          "precision": 0.8181818181818182,
+          "recall": 0.6136363636363636,
+          "threshold": 0.7
+        },
+        "paper_f1": 0.694
+      },
+      "ClaimBuster": {
+        "evaluation_oracle_diagnostic": {
+          "accuracy": 0.9467054263565892,
+          "f1": 0.8865979381443299,
+          "precision": 0.8704453441295547,
+          "recall": 0.9033613445378151,
+          "threshold": 0.35
+        },
+        "fixed_source_development_threshold": {
+          "accuracy": 0.9292635658914729,
+          "f1": 0.8274231678486997,
+          "precision": 0.9459459459459459,
+          "recall": 0.7352941176470589,
+          "threshold": 0.7
+        },
+        "paper_f1": 0.894
+      }
+    },
+    "retained_partition_boundary": "the text and PCA partitions remain in the canonical row order of the checksum-bound numerical bundle; that bundle does not embed their per-row sentence IDs",
+    "status": "COMPLETE"
+  },
   "development_selected_threshold_diagnostic": {
     "development_selection_metrics": {
       "accuracy": 0.9466537342386033,

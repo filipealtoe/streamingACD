@@ -1,0 +1,77 @@
+{
+  "change_note": "Sérgio Pinto, 2026-08-25 13:41 WEST — froze the accepted-paper check-worthiness contract so new reproductions cannot silently change the reported task, splits, models, or values.",
+  "paper": {
+    "file_name": "CIKM2026-camera-ready-2026-08-22.pdf",
+    "sha256": "4d82abd01d66de5e04d7107e8c4bb21d3b3d1a7148aa235e95b78b803df78b9c",
+    "status": "immutable accepted camera-ready source"
+  },
+  "scope": "Sérgio Pinto's claim check-worthiness experiments and associated ablations",
+  "primary_metric": "binary F1 for the positive check-worthy class",
+  "paper_reported_values": {
+    "table_5": {
+      "Encoder Only": {
+        "CT2024": 0.821,
+        "ClaimBuster": 0.970,
+        "CT2023": 0.928
+      },
+      "LLM features": {
+        "CT2024": 0.694,
+        "ClaimBuster": 0.894,
+        "CT2023": 0.846
+      },
+      "4 Parallel Heads": {
+        "CT2024": 0.833,
+        "ClaimBuster": 0.973,
+        "CT2023": 0.933
+      },
+      "Fusion Classifier": {
+        "CT2024": 0.836,
+        "ClaimBuster": 0.961,
+        "CT2023": 0.915
+      }
+    },
+    "table_6": {
+      "4 Parallel Heads MTL": {
+        "f1": 0.833,
+        "latency_per_claim": "<10 ms on GPU",
+        "cost_per_1000_claims": "approximately zero amortized"
+      },
+      "Claude Opus 4.7 zero-shot": {
+        "f1": 0.722,
+        "latency_per_claim_seconds": 9.9,
+        "cost_per_1000_claims_usd_approximate": 18.07
+      }
+    },
+    "shared_misclassification_percent": 86
+  },
+  "paper_method": {
+    "base_encoder": "microsoft/deberta-v3-large",
+    "maximum_sequence_length": 128,
+    "checkworthiness_dimensions": [
+      "checkability",
+      "verifiability",
+      "harm potential",
+      "overall check-worthiness"
+    ],
+    "four_head_schedule": [
+      "auxiliary-head warm-up",
+      "joint encoder/head training",
+      "final main-task fine-tuning"
+    ],
+    "fusion": "three-seed DeBERTa ensemble plus LLM features with late fusion",
+    "model_and_threshold_selection": "development data only",
+    "final_reporting": "held-out test labels are used once after selection"
+  },
+  "reproduction_invariants": [
+    "Paper-reported values remain immutable historical targets.",
+    "Every cross-file join uses sentence_id or Sentence_id and validates one-to-one coverage.",
+    "Evaluation labels cannot select a threshold in a protocol-conformant result.",
+    "An evaluation-set threshold sweep is labelled as a historical or diagnostic oracle, never as a held-out reproduction.",
+    "Fresh outputs retain exact model revisions, input hashes, per-example probabilities, configuration, and full-precision metrics.",
+    "No raw Twitter/X post identifiers, user identifiers, usernames, profiles, or locations are released."
+  ],
+  "known_source_boundary": {
+    "ct24_dev_test": "The official English dev-test file has 318 rows, whereas the paper reports N=317. No row is removed merely to force the paper count.",
+    "historical_results": "Historical values and fresh protocol-conformant replications are stored separately; a new run does not replace historical provenance."
+  }
+}

@@ -30,7 +30,8 @@
     "Sérgio Pinto, 2026-08-22 00:53 PDT — Realigned release coverage with the exact final PDF: the stated 529-row dataset, source code, model parameters, prompts, schema, and reproducibility artifacts are present.",
     "Sérgio Pinto, 2026-08-21 21:46 PDT — Recorded the retained three-phase linear-schedule MTL protocol and the two-seed historical cross-benchmark Fusion scope alongside the corresponding manuscript descriptions.",
     "Sérgio Pinto, 2026-08-22 00:53 PDT — Confirmed that the exact final PDF does not state an embedding dimension; retained the authenticated 100,000 by 384 matrix without a stale manuscript-mismatch claim.",
-    "Sérgio Pinto, 2026-08-22 00:53 PDT — Rebound the numerical inventory to the exact final 12-page camera-ready PDF by file size and SHA-256."
+    "Sérgio Pinto, 2026-08-22 00:53 PDT — Rebound the numerical inventory to the exact final 12-page camera-ready PDF by file size and SHA-256.",
+    "Sérgio Pinto, 2026-08-25 14:18 WEST — Added direct inference from the three immutable public Encoder checkpoints and separated historical positional results from corrected sentence-ID-aligned LLM/Fusion replications."
   ],
   "paper": "CIKM 2026 camera-ready manuscript",
   "paper_pdf": {
@@ -363,22 +364,25 @@
         },
         "Encoder": {
           "metrics": [0.821, 0.970, 0.928],
-          "evidence_status": "CT24 and CT23 directly reproduced from checksum-bound per-example probabilities; ClaimBuster has a checksum-bound historical aggregate extract and consistent confusion matrix but remains unresolved as direct reproduction because the per-example vector was not retained",
+        "evidence_status": "CT24 and CT23 directly reproduced from checksum-bound per-example probabilities; fresh inference from the immutable public seed-0 checkpoint also reproduces CT23 after rounding but reaches only 0.966805 on the ClaimBuster evaluation-set diagnostic, so the historical ClaimBuster 0.970 remains unmatched",
           "reproduction_command": "uv run scripts/reproduce_cikm2026_encoder_only.py",
           "full_precision_evidence": "results/encoder_only_table_reproduction_2026-08-21.json",
           "numerical_input": "reproducibility/source_artifacts/checkworthiness/encoder_only/",
           "claimbuster_recovery_audit": "reproducibility/source_artifacts/checkworthiness/encoder_only/ENCODER_RECOVERY_AUDIT.json",
           "claimbuster_historical_extract": "reproducibility/source_artifacts/checkworthiness/encoder_only/HISTORICAL_RUN_EXTRACT.md",
-          "claimbuster_per_example_evidence_status": "unresolved; the historical aggregate extract is public, but the per-example probability vector was not retained"
+        "claimbuster_per_example_evidence_status": "fresh public-checkpoint per-example probabilities are retained; they do not reproduce the historical aggregate after rounding and are not presented as the missing historical vector",
+        "public_checkpoint_reproduction_command": "uv run scripts/reproduce_cikm2026_public_encoder_fusion.py --inference",
+        "public_checkpoint_evidence": "results/public_encoder_fusion_replication_2026-08-25/summary.json"
         },
         "LLM features": {
           "metrics": [0.694, 0.894, 0.846],
-          "evidence_status": "fresh fit from checksum-bound numerical features reproduced all three cells under the retained per-benchmark threshold sweep; the result also records a fixed development-selected threshold diagnostic",
+        "evidence_status": "the retained row-position pipeline reproduces all three cells under a separate evaluation-set threshold sweep; the same result separately reports a corrected fit in which all 54 LLM feature columns are joined one-to-one by sentence_id",
           "reproduction_command": "uv run scripts/reproduce_cikm2026_llm_features.py",
           "full_precision_evidence": "results/llm_features_table_reproduction_2026-08-21.json",
           "numerical_input": "reproducibility/source_artifacts/checkworthiness/llm_features_classifier/matrices.npz",
           "reported_threshold_selection": "maximum F1 selected separately on each evaluation set, matching the retained paper source",
-          "transfer_diagnostic_threshold_selection": "one threshold selected on CT24 development labels and held fixed across the three evaluation sets"
+        "transfer_diagnostic_threshold_selection": "one threshold selected on CT24 development labels and held fixed across the three evaluation sets",
+        "corrected_alignment_status": "complete one-to-one sentence-ID joins for CT24 train/dev/test, ClaimBuster, and CT23; corrected values are not substituted for the historical paper cells"
         },
         "4 Parallel Heads": {
           "metrics": [0.833, 0.973, 0.933],
@@ -390,13 +394,15 @@
         },
         "Fusion": {
           "metrics": [0.836, 0.961, 0.915],
-          "evidence_status": "CT24 exactly reproduced from retained component probabilities; ClaimBuster and CT23 have a checksum-bound historical aggregate extract but remain unresolved as direct reproduction because their per-sample predictions and original checkpoint bytes were not retained",
+        "evidence_status": "CT24 exactly reproduced from retained component probabilities; ClaimBuster and CT23 now have fresh per-sample predictions from all three immutable public Encoder checkpoints plus recovered LLM features, but neither the retained positional diagnostic nor the corrected ID-aligned replication reproduces the historical paper cells",
           "ct24_reproduction_command": "uv run scripts/reproduce_cikm2026_fusion_ct24.py",
           "ct24_full_precision_evidence": "results/fusion_ct24_reproduction_2026-08-21.json",
           "ct24_numerical_input": "reproducibility/source_artifacts/checkworthiness/fusion_classifier/",
-          "cross_benchmark_evidence_status": "checksum-bound historical aggregate extract; exact metric reproduction requires the original checkpoint bytes or corresponding prediction arrays",
-          "cross_benchmark_historical_extract": "reproducibility/source_artifacts/checkworthiness/fusion_classifier/HISTORICAL_RUN_EXTRACT.md",
-          "cross_benchmark_recovery_audit": "reproducibility/source_artifacts/checkworthiness/fusion_classifier/FUSION_RECOVERY_AUDIT.json"
+        "cross_benchmark_evidence_status": "fresh public-checkpoint predictions are checksum-bound and complete, while the exact historical paper-run vectors remain unavailable; fresh mismatches are reported rather than relabelled as historical reproduction",
+        "cross_benchmark_historical_extract": "reproducibility/source_artifacts/checkworthiness/fusion_classifier/HISTORICAL_RUN_EXTRACT.md",
+        "cross_benchmark_recovery_audit": "reproducibility/source_artifacts/checkworthiness/fusion_classifier/FUSION_RECOVERY_AUDIT.json",
+        "public_checkpoint_reproduction_command": "uv run scripts/reproduce_cikm2026_public_encoder_fusion.py --inference",
+        "public_checkpoint_evidence": "results/public_encoder_fusion_replication_2026-08-25/summary.json"
         }
       }
     },

@@ -29,7 +29,6 @@ import pyarrow as pa
 import pyarrow.compute as pc
 import pyarrow.parquet as pq
 
-
 CHECKPOINT_SHA256 = "5f61837bbeb2b513ca7c49ab5901a6a107dbe275200ac0396777ce375271f081"
 CHECKPOINT_SIZE_BYTES = 1_739_380_133
 PAPER_PDF_SHA256 = "4d82abd01d66de5e04d7107e8c4bb21d3b3d1a7148aa235e95b78b803df78b9c"
@@ -238,6 +237,11 @@ def verify_checksums(repo_root: Path) -> Check:
         "results/psr_latency_benchmark_2026-08-21.json",
         "results/mtl_threshold_calibration_audit_2026-08-21.json",
         "results/mtl_gpu_latency_audit_2026-08-21.json",
+        "reproducibility/source_artifacts/checkworthiness/ct24_labels/train_labels.parquet",
+        "reproducibility/source_artifacts/checkworthiness/ct24_labels/dev_labels.parquet",
+        "reproducibility/source_artifacts/checkworthiness/ct24_labels/test_labels.parquet",
+        "results/public_encoder_fusion_replication_2026-08-25/per_example_predictions.npz",
+        "results/public_encoder_fusion_replication_2026-08-25/summary.json",
     }
     absent_required = sorted(required_paths - manifest_paths)
     passed = not missing and not mismatched and not absent_required
@@ -273,6 +277,8 @@ def verify_code_checksums(repo_root: Path) -> Check:
         "scripts/reproduce_cikm2026_virality_statistics.py",
         "scripts/audit_cikm2026_release_coverage.py",
         "results/psr_statistics_20260518_205609/scripts/run_psr_statistics.py",
+        "scripts/reproduce_cikm2026_public_encoder_fusion.py",
+        "tests/test_cikm2026_checkworthiness_reproduction.py",
     }
     return Check(
         "Source and configuration checksums",
@@ -350,6 +356,17 @@ def verify_checkworthiness_checksums(repo_root: Path) -> Check:
         "results/mtl_gpu_latency_audit_2026-08-21.json",
         "reproducibility/source_artifacts/checkworthiness/encoder_only/HISTORICAL_RUN_EXTRACT.md",
         "reproducibility/source_artifacts/checkworthiness/fusion_classifier/HISTORICAL_RUN_EXTRACT.md",
+        "reproducibility/cikm2026/checkworthiness/PAPER_PROTOCOL.json",
+        "reproducibility/source_artifacts/checkworthiness/benchmark_llm_features/CB_groundtruth_llm_features.parquet",
+        "reproducibility/source_artifacts/checkworthiness/benchmark_llm_features/CT23_llm_features.parquet",
+        "reproducibility/source_artifacts/checkworthiness/ct24_llm_features_v4/train_llm_features.parquet",
+        "reproducibility/source_artifacts/checkworthiness/ct24_llm_features_v4/dev_llm_features.parquet",
+        "reproducibility/source_artifacts/checkworthiness/ct24_llm_features_v4/test_llm_features.parquet",
+        "reproducibility/source_artifacts/checkworthiness/ct24_labels/train_labels.parquet",
+        "reproducibility/source_artifacts/checkworthiness/ct24_labels/dev_labels.parquet",
+        "reproducibility/source_artifacts/checkworthiness/ct24_labels/test_labels.parquet",
+        "results/public_encoder_fusion_replication_2026-08-25/per_example_predictions.npz",
+        "results/public_encoder_fusion_replication_2026-08-25/summary.json",
     }
     return Check(
         "Check-worthiness artifact checksums",
@@ -2145,7 +2162,200 @@ def verify_llm_feature_reproduction(repo_root: Path) -> list[Check]:
             f"status={summary['status']}; partition={summary['feature_partition']}",
         )
     )
+    corrected = summary["corrected_sentence_id_replication"]
+    corrected_alignment = corrected["alignment_audit"]
+    corrected_expected = {
+        "CT24": {"fixed": 0.7012987012987013, "oracle": 0.7457627118644068},
+        "ClaimBuster": {
+            "fixed": 0.8274231678486997,
+            "oracle": 0.8865979381443299,
+        },
+        "CT23": {"fixed": 0.6086956521739131, "oracle": 0.7860696517412935},
+    }
+    corrected_values_match = all(
+        math.isclose(
+            float(corrected["results"][name]["fixed_source_development_threshold"]["f1"]),
+            expected["fixed"],
+            rel_tol=0.0,
+            abs_tol=1e-15,
+        )
+        and math.isclose(
+            float(corrected["results"][name]["evaluation_oracle_diagnostic"]["f1"]),
+            expected["oracle"],
+            rel_tol=0.0,
+            abs_tol=1e-15,
+        )
+        for name, expected in corrected_expected.items()
+    )
+    alignment_complete = (
+        set(corrected_alignment)
+        == {"CT24 train", "CT24 dev", "CT24 test", "ClaimBuster", "CT23"}
+        and all(
+            row["one_to_one_id_set_match"]
+            and row["rows"] == row["unique_sentence_ids"]
+            and row["source_feature_order_differed"]
+            for row in corrected_alignment.values()
+        )
+    )
+    checks.append(
+        Check(
+            "LLM-feature sentence-ID-aligned replication",
+            corrected["status"] == "COMPLETE"
+            and round(float(corrected["development_threshold"]), 2) == 0.70
+            and alignment_complete
+            and corrected_values_match,
+            "five complete one-to-one ID joins; corrected fixed and diagnostic "
+            f"values verified={corrected_values_match}",
+        )
+    )
     return checks
+
+
+def verify_public_encoder_fusion_replication(repo_root: Path) -> list[Check]:
+    """Verify the public-checkpoint predictions and ID-aligned Fusion audit."""
+    # CAMERA-READY ARTIFACT CHANGE | Author: Sérgio Pinto | Timestamp:
+    # 2026-08-25 14:18 WEST | Reason: bind direct public-model inference and
+    # corrected cross-benchmark joins without treating a fresh mismatch as the
+    # historical paper run.
+    result_root = repo_root / "results/public_encoder_fusion_replication_2026-08-25"
+    summary = load_json(result_root / "summary.json")
+    protocol = load_json(
+        repo_root / "reproducibility/cikm2026/checkworthiness/PAPER_PROTOCOL.json"
+    )
+    prediction_path = repo_root / summary["prediction_bundle"]["path"]
+    with np.load(prediction_path, allow_pickle=False) as bundle:
+        arrays = {name: bundle[name] for name in bundle.files}
+
+    required_keys = {
+        "claimbuster_sentence_ids",
+        "claimbuster_labels",
+        "ct23_sentence_ids",
+        "ct23_labels",
+        *{
+            f"{benchmark}_seed_{seed}_probabilities"
+            for benchmark in ("claimbuster", "ct23")
+            for seed in (0, 42, 456)
+        },
+        *{
+            f"{benchmark}_{component}_probabilities"
+            for benchmark in ("claimbuster", "ct23")
+            for component in (
+                "historical_xgboost",
+                "corrected_xgboost",
+                "historical_fusion",
+                "corrected_fusion",
+            )
+        },
+    }
+    expected_rows = {"claimbuster": 1_032, "ct23": 318}
+    arrays_complete = required_keys.issubset(arrays) and all(
+        arrays[name].shape == (expected_rows[name.split("_")[0]],)
+        for name in required_keys
+    )
+    forbidden_fragments = ("text", "user", "post", "tweet", "profile", "location")
+    boundary_safe = not any(
+        fragment in name.lower()
+        for name in arrays
+        for fragment in forbidden_fragments
+    )
+    identity_verified = all(
+        model["model_sha256"] == model["observed_model_sha256"]
+        and model["model_bytes"] == model["observed_model_bytes"]
+        and len(model["revision"]) == 40
+        for model in summary["model_specs"].values()
+    )
+
+    metric_checks: list[bool] = []
+    for seed, benchmark_rows in summary["individual_public_encoder_models"].items():
+        for benchmark_name, record in benchmark_rows.items():
+            key = benchmark_name.lower()
+            labels = arrays[f"{key}_labels"]
+            probabilities = arrays[f"{key}_seed_{seed}_probabilities"]
+            for result_name in ("fixed_threshold", "evaluation_oracle_diagnostic"):
+                metric = record[result_name]
+                metric_checks.append(
+                    math.isclose(
+                        binary_f1(labels, probabilities, float(metric["threshold"])),
+                        float(metric["f1"]),
+                        rel_tol=0.0,
+                        abs_tol=1e-15,
+                    )
+                )
+
+    fusion_keys = {
+        "historical_positional_two_seed": "historical_fusion",
+        "corrected_id_aligned_three_seed": "corrected_fusion",
+    }
+    for result_name, array_component in fusion_keys.items():
+        for benchmark_name, record in summary["fusion"][result_name].items():
+            key = benchmark_name.lower()
+            labels = arrays[f"{key}_labels"]
+            probabilities = arrays[f"{key}_{array_component}_probabilities"]
+            for metric_name in ("fixed_threshold", "evaluation_oracle_diagnostic"):
+                metric = record[metric_name]
+                metric_checks.append(
+                    math.isclose(
+                        binary_f1(labels, probabilities, float(metric["threshold"])),
+                        float(metric["f1"]),
+                        rel_tol=0.0,
+                        abs_tol=1e-15,
+                    )
+                )
+
+    alignment = summary["sentence_id_alignment_audit"]
+    alignment_verified = (
+        set(alignment) == {"CT24 train", "CT24 dev", "ClaimBuster", "CT23"}
+        and all(
+            row["one_to_one_id_set_match"]
+            and row["rows"] == row["unique_sentence_ids"]
+            and row["source_feature_order_differed"]
+            for row in alignment.values()
+        )
+    )
+    paper_flags_truthful = (
+        summary["individual_public_encoder_models"]["0"]["CT23"][
+            "fixed_threshold_matches_paper_after_rounding"
+        ]
+        is True
+        and summary["individual_public_encoder_models"]["0"]["ClaimBuster"][
+            "oracle_matches_paper_after_rounding"
+        ]
+        is False
+        and all(
+            row["fixed_threshold_matches_paper_after_rounding"] is False
+            and row["oracle_matches_paper_after_rounding"] is False
+            for path in summary["fusion"].values()
+            for row in path.values()
+        )
+        and protocol["paper_reported_values"]["table_5"]["Encoder Only"][
+            "ClaimBuster"
+        ]
+        == 0.970
+    )
+
+    return [
+        Check(
+            "Public Encoder/Fusion prediction bundle",
+            arrays_complete
+            and boundary_safe
+            and sha256_file(prediction_path)
+            == summary["prediction_bundle"]["sha256"],
+            f"arrays={len(arrays)}; required complete={arrays_complete}; "
+            f"data boundary safe={boundary_safe}",
+        ),
+        Check(
+            "Public Encoder checkpoint identity",
+            identity_verified,
+            "three immutable revisions verified by observed model byte size and SHA-256",
+        ),
+        Check(
+            "Public Encoder/Fusion metric integrity",
+            all(metric_checks) and alignment_verified and paper_flags_truthful,
+            f"metric records checked={len(metric_checks)}; "
+            f"ID alignment verified={alignment_verified}; "
+            f"paper-match flags truthful={paper_flags_truthful}",
+        ),
+    ]
 
 
 def verify_encoder_only_reproduction(repo_root: Path) -> list[Check]:
@@ -2299,6 +2509,9 @@ def verify_fusion_ct24_reproduction(repo_root: Path) -> list[Check]:
     # CAMERA-READY ARTIFACT CHANGE | Author: Sérgio Pinto | Timestamp:
     # 2026-08-21 19:45 PDT | Reason: bind the supported CT24 Fusion cell to its
     # retained numeric components without treating later checkpoints as paper evidence.
+    # CAMERA-READY ARTIFACT UPDATE | Author: Sérgio Pinto | Timestamp:
+    # 2026-08-25 14:24 WEST | Reason: verify the new public-checkpoint evidence
+    # while preserving the missing exact historical cross-benchmark boundary.
     bundle_root = (
         repo_root
         / "reproducibility/source_artifacts/checkworthiness/fusion_classifier"
@@ -2351,8 +2564,13 @@ def verify_fusion_ct24_reproduction(repo_root: Path) -> list[Check]:
             fusion_row["ct24_reproduction_command"]
             == "uv run scripts/reproduce_cikm2026_fusion_ct24.py"
             and fusion_row["cross_benchmark_evidence_status"].startswith(
-                "checksum-bound historical aggregate extract"
+                "fresh public-checkpoint predictions"
             )
+            and fusion_row["public_checkpoint_reproduction_command"]
+            == "uv run scripts/reproduce_cikm2026_public_encoder_fusion.py --inference"
+            and (
+                repo_root / fusion_row["public_checkpoint_evidence"]
+            ).is_file()
             and fusion_row["cross_benchmark_historical_extract"]
             == "reproducibility/source_artifacts/checkworthiness/fusion_classifier/HISTORICAL_RUN_EXTRACT.md"
             and recovery_audit["historical_run"]["console_metrics"]["ClaimBuster"][
@@ -2644,6 +2862,10 @@ def main() -> int:
         *run_check_group(
             "LLM-feature table verification",
             lambda: verify_llm_feature_reproduction(repo_root),
+        ),
+        *run_check_group(
+            "Public Encoder/Fusion verification",
+            lambda: verify_public_encoder_fusion_replication(repo_root),
         ),
         *run_check_group(
             "Fusion CT24 verification",

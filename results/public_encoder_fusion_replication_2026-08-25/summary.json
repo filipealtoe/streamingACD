@@ -1,0 +1,481 @@
+{
+  "change_note": "S\u00e9rgio Pinto, 2026-08-25 13:41 WEST \u2014 ran immutable public Encoder Only checkpoints and separated historical positional Fusion evidence from the corrected sentence-ID-aligned replication.",
+  "evaluation_policy": {
+    "corrected_join": "one-to-one benchmark sentence-ID alignment",
+    "evaluation_oracle_diagnostic": "maximum F1 over the evaluated labels; retained only for historical comparison and never treated as held-out reproduction",
+    "fixed_threshold_results": "direct evaluations at a threshold fixed independently of the evaluated labels",
+    "historical_join": "row-position behavior retained only as a diagnostic of the original cross-benchmark pipeline"
+  },
+  "fusion": {
+    "corrected_id_aligned_three_seed": {
+      "CT23": {
+        "evaluation_oracle_diagnostic": {
+          "accuracy": 0.9182389937106918,
+          "f1": 0.8761904761904762,
+          "false_negative": 16,
+          "false_positive": 10,
+          "precision": 0.9019607843137255,
+          "recall": 0.8518518518518519,
+          "threshold": 0.45,
+          "true_negative": 200,
+          "true_positive": 92
+        },
+        "fixed_threshold": {
+          "accuracy": 0.9119496855345912,
+          "f1": 0.8613861386138614,
+          "false_negative": 21,
+          "false_positive": 7,
+          "precision": 0.925531914893617,
+          "recall": 0.8055555555555556,
+          "threshold": 0.5,
+          "true_negative": 203,
+          "true_positive": 87
+        },
+        "fixed_threshold_matches_paper_after_rounding": false,
+        "oracle_matches_paper_after_rounding": false,
+        "paper_f1": 0.915
+      },
+      "ClaimBuster": {
+        "evaluation_oracle_diagnostic": {
+          "accuracy": 0.9748062015503876,
+          "f1": 0.9451476793248945,
+          "false_negative": 14,
+          "false_positive": 12,
+          "precision": 0.9491525423728814,
+          "recall": 0.9411764705882353,
+          "threshold": 0.55,
+          "true_negative": 782,
+          "true_positive": 224
+        },
+        "fixed_threshold": {
+          "accuracy": 0.9728682170542635,
+          "f1": 0.941908713692946,
+          "false_negative": 11,
+          "false_positive": 17,
+          "precision": 0.930327868852459,
+          "recall": 0.9537815126050421,
+          "threshold": 0.5,
+          "true_negative": 777,
+          "true_positive": 227
+        },
+        "fixed_threshold_matches_paper_after_rounding": false,
+        "oracle_matches_paper_after_rounding": false,
+        "paper_f1": 0.961
+      }
+    },
+    "historical_positional_two_seed": {
+      "CT23": {
+        "evaluation_oracle_diagnostic": {
+          "accuracy": 0.9371069182389937,
+          "f1": 0.9056603773584906,
+          "false_negative": 12,
+          "false_positive": 8,
+          "precision": 0.9230769230769231,
+          "recall": 0.8888888888888888,
+          "threshold": 0.45,
+          "true_negative": 202,
+          "true_positive": 96
+        },
+        "fixed_threshold": {
+          "accuracy": 0.9371069182389937,
+          "f1": 0.9,
+          "false_negative": 18,
+          "false_positive": 2,
+          "precision": 0.9782608695652174,
+          "recall": 0.8333333333333334,
+          "threshold": 0.5,
+          "true_negative": 208,
+          "true_positive": 90
+        },
+        "fixed_threshold_matches_paper_after_rounding": false,
+        "oracle_matches_paper_after_rounding": false,
+        "paper_f1": 0.915
+      },
+      "ClaimBuster": {
+        "evaluation_oracle_diagnostic": {
+          "accuracy": 0.9796511627906976,
+          "f1": 0.9561586638830898,
+          "false_negative": 9,
+          "false_positive": 12,
+          "precision": 0.950207468879668,
+          "recall": 0.9621848739495799,
+          "threshold": 0.5,
+          "true_negative": 782,
+          "true_positive": 229
+        },
+        "fixed_threshold": {
+          "accuracy": 0.9777131782945736,
+          "f1": 0.9511677282377919,
+          "false_negative": 14,
+          "false_positive": 9,
+          "precision": 0.9613733905579399,
+          "recall": 0.9411764705882353,
+          "threshold": 0.55,
+          "true_negative": 785,
+          "true_positive": 224
+        },
+        "fixed_threshold_matches_paper_after_rounding": false,
+        "oracle_matches_paper_after_rounding": false,
+        "paper_f1": 0.961
+      }
+    }
+  },
+  "individual_public_encoder_models": {
+    "0": {
+      "CT23": {
+        "evaluation_oracle_diagnostic": {
+          "accuracy": 0.9528301886792453,
+          "f1": 0.927536231884058,
+          "false_negative": 12,
+          "false_positive": 3,
+          "precision": 0.9696969696969697,
+          "recall": 0.8888888888888888,
+          "threshold": 0.5,
+          "true_negative": 207,
+          "true_positive": 96
+        },
+        "fixed_threshold": {
+          "accuracy": 0.9528301886792453,
+          "f1": 0.927536231884058,
+          "false_negative": 12,
+          "false_positive": 3,
+          "precision": 0.9696969696969697,
+          "recall": 0.8888888888888888,
+          "threshold": 0.5,
+          "true_negative": 207,
+          "true_positive": 96
+        },
+        "fixed_threshold_matches_paper_after_rounding": true,
+        "oracle_matches_paper_after_rounding": true,
+        "paper_f1": 0.928
+      },
+      "ClaimBuster": {
+        "evaluation_oracle_diagnostic": {
+          "accuracy": 0.9844961240310077,
+          "f1": 0.966804979253112,
+          "false_negative": 5,
+          "false_positive": 11,
+          "precision": 0.9549180327868853,
+          "recall": 0.9789915966386554,
+          "threshold": 0.55,
+          "true_negative": 783,
+          "true_positive": 233
+        },
+        "fixed_threshold": {
+          "accuracy": 0.9825581395348837,
+          "f1": 0.963265306122449,
+          "false_negative": 2,
+          "false_positive": 16,
+          "precision": 0.9365079365079365,
+          "recall": 0.9915966386554622,
+          "threshold": 0.5,
+          "true_negative": 778,
+          "true_positive": 236
+        },
+        "fixed_threshold_matches_paper_after_rounding": false,
+        "oracle_matches_paper_after_rounding": false,
+        "paper_f1": 0.97
+      }
+    },
+    "42": {
+      "CT23": {
+        "evaluation_oracle_diagnostic": {
+          "accuracy": 0.9528301886792453,
+          "f1": 0.9289099526066351,
+          "false_negative": 10,
+          "false_positive": 5,
+          "precision": 0.9514563106796117,
+          "recall": 0.9074074074074074,
+          "threshold": 0.45,
+          "true_negative": 205,
+          "true_positive": 98
+        },
+        "fixed_threshold": {
+          "accuracy": 0.9528301886792453,
+          "f1": 0.927536231884058,
+          "false_negative": 12,
+          "false_positive": 3,
+          "precision": 0.9696969696969697,
+          "recall": 0.8888888888888888,
+          "threshold": 0.5,
+          "true_negative": 207,
+          "true_positive": 96
+        },
+        "fixed_threshold_matches_paper_after_rounding": null,
+        "oracle_matches_paper_after_rounding": null,
+        "paper_f1": null
+      },
+      "ClaimBuster": {
+        "evaluation_oracle_diagnostic": {
+          "accuracy": 0.9854651162790697,
+          "f1": 0.9682875264270613,
+          "false_negative": 9,
+          "false_positive": 6,
+          "precision": 0.9744680851063829,
+          "recall": 0.9621848739495799,
+          "threshold": 0.6,
+          "true_negative": 788,
+          "true_positive": 229
+        },
+        "fixed_threshold": {
+          "accuracy": 0.9835271317829457,
+          "f1": 0.9649484536082474,
+          "false_negative": 4,
+          "false_positive": 13,
+          "precision": 0.9473684210526315,
+          "recall": 0.9831932773109243,
+          "threshold": 0.5,
+          "true_negative": 781,
+          "true_positive": 234
+        },
+        "fixed_threshold_matches_paper_after_rounding": null,
+        "oracle_matches_paper_after_rounding": null,
+        "paper_f1": null
+      }
+    },
+    "456": {
+      "CT23": {
+        "evaluation_oracle_diagnostic": {
+          "accuracy": 0.949685534591195,
+          "f1": 0.9245283018867925,
+          "false_negative": 10,
+          "false_positive": 6,
+          "precision": 0.9423076923076923,
+          "recall": 0.9074074074074074,
+          "threshold": 0.4,
+          "true_negative": 204,
+          "true_positive": 98
+        },
+        "fixed_threshold": {
+          "accuracy": 0.940251572327044,
+          "f1": 0.9045226130653267,
+          "false_negative": 18,
+          "false_positive": 1,
+          "precision": 0.989010989010989,
+          "recall": 0.8333333333333334,
+          "threshold": 0.5,
+          "true_negative": 209,
+          "true_positive": 90
+        },
+        "fixed_threshold_matches_paper_after_rounding": null,
+        "oracle_matches_paper_after_rounding": null,
+        "paper_f1": null
+      },
+      "ClaimBuster": {
+        "evaluation_oracle_diagnostic": {
+          "accuracy": 0.9844961240310077,
+          "f1": 0.9659574468085106,
+          "false_negative": 11,
+          "false_positive": 5,
+          "precision": 0.978448275862069,
+          "recall": 0.9537815126050421,
+          "threshold": 0.55,
+          "true_negative": 789,
+          "true_positive": 227
+        },
+        "fixed_threshold": {
+          "accuracy": 0.9835271317829457,
+          "f1": 0.9646569646569647,
+          "false_negative": 6,
+          "false_positive": 11,
+          "precision": 0.9547325102880658,
+          "recall": 0.9747899159663865,
+          "threshold": 0.5,
+          "true_negative": 783,
+          "true_positive": 232
+        },
+        "fixed_threshold_matches_paper_after_rounding": null,
+        "oracle_matches_paper_after_rounding": null,
+        "paper_f1": null
+      }
+    }
+  },
+  "input_sha256": {
+    "benchmark_llm_features/CB_groundtruth_llm_features.parquet": "a26ac74990d876fe91e8cd9e34fe24134969a2c4bb997079b922d7cfc99e0a7a",
+    "benchmark_llm_features/CT23_llm_features.parquet": "7db1dcdc780a0991b09af84288e1abc8d907ad1c1e57358953757fc86c7a53d6",
+    "benchmarks/claim_buster/groundtruth.csv": "64890c51e1092fec0d361ca770b3efccc0c889dd569b46b35922d94c44fa99ea",
+    "benchmarks/ct23/CT23_1B_checkworthy_english_test.tsv": "cca096dbc4417ca42c25dd4011299de140d577d75d46ccb204c7c3ee27c452bf",
+    "benchmarks/ct23/CT23_1B_checkworthy_english_test_gold.tsv": "bb7211548c0c1a619f7283d66a0ccc12eaf115a8124046c5ccc5e13cd9eb8f6c",
+    "ct24_labels/dev_labels.parquet": "2c31452d08fd3fa447f633c9eb4bbc072486b783a060d90b1a9d514796f17099",
+    "ct24_labels/test_labels.parquet": "2831afeb6cc08d2942ae02ee50afdac2368aadba41fbabf8fd069a117408ae57",
+    "ct24_labels/train_labels.parquet": "9c29a60b17f14c7e171bffe8eeab46fc763f09e0ff70d0e2186b209b2ae53868",
+    "ct24_llm_features_v4/dev_llm_features.parquet": "00d0ce6698dd9d7dc3a50f56f7c644abe22e4c9b3c6f10d97ed7ececfeb05af7",
+    "ct24_llm_features_v4/test_llm_features.parquet": "60252ee38453d14a43b076fe8fa50e998a9dafebdb1d51f7e81d92470a9d0e1c",
+    "ct24_llm_features_v4/train_llm_features.parquet": "ec15929b5eb6d509d32d6b32b38e0d765bbfa15609a617b4f4a085741886f218",
+    "llm_features_classifier/matrices.npz": "de2c3e47534a0bfe81a4855bf5989ad2efaa434f20229220843080ba2862fa6e"
+  },
+  "llm_xgboost_components": {
+    "corrected_id_aligned": {
+      "CT23": {
+        "evaluation_oracle_diagnostic": {
+          "accuracy": 0.839622641509434,
+          "f1": 0.775330396475771,
+          "false_negative": 20,
+          "false_positive": 31,
+          "precision": 0.7394957983193278,
+          "recall": 0.8148148148148148,
+          "threshold": 0.35,
+          "true_negative": 179,
+          "true_positive": 88
+        },
+        "fixed_threshold": {
+          "accuracy": 0.8333333333333334,
+          "f1": 0.7389162561576355,
+          "false_negative": 33,
+          "false_positive": 20,
+          "precision": 0.7894736842105263,
+          "recall": 0.6944444444444444,
+          "threshold": 0.5,
+          "true_negative": 190,
+          "true_positive": 75
+        },
+        "fixed_threshold_matches_paper_after_rounding": null,
+        "oracle_matches_paper_after_rounding": null,
+        "paper_f1": null
+      },
+      "ClaimBuster": {
+        "evaluation_oracle_diagnostic": {
+          "accuracy": 0.9418604651162791,
+          "f1": 0.871244635193133,
+          "false_negative": 35,
+          "false_positive": 25,
+          "precision": 0.8903508771929824,
+          "recall": 0.8529411764705882,
+          "threshold": 0.65,
+          "true_negative": 769,
+          "true_positive": 203
+        },
+        "fixed_threshold": {
+          "accuracy": 0.936046511627907,
+          "f1": 0.8663967611336032,
+          "false_negative": 24,
+          "false_positive": 42,
+          "precision": 0.8359375,
+          "recall": 0.8991596638655462,
+          "threshold": 0.5,
+          "true_negative": 752,
+          "true_positive": 214
+        },
+        "fixed_threshold_matches_paper_after_rounding": null,
+        "oracle_matches_paper_after_rounding": null,
+        "paper_f1": null
+      }
+    },
+    "historical_positional": {
+      "CT23": {
+        "evaluation_oracle_diagnostic": {
+          "accuracy": 0.3742138364779874,
+          "f1": 0.5110565110565111,
+          "false_negative": 4,
+          "false_positive": 195,
+          "precision": 0.34782608695652173,
+          "recall": 0.9629629629629629,
+          "threshold": 0.3,
+          "true_negative": 15,
+          "true_positive": 104
+        },
+        "fixed_threshold": {
+          "accuracy": 0.5880503144654088,
+          "f1": 0.4018264840182648,
+          "false_negative": 64,
+          "false_positive": 67,
+          "precision": 0.3963963963963964,
+          "recall": 0.4074074074074074,
+          "threshold": 0.5,
+          "true_negative": 143,
+          "true_positive": 44
+        },
+        "fixed_threshold_matches_paper_after_rounding": null,
+        "oracle_matches_paper_after_rounding": null,
+        "paper_f1": null
+      },
+      "ClaimBuster": {
+        "evaluation_oracle_diagnostic": {
+          "accuracy": 0.7412790697674418,
+          "f1": 0.4835589941972921,
+          "false_negative": 113,
+          "false_positive": 154,
+          "precision": 0.44802867383512546,
+          "recall": 0.5252100840336135,
+          "threshold": 0.55,
+          "true_negative": 640,
+          "true_positive": 125
+        },
+        "fixed_threshold": {
+          "accuracy": 0.7093023255813954,
+          "f1": 0.46619217081850534,
+          "false_negative": 107,
+          "false_positive": 193,
+          "precision": 0.404320987654321,
+          "recall": 0.5504201680672269,
+          "threshold": 0.5,
+          "true_negative": 601,
+          "true_positive": 131
+        },
+        "fixed_threshold_matches_paper_after_rounding": null,
+        "oracle_matches_paper_after_rounding": null,
+        "paper_f1": null
+      }
+    }
+  },
+  "model_specs": {
+    "0": {
+      "model_bytes": 1740304440,
+      "model_sha256": "9c4c555ce0e839b109d7ca2d9df69b8b5b86fe63be2a493fe1ecb1cfa467440b",
+      "observed_model_bytes": 1740304440,
+      "observed_model_sha256": "9c4c555ce0e839b109d7ca2d9df69b8b5b86fe63be2a493fe1ecb1cfa467440b",
+      "repository": "sergiopinto/deberta-v3-large-claim-checkworthiness-seed0",
+      "revision": "a7e8f07153c72c853ce39bb4c03b4bc817c1e39c"
+    },
+    "42": {
+      "model_bytes": 1740304440,
+      "model_sha256": "74ef9ea94b3345ecf87b84e65b07ff390f8cf9d20f6defb67d7ec9a1f278b7c0",
+      "observed_model_bytes": 1740304440,
+      "observed_model_sha256": "74ef9ea94b3345ecf87b84e65b07ff390f8cf9d20f6defb67d7ec9a1f278b7c0",
+      "repository": "sergiopinto/deberta-v3-large-claim-checkworthiness-seed42",
+      "revision": "972bbd2a25acbe26c46358f11c55c42cfafa0090"
+    },
+    "456": {
+      "model_bytes": 1740304440,
+      "model_sha256": "6c76e81fd86773e516fd3d26e0d243c49c68bd88ae331bd060b41cde26fbd517",
+      "observed_model_bytes": 1740304440,
+      "observed_model_sha256": "6c76e81fd86773e516fd3d26e0d243c49c68bd88ae331bd060b41cde26fbd517",
+      "repository": "sergiopinto/deberta-v3-large-claim-checkworthiness-seed456",
+      "revision": "eda7cc7a98577ab52dab370642ca9a9ecd33acfc"
+    }
+  },
+  "paper_values_are_immutable_targets": true,
+  "prediction_bundle": {
+    "contains_source_text": false,
+    "contains_user_or_post_identifiers": false,
+    "path": "results/public_encoder_fusion_replication_2026-08-25/per_example_predictions.npz",
+    "sha256": "2e26ac2b270c366105fd44d49440d20440278497232c26073587d78c736b8887"
+  },
+  "sentence_id_alignment_audit": {
+    "CT23": {
+      "one_to_one_id_set_match": true,
+      "rows": 318,
+      "source_feature_order_differed": true,
+      "unique_sentence_ids": 318
+    },
+    "CT24 dev": {
+      "one_to_one_id_set_match": true,
+      "rows": 1031,
+      "source_feature_order_differed": true,
+      "unique_sentence_ids": 1031
+    },
+    "CT24 train": {
+      "one_to_one_id_set_match": true,
+      "rows": 22402,
+      "source_feature_order_differed": true,
+      "unique_sentence_ids": 22402
+    },
+    "ClaimBuster": {
+      "one_to_one_id_set_match": true,
+      "rows": 1032,
+      "source_feature_order_differed": true,
+      "unique_sentence_ids": 1032
+    }
+  },
+  "status": "fresh public-checkpoint replication complete"
+}
