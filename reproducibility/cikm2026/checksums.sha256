@@ -24,3 +24,5 @@ e30bbf6c47936e14f153ad40df8d36ecb174e0d44d1cd4815f2e6c1126371aa1  psr/explainabl
 61811e74b6732fdff04756793bd44106ef8af631a71a0472fa2a0f8bcecfcc82  results/virality_tabular_fresh_fit_2026-08-25.json
 # Sérgio Pinto, 2026-08-25 21:56 WEST — binds the complete version-pinned RandomForest paper-cell reconstruction.
 1e5c6217901b1d7dc956a97e61dafd67bf11b37c4c231e38c209d16d06cb2a21  results/virality_random_forest_reproduction_2026-08-25/checksums.sha256
+# Sérgio Pinto, 2026-08-28 03:38 WEST — binds the fresh A10 ClaimBuster Encoder Only and Fusion paper-cell reproduction.
+16edac7aa71d62aa02804db2b53f9a33922bc17d9170ef0bba92ffc86f096f6f  results/claimbuster_encoder_fusion_reproduction_2026-08-28/checksums.sha256

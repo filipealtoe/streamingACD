@@ -86,6 +86,7 @@ def test_public_manifest_contains_verified_sections_only() -> None:
     assert manifest["virality_prediction"]["status"] == "PASS"
     assert manifest["claim_checkworthiness"]["fusion"]["cells"] == {
         "CT24": 0.836,
+        "ClaimBuster": 0.961,
         "CT23": 0.915,
     }
     assert set(manifest["virality_prediction"]["complete_rows"]) == {
@@ -121,6 +122,24 @@ def test_ct23_fusion_dependency_and_result_are_public() -> None:
         result["metrics"]["false_negative"],
         result["metrics"]["true_positive"],
     ) == (203, 7, 11, 97)
+
+
+def test_claimbuster_encoder_and_fusion_results_are_public() -> None:
+    # Sérgio Pinto, 2026-08-28 03:38 WEST — protect the fresh A10 ClaimBuster
+    # paper-cell outputs and their full-precision metrics.
+    manifest = load_json(CIKM / "PAPER_VALUE_MANIFEST.json")[
+        "claim_checkworthiness"
+    ]
+    result = load_json(ROOT / manifest["fusion"]["results"]["ClaimBuster"])
+    assert result["status"] == "PASS"
+    assert result["dataset"] == "ClaimBuster"
+    assert round(result["metrics"]["encoder_only"]["f1"], 3) == 0.970
+    assert round(result["metrics"]["fusion"]["f1"], 3) == 0.961
+    assert result["metrics"]["encoder_only"]["threshold"] == 0.65
+    assert result["metrics"]["fusion"]["threshold"] == 0.60
+    assert result["encoder_run"]["model_sha256"] == (
+        "3765638fb1f60a87741fdd6c576faeece8be1cb520d074d08e7e2abe8c3feb0f"
+    )
 
 
 def test_random_forest_paper_cells_are_checksum_bound_and_reconstructed() -> None:

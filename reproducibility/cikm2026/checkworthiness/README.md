@@ -1,6 +1,6 @@
 # CIKM 2026 claim check-worthiness reproduction
 
-<!-- Sérgio Pinto, 2026-08-28 01:11 WEST — added the retained CT23 Fusion result and the checksum-bound A10 rerun entrypoint. -->
+<!-- Sérgio Pinto, 2026-08-28 03:38 WEST — linked the fresh A10 ClaimBuster Encoder Only and Fusion reproduction to the public artifact entrypoint. -->
 
 The accepted paper's task and reported values are recorded in
 [`PAPER_PROTOCOL.json`](PAPER_PROTOCOL.json). The public package includes:
@@ -17,9 +17,16 @@ Run the verified numerical paths with:
 uv run scripts/reproduce_cikm2026_mtl_table.py
 uv run scripts/reproduce_cikm2026_llm_features.py
 uv run scripts/reproduce_cikm2026_fusion_ct24.py
+uv run scripts/run_cikm2026_checkworthiness_lambda.py verify-retained-claimbuster
 uv run scripts/run_cikm2026_checkworthiness_lambda.py verify-retained-ct23
 uv run --no-project scripts/verify_cikm2026_artifacts.py
 ```
+
+The ClaimBuster command verifies the fresh A10 seed-42 vector against the
+public benchmark order, reconstructs the four-confidence XGBoost component,
+and reproduces Encoder Only F1 `0.970085` and Fusion F1 `0.961373`. It writes
+the full-precision metrics and text-free per-example predictions to
+`results/claimbuster_encoder_fusion_reproduction_2026-08-28/`.
 
 The CT23 command reconstructs F1 `0.915094` from the two retained encoder
 probability vectors and the nine-feature XGBoost input, and writes the
