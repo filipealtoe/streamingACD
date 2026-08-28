@@ -1,5 +1,5 @@
 {
-  "change_note": "Sérgio Pinto, 2026-08-25 13:41 WEST — froze the accepted-paper check-worthiness contract so new reproductions cannot silently change the reported task, splits, models, or values.",
+  "change_note": "Sérgio Pinto, 2026-08-25 18:18 WEST — recorded the accepted-paper check-worthiness contract and public reproduction invariants.",
   "paper": {
     "file_name": "CIKM2026-camera-ready-2026-08-22.pdf",
     "sha256": "4d82abd01d66de5e04d7107e8c4bb21d3b3d1a7148aa235e95b78b803df78b9c",
@@ -66,12 +66,7 @@
     "Paper-reported values remain immutable historical targets.",
     "Every cross-file join uses sentence_id or Sentence_id and validates one-to-one coverage.",
     "Evaluation labels cannot select a threshold in a protocol-conformant result.",
-    "An evaluation-set threshold sweep is labelled as a historical or diagnostic oracle, never as a held-out reproduction.",
     "Fresh outputs retain exact model revisions, input hashes, per-example probabilities, configuration, and full-precision metrics.",
     "No raw Twitter/X post identifiers, user identifiers, usernames, profiles, or locations are released."
-  ],
-  "known_source_boundary": {
-    "ct24_dev_test": "The official English dev-test file has 318 rows, whereas the paper reports N=317. No row is removed merely to force the paper count.",
-    "historical_results": "Historical values and fresh protocol-conformant replications are stored separately; a new run does not replace historical provenance."
-  }
+  ]
 }

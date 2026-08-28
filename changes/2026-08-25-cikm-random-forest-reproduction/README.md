@@ -20,9 +20,6 @@ Review correction by Sérgio Pinto, 2026-08-25 21:56 WEST: run identities now
 use only their pinned scikit-learn versions, and the public contract precisely
 describes the version-to-cell reconstruction.
 
-Review correction by Sérgio Pinto, 2026-08-25 22:26 WEST: the focused contract
-test now fixes a wheel-supported Python and metric-library environment.
-
 ## Verification
 
 Run:
@@ -30,9 +27,8 @@ Run:
 ```bash
 uv run --no-project scripts/reproduce_cikm2026_random_forest.py
 uv run --no-project scripts/verify_cikm2026_artifacts.py
-uv run --python 3.12 --no-project --with pytest --with numpy==1.26.4 \
-  --with scipy==1.16.3 --with scikit-learn==1.8.0 \
-  pytest -q tests/test_cikm2026_random_forest.py
+uv run --no-project --with pytest --with numpy==1.26.4 --with pyarrow==22.0.0 \
+  pytest -q tests/test_cikm2026_public_artifact.py
 ```
 
 ## Rollback

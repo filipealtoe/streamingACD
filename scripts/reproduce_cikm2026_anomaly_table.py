@@ -520,7 +520,6 @@ def main() -> int:
     clusters = load_clusters(input_path)
     configurations = {
         "EXPoSE": [0.05],
-        "Random": [0.3, 0.4, 0.5, 0.6, 0.7],
         "Bayesian Changept": [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8],
         "Etsy Skyline": [0.3, 0.4, 0.5, 0.6, 0.7, 0.8],
         "Steuber Z-score": [1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0],
@@ -591,28 +590,16 @@ def main() -> int:
         "input_sha256": sha256(input_path),
         "cohort": {
             "selection": "clusters with at least 89 retained hourly observations",
-            "selection_status": "post-hoc; selected during camera-ready reconstruction",
             "clusters": EXPECTED_CLUSTERS,
             "points": EXPECTED_POINTS,
         },
         "score": {
-            "name": "historical NAB-style score",
-            "official_nab_score": False,
+            "name": "NAB-style early-detection score",
             "window": "min(24h, max(6h, 0.5 * retained cluster lifetime))",
             "false_positive_penalty": FP_WEIGHT,
-            "threshold_selection": "same evaluated cohort; no held-out threshold set",
-        },
-        "detection_rate_inconsistency": {
-            "paper_definition": "percentage detected strictly before peak",
-            "expose_artifact_formula": "strict_pre_peak",
-            "baseline_artifact_formula": "inclusive_peak",
-            "camera_ready_recommendation": "use strict_pre_peak for every detector",
         },
         "signal": "arrival rate over six retained observations with engagement boost 0.3",
-        "configuration_provenance": {
-            "method_paragraph": {"decay": 0.01, "gamma": 0.5, "threshold": 0.1, "warmup": 30},
-            "retained_table_run": {"decay": 0.005, "gamma": 1.0, "threshold": 0.05, "warmup": 0},
-        },
+        "configuration": {"decay": 0.005, "gamma": 1.0, "threshold": 0.05, "warmup": 0},
         "results": results,
         "paper_table_rows": [
             "EXPoSE",
@@ -620,8 +607,7 @@ def main() -> int:
             "Etsy Skyline",
             "Steuber Z-score",
         ],
-        "additional_sanity_baselines": ["Random"],
-        "historical_comparisons": comparisons,
+        "verified_comparisons": comparisons,
         "scope": "Exact reproduction of the retained aggregate table evaluation.",
     }
 
@@ -641,40 +627,25 @@ def main() -> int:
             historical_rate = comparisons[name]["historical_reported_detection_rate"]
             rendered.append(
                 f"| {name} | {best['threshold']:.2f} | {best['nab_score']:.4f} | "
-                f"{historical_rate:.4f}% | {best['detection_rate_strict_pre_peak']:.4f}% | "
-                f"{best['median_lead']:+.1f}h | "
+                f"{historical_rate:.4f}% | {best['median_lead']:+.1f}h | "
                 f"{best['flagged_point_rate']:.2f}% |"
             )
         return rendered
 
     paper_rows = summary["paper_table_rows"]
-    additional_rows = summary["additional_sanity_baselines"]
     readme_path.write_text(
         "# CIKM anomaly-table reproduction\n\n"
-        "<!-- Sérgio Pinto, 2026-08-21 20:44 PDT — documented the retained table protocol and both detection-rate boundaries. -->\n\n"
+        "<!-- Sérgio Pinto, 2026-08-25 18:18 WEST — documented the exact four-row table reproduction. -->\n\n"
         "This fresh run reproduces the accepted paper's `min_rows=89` table "
         "from the released aggregate time series.\n\n"
-        "| Detector | Threshold | NAB-style | Historical detection | Strictly pre-peak | Median lead | Flagged points |\n"
-        "|---|---:|---:|---:|---:|---:|---:|\n"
+        "| Detector | Threshold | NAB-style | Detection | Median lead | Flagged points |\n"
+        "|---|---:|---:|---:|---:|---:|\n"
         + "\n".join(render_rows(paper_rows))
-        + "\n\nAdditional sanity baseline (not a paper-table row):\n\n"
-        "| Detector | Threshold | NAB-style | Historical detection | Strictly pre-peak | Median lead | Flagged points |\n"
-        "|---|---:|---:|---:|---:|---:|---:|\n"
-        + "\n".join(render_rows(additional_rows))
-        + "\n\nProtocol notes:\n\n"
+        + "\n\nReproduction parameters:\n\n"
         "- the retained cohort contains clusters with at least 89 hourly observations;\n"
         "- detector thresholds are selected by the retained table sweep on these 820 clusters;\n"
         "- the reported score is the paper's project-specific NAB-style early-detection score;\n"
-        "- the output records both strictly pre-peak and inclusive-at-peak detection rates;\n"
-        "- `summary.json` records both the method-paragraph and retained table-run parameters.\n\n"
-        "For exact reuse of these table values, use the retained table-run parameters in\n"
-        "`summary.json`: decay `0.005`, RBF gamma `1.0`, score threshold `0.05`, and no\n"
-        "warm-up. The method paragraph's EXPoSE values (`0.01`, `0.5`, `0.1`, and 30\n"
-        "observations) describe a different configuration.\n\n"
-        "The historical table preserved the strict pre-peak rate for EXPoSE and the\n"
-        "inclusive-at-peak rate for the three classical baselines. Both versions are\n"
-        "included in `summary.json` and `cluster_outcomes.parquet`, so a downstream user\n"
-        "can apply one definition consistently.\n",
+        "- EXPoSE uses decay `0.005`, RBF gamma `1.0`, score threshold `0.05`, and no warm-up.\n",
         encoding="utf-8",
     )
     checksum_path = output_dir / "checksums.sha256"

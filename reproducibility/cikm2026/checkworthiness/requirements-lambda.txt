@@ -1,0 +1,16 @@
+# Sérgio Pinto, 2026-08-27 19:08 WEST — pinned the recovered A10 training
+# stack so the historical run cannot silently use a different CUDA runtime.
+--extra-index-url https://download.pytorch.org/whl/cu128
+torch==2.7.0+cu128
+accelerate==0.34.2
+datasets==3.0.1
+huggingface-hub==0.24.7
+numpy==1.26.4
+polars==1.9.0
+protobuf==5.28.2
+pyarrow==17.0.0
+safetensors==0.4.5
+scikit-learn==1.5.2
+sentencepiece==0.2.0
+transformers==4.44.0
+xgboost==2.1.1

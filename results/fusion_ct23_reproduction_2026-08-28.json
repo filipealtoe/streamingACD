@@ -1,0 +1,58 @@
+{
+  "change_note": "S\u00e9rgio Pinto, 2026-08-28 01:11 WEST \u2014 added the checksum-bound CT23 Fusion reconstruction to the public paper-value inventory.",
+  "dataset": "CT23",
+  "inputs": {
+    "encoder_only/ct23_probs.npy": "b3260befbe0200dbfe45fc7a77cc159909d1252f924dbccb02e4cbbbc514292c",
+    "encoder_only/ct23_seed_456_probs.json": "99bc3c16f30ec1783ba4e8bb98a822dccacc55e629a490dc98011c79b2eea82e",
+    "llm_features_classifier/matrices.npz": "de2c3e47534a0bfe81a4855bf5989ad2efaa434f20229220843080ba2862fa6e"
+  },
+  "method": {
+    "encoder_runs": [
+      {
+        "effective_rng_seed": 42,
+        "historical_label": "seed_0"
+      },
+      {
+        "effective_rng_seed": 456,
+        "historical_label": "seed_456"
+      }
+    ],
+    "encoder_temperature": 0.7,
+    "encoder_weight": 0.6,
+    "features": [
+      "check_score",
+      "verif_score",
+      "harm_score",
+      "check_p_yes",
+      "verif_p_yes",
+      "harm_p_yes",
+      "check_entropy",
+      "verif_entropy",
+      "harm_entropy"
+    ],
+    "threshold": 0.5,
+    "xgboost": {
+      "learning_rate": 0.1,
+      "max_depth": 4,
+      "n_estimators": 100,
+      "random_state": 42,
+      "scale_pos_weight": 3,
+      "version": "2.1.1"
+    },
+    "xgboost_weight": 0.4
+  },
+  "metrics": {
+    "accuracy": 0.9433962264150944,
+    "f1": 0.9150943396226415,
+    "false_negative": 11,
+    "false_positive": 7,
+    "precision": 0.9326923076923077,
+    "recall": 0.8981481481481481,
+    "threshold": 0.5,
+    "true_negative": 203,
+    "true_positive": 97
+  },
+  "paper_f1": 0.915,
+  "reproduction_type": "deterministic reconstruction from retained January numerical components",
+  "status": "PASS"
+}

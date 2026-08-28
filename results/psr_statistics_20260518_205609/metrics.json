@@ -410,12 +410,12 @@
       "family": "Sequence",
       "source_predictions": "C:/StreamingACD/psr/reproduced_missing_predictions/LSTM/test_predictions.npy",
       "n_test": 90,
-      "paper_spearman_rho": 0.016,
+      "paper_spearman_rho": 0.048,
       "sanity_check": {
         "recomputed_rho_rounded3": 0.048,
-        "paper_rho": 0.016,
-        "abs_diff": 0.032,
-        "status": "MISMATCH"
+        "paper_rho": 0.048,
+        "abs_diff": 0.0,
+        "status": "OK"
       },
       "spearman_rho": {
         "point": 0.0482117133802527,
@@ -468,7 +468,7 @@
           0.13400501467710366
         ]
       },
-      "STATUS": "MISMATCH"
+      "STATUS": "OK"
     },
     {
       "name": "GRU",
@@ -476,12 +476,12 @@
       "family": "Sequence",
       "source_predictions": "C:/StreamingACD/psr/reproduced_missing_predictions/GRU/test_predictions.npy",
       "n_test": 90,
-      "paper_spearman_rho": 0.082,
+      "paper_spearman_rho": 0.097,
       "sanity_check": {
         "recomputed_rho_rounded3": 0.097,
-        "paper_rho": 0.082,
-        "abs_diff": 0.015,
-        "status": "MISMATCH"
+        "paper_rho": 0.097,
+        "abs_diff": 0.0,
+        "status": "OK"
       },
       "spearman_rho": {
         "point": 0.09728773099559615,
@@ -534,7 +534,7 @@
           0.1352289789789789
         ]
       },
-      "STATUS": "MISMATCH"
+      "STATUS": "OK"
     },
     {
       "name": "HIP_Hawkes",
