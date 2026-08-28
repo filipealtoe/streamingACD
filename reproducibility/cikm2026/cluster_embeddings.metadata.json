@@ -1,5 +1,5 @@
 {
-  "change_note": "Sérgio Pinto, 2026-08-22 00:53 PDT — Kept the verified 100000 by 384 released matrix and removed the stale dimension mismatch because the exact final PDF states no embedding dimension.",
+  "change_note": "Sérgio Pinto, 2026-08-25 18:18 WEST — Recorded the authenticated 100000 by 384 release matrix.",
   "artifact_name": "cluster_embeddings.npy",
   "availability": "published as cluster_embeddings.npy on the cikm-2026-artifact-v1 GitHub release; not committed as a normal Git blob",
   "bytes": 153600128,

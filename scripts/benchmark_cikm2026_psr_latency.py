@@ -10,6 +10,9 @@
 # CAMERA-READY ARTIFACT CHANGE | Author: Sérgio Pinto | Timestamp:
 # 2026-08-21 21:11 PDT | Reason: directly benchmark the paper's PSR
 # sub-millisecond prediction claim on the released 42-feature matrix.
+# Sérgio Pinto, 2026-08-28 01:26 WEST (+0100) — read the checksum-bound fresh-fit
+# result that supersedes the removed aggregate audit result, and require an
+# explicit output path for hardware-specific reruns.
 """Benchmark single-item PSR prediction over the released 42 features.
 
 The timed boundary includes StandardScaler.transform and model.predict for one
@@ -64,8 +67,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--output",
         type=Path,
-        default=None,
-        help="JSON result path (default: results/psr_latency_benchmark_2026-08-21.json).",
+        required=True,
+        help="JSON result path for this hardware-specific measurement.",
     )
     return parser.parse_args()
 
@@ -171,9 +174,9 @@ def main() -> int:
         "SVR (RBF)": SVR(C=0.1, epsilon=0.05, gamma="auto"),
     }
     expected_hashes = json.loads(
-        (
-            repo_root / "results/virality_tabular_reproduction_2026-08-21.json"
-        ).read_text(encoding="utf-8")
+        (repo_root / "results/virality_tabular_fresh_fit_2026-08-25.json").read_text(
+            encoding="utf-8"
+        )
     )["prediction_sha256_float64_little_endian"]
 
     results: dict[str, Any] = {}
@@ -194,7 +197,9 @@ def main() -> int:
         measurement["prediction_sha256_float64_little_endian"] = prediction_hash
         results[name] = measurement
 
-    verdict = "PASS" if all(item["status"] == "PASS" for item in results.values()) else "FAIL"
+    verdict = (
+        "PASS" if all(item["status"] == "PASS" for item in results.values()) else "FAIL"
+    )
     output = {
         "change_note": (
             "Sérgio Pinto, 2026-08-21 21:11 PDT — Benchmarked single-item "
@@ -205,10 +210,10 @@ def main() -> int:
         "measurement_boundary": {
             "included": "StandardScaler.transform plus model.predict for one feature row",
             "excluded": ["feature generation", "model fitting", "file I/O", "batching"],
-            "rows": int(len(matrix)),
+            "rows": len(matrix),
             "features": int(matrix.shape[1]),
-            "train_rows": int(len(train_x)),
-            "test_rows": int(len(test_x)),
+            "train_rows": len(train_x),
+            "test_rows": len(test_x),
             "split_random_state": 42,
             "warmup_calls_per_model": args.warmup,
             "timed_calls_per_model": args.iterations,
@@ -228,9 +233,7 @@ def main() -> int:
         "verdict": verdict,
     }
 
-    output_path = args.output or (
-        repo_root / "results/psr_latency_benchmark_2026-08-21.json"
-    )
+    output_path = args.output
     if not output_path.is_absolute():
         output_path = repo_root / output_path
     output_path.parent.mkdir(parents=True, exist_ok=True)

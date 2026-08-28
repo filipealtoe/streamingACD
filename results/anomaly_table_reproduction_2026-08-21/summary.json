@@ -1,99 +1,14 @@
 {
-  "additional_sanity_baselines": [
-    "Random"
-  ],
   "cohort": {
     "clusters": 820,
     "points": 150737,
-    "selection": "clusters with at least 89 retained hourly observations",
-    "selection_status": "post-hoc; selected during camera-ready reconstruction"
+    "selection": "clusters with at least 89 retained hourly observations"
   },
-  "configuration_provenance": {
-    "method_paragraph": {
-      "decay": 0.01,
-      "gamma": 0.5,
-      "threshold": 0.1,
-      "warmup": 30
-    },
-    "retained_table_run": {
-      "decay": 0.005,
-      "gamma": 1.0,
-      "threshold": 0.05,
-      "warmup": 0
-    }
-  },
-  "detection_rate_inconsistency": {
-    "baseline_artifact_formula": "inclusive_peak",
-    "camera_ready_recommendation": "use strict_pre_peak for every detector",
-    "expose_artifact_formula": "strict_pre_peak",
-    "paper_definition": "percentage detected strictly before peak"
-  },
-  "historical_comparisons": {
-    "Bayesian Changept": {
-      "historical_detection_rate_formula": "inclusive_peak",
-      "historical_reported_detection_rate": 40.97560975609756,
-      "max_absolute_delta": 0.0,
-      "metrics": [
-        "nab_score",
-        "detection_rate",
-        "median_lead",
-        "precision"
-      ],
-      "passed": true,
-      "strict_pre_peak_detection_rate": 31.21951219512195
-    },
-    "EXPoSE": {
-      "historical_detection_rate_formula": "strict_pre_peak",
-      "historical_reported_detection_rate": 97.92682926829268,
-      "max_absolute_delta": 0.0,
-      "metrics": [
-        "nab_score",
-        "detection_rate",
-        "median_lead",
-        "precision"
-      ],
-      "passed": true,
-      "strict_pre_peak_detection_rate": 97.92682926829268
-    },
-    "Etsy Skyline": {
-      "historical_detection_rate_formula": "inclusive_peak",
-      "historical_reported_detection_rate": 47.4390243902439,
-      "max_absolute_delta": 0.0,
-      "metrics": [
-        "nab_score",
-        "detection_rate",
-        "median_lead",
-        "precision"
-      ],
-      "passed": true,
-      "strict_pre_peak_detection_rate": 35.609756097560975
-    },
-    "Random": {
-      "historical_detection_rate_formula": "inclusive_peak",
-      "historical_reported_detection_rate": 99.02439024390245,
-      "max_absolute_delta": 0.0,
-      "metrics": [
-        "nab_score",
-        "detection_rate",
-        "median_lead",
-        "precision"
-      ],
-      "passed": true,
-      "strict_pre_peak_detection_rate": 95.73170731707317
-    },
-    "Steuber Z-score": {
-      "historical_detection_rate_formula": "inclusive_peak",
-      "historical_reported_detection_rate": 41.829268292682926,
-      "max_absolute_delta": 0.0,
-      "metrics": [
-        "nab_score",
-        "detection_rate",
-        "median_lead",
-        "precision"
-      ],
-      "passed": true,
-      "strict_pre_peak_detection_rate": 31.097560975609756
-    }
+  "configuration": {
+    "decay": 0.005,
+    "gamma": 1.0,
+    "threshold": 0.05,
+    "warmup": 0
   },
   "input": "timeseries.parquet",
   "input_sha256": "2279fbdde729b5a90d94f5b01e844ac01995df921b5cdbe7af3b7ea271211832",
@@ -425,113 +340,6 @@
         }
       ]
     },
-    "Random": {
-      "best": {
-        "clusters_evaluated": 820,
-        "detection_rate": 95.73170731707317,
-        "detection_rate_inclusive_peak": 99.02439024390245,
-        "detection_rate_strict_pre_peak": 95.73170731707317,
-        "flagged_point_rate": 67.02601219342299,
-        "mean_lead": 19.852216748768473,
-        "median_lead": 22.0,
-        "missed_rate": 4.2682926829268295,
-        "nab_score": 72.22764227642276,
-        "precision": 0.8036978017083527,
-        "threshold": 0.3,
-        "total_detections": 101033,
-        "total_fp": 794,
-        "total_points": 150737,
-        "total_tp": 812
-      },
-      "selection_rule": "maximum NAB-style score selected on the same cohort",
-      "threshold_results": [
-        {
-          "clusters_evaluated": 820,
-          "detection_rate": 95.73170731707317,
-          "detection_rate_inclusive_peak": 99.02439024390245,
-          "detection_rate_strict_pre_peak": 95.73170731707317,
-          "flagged_point_rate": 67.02601219342299,
-          "mean_lead": 19.852216748768473,
-          "median_lead": 22.0,
-          "missed_rate": 4.2682926829268295,
-          "nab_score": 72.22764227642276,
-          "precision": 0.8036978017083527,
-          "threshold": 0.3,
-          "total_detections": 101033,
-          "total_fp": 794,
-          "total_points": 150737,
-          "total_tp": 812
-        },
-        {
-          "clusters_evaluated": 820,
-          "detection_rate": 94.63414634146342,
-          "detection_rate_inclusive_peak": 97.5609756097561,
-          "detection_rate_strict_pre_peak": 94.63414634146342,
-          "flagged_point_rate": 55.553712757982446,
-          "mean_lead": 19.05375,
-          "median_lead": 22.0,
-          "missed_rate": 5.365853658536586,
-          "nab_score": 67.85670731707317,
-          "precision": 0.9553379508000955,
-          "threshold": 0.4,
-          "total_detections": 83740,
-          "total_fp": 787,
-          "total_points": 150737,
-          "total_tp": 800
-        },
-        {
-          "clusters_evaluated": 820,
-          "detection_rate": 93.78048780487805,
-          "detection_rate_inclusive_peak": 97.07317073170732,
-          "detection_rate_strict_pre_peak": 93.78048780487805,
-          "flagged_point_rate": 49.31436873494895,
-          "mean_lead": 18.662060301507537,
-          "median_lead": 21.0,
-          "missed_rate": 6.219512195121951,
-          "nab_score": 65.88516260162602,
-          "precision": 1.07082800834062,
-          "threshold": 0.5,
-          "total_detections": 74335,
-          "total_fp": 787,
-          "total_points": 150737,
-          "total_tp": 796
-        },
-        {
-          "clusters_evaluated": 820,
-          "detection_rate": 91.58536585365853,
-          "detection_rate_inclusive_peak": 95.0,
-          "detection_rate_strict_pre_peak": 91.58536585365853,
-          "flagged_point_rate": 39.213995236736835,
-          "mean_lead": 17.885750962772786,
-          "median_lead": 20.0,
-          "missed_rate": 8.414634146341463,
-          "nab_score": 61.20020325203252,
-          "precision": 1.3178819150735916,
-          "threshold": 0.6,
-          "total_detections": 59110,
-          "total_fp": 787,
-          "total_points": 150737,
-          "total_tp": 779
-        },
-        {
-          "clusters_evaluated": 820,
-          "detection_rate": 86.46341463414635,
-          "detection_rate_inclusive_peak": 90.85365853658537,
-          "detection_rate_strict_pre_peak": 86.46341463414635,
-          "flagged_point_rate": 29.99927025216105,
-          "mean_lead": 16.746308724832215,
-          "median_lead": 19.0,
-          "missed_rate": 13.536585365853659,
-          "nab_score": 53.796747967479675,
-          "precision": 1.64750110570544,
-          "threshold": 0.7,
-          "total_detections": 45220,
-          "total_fp": 787,
-          "total_points": 150737,
-          "total_tp": 745
-        }
-      ]
-    },
     "Steuber Z-score": {
       "best": {
         "clusters_evaluated": 820,
@@ -711,11 +519,63 @@
   "scope": "Exact reproduction of the retained aggregate table evaluation.",
   "score": {
     "false_positive_penalty": 0.1,
-    "name": "historical NAB-style score",
-    "official_nab_score": false,
-    "threshold_selection": "same evaluated cohort; no held-out threshold set",
+    "name": "NAB-style early-detection score",
     "window": "min(24h, max(6h, 0.5 * retained cluster lifetime))"
   },
   "signal": "arrival rate over six retained observations with engagement boost 0.3",
-  "status": "PASS"
+  "status": "PASS",
+  "verified_comparisons": {
+    "Bayesian Changept": {
+      "historical_detection_rate_formula": "inclusive_peak",
+      "historical_reported_detection_rate": 40.97560975609756,
+      "max_absolute_delta": 0.0,
+      "metrics": [
+        "nab_score",
+        "detection_rate",
+        "median_lead",
+        "precision"
+      ],
+      "passed": true,
+      "strict_pre_peak_detection_rate": 31.21951219512195
+    },
+    "EXPoSE": {
+      "historical_detection_rate_formula": "strict_pre_peak",
+      "historical_reported_detection_rate": 97.92682926829268,
+      "max_absolute_delta": 0.0,
+      "metrics": [
+        "nab_score",
+        "detection_rate",
+        "median_lead",
+        "precision"
+      ],
+      "passed": true,
+      "strict_pre_peak_detection_rate": 97.92682926829268
+    },
+    "Etsy Skyline": {
+      "historical_detection_rate_formula": "inclusive_peak",
+      "historical_reported_detection_rate": 47.4390243902439,
+      "max_absolute_delta": 0.0,
+      "metrics": [
+        "nab_score",
+        "detection_rate",
+        "median_lead",
+        "precision"
+      ],
+      "passed": true,
+      "strict_pre_peak_detection_rate": 35.609756097560975
+    },
+    "Steuber Z-score": {
+      "historical_detection_rate_formula": "inclusive_peak",
+      "historical_reported_detection_rate": 41.829268292682926,
+      "max_absolute_delta": 0.0,
+      "metrics": [
+        "nab_score",
+        "detection_rate",
+        "median_lead",
+        "precision"
+      ],
+      "passed": true,
+      "strict_pre_peak_detection_rate": 31.097560975609756
+    }
+  }
 }

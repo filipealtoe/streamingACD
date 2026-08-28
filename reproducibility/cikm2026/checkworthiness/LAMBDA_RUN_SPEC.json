@@ -1,0 +1,121 @@
+{
+  "change_note": "Sérgio Pinto, 2026-08-28 01:11 WEST — bound the retained CT23 Fusion reconstruction and historical training to their verified numerical and execution contracts.",
+  "base_model": {
+    "repository": "microsoft/deberta-v3-large",
+    "revision": "64a8c8eab3e352a784c658aef62be1662607476f"
+  },
+  "historical_training": {
+    "runs": [
+      {
+        "historical_label": "seed_0",
+        "effective_rng_seed": 42,
+        "gradient_accumulation_steps": 2,
+        "fgm_epsilon": 0.5
+      },
+      {
+        "historical_label": "seed_456",
+        "effective_rng_seed": 456,
+        "gradient_accumulation_steps": 4,
+        "fgm_epsilon": 1.0
+      }
+    ],
+    "epochs": 5,
+    "batch_size": 8,
+    "learning_rate": 0.00002,
+    "maximum_sequence_length": 128,
+    "weight_decay": 0.01,
+    "warmup_ratio": 0.1,
+    "evaluation_steps": 100,
+    "save_steps": 200,
+    "focal_loss_gamma": 2.0,
+    "llrd_decay": 0.9,
+    "rdrop_alpha": 1.0,
+    "scheduler": "cosine",
+    "precision": "fp16",
+    "python": "3.10",
+    "transformers": "4.44.0",
+    "torch": "2.7.0",
+    "cuda_runtime": "12.8",
+    "gpu": "NVIDIA A10",
+    "cuda_compute_capability": "8.6"
+  },
+  "strict_training": {
+    "seeds": [0, 42, 456],
+    "gradient_accumulation_steps": 4,
+    "fgm_epsilon": 1.0,
+    "precision": "bf16"
+  },
+  "tracks": {
+    "historical": {
+      "training_split": "CT24 train",
+      "checkpoint_selection_split": "CT24 dev-test / CT23",
+      "additional_evaluation_split": "CT24 dev / ClaimBuster-aligned",
+      "ensemble_effective_rng_seeds": [42, 456],
+      "encoder_sources": {
+        "encoder_only": {
+          "ClaimBuster": "temperature-scaled two-run ensemble",
+          "CT23": "retained seed_0 run with effective RNG seed 42"
+        },
+        "fusion": {
+          "ClaimBuster": "temperature-scaled two-run ensemble",
+          "CT23": "temperature-scaled retained two-run ensemble"
+        }
+      },
+      "encoder_temperature": 0.7,
+      "fusion_encoder_weight": 0.6,
+      "recorded_thresholds": {
+        "encoder_only": {"ClaimBuster": 0.70, "CT23": 0.5},
+        "fusion": {"ClaimBuster": 0.55, "CT23": 0.5}
+      }
+    },
+    "strict": {
+      "source_pool": "CT24 train only",
+      "benchmark_text_deduplication": true,
+      "internal_validation": {
+        "method": "StratifiedGroupKFold",
+        "groups": "NFKC-casefolded whitespace-normalized text",
+        "folds": 10,
+        "selected_fold": 0,
+        "shuffle": true,
+        "random_state": 42
+      },
+      "checkpoint_and_threshold_selection": "internal validation only",
+      "external_evaluation": ["ClaimBuster", "CT23"],
+      "ensemble_seed_set": [0, 42, 456],
+      "encoder_temperature": 0.7,
+      "fusion_encoder_weight": 0.6
+    }
+  },
+  "fusion_classifier": {
+    "features": [
+      "check_score",
+      "verif_score",
+      "harm_score",
+      "check_p_yes",
+      "verif_p_yes",
+      "harm_p_yes",
+      "check_entropy",
+      "verif_entropy",
+      "harm_entropy"
+    ],
+    "standard_scaler": true,
+    "xgboost": {
+      "n_estimators": 100,
+      "max_depth": 4,
+      "learning_rate": 0.1,
+      "scale_pos_weight": 3,
+      "random_state": 42
+    }
+  },
+  "paper_targets": {
+    "encoder_only": {"ClaimBuster": 0.970, "CT23": 0.928},
+    "fusion": {"ClaimBuster": 0.961, "CT23": 0.915}
+  },
+  "required_outputs": [
+    "preflight.json",
+    "environment.json",
+    "per_example_predictions.npz",
+    "summary.json",
+    "checksums.sha256"
+  ]
+}

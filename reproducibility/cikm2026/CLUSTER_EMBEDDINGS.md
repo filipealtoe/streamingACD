@@ -3,7 +3,7 @@
 <!-- Sérgio Pinto, 2026-08-21 21:55 PDT — documented the recovered canonical matrix and its external-release boundary. -->
 <!-- Sérgio Pinto, 2026-08-21 22:29 PDT — linked the expected public asset identity to a live, metadata-only release check. -->
 <!-- Sérgio Pinto, 2026-08-21 23:43 PDT — recorded the completed public upload and stable download URL after verifying the remote digest. -->
-<!-- Sérgio Pinto, 2026-08-22 00:53 PDT — removed the stale manuscript-dimension mismatch after checking the exact final PDF. -->
+<!-- Sérgio Pinto, 2026-08-25 18:18 WEST — kept the public description focused on the authenticated release asset. -->
 
 The canonical `streaming_full/2026-01-17_03-56` cluster-embedding matrix has
 been recovered and authenticated:
@@ -29,9 +29,7 @@ command below verifies the live release without downloading the matrix:
 uv run --no-project scripts/verify_cikm2026_release_assets.py
 ```
 
-The exact final camera-ready PDF does not state an embedding dimension. The
-metadata therefore records the observed and checksum-verified 384-dimensional
-shape without asserting a manuscript mismatch.
+The metadata records the observed and checksum-verified 384-dimensional shape.
 
 After downloading the published file, verify its contents with:
 

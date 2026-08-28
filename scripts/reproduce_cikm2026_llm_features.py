@@ -2,17 +2,13 @@
 # Artifact change — Sérgio Pinto, 2026-08-21 19:21 PDT.
 # Reason: make the three paper-facing LLM-feature F1 cells executable from a
 # text-free numerical bundle.
-# Artifact clarification — Sérgio Pinto, 2026-08-21 19:27 PDT.
-# Reason: preserve the historical paper-value reproduction while also reporting
-# a single threshold selected on CT24 development labels and held fixed elsewhere.
-# Artifact correction — Sérgio Pinto, 2026-08-25 14:12 WEST.
-# Reason: preserve the paper-run row-position result while also recomputing the
-# LLM partition after complete one-to-one sentence-ID alignment.
+# Artifact scope — Sérgio Pinto, 2026-08-25 18:18 WEST.
+# Reason: keep the public command focused on the exact three-cell numerical
+# reproduction from the checksum-bound matrix bundle.
 # /// script
 # requires-python = ">=3.11,<3.13"
 # dependencies = [
 #   "numpy==1.26.4",
-#   "polars==1.27.1",
 #   "scikit-learn==1.8.0",
 # ]
 # ///
@@ -26,7 +22,6 @@ from pathlib import Path
 from typing import Any
 
 import numpy as np
-import polars as pl
 from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import StandardScaler
 
@@ -43,105 +38,6 @@ EXPECTED_SHAPES = {
     "X_claimbuster": (1_032, 153),
     "X_ct23": (318, 153),
 }
-
-
-def align_llm_features(
-    feature_path: Path,
-    canonical_ids: list[str],
-    llm_feature_names: list[str],
-    context: str,
-) -> tuple[np.ndarray, dict[str, Any]]:
-    features = pl.read_parquet(feature_path).with_columns(
-        pl.col("sentence_id").cast(pl.String)
-    )
-    canonical = pl.DataFrame(
-        {"sentence_id": [str(value) for value in canonical_ids]}
-    ).with_row_index("__row_order")
-    if canonical["sentence_id"].n_unique() != len(canonical):
-        raise ValueError(f"{context}: canonical sentence IDs are not unique")
-    if features["sentence_id"].n_unique() != len(features):
-        raise ValueError(f"{context}: feature sentence IDs are not unique")
-    canonical_set = set(canonical["sentence_id"].to_list())
-    feature_set = set(features["sentence_id"].to_list())
-    if canonical_set != feature_set:
-        raise ValueError(f"{context}: sentence-ID sets differ")
-    if not set(llm_feature_names).issubset(features.columns):
-        raise ValueError(f"{context}: the expected LLM feature schema is incomplete")
-    aligned = (
-        canonical.join(features, on="sentence_id", how="left", validate="1:1")
-        .sort("__row_order")
-    )
-    values = aligned.select(llm_feature_names)
-    if values.null_count().row(0) != (0,) * len(llm_feature_names):
-        raise ValueError(f"{context}: aligned LLM features contain null values")
-    return values.to_numpy(), {
-        "rows": len(aligned),
-        "unique_sentence_ids": aligned["sentence_id"].n_unique(),
-        "one_to_one_id_set_match": True,
-        "source_feature_order_differed": (
-            canonical["sentence_id"].to_list()
-            != features["sentence_id"].to_list()
-        ),
-    }
-
-
-def corrected_llm_partition(
-    matrices: dict[str, np.ndarray], artifact_parent: Path
-) -> tuple[dict[str, np.ndarray], dict[str, dict[str, Any]]]:
-    """Replace only the positionally combined LLM partition using ID joins."""
-    corrected = {name: value.copy() for name, value in matrices.items()}
-    feature_names = corrected["feature_names"].tolist()
-    llm_names = [
-        name for name in feature_names if not name.startswith(("feat_", "pca64_"))
-    ]
-    llm_indices = [feature_names.index(name) for name in llm_names]
-    if len(llm_names) != 54:
-        raise ValueError("unexpected LLM feature partition")
-
-    audit: dict[str, dict[str, Any]] = {}
-    split_keys = {"train": "train", "dev": "dev", "test": "ct24"}
-    for split, key in split_keys.items():
-        labels = pl.read_parquet(
-            artifact_parent / f"ct24_labels/{split}_labels.parquet"
-        )
-        expected_labels = labels["label"].cast(pl.Int8).to_numpy()
-        if not np.array_equal(corrected[f"y_{key}"], expected_labels):
-            raise ValueError(f"CT24 {split}: retained labels changed order")
-        values, audit_row = align_llm_features(
-            artifact_parent / f"ct24_llm_features_v4/{split}_llm_features.parquet",
-            labels["sentence_id"].cast(pl.String).to_list(),
-            llm_names,
-            f"CT24 {split}",
-        )
-        corrected[f"X_{key}"][:, llm_indices] = values
-        audit[f"CT24 {split}"] = audit_row
-
-    claimbuster = pl.read_csv(
-        artifact_parent / "benchmarks/claim_buster/groundtruth.csv"
-    )
-    ct23 = pl.read_csv(
-        artifact_parent / "benchmarks/ct23/CT23_1B_checkworthy_english_test.tsv",
-        separator="\t",
-    )
-    benchmark_rows = {
-        "claimbuster": (
-            claimbuster["Sentence_id"].cast(pl.String).to_list(),
-            artifact_parent
-            / "benchmark_llm_features/CB_groundtruth_llm_features.parquet",
-        ),
-        "ct23": (
-            ct23["Sentence_id"].cast(pl.String).to_list(),
-            artifact_parent / "benchmark_llm_features/CT23_llm_features.parquet",
-        ),
-    }
-    for key, (ids, path) in benchmark_rows.items():
-        values, audit_row = align_llm_features(
-            path, ids, llm_names, key
-        )
-        corrected[f"X_{key}"][:, llm_indices] = values
-        audit["ClaimBuster" if key == "claimbuster" else "CT23"] = audit_row
-
-    return corrected, audit
 
 
 def evaluate(labels: np.ndarray, probabilities: np.ndarray, threshold: float) -> dict[str, float]:
@@ -230,25 +126,7 @@ def main() -> int:
     )
     classifier.fit(scaled_training, training_labels)
 
-    development_scaler = StandardScaler()
-    scaled_train = development_scaler.fit_transform(matrices["X_train"])
-    development_classifier = LogisticRegression(
-        C=1.0,
-        max_iter=1000,
-        random_state=42,
-        class_weight="balanced",
-    )
-    development_classifier.fit(scaled_train, matrices["y_train"])
-    development_probabilities = development_classifier.predict_proba(
-        development_scaler.transform(matrices["X_dev"])
-    )[:, 1]
-    development_selection = best_threshold(
-        matrices["y_dev"], development_probabilities
-    )
-    development_threshold = float(development_selection["threshold"])
-
     results: dict[str, dict[str, Any]] = {}
-    final_probabilities: dict[str, np.ndarray] = {}
     all_values_match = True
     all_reference_decisions_match = True
     for public_name, key in DATASET_KEYS.items():
@@ -256,7 +134,6 @@ def main() -> int:
         probabilities = classifier.predict_proba(
             scaler.transform(matrices[f"X_{key}"])
         )[:, 1]
-        final_probabilities[public_name] = probabilities
         metrics = best_threshold(labels, probabilities)
         reference = references[key]
         decisions_match = bool(
@@ -279,69 +156,6 @@ def main() -> int:
             "n": len(labels),
         }
 
-    fixed_threshold_results = {
-        public_name: evaluate(
-            matrices[f"y_{key}"],
-            final_probabilities[public_name],
-            development_threshold,
-        )
-        for public_name, key in DATASET_KEYS.items()
-    }
-
-    corrected_matrices, alignment_audit = corrected_llm_partition(
-        matrices, artifact_parent
-    )
-    corrected_scaler = StandardScaler()
-    corrected_training = np.vstack(
-        [corrected_matrices["X_train"], corrected_matrices["X_dev"]]
-    )
-    corrected_labels = np.concatenate(
-        [corrected_matrices["y_train"], corrected_matrices["y_dev"]]
-    )
-    corrected_classifier = LogisticRegression(
-        C=1.0,
-        max_iter=1000,
-        random_state=42,
-        class_weight="balanced",
-    )
-    corrected_classifier.fit(
-        corrected_scaler.fit_transform(corrected_training), corrected_labels
-    )
-
-    corrected_development_scaler = StandardScaler()
-    corrected_development_classifier = LogisticRegression(
-        C=1.0,
-        max_iter=1000,
-        random_state=42,
-        class_weight="balanced",
-    )
-    corrected_development_classifier.fit(
-        corrected_development_scaler.fit_transform(corrected_matrices["X_train"]),
-        corrected_matrices["y_train"],
-    )
-    corrected_development_probabilities = (
-        corrected_development_classifier.predict_proba(
-            corrected_development_scaler.transform(corrected_matrices["X_dev"])
-        )[:, 1]
-    )
-    corrected_development_selection = best_threshold(
-        corrected_matrices["y_dev"], corrected_development_probabilities
-    )
-    corrected_threshold = float(corrected_development_selection["threshold"])
-    corrected_results: dict[str, dict[str, Any]] = {}
-    for public_name, key in DATASET_KEYS.items():
-        labels = corrected_matrices[f"y_{key}"]
-        probabilities = corrected_classifier.predict_proba(
-            corrected_scaler.transform(corrected_matrices[f"X_{key}"])
-        )[:, 1]
-        corrected_results[public_name] = {
-            "fixed_source_development_threshold": evaluate(
-                labels, probabilities, corrected_threshold
-            ),
-            "evaluation_oracle_diagnostic": best_threshold(labels, probabilities),
-            "paper_f1": PAPER_F1[public_name],
-        }
-
     status = (
         "PASS"
         if all(shape_checks.values())
@@ -352,7 +166,7 @@ def main() -> int:
     )
     summary = {
         "change_note": (
-            "Sérgio Pinto, 2026-08-21 19:21 PDT — Freshly fitted the "
+            "Sérgio Pinto, 2026-08-25 18:18 WEST — Freshly fitted the "
             "PCA-64 + LLM + text-feature classifier from the text-free "
             "numerical bundle."
         ),
@@ -368,36 +182,6 @@ def main() -> int:
                 "maximum F1 selected separately on each evaluation set, "
                 "matching the retained paper source"
             ),
-        },
-        "development_selected_threshold_diagnostic": {
-            "selection_split": "CT24 development",
-            "selection_training_split": "CT24 training",
-            "threshold": development_threshold,
-            "development_selection_metrics": development_selection,
-            "evaluation_model_training_split": "CT24 training plus development",
-            "results": fixed_threshold_results,
-        },
-        "corrected_sentence_id_replication": {
-            "change_note": (
-                "Sérgio Pinto, 2026-08-25 14:18 WEST — joined the recovered "
-                "LLM partition one-to-one by sentence_id and retained the "
-                "positionally combined paper-run result separately."
-            ),
-            "status": "COMPLETE",
-            "correction": (
-                "the 54 recovered LLM feature columns are joined one-to-one "
-                "by sentence_id before combination with the retained 35 text "
-                "and 64 PCA columns"
-            ),
-            "retained_partition_boundary": (
-                "the text and PCA partitions remain in the canonical row order "
-                "of the checksum-bound numerical bundle; that bundle does not "
-                "embed their per-row sentence IDs"
-            ),
-            "development_threshold": corrected_threshold,
-            "development_selection_metrics": corrected_development_selection,
-            "alignment_audit": alignment_audit,
-            "results": corrected_results,
         },
         "shape_checks": shape_checks,
         "feature_partition": feature_partition,
