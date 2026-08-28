@@ -1,5 +1,5 @@
 {
-  "change_note": "Sérgio Pinto, 2026-08-25 18:18 WEST — limited the public numerical inventory to checksum-bound reproductions verified from the released package.",
+  "change_note": "Sérgio Pinto, 2026-08-28 03:38 WEST — linked the fresh A10 ClaimBuster Encoder Only and Fusion paper cells to checksum-bound per-example reproduction outputs.",
   "artifact_version": "cikm-2026-artifact-v1",
   "paper_pdf": {
     "file_name": "CIKM2026-camera-ready-2026-08-22.pdf",
@@ -39,8 +39,15 @@
     "status": "PASS",
     "metric": "f1",
     "encoder_only": {
-      "result": "reproducibility/source_artifacts/checkworthiness/encoder_only/",
-      "cells": {"CT24": 0.821, "CT23": 0.928}
+      "commands": {
+        "CT24_and_CT23": "uv run --no-project scripts/verify_cikm2026_artifacts.py",
+        "ClaimBuster": "uv run scripts/run_cikm2026_checkworthiness_lambda.py verify-retained-claimbuster"
+      },
+      "results": {
+        "CT24_and_CT23": "reproducibility/source_artifacts/checkworthiness/encoder_only/",
+        "ClaimBuster": "results/claimbuster_encoder_fusion_reproduction_2026-08-28/summary.json"
+      },
+      "cells": {"CT24": 0.821, "ClaimBuster": 0.970, "CT23": 0.928}
     },
     "llm_features": {
       "command": "uv run scripts/reproduce_cikm2026_llm_features.py",
@@ -55,13 +62,15 @@
     "fusion": {
       "commands": {
         "CT24": "uv run scripts/reproduce_cikm2026_fusion_ct24.py",
+        "ClaimBuster": "uv run scripts/run_cikm2026_checkworthiness_lambda.py verify-retained-claimbuster",
         "CT23": "uv run scripts/run_cikm2026_checkworthiness_lambda.py verify-retained-ct23"
       },
       "results": {
         "CT24": "results/fusion_ct24_reproduction_2026-08-21.json",
+        "ClaimBuster": "results/claimbuster_encoder_fusion_reproduction_2026-08-28/summary.json",
         "CT23": "results/fusion_ct23_reproduction_2026-08-28.json"
       },
-      "cells": {"CT24": 0.836, "CT23": 0.915}
+      "cells": {"CT24": 0.836, "ClaimBuster": 0.961, "CT23": 0.915}
     }
   },
   "performance": {

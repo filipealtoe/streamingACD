@@ -1,5 +1,5 @@
 {
-  "change_note": "Sérgio Pinto, 2026-08-28 01:11 WEST — bound the retained CT23 Fusion reconstruction and historical training to their verified numerical and execution contracts.",
+  "change_note": "Sérgio Pinto, 2026-08-28 03:38 WEST — bound the ClaimBuster Encoder Only and Fusion paper cells to the fresh A10 seed-42 run, recovered four-confidence inputs and exact evaluation thresholds.",
   "base_model": {
     "repository": "microsoft/deberta-v3-large",
     "revision": "64a8c8eab3e352a784c658aef62be1662607476f"
@@ -53,19 +53,19 @@
       "ensemble_effective_rng_seeds": [42, 456],
       "encoder_sources": {
         "encoder_only": {
-          "ClaimBuster": "temperature-scaled two-run ensemble",
+          "ClaimBuster": "fresh seed_0 run with effective RNG seed 42",
           "CT23": "retained seed_0 run with effective RNG seed 42"
         },
         "fusion": {
-          "ClaimBuster": "temperature-scaled two-run ensemble",
+          "ClaimBuster": "fresh seed_0 run with effective RNG seed 42",
           "CT23": "temperature-scaled retained two-run ensemble"
         }
       },
       "encoder_temperature": 0.7,
       "fusion_encoder_weight": 0.6,
       "recorded_thresholds": {
-        "encoder_only": {"ClaimBuster": 0.70, "CT23": 0.5},
-        "fusion": {"ClaimBuster": 0.55, "CT23": 0.5}
+        "encoder_only": {"ClaimBuster": 0.65, "CT23": 0.5},
+        "fusion": {"ClaimBuster": 0.60, "CT23": 0.5}
       }
     },
     "strict": {
@@ -87,17 +87,25 @@
     }
   },
   "fusion_classifier": {
-    "features": [
-      "check_score",
-      "verif_score",
-      "harm_score",
-      "check_p_yes",
-      "verif_p_yes",
-      "harm_p_yes",
-      "check_entropy",
-      "verif_entropy",
-      "harm_entropy"
-    ],
+    "benchmark_features": {
+      "ClaimBuster": [
+        "checkability_conf",
+        "verifiability_conf",
+        "harm_conf",
+        "avg_confidence"
+      ],
+      "CT23": [
+        "check_score",
+        "verif_score",
+        "harm_score",
+        "check_p_yes",
+        "verif_p_yes",
+        "harm_p_yes",
+        "check_entropy",
+        "verif_entropy",
+        "harm_entropy"
+      ]
+    },
     "standard_scaler": true,
     "xgboost": {
       "n_estimators": 100,

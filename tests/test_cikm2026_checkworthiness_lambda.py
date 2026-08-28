@@ -1,7 +1,7 @@
 """Tests for the two-track CIKM check-worthiness GPU run contract."""
 
-# Sérgio Pinto, 2026-08-28 01:11 WEST — protect the recovered per-run
-# parameters, retained CT23 Fusion reconstruction and A10 runtime contract.
+# Sérgio Pinto, 2026-08-28 03:38 WEST — protect the fresh A10 ClaimBuster
+# reconstruction, retained CT23 Fusion reconstruction and A10 contract.
 
 from __future__ import annotations
 
@@ -86,6 +86,79 @@ def test_retained_fusion_feature_order_is_stable() -> None:
         "check_entropy",
         "verif_entropy",
         "harm_entropy",
+    )
+    assert runner.CLAIMBUSTER_FUSION_FEATURES == (
+        "checkability_conf",
+        "verifiability_conf",
+        "harm_conf",
+        "avg_confidence",
+    )
+
+
+def test_retained_claimbuster_llm_component_matches_historical_result() -> None:
+    runner = load_runner()
+    benchmarks = runner.load_benchmarks(ROOT)
+    probabilities, validation_probabilities, validation_labels = (
+        runner.evaluation_feature_components(
+            ROOT, ROOT / "unused-historical-run", "historical", benchmarks
+        )
+    )
+    metrics = runner.evaluate(
+        benchmarks["ClaimBuster"].labels,
+        probabilities["ClaimBuster"],
+        0.45,
+    )
+    assert validation_probabilities is None
+    assert validation_labels is None
+    assert metrics.f1 == pytest.approx(0.6333333333333333)
+    assert (metrics.true_positive, metrics.false_positive, metrics.false_negative) == (
+        190,
+        172,
+        48,
+    )
+
+
+def test_fresh_a10_claimbuster_reproduces_encoder_and_fusion_paper_cells() -> None:
+    runner = load_runner()
+    encoder, xgboost, fusion, arrays = runner.retained_claimbuster_encoder_fusion(
+        ROOT
+    )
+    assert encoder.threshold == 0.65
+    assert encoder.f1 == pytest.approx(0.9700854700854701)
+    assert (
+        encoder.true_negative,
+        encoder.false_positive,
+        encoder.false_negative,
+        encoder.true_positive,
+    ) == (791, 3, 11, 227)
+    assert xgboost.f1 == pytest.approx(0.6333333333333333)
+    assert fusion.threshold == 0.60
+    assert fusion.f1 == pytest.approx(0.9613733905579399)
+    assert (
+        fusion.true_negative,
+        fusion.false_positive,
+        fusion.false_negative,
+        fusion.true_positive,
+    ) == (790, 4, 14, 224)
+    assert arrays["sentence_ids"].shape == (1_032,)
+    assert arrays["labels"].sum() == 238
+
+
+def test_fresh_a10_claimbuster_public_result_binds_model_and_inputs() -> None:
+    runner = load_runner()
+    encoder, xgboost, fusion, _ = runner.retained_claimbuster_encoder_fusion(ROOT)
+    result = runner.retained_claimbuster_result(encoder, xgboost, fusion)
+    assert result["status"] == "PASS"
+    assert result["paper_f1"] == {"encoder_only": 0.970, "fusion": 0.961}
+    assert result["encoder_run"]["model_sha256"] == (
+        "3765638fb1f60a87741fdd6c576faeece8be1cb520d074d08e7e2abe8c3feb0f"
+    )
+    assert result["method"]["encoder_threshold"] == 0.65
+    assert result["method"]["fusion_threshold"] == 0.60
+    assert result["inputs"][
+        "encoder_only/claimbuster_seed_42_predictions.npz"
+    ] == (
+        "544a6a1230464fc1c52875e50328c9b30af8bf3585163e3acc5d6b36431085ab"
     )
 
 

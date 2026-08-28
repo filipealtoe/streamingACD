@@ -1,6 +1,6 @@
 # Two-track check-worthiness GPU reproduction
 
-<!-- Sérgio Pinto, 2026-08-28 01:11 WEST — bound the retained CT23 Fusion reconstruction and the GPU rerun to their verified inputs and environment. -->
+<!-- Sérgio Pinto, 2026-08-28 03:38 WEST — bound the ClaimBuster Encoder Only and Fusion cells to the fresh A10 seed-42 run and recovered four-confidence inputs. -->
 
 The run contract is frozen in [`LAMBDA_RUN_SPEC.json`](LAMBDA_RUN_SPEC.json).
 It produces two separately named result tracks:
@@ -20,6 +20,12 @@ environment before training.
 For CT23, the Encoder Only cell uses the retained `seed_0` vector, while the
 Fusion cell combines the retained `seed_0` and `seed_456` vectors before adding
 the XGBoost probability component.
+
+For ClaimBuster, Encoder Only uses the fresh `seed_0` run (effective RNG seed
+42) at threshold `0.65`. Fusion combines that vector with the recovered
+four-confidence XGBoost component using weights `0.6` and `0.4` at threshold
+`0.60`. This reproduces full-precision F1 values `0.970085` and `0.961373`,
+reported as `0.970` and `0.961` in the paper.
 
 The strict preflight groups duplicate text before splitting and checks that its
 training and internal-validation rows do not overlap the external benchmarks.

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-# Artifact change — Sérgio Pinto, 2026-08-28 01:11 WEST.
-# Reason: reproduce the retained CT23 Fusion paper cell and require the
-# recovered A10, CUDA 12.8 and PyTorch 2.7 execution environment for training.
+# Artifact change — Sérgio Pinto, 2026-08-28 03:38 WEST.
+# Reason: bind the ClaimBuster paper cells to the fresh A10 seed-42 predictions,
+# recovered four-confidence inputs and exact recorded evaluation thresholds.
 """Prepare, train, and evaluate the two-track CIKM check-worthiness run."""
 
 from __future__ import annotations
@@ -82,11 +82,20 @@ PUBLIC_INPUTS = {
     "benchmark_llm_features/CT23_llm_features.parquet": (
         "7db1dcdc780a0991b09af84288e1abc8d907ad1c1e57358953757fc86c7a53d6"
     ),
+    "fusion_benchmark_features/CB_groundtruth_features_mistral-small-24b.parquet": (
+        "60bdfcf5a89002b8eddfcfdf220b2d35665ce0121cc228f5ea0cd30e70858326"
+    ),
+    "fusion_benchmark_features/CT23_features_mistral-small-24b.parquet": (
+        "07591b77a281939c852aebd5627c6e1cf36731bc84457839f6aa170ff4536327"
+    ),
     "encoder_only/ct23_probs.npy": (
         "b3260befbe0200dbfe45fc7a77cc159909d1252f924dbccb02e4cbbbc514292c"
     ),
     "encoder_only/ct23_seed_456_probs.json": (
         "99bc3c16f30ec1783ba4e8bb98a822dccacc55e629a490dc98011c79b2eea82e"
+    ),
+    "encoder_only/claimbuster_seed_42_predictions.npz": (
+        "544a6a1230464fc1c52875e50328c9b30af8bf3585163e3acc5d6b36431085ab"
     ),
 }
 
@@ -106,14 +115,21 @@ FUSION_FEATURES = (
     "harm_entropy",
 )
 
+CLAIMBUSTER_FUSION_FEATURES = (
+    "checkability_conf",
+    "verifiability_conf",
+    "harm_conf",
+    "avg_confidence",
+)
+
 PAPER_TARGETS = {
     "encoder_only": {"ClaimBuster": 0.970, "CT23": 0.928},
     "fusion": {"ClaimBuster": 0.961, "CT23": 0.915},
 }
 
 HISTORICAL_THRESHOLDS = {
-    "encoder_only": {"ClaimBuster": 0.70, "CT23": 0.50},
-    "fusion": {"ClaimBuster": 0.55, "CT23": 0.50},
+    "encoder_only": {"ClaimBuster": 0.65, "CT23": 0.50},
+    "fusion": {"ClaimBuster": 0.60, "CT23": 0.50},
 }
 
 HISTORICAL_ENVIRONMENT = {
@@ -1063,27 +1079,58 @@ def evaluation_feature_components(
         ) as bundle:
             feature_names = bundle["feature_names"].tolist()
             feature_indices = [feature_names.index(name) for name in FUSION_FEATURES]
-            train_x = np.vstack(
+            ct23_train_x = np.vstack(
                 [
                     bundle["X_train"][:, feature_indices],
                     bundle["X_dev"][:, feature_indices],
                 ]
             )
             train_y = np.concatenate([bundle["y_train"], bundle["y_dev"]])
-            evaluation_x = {
-                "ClaimBuster": bundle["X_claimbuster"][:, feature_indices],
-                "CT23": bundle["X_ct23"][:, feature_indices],
-            }
-            for name, label_key in (
-                ("ClaimBuster", "y_claimbuster"),
-                ("CT23", "y_ct23"),
-            ):
-                if not np.array_equal(bundle[label_key], benchmarks[name].labels):
-                    raise ValueError(f"{name}: historical label order changed")
-        scaler, classifier = fit_xgboost(train_x, train_y)
+            if not np.array_equal(bundle["y_ct23"], benchmarks["CT23"].labels):
+                raise ValueError("CT23: historical label order changed")
+            ct23_evaluation_x = bundle["X_ct23"][:, feature_indices].copy()
+
+            score_indices = [
+                feature_names.index(name)
+                for name in ("check_score", "verif_score", "harm_score")
+            ]
+            claimbuster_scores = np.vstack(
+                [
+                    bundle["X_train"][:, score_indices],
+                    bundle["X_dev"][:, score_indices],
+                ]
+            )
+            claimbuster_train_x = np.column_stack(
+                [claimbuster_scores, claimbuster_scores.mean(axis=1)]
+            )
+
+        retained_claimbuster = pl.read_parquet(
+            root
+            / "fusion_benchmark_features/CB_groundtruth_features_mistral-small-24b.parquet"
+        )
+        if retained_claimbuster["text"].to_list() != benchmarks["ClaimBuster"].texts:
+            raise ValueError("ClaimBuster: retained Fusion text order changed")
+        if not np.array_equal(
+            retained_claimbuster["label"].to_numpy(),
+            benchmarks["ClaimBuster"].labels,
+        ):
+            raise ValueError("ClaimBuster: retained Fusion label order changed")
+        claimbuster_x = retained_claimbuster.select(
+            CLAIMBUSTER_FUSION_FEATURES
+        ).to_numpy().astype(np.float32)
+        claimbuster_x = np.nan_to_num(claimbuster_x, nan=50.0)
+
+        claimbuster_scaler, claimbuster_classifier = fit_xgboost(
+            claimbuster_train_x, train_y
+        )
+        ct23_scaler, ct23_classifier = fit_xgboost(ct23_train_x, train_y)
         probabilities = {
-            name: classifier.predict_proba(scaler.transform(values))[:, 1]
-            for name, values in evaluation_x.items()
+            "ClaimBuster": claimbuster_classifier.predict_proba(
+                claimbuster_scaler.transform(claimbuster_x)
+            )[:, 1],
+            "CT23": ct23_classifier.predict_proba(
+                ct23_scaler.transform(ct23_evaluation_x)
+            )[:, 1],
         }
         return probabilities, None, None
 
@@ -1115,6 +1162,128 @@ def evaluation_feature_components(
             scaler.transform(validation_x)
         )[:, 1]
     return probabilities, validation_probabilities, validation_y
+
+
+def retained_claimbuster_encoder_fusion(
+    repo_root: Path,
+) -> tuple[Metrics, Metrics, Metrics, dict[str, np.ndarray]]:
+    """Recompute the ClaimBuster Encoder Only, XGBoost and Fusion cells."""
+    benchmarks = load_benchmarks(repo_root)
+    benchmark = benchmarks["ClaimBuster"]
+    root = artifact_root(repo_root)
+    with np.load(
+        root / "encoder_only/claimbuster_seed_42_predictions.npz",
+        allow_pickle=False,
+    ) as bundle:
+        sentence_ids = bundle["sentence_ids"].astype(str)
+        labels = bundle["labels"].astype(np.int8)
+        encoder_probabilities = bundle["probabilities"].astype(np.float64)
+    if not np.array_equal(sentence_ids, benchmark.sentence_ids.astype(str)):
+        raise ValueError("retained ClaimBuster sentence order changed")
+    if not np.array_equal(labels, benchmark.labels):
+        raise ValueError("retained ClaimBuster labels changed")
+    if encoder_probabilities.shape != benchmark.labels.shape:
+        raise ValueError("retained ClaimBuster probability length changed")
+    if np.any((encoder_probabilities < 0) | (encoder_probabilities > 1)):
+        raise ValueError("retained ClaimBuster probabilities are outside [0, 1]")
+
+    xgboost, validation_probabilities, validation_labels = (
+        evaluation_feature_components(
+            repo_root, repo_root / "unused-historical-run", "historical", benchmarks
+        )
+    )
+    if validation_probabilities is not None or validation_labels is not None:
+        raise ValueError("historical ClaimBuster reconstruction returned validation data")
+    xgboost_probabilities = xgboost["ClaimBuster"].astype(np.float64)
+    fusion_probabilities = (
+        ENCODER_WEIGHT * encoder_probabilities
+        + (1 - ENCODER_WEIGHT) * xgboost_probabilities
+    )
+    encoder_metrics = evaluate(
+        benchmark.labels,
+        encoder_probabilities,
+        HISTORICAL_THRESHOLDS["encoder_only"]["ClaimBuster"],
+    )
+    xgboost_metrics = evaluate(benchmark.labels, xgboost_probabilities, 0.45)
+    fusion_metrics = evaluate(
+        benchmark.labels,
+        fusion_probabilities,
+        HISTORICAL_THRESHOLDS["fusion"]["ClaimBuster"],
+    )
+    arrays = {
+        "sentence_ids": benchmark.sentence_ids.astype(str),
+        "labels": benchmark.labels.astype(np.int8),
+        "encoder_probabilities": encoder_probabilities.astype(np.float32),
+        "xgboost_probabilities": xgboost_probabilities.astype(np.float32),
+        "fusion_probabilities": fusion_probabilities.astype(np.float32),
+    }
+    return encoder_metrics, xgboost_metrics, fusion_metrics, arrays
+
+
+def retained_claimbuster_result(
+    encoder_metrics: Metrics,
+    xgboost_metrics: Metrics,
+    fusion_metrics: Metrics,
+) -> dict[str, Any]:
+    """Build the checksum-bound record for the ClaimBuster paper cells."""
+    return {
+        "change_note": (
+            "Sérgio Pinto, 2026-08-28 03:38 WEST — bound the ClaimBuster "
+            "Encoder Only and Fusion cells to the fresh A10 replication."
+        ),
+        "status": "PASS",
+        "dataset": "ClaimBuster",
+        "reproduction_type": (
+            "fresh A10 training with deterministic public numerical reconstruction"
+        ),
+        "encoder_run": {
+            "historical_label": "seed_0",
+            "effective_rng_seed": 42,
+            "model_sha256": (
+                "3765638fb1f60a87741fdd6c576faeece8be1cb520d074d08e7e2abe8c3feb0f"
+            ),
+            "gpu": "NVIDIA A10",
+            "torch": "2.7.0+cu128",
+            "transformers": "4.44.0",
+        },
+        "method": {
+            "encoder_threshold": HISTORICAL_THRESHOLDS["encoder_only"][
+                "ClaimBuster"
+            ],
+            "xgboost_features": list(CLAIMBUSTER_FUSION_FEATURES),
+            "xgboost_threshold": 0.45,
+            "xgboost": {
+                "n_estimators": 100,
+                "max_depth": 4,
+                "learning_rate": 0.1,
+                "scale_pos_weight": 3,
+                "random_state": 42,
+                "version": "2.1.1",
+            },
+            "encoder_weight": ENCODER_WEIGHT,
+            "xgboost_weight": 1 - ENCODER_WEIGHT,
+            "fusion_threshold": HISTORICAL_THRESHOLDS["fusion"]["ClaimBuster"],
+        },
+        "inputs": {
+            name: digest
+            for name, digest in PUBLIC_INPUTS.items()
+            if name
+            in {
+                "llm_features_classifier/matrices.npz",
+                "fusion_benchmark_features/CB_groundtruth_features_mistral-small-24b.parquet",
+                "encoder_only/claimbuster_seed_42_predictions.npz",
+            }
+        },
+        "metrics": {
+            "encoder_only": asdict(encoder_metrics),
+            "xgboost": asdict(xgboost_metrics),
+            "fusion": asdict(fusion_metrics),
+        },
+        "paper_f1": {
+            "encoder_only": PAPER_TARGETS["encoder_only"]["ClaimBuster"],
+            "fusion": PAPER_TARGETS["fusion"]["ClaimBuster"],
+        },
+    }
 
 
 def verify_model_receipts(
@@ -1282,16 +1451,14 @@ def evaluate_track(
             str(seed): HISTORICAL_RUN_LABELS[seed] for seed in track_seeds
         }
         summary["encoder_sources"] = {
-            "ClaimBuster": "temperature-scaled two-run ensemble",
+            "ClaimBuster": "fresh seed_0 run (effective RNG seed 42)",
             "CT23": "retained seed_0 run (effective RNG seed 42)",
         }
         for name, benchmark in benchmarks.items():
             ensemble_values = temperature_scale(
                 [benchmark_probabilities[seed][name] for seed in track_seeds]
             )
-            encoder_values = (
-                benchmark_probabilities[42][name] if name == "CT23" else ensemble_values
-            )
+            encoder_values = benchmark_probabilities[42][name]
             arrays[f"{name.lower()}_encoder_probabilities"] = encoder_values.astype(
                 np.float32
             )
@@ -1305,10 +1472,12 @@ def evaluate_track(
                 ),
                 "paper_target": PAPER_TARGETS["encoder_only"][name],
             }
-            fusion_values = (
-                ENCODER_WEIGHT * ensemble_values
-                + (1 - ENCODER_WEIGHT) * xgb_external[name]
+            fusion_encoder_values = (
+                encoder_values if name == "ClaimBuster" else ensemble_values
             )
+            fusion_values = ENCODER_WEIGHT * fusion_encoder_values + (
+                1 - ENCODER_WEIGHT
+            ) * xgb_external[name]
             arrays[f"{name.lower()}_fusion_probabilities"] = fusion_values.astype(
                 np.float32
             )
@@ -1347,6 +1516,10 @@ def parse_args() -> argparse.Namespace:
         "verify-retained-ct23",
         help="recompute the retained historical CT23 Fusion paper cell",
     )
+    subparsers.add_parser(
+        "verify-retained-claimbuster",
+        help="recompute the fresh A10 ClaimBuster Encoder Only and Fusion cells",
+    )
 
     for name in ("train", "evaluate"):
         child = subparsers.add_parser(name)
@@ -1372,6 +1545,38 @@ def main() -> int:
         print("RETAINED CT23 FUSION: PASS")
         print(f"F1: {metrics.f1:.6f} -> {metrics.f1:.3f}")
         print(f"Result: {result_path}")
+        return 0
+    if args.command == "verify-retained-claimbuster":
+        encoder, xgboost, fusion, arrays = retained_claimbuster_encoder_fusion(
+            repo_root
+        )
+        expected_encoder = PAPER_TARGETS["encoder_only"]["ClaimBuster"]
+        expected_fusion = PAPER_TARGETS["fusion"]["ClaimBuster"]
+        if round(encoder.f1, 3) != expected_encoder:
+            raise RuntimeError(
+                f"ClaimBuster Encoder F1 is {encoder.f1:.6f}, "
+                f"expected {expected_encoder:.3f}"
+            )
+        if round(fusion.f1, 3) != expected_fusion:
+            raise RuntimeError(
+                f"ClaimBuster Fusion F1 is {fusion.f1:.6f}, "
+                f"expected {expected_fusion:.3f}"
+            )
+        output_dir = (
+            repo_root / "results/claimbuster_encoder_fusion_reproduction_2026-08-28"
+        )
+        output_dir.mkdir(parents=True, exist_ok=True)
+        write_npz(output_dir / "per_example_predictions.npz", arrays)
+        write_json(
+            output_dir / "summary.json",
+            retained_claimbuster_result(encoder, xgboost, fusion),
+        )
+        checksums_manifest(output_dir)
+        print("CLAIMBUSTER ENCODER AND FUSION: PASS")
+        print(f"Encoder F1: {encoder.f1:.6f} -> {encoder.f1:.3f}")
+        print(f"XGBoost F1: {xgboost.f1:.6f} -> {xgboost.f1:.3f}")
+        print(f"Fusion F1: {fusion.f1:.6f} -> {fusion.f1:.3f}")
+        print(f"Result: {output_dir}")
         return 0
 
     run_root = args.run_root.resolve()

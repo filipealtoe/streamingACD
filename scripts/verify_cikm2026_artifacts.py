@@ -40,6 +40,9 @@ from sklearn.metrics import f1_score, fbeta_score, mean_absolute_error, r2_score
 # CAMERA-READY ARTIFACT CHANGE | Author: Sérgio Pinto | Timestamp:
 # 2026-08-25 21:56 WEST | Reason: verify neutral version-based RandomForest run
 # identities and their paper-cell reconstruction mapping.
+# CAMERA-READY ARTIFACT CHANGE | Author: Sérgio Pinto | Timestamp:
+# 2026-08-28 03:38 WEST | Reason: verify the fresh A10 ClaimBuster Encoder Only
+# and Fusion cells directly from public labels and prediction vectors.
 
 EXPECTED_MISSING = {
     "geographic_entropy_predetect": 529,
@@ -338,7 +341,9 @@ def verify_checkworthiness(root: Path, manifest: dict[str, Any]) -> list[Check]:
     fusion = section["fusion"]
     for dataset, result_path in fusion["results"].items():
         fusion_result = load_json(root / result_path)
-        fusion_actual = round(float(fusion_result["metrics"]["f1"]), 3)
+        metrics = fusion_result["metrics"]
+        fusion_metrics = metrics["fusion"] if dataset == "ClaimBuster" else metrics
+        fusion_actual = round(float(fusion_metrics["f1"]), 3)
         checks.extend(
             [
                 Check(
@@ -368,6 +373,23 @@ def verify_checkworthiness(root: Path, manifest: dict[str, Any]) -> list[Check]:
     ct23_probabilities = np.asarray(
         np.load(source / "ct23_probs.npy"), dtype=np.float64
     )
+    with np.load(
+        source / "claimbuster_seed_42_predictions.npz", allow_pickle=False
+    ) as bundle:
+        claimbuster_bundle_labels = np.asarray(bundle["labels"], dtype=np.int8)
+        claimbuster_probabilities = np.asarray(
+            bundle["probabilities"], dtype=np.float64
+        )
+    with (
+        root
+        / "reproducibility/source_artifacts/checkworthiness/benchmarks/claim_buster/groundtruth.csv"
+    ).open(encoding="utf-8", newline="") as handle:
+        claimbuster_labels = np.asarray(
+            [1 if int(row["Verdict"]) == 1 else 0 for row in csv.DictReader(handle)],
+            dtype=np.int8,
+        )
+    if not np.array_equal(claimbuster_bundle_labels, claimbuster_labels):
+        raise ValueError("ClaimBuster prediction-bundle labels changed")
     with (
         root
         / "reproducibility/source_artifacts/checkworthiness/benchmarks/ct23/CT23_1B_checkworthy_english_test_gold.tsv"
@@ -382,6 +404,9 @@ def verify_checkworthiness(root: Path, manifest: dict[str, Any]) -> list[Check]:
     encoder_expected = section["encoder_only"]["cells"]
     encoder_actual = {
         "CT24": round(float(f1_score(ct24_labels, ct24_probabilities >= 0.5)), 3),
+        "ClaimBuster": round(
+            float(f1_score(claimbuster_labels, claimbuster_probabilities >= 0.65)), 3
+        ),
         "CT23": round(float(f1_score(ct23_labels, ct23_probabilities >= 0.5)), 3),
     }
     for dataset, wanted in encoder_expected.items():

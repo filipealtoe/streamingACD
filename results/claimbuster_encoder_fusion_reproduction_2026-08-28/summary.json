@@ -1,0 +1,79 @@
+{
+  "change_note": "S\u00e9rgio Pinto, 2026-08-28 03:38 WEST \u2014 bound the ClaimBuster Encoder Only and Fusion cells to the fresh A10 replication.",
+  "dataset": "ClaimBuster",
+  "encoder_run": {
+    "effective_rng_seed": 42,
+    "gpu": "NVIDIA A10",
+    "historical_label": "seed_0",
+    "model_sha256": "3765638fb1f60a87741fdd6c576faeece8be1cb520d074d08e7e2abe8c3feb0f",
+    "torch": "2.7.0+cu128",
+    "transformers": "4.44.0"
+  },
+  "inputs": {
+    "encoder_only/claimbuster_seed_42_predictions.npz": "544a6a1230464fc1c52875e50328c9b30af8bf3585163e3acc5d6b36431085ab",
+    "fusion_benchmark_features/CB_groundtruth_features_mistral-small-24b.parquet": "60bdfcf5a89002b8eddfcfdf220b2d35665ce0121cc228f5ea0cd30e70858326",
+    "llm_features_classifier/matrices.npz": "de2c3e47534a0bfe81a4855bf5989ad2efaa434f20229220843080ba2862fa6e"
+  },
+  "method": {
+    "encoder_threshold": 0.65,
+    "encoder_weight": 0.6,
+    "fusion_threshold": 0.6,
+    "xgboost": {
+      "learning_rate": 0.1,
+      "max_depth": 4,
+      "n_estimators": 100,
+      "random_state": 42,
+      "scale_pos_weight": 3,
+      "version": "2.1.1"
+    },
+    "xgboost_features": [
+      "checkability_conf",
+      "verifiability_conf",
+      "harm_conf",
+      "avg_confidence"
+    ],
+    "xgboost_threshold": 0.45,
+    "xgboost_weight": 0.4
+  },
+  "metrics": {
+    "encoder_only": {
+      "accuracy": 0.9864341085271318,
+      "f1": 0.9700854700854701,
+      "false_negative": 11,
+      "false_positive": 3,
+      "precision": 0.9869565217391304,
+      "recall": 0.9537815126050421,
+      "threshold": 0.65,
+      "true_negative": 791,
+      "true_positive": 227
+    },
+    "fusion": {
+      "accuracy": 0.9825581395348837,
+      "f1": 0.9613733905579399,
+      "false_negative": 14,
+      "false_positive": 4,
+      "precision": 0.9824561403508771,
+      "recall": 0.9411764705882353,
+      "threshold": 0.6,
+      "true_negative": 790,
+      "true_positive": 224
+    },
+    "xgboost": {
+      "accuracy": 0.7868217054263565,
+      "f1": 0.6333333333333333,
+      "false_negative": 48,
+      "false_positive": 172,
+      "precision": 0.5248618784530387,
+      "recall": 0.7983193277310925,
+      "threshold": 0.45,
+      "true_negative": 622,
+      "true_positive": 190
+    }
+  },
+  "paper_f1": {
+    "encoder_only": 0.97,
+    "fusion": 0.961
+  },
+  "reproduction_type": "fresh A10 training with deterministic public numerical reconstruction",
+  "status": "PASS"
+}
