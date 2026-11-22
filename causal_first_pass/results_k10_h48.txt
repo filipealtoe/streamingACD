@@ -1,0 +1,140 @@
+n = 3955 alpha = 0.01
+
+Full-sample graph with time-order knowledge:
+   stream_volume_24h -- day_index
+   stream_volume_24h -> url_share
+   stream_volume_24h -> mention_share
+   stream_volume_24h -> mean_words
+   stream_volume_24h -> hours_to_k
+   day_index -> hours_to_k
+   median_followers -> max_followers
+   unique_users -> max_followers
+   max_followers -> account_age_days
+   max_followers -> mention_share
+   median_followers -> account_age_days
+   median_followers -> url_share
+   mean_words -> unique_users
+   similarity -> unique_users
+   unique_users -> tweets_after
+   mention_share -> url_share
+   mean_words -> url_share
+   similarity -> url_share
+   url_share -> tweets_after
+   mention_share -> mean_words
+   similarity -> hours_to_k
+   hours_to_k -> tweets_after
+
+Without time-order knowledge: 22 edges; shares 22 adjacencies with the graph above; 14 with the same orientation; undirected or differently oriented: 8
+
+Edge stability over 200 day-block bootstrap samples (share of samples with the edge):
+ *  100%  stream_volume_24h ~ day_index   most common form: stream_volume_24h -- day_index (100%)
+ *  100%  day_index ~ hours_to_k   most common form: day_index -> hours_to_k (100%)
+ *  100%  max_followers ~ median_followers   most common form: median_followers -> max_followers (100%)
+ *  100%  max_followers ~ unique_users   most common form: unique_users -> max_followers (100%)
+ *  100%  median_followers ~ account_age_days   most common form: account_age_days -> median_followers (40%)
+ *  100%  median_followers ~ url_share   most common form: median_followers -> url_share (62%)
+ *  100%  unique_users ~ mean_words   most common form: mean_words -> unique_users (96%)
+ *  100%  unique_users ~ similarity   most common form: similarity -> unique_users (96%)
+ *  100%  mention_share ~ mean_words   most common form: mention_share -> mean_words (40%)
+ *  100%  similarity ~ hours_to_k   most common form: similarity -> hours_to_k (100%)
+ *  100%  hours_to_k ~ tweets_after   most common form: hours_to_k -> tweets_after (100%)
+ *   97%  url_share ~ similarity   most common form: similarity -> url_share (97%)
+ *   96%  url_share ~ mention_share   most common form: mention_share -> url_share (95%)
+ *   96%  unique_users ~ tweets_after   most common form: unique_users -> tweets_after (96%)
+ *   76%  url_share ~ tweets_after   most common form: url_share -> tweets_after (76%)
+ *   74%  url_share ~ mean_words   most common form: mean_words -> url_share (70%)
+ *   72%  max_followers ~ mention_share   most common form: mention_share -> max_followers (42%)
+ *   69%  stream_volume_24h ~ hours_to_k   most common form: stream_volume_24h -> hours_to_k (69%)
+ *   64%  max_followers ~ account_age_days   most common form: account_age_days -> max_followers (34%)
+ *   62%  stream_volume_24h ~ url_share   most common form: stream_volume_24h -> url_share (62%)
+ *   53%  stream_volume_24h ~ mean_words   most common form: stream_volume_24h -> mean_words (53%)
+ *   48%  stream_volume_24h ~ mention_share   most common form: stream_volume_24h -> mention_share (48%)
+     47%  day_index ~ tweets_after   most common form: day_index -> tweets_after (47%)
+     45%  max_followers ~ similarity   most common form: similarity -> max_followers (45%)
+     39%  day_index ~ mention_share   most common form: day_index -> mention_share (39%)
+     21%  stream_volume_24h ~ tweets_after   most common form: stream_volume_24h -> tweets_after (21%)
+     18%  mean_words ~ similarity   most common form: similarity -> mean_words (16%)
+     17%  day_index ~ url_share   most common form: day_index -> url_share (17%)
+     12%  unique_users ~ url_share   most common form: url_share -> unique_users (10%)
+     12%  mention_share ~ tweets_after   most common form: mention_share -> tweets_after (12%)
+     12%  unique_users ~ mention_share   most common form: mention_share -> unique_users (12%)
+     12%  account_age_days ~ hours_to_k   most common form: account_age_days -> hours_to_k (12%)
+     10%  url_share ~ hours_to_k   most common form: url_share -> hours_to_k (10%)
+      7%  mean_words ~ tweets_after   most common form: mean_words -> tweets_after (7%)
+      7%  mean_words ~ hours_to_k   most common form: mean_words -> hours_to_k (7%)
+      6%  median_followers ~ mean_words   most common form: mean_words -> median_followers (6%)
+      6%  stream_volume_24h ~ account_age_days   most common form: stream_volume_24h -> account_age_days (6%)
+      6%  mention_share ~ hours_to_k   most common form: mention_share -> hours_to_k (6%)
+      4%  unique_users ~ account_age_days   most common form: unique_users -> account_age_days (2%)
+      4%  account_age_days ~ mention_share   most common form: mention_share -> account_age_days (2%)
+      4%  day_index ~ mean_words   most common form: day_index -> mean_words (4%)
+      3%  unique_users ~ hours_to_k   most common form: unique_users -> hours_to_k (3%)
+      2%  max_followers ~ hours_to_k   most common form: max_followers -> hours_to_k (2%)
+      2%  max_followers ~ tweets_after   most common form: max_followers -> tweets_after (2%)
+      2%  account_age_days ~ mean_words   most common form: account_age_days -> mean_words (2%)
+      2%  max_followers ~ url_share   most common form: url_share -> max_followers (2%)
+      2%  account_age_days ~ tweets_after   most common form: account_age_days -> tweets_after (2%)
+      2%  median_followers ~ tweets_after   most common form: median_followers -> tweets_after (2%)
+      1%  stream_volume_24h ~ max_followers   most common form: stream_volume_24h -> max_followers (1%)
+      1%  day_index ~ account_age_days   most common form: day_index -> account_age_days (1%)
+      1%  similarity ~ tweets_after   most common form: similarity -> tweets_after (1%)
+      0%  stream_volume_24h ~ unique_users   most common form: stream_volume_24h -> unique_users (0%)
+      0%  median_followers ~ hours_to_k   most common form: median_followers -> hours_to_k (0%)
+
+Split by time (before / from 2020-10-25): n = 1829 / 2126; edges 22 / 17; shared 15
+   shared: account_age_days -> median_followers | median_followers -- account_age_days
+   shared: stream_volume_24h -- day_index | stream_volume_24h -- day_index
+   shared: url_share -> median_followers | median_followers -> url_share
+   shared: day_index -> tweets_after | day_index -> tweets_after
+   shared: similarity -> unique_users | similarity -> unique_users
+   shared: mean_words -> mention_share | mention_share -- mean_words
+   shared: similarity -> url_share | similarity -> url_share
+   shared: unique_users -> tweets_after | unique_users -> tweets_after
+   shared: day_index -> hours_to_k | day_index -> hours_to_k
+   shared: median_followers -> max_followers | median_followers -> max_followers
+   shared: mean_words -> unique_users | mean_words -> unique_users
+   shared: unique_users -> max_followers | unique_users -> max_followers
+   shared: hours_to_k -> tweets_after | hours_to_k -> tweets_after
+   shared: mention_share -> url_share | mention_share -> url_share
+   shared: similarity -> hours_to_k | similarity -> hours_to_k
+
+=== effects
+Spearman with tweets_after: {'max_followers': np.float64(0.062), 'unique_users': np.float64(0.118), 'hours_to_k': np.float64(-0.294), 'url_share': np.float64(-0.099), 'similarity': np.float64(-0.046), 'early_engagement': np.float64(0.096)}
+Spearman with engagement_after: {'max_followers': np.float64(0.161), 'unique_users': np.float64(0.179), 'hours_to_k': np.float64(-0.201), 'early_engagement': np.float64(0.236)}
+
+Outcome l_tweets_after (day-clustered 95% intervals)
+ treatment: log max followers of the first 10 posters
+  unadjusted                                     +0.054  [+0.020, +0.087]
+  adjusted for context and early who/what        +0.019  [-0.012, +0.050]
+  also holding early speed fixed                 +0.023  [-0.004, +0.051]
+ treatment: distinct users among the first 10 tweets
+  unadjusted                                     +0.061  [+0.033, +0.088]
+  adjusted for context and early who/what        +0.070  [+0.037, +0.103]
+  also holding early speed fixed                 +0.044  [+0.009, +0.079]
+
+Outcome l_new_users_after (day-clustered 95% intervals)
+ treatment: log max followers of the first 10 posters
+  unadjusted                                     +0.154  [+0.130, +0.177]
+  adjusted for context and early who/what        +0.022  [-0.008, +0.051]
+  also holding early speed fixed                 +0.025  [-0.001, +0.051]
+ treatment: distinct users among the first 10 tweets
+  unadjusted                                     +0.221  [+0.199, +0.243]
+  adjusted for context and early who/what        +0.201  [+0.177, +0.225]
+  also holding early speed fixed                 +0.179  [+0.153, +0.205]
+
+Outcome l_engagement_after (day-clustered 95% intervals)
+ treatment: log max followers of the first 10 posters
+  unadjusted                                     +0.203  [+0.157, +0.249]
+  adjusted for context and early who/what        +0.077  [+0.029, +0.124]
+  also holding early speed fixed                 +0.083  [+0.041, +0.124]
+ treatment: distinct users among the first 10 tweets
+  unadjusted                                     +0.167  [+0.126, +0.207]
+  adjusted for context and early who/what        +0.170  [+0.120, +0.220]
+  also holding early speed fixed                 +0.133  [+0.082, +0.184]
+
+Placebo: 'effect' of distinct users on a variable fixed before the narrative (stream volume 24h before)
+  adjusted                                       +0.007  [-0.001, +0.015]
+
+Left-truncation check: narratives whose first tweet came after day 3 only
+ n = 1599  spearman(day_index, hours_to_k): all 0.65  subset 0.52
+ unique_users distribution: {1: 290, 2: 80, 3: 60, 4: 54, 5: 58, 6: 82, 7: 116, 8: 257, 9: 707, 10: 2251}
