@@ -1,0 +1,151 @@
+pair_id,cluster_id,band,best_sim,fc_url,label
+1,5950,0.4-0.5,0.4799947,https://www.misbar.com/en/factcheck/2020/10/06/tom-hanks-didnt-wear-a-poltical-shirt,"same topic, different claim"
+2,30428,0.6-0.7,0.67416567,https://www.factcheck.org/2020/11/overblown-claims-of-bad-things-at-philly-polls/,"same topic, different claim"
+3,4678,0.5-0.6,0.5973286,https://oglobo.globo.com/fato-ou-fake/e-fake-que-mais-de-500-mil-votos-em-trump-tenham-sido-desviados-para-biden-na-eleicao-dos-eua-1-24745018,unrelated
+4,1472,0.4-0.5,0.47671372,https://www.washingtonpost.com/politics/2020/10/07/trump-campaign-promotes-false-claim-that-biden-would-end-fracking/,unrelated
+5,2139,>0.7,0.702952,https://www.aosfatos.org/noticias/e-falso-que-cedulas-utilizadas-em-eleicoes-dos-estados-unidos-foram-queimadas/,unrelated
+6,4479,0.5-0.6,0.56225353,https://www.boomlive.in/fake-news/7-year-old-photo-of-a-mexican-politician-viral-with-misleading-context-10198,unrelated
+7,6733,>0.7,0.76317525,https://www.snopes.com/fact-check/emily-murphy-feelings-trump-shirt/,unrelated
+8,65584,0.4-0.5,0.49031016,https://politifact.com/factchecks/2020/nov/18/facebook-posts/joe-biden-did-not-hire-mob-fabricate-ballots-phila/,unrelated
+9,12820,0.4-0.5,0.40095115,https://www.snopes.com/fact-check/stress-awareness-day/,unrelated
+10,4926,>0.7,0.72993267,https://factly.in/these-are-not-actual-statistics-related-to-registered-voters-in-american-states/,unrelated
+11,19570,0.6-0.7,0.6238824,https://politifact.com/factchecks/2020/oct/14/facebook-posts/facebook-video-edits-joe-bidens-comments-running-s/,unrelated
+12,2406,<0.4,0.30605716,https://leadstories.com/hoax-alert/2020/10/projection-of-the-biden-harris-logo-on-a-harley-davidson-building-was-not-an-endorsement-by-the-business.html,unrelated
+13,82532,0.6-0.7,0.6678387,https://www.factcheck.org/2020/11/trump-misinformation-on-georgia-ballot-rejections/,"same topic, different claim"
+14,203,0.5-0.6,0.55723786,https://politifact.com/factchecks/2020/sep/17/michael-caputo/fact-checking-trump-health-aides-unproven-hit-squa/,unrelated
+15,1754,0.5-0.6,0.57698303,https://www.washingtonpost.com/politics/2020/10/07/trump-tweets-video-mask-protest-claiming-it-is-church-service/,unrelated
+16,18044,0.4-0.5,0.49224097,https://oglobo.globo.com/fato-ou-fake/e-fake-que-mais-de-500-mil-votos-em-trump-tenham-sido-desviados-para-biden-na-eleicao-dos-eua-1-24745018,unrelated
+17,2709,0.6-0.7,0.6253902,https://factly.in/the-tweet-about-indian-media-by-joe-biden-is-from-a-parody-account/,"same topic, different claim"
+18,5068,0.5-0.6,0.5682732,https://www.misbar.com/en/factcheck/2020/11/19/there-werent-more-votes-than-people-in-detroit,unrelated
+19,56223,0.4-0.5,0.4924931,https://www.snopes.com/fact-check/emily-murphy-feelings-trump-shirt/,unrelated
+20,20247,0.4-0.5,0.44576874,https://leadstories.com/hoax-alert/2020/10/projection-of-the-biden-harris-logo-on-a-harley-davidson-building-was-not-an-endorsement-by-the-business.html,unrelated
+21,47877,0.6-0.7,0.6574334,https://www.factcheck.org/2020/10/bogus-claims-of-debate-moderator-bias/,unrelated
+22,6529,0.6-0.7,0.6533343,https://www.usatoday.com/story/news/factcheck/2020/10/06/fact-check-post-claims-trump-would-be-fine-if-he-hadnt-gotten-tested-satire/3626371001/,"same topic, different claim"
+23,4320,0.5-0.6,0.56728464,https://www.washingtonpost.com/politics/2020/10/26/trump-ad-snips-bidens-comments-taxes-out-context/,"same topic, different claim"
+24,25598,0.4-0.5,0.47742862,https://www.misbar.com/en/factcheck/2020/11/07/false-ballots-stuffing-in-michigan,unrelated
+25,14476,>0.7,0.79941744,https://www.misbar.com/en/factcheck/2020/11/07/joe-biden-won-the-presidential-election,unrelated
+26,13812,0.6-0.7,0.6948426,https://www.snopes.com/fact-check/emily-murphy-feelings-trump-shirt/,unrelated
+27,13468,0.4-0.5,0.48746812,https://apnews.com/article/fact-checking-9641005132,unrelated
+28,2911,0.4-0.5,0.4039234,https://projetocomprova.com.br/publica%C3%A7%C3%B5es/e-falso-que-apenas-tres-paises-inclusive-o-brasil-utilizem-urnas-eletronicas/,unrelated
+29,11596,0.5-0.6,0.5871552,https://www.aosfatos.org/noticias/e-falso-que-cedulas-utilizadas-em-eleicoes-dos-estados-unidos-foram-queimadas/,unrelated
+30,754,>0.7,0.7434875,https://politifact.com/factchecks/2020/oct/14/facebook-posts/facebook-video-edits-joe-bidens-comments-running-s/,unrelated
+31,59993,0.6-0.7,0.6730368,https://politifact.com/factchecks/2020/nov/01/jason-miller/trump-spokesman-jason-miller-paints-dubious-pictur/,"same topic, different claim"
+32,22332,>0.7,0.70365477,https://politifact.com/factchecks/2020/oct/14/facebook-posts/facebook-video-edits-joe-bidens-comments-running-s/,unrelated
+33,58324,0.5-0.6,0.59153414,https://www.snopes.com/fact-check/stop-the-count-chant/,unrelated
+34,6147,>0.7,0.8117013,https://factcheck.afp.com/trump-envoy-uses-2019-photo-allege-biden-hypocrisy-masks,"same topic, different claim"
+35,7598,0.6-0.7,0.6785981,https://politifact.com/factchecks/2020/nov/05/tiktok-posts/social-media-posts-falsely-claim-40000-votes-jo-jo/,unrelated
+36,3605,0.5-0.6,0.59693074,https://www.washingtonpost.com/politics/2020/10/07/trump-tweets-video-mask-protest-claiming-it-is-church-service/,unrelated
+37,18403,0.5-0.6,0.5646417,https://www.snopes.com/fact-check/did-trump-call-mccain-a-loser/,unrelated
+38,3440,0.4-0.5,0.43176484,https://politifact.com/factchecks/2020/sep/30/hugh-hewitt/experts-say-trump-tax-report-shows-aggressive-tax/,unrelated
+39,35648,0.5-0.6,0.5936746,https://apnews.com/article/fact-checking-9667191348,"same topic, different claim"
+40,21656,0.6-0.7,0.6305561,https://apnews.com/article/fact-checking-9682051106,unrelated
+41,13589,0.6-0.7,0.6846722,https://politifact.com/factchecks/2020/nov/01/jason-miller/trump-spokesman-jason-miller-paints-dubious-pictur/,unrelated
+42,56130,0.4-0.5,0.46187684,https://www.misbar.com/en/factcheck/2020/10/14/israeli-flag-isnt-raised-in-lebanon,unrelated
+43,1558,>0.7,0.71037054,https://www.snopes.com/fact-check/unemployment-low-trump/,same claim
+44,12859,0.6-0.7,0.6734085,https://factcheck.afp.com/photo-2018-swiss-music-festival-falsely-shared-florida-trump-rally,unrelated
+45,50883,0.5-0.6,0.59589666,https://www.washingtonpost.com/politics/2020/10/07/trump-tweets-video-mask-protest-claiming-it-is-church-service/,unrelated
+46,6767,>0.7,0.709448,https://www.snopes.com/fact-check/trump-fail-to-denounce-qanon/,same claim
+47,56137,0.4-0.5,0.44957393,https://www.thequint.com/news/webqoof/old-russian-video-shared-in-context-of-azerbaijan-armenia-conflict,unrelated
+48,22096,<0.4,0.39370197,https://www.snopes.com/fact-check/starbucks-christmas-holiday-blend/,unrelated
+49,6373,0.4-0.5,0.47368598,https://www.rappler.com/newsbreak/fact-check/robredo-erroneously-reports-drug-war-numbers-un-talk/,unrelated
+50,18683,0.5-0.6,0.5784455,https://politifact.com/factchecks/2020/oct/09/viral-image/no-trump-didnt-tweet-his-blood-vaccine/,"same topic, different claim"
+51,69551,0.4-0.5,0.45842203,https://www.snopes.com/fact-check/kamala-harris-protests/,unrelated
+52,11700,0.4-0.5,0.48738486,https://leadstories.com/hoax-alert/2020/10/projection-of-the-biden-harris-logo-on-a-harley-davidson-building-was-not-an-endorsement-by-the-business.html,unrelated
+53,8626,>0.7,0.7283875,https://leadstories.com/hoax-alert/2020/10/fact-check-photo-does-not-show-bidens-golfing-with-burisma-ceo.html,"same topic, different claim"
+54,2310,>0.7,0.7992989,https://www.snopes.com/fact-check/listen-to-scientists/,"same topic, different claim"
+55,750,0.6-0.7,0.6296012,https://www.washingtonpost.com/politics/2023/02/13/hunter-biden-laptop-claims-russian-disinfo/,"same topic, different claim"
+56,7200,>0.7,0.7478045,https://www.factcheck.org/2020/10/viral-post-overstates-effect-of-trumps-order-on-preexisting-conditions/,same claim
+57,27719,>0.7,0.7395606,https://www.snopes.com/fact-check/trump-healthcare-lesley-stahl/,same claim
+58,43910,0.6-0.7,0.62975955,https://politifact.com/factchecks/2020/nov/01/jason-miller/trump-spokesman-jason-miller-paints-dubious-pictur/,unrelated
+59,12194,>0.7,0.7008124,https://politifact.com/factchecks/2020/dec/02/rand-paul/fact-checking-rand-pauls-unsupported-claim-about-f/,unrelated
+60,22566,0.6-0.7,0.665466,https://oglobo.globo.com/fato-ou-fake/e-fake-que-mais-de-500-mil-votos-em-trump-tenham-sido-desviados-para-biden-na-eleicao-dos-eua-1-24745018,unrelated
+61,21744,<0.4,0.38227504,https://factcheck.afp.com/tweets-falsely-claim-photo-nazi-flag-pro-trump-march,unrelated
+62,29040,0.6-0.7,0.62984943,https://observador.pt/factchecks/fact-check-80-votos-em-trump-foram-queimados-na-virginia-como-disse-eric-trump/,unrelated
+63,35181,>0.7,0.73092294,https://www.boomlive.in/world/fact-checking-the-final-debate-between-donald-trump-and-joe-biden-10332,"same topic, different claim"
+64,3026,<0.4,0.32266548,https://oglobo.globo.com/fato-ou-fake/e-fake-que-mais-de-500-mil-votos-em-trump-tenham-sido-desviados-para-biden-na-eleicao-dos-eua-1-24745018,unrelated
+65,1408,<0.4,0.34688342,https://leadstories.com/hoax-alert/2020/09/fact-check-memes-with-fake-news-still-being-used-to-promote-a-shady-network-of-dating-sites.html,unrelated
+66,805,0.6-0.7,0.61910903,https://www.factcheck.org/2020/10/partisan-claims-of-russia-hoax-revived-ahead-of-2020-election/,"same topic, different claim"
+67,21326,<0.4,0.3860287,https://leadstories.com/hoax-alert/2020/11/fact-check-time-magazine-did-not-publish-cover-telling-donald-trump-time-to-go.html,unrelated
+68,30876,>0.7,0.75201213,https://www.factcheck.org/2020/09/vice-presidential-vacancy-isnt-automatically-filled-by-house-speaker/,unrelated
+69,12647,0.6-0.7,0.6307986,https://oglobo.globo.com/fato-ou-fake/e-fake-que-mais-de-500-mil-votos-em-trump-tenham-sido-desviados-para-biden-na-eleicao-dos-eua-1-24745018,unrelated
+70,6777,0.5-0.6,0.569645,https://www.snopes.com/fact-check/harris-defund-police-tweet/,"same topic, different claim"
+71,4970,0.5-0.6,0.5993705,https://www.washingtonpost.com/politics/2020/10/07/trump-tweets-video-mask-protest-claiming-it-is-church-service/,unrelated
+72,13078,>0.7,0.821235,https://www.misbar.com/en/factcheck/2020/11/08/trump-didnt-tweet-hell-leave-the-usa,same claim
+73,59,>0.7,0.71555245,https://oglobo.globo.com/fato-ou-fake/e-fake-que-mais-de-500-mil-votos-em-trump-tenham-sido-desviados-para-biden-na-eleicao-dos-eua-1-24745018,unrelated
+74,2478,0.4-0.5,0.49380624,https://www.snopes.com/fact-check/trump-biden-resident-meme/,unrelated
+75,21783,0.5-0.6,0.58731925,https://www.usatoday.com/story/news/factcheck/2020/11/04/fact-check-no-fraud-wisconsin-overnight-vote-spike/6167188002/,unrelated
+76,53992,0.5-0.6,0.5782474,https://factcheck.afp.com/it-not-joe-bidens-policy-ban-fracking,"same topic, different claim"
+77,20209,>0.7,0.7268617,https://oglobo.globo.com/fato-ou-fake/e-fake-que-mais-de-500-mil-votos-em-trump-tenham-sido-desviados-para-biden-na-eleicao-dos-eua-1-24745018,unrelated
+78,12485,0.6-0.7,0.61736876,https://www.aosfatos.org/noticias/e-falso-que-cedulas-utilizadas-em-eleicoes-dos-estados-unidos-foram-queimadas/,unrelated
+79,61605,0.6-0.7,0.64056766,https://observador.pt/factchecks/fact-check-fotografias-mostram-enchentes-nas-manifestacoes-pro-trump/,unrelated
+80,40150,0.6-0.7,0.6504729,https://oglobo.globo.com/fato-ou-fake/e-fake-que-mais-de-500-mil-votos-em-trump-tenham-sido-desviados-para-biden-na-eleicao-dos-eua-1-24745018,unrelated
+81,30946,<0.4,0.36257052,https://leadstories.com/hoax-alert/2020/10/the-three-red-lines-on-biden-harris-campaign-logo-are-not-a-reference-to-chinese-socialism.html,unrelated
+82,10758,0.4-0.5,0.43790367,https://www.misbar.com/en/factcheck/2020/11/24/emily-murphy-didn%E2%80%99t-wear-a-f*ck-your-feelings-shirt,unrelated
+83,25164,0.4-0.5,0.49467364,https://www.misbar.com/en/factcheck/2020/10/24/misleading-google-and-search-results,"same topic, different claim"
+84,4469,>0.7,0.8204236,https://www.snopes.com/fact-check/pennsylvania-judge-legal-win-trump/,"same topic, different claim"
+85,77075,0.4-0.5,0.4965086,https://www.misbar.com/en/factcheck/2020/11/05/trumps-social-media-posts-are-being-flagged,unrelated
+86,6680,0.6-0.7,0.6475093,https://oglobo.globo.com/fato-ou-fake/e-fake-que-mais-de-500-mil-votos-em-trump-tenham-sido-desviados-para-biden-na-eleicao-dos-eua-1-24745018,unrelated
+87,38682,0.6-0.7,0.6653082,https://www.usatoday.com/story/news/factcheck/2020/11/17/fact-check-critics-redact-trumps-tweet-make-him-jokingly-concede/6315733002/,unrelated
+88,12427,>0.7,0.7253385,https://www.snopes.com/fact-check/kamala-harris-protests/,unrelated
+89,22748,0.4-0.5,0.4885831,https://www.usatoday.com/story/news/factcheck/2020/09/17/fact-check-joe-biden-has-condemned-violence-protests-all-summer/5706355002/,unrelated
+90,58940,0.4-0.5,0.47999784,https://www.factcheck.org/2020/10/trump-revives-false-narrative-on-biden-and-ukraine/,unrelated
+91,741,0.5-0.6,0.58286154,https://www.snopes.com/fact-check/emily-murphy-feelings-trump-shirt/,unrelated
+92,22448,<0.4,0.3486823,https://www.boomlive.in/fake-news/dubbaka-bypolls-old-video-of-trs-workers-distributing-money-revived-10481,unrelated
+93,73625,>0.7,0.7764942,https://www.misbar.com/en/factcheck/2020/11/05/trumps-social-media-posts-are-being-flagged,"same topic, different claim"
+94,966,0.6-0.7,0.6366917,https://politifact.com/factchecks/2020/oct/31/joe-biden/yes-joe-biden-has-released-22-years-tax-returns-on/,same claim
+95,23356,0.6-0.7,0.6061239,https://www.snopes.com/fact-check/did-kkk-taliban-endorse-trump/,"same topic, different claim"
+96,22546,>0.7,0.754738,https://www.rappler.com/newsbreak/fact-check/youtube-livestream-2020-us-presidential-election-results/,unrelated
+97,16066,0.6-0.7,0.67229486,https://leadstories.com/hoax-alert/2020/10/fact-check-white-house-not-confirmed-ready-to-release-footage-of-hunter-biden-raping-and-torturing-underage-girls.html,same claim
+98,4794,>0.7,0.7251122,https://apnews.com/article/fact-checking-9458967050,unrelated
+99,3684,0.6-0.7,0.64277285,https://www.snopes.com/fact-check/twitter-cammo-trump-covid/,unrelated
+100,5282,0.5-0.6,0.5318651,https://www.snopes.com/fact-check/stop-the-count-chant/,unrelated
+101,3496,0.4-0.5,0.48638272,https://www.washingtonpost.com/politics/2020/09/24/three-trump-ads-spanish-many-distortions/,unrelated
+102,6925,0.6-0.7,0.6595632,https://www.snopes.com/fact-check/ingraham-nevada-interview-trump/,unrelated
+103,1594,0.4-0.5,0.48436886,https://politifact.com/factchecks/2020/oct/14/facebook-posts/facebook-video-edits-joe-bidens-comments-running-s/,unrelated
+104,3239,0.5-0.6,0.5783654,https://apnews.com/article/fact-checking-9582880959,unrelated
+105,41977,0.5-0.6,0.5966954,https://www.usatoday.com/story/news/factcheck/2020/09/14/fact-check-list-10-donald-trump-accomplishments-3-true/3438025001/,unrelated
+106,65561,0.4-0.5,0.48386213,https://newsmeter.in/fact-check-tweets-posted-by-satishmaneshnde-is-not-official-handle-of-rhea-chakrabortys-lawyer,unrelated
+107,4234,0.5-0.6,0.5538088,https://www.voanews.com/a/maduro-claims-without-evidence-that-trump-ordered-him-killed/6742570.html,unrelated
+108,2730,0.4-0.5,0.44856006,https://www.snopes.com/fact-check/trump-defeats-covid19-coin/,unrelated
+109,4344,0.4-0.5,0.40336943,https://leadstories.com/hoax-alert/2020/11/fact-check-episode-michigan-did-not-add-138000-votes-where-none-were-for-trump-and-there-was-not-a-4-am-ballot-dump-in-wisconsin.html,unrelated
+110,3184,>0.7,0.81130636,https://checamos.afp.com/donald-trump-e-sua-denuncia-de-que-eleicao-dos-eua-esta-sendo-fraudada,same claim
+111,44662,>0.7,0.7139961,https://oglobo.globo.com/fato-ou-fake/e-fake-que-mais-de-500-mil-votos-em-trump-tenham-sido-desviados-para-biden-na-eleicao-dos-eua-1-24745018,unrelated
+112,552,>0.7,0.71130526,https://www.aosfatos.org/noticias/e-falso-que-cedulas-utilizadas-em-eleicoes-dos-estados-unidos-foram-queimadas/,unrelated
+113,35957,0.5-0.6,0.53429174,https://www.factcheck.org/2020/09/no-evidence-biden-was-wearing-a-wire-in-debate/,"same topic, different claim"
+114,9687,0.4-0.5,0.48967558,https://www.altnews.in/times-now-airs-fb-live-video-as-secret-admission-by-left-wing-activists-on-umar-khalid/,unrelated
+115,68808,0.5-0.6,0.54480404,https://factcheck.afp.com/image-screenshot-tweet-posted-hoax-donald-trump-account,unrelated
+116,58687,<0.4,0.3816157,https://www.snopes.com/fact-check/trump-healthcare-lesley-stahl/,unrelated
+117,2250,>0.7,0.7634306,https://www.snopes.com/fact-check/biden-hat-trump-maga/,"same topic, different claim"
+118,68004,0.4-0.5,0.4993209,https://www.snopes.com/fact-check/emily-murphy-feelings-trump-shirt/,unrelated
+119,37317,>0.7,0.74597204,https://www.indiatoday.in/fact-check/story/fact-check-donald-trump-s-filthy-remark-on-india-s-air-quality-goes-viral-with-misleading-claims-1734515-2020-10-23,same claim
+120,64251,0.6-0.7,0.6312222,https://politifact.com/factchecks/2020/nov/10/facebook-posts/siri-glitch-sparks-misinformation-about-biden-25th/,same claim
+121,9708,0.4-0.5,0.49011603,https://politifact.com/factchecks/2020/oct/11/donald-trump/trump-ad-takes-fauci-out-context/,unrelated
+122,14022,0.6-0.7,0.6060698,https://www.boomlive.in/world/photos-from-cavs-2016-nba-title-celebration-shared-as-pro-trump-rally-10683,unrelated
+123,49080,<0.4,0.39351124,https://www.aap.com.au/factcheck/australia-essay-attributed-to-douglas-adams-isnt-true-blue/,unrelated
+124,5442,0.6-0.7,0.6800665,https://oglobo.globo.com/fato-ou-fake/e-fake-que-mais-de-500-mil-votos-em-trump-tenham-sido-desviados-para-biden-na-eleicao-dos-eua-1-24745018,unrelated
+125,49419,<0.4,0.3959446,https://www.snopes.com/fact-check/letter-g-cant-recognize/,unrelated
+126,17565,0.5-0.6,0.51729023,https://www.thequint.com/news/webqoof/kamala-harris-us-president-candidate-joe-biden-trash-fact-check,unrelated
+127,2739,0.5-0.6,0.5923567,https://www.aosfatos.org/noticias/e-falso-que-cedulas-utilizadas-em-eleicoes-dos-estados-unidos-foram-queimadas/,unrelated
+128,978,<0.4,0.39525634,https://oglobo.globo.com/fato-ou-fake/e-fake-foto-que-mostra-caetano-veloso-segurando-camiseta-com-frase-ofensiva-ao-presidente-24648062,unrelated
+129,12883,<0.4,0.38228816,https://factcheck.afp.com/misleading-claim-circulates-online-about-new-fees-charged-philippine-money-transfer-app,unrelated
+130,45229,0.5-0.6,0.5804223,https://politifact.com/factchecks/2020/nov/01/jason-miller/trump-spokesman-jason-miller-paints-dubious-pictur/,"same topic, different claim"
+131,9969,0.4-0.5,0.4746077,https://oglobo.globo.com/fato-ou-fake/e-fake-que-mais-de-500-mil-votos-em-trump-tenham-sido-desviados-para-biden-na-eleicao-dos-eua-1-24745018,unrelated
+132,7663,0.5-0.6,0.55191433,https://www.snopes.com/fact-check/stop-the-count-chant/,unrelated
+133,16402,0.5-0.6,0.5680587,https://www.washingtonpost.com/politics/2020/10/07/trump-tweets-video-mask-protest-claiming-it-is-church-service/,unrelated
+134,29447,<0.4,0.39192986,https://www.boomlive.in/fake-news/times-now-falls-for-fake-account-impersonating-kangana-ranauts-mother-9699,unrelated
+135,10841,0.6-0.7,0.60728425,https://www.washingtonpost.com/politics/2020/10/07/trump-tweets-video-mask-protest-claiming-it-is-church-service/,unrelated
+136,6684,0.6-0.7,0.612793,https://apnews.com/article/fact-checking-9567626221,unrelated
+137,13425,0.5-0.6,0.5641695,https://factly.in/the-tweet-about-indian-media-by-joe-biden-is-from-a-parody-account/,unrelated
+138,2578,0.5-0.6,0.5723969,https://factcheck.afp.com/old-footage-atheist-invocation-does-not-show-new-american-government-praying-satan,unrelated
+139,52515,0.6-0.7,0.67403907,https://www.usatoday.com/story/news/factcheck/2020/09/17/fact-check-joe-biden-has-condemned-violence-protests-all-summer/5706355002/,"same topic, different claim"
+140,73233,0.4-0.5,0.47035903,https://factly.in/the-tweet-about-indian-media-by-joe-biden-is-from-a-parody-account/,unrelated
+141,10420,0.4-0.5,0.499563,https://www.snopes.com/fact-check/kamala-harris-jacob-blake-proud/,unrelated
+142,13630,>0.7,0.7003906,https://www.misbar.com/en/factcheck/2020/11/07/false-ballots-stuffing-in-michigan,unrelated
+143,15824,0.5-0.6,0.5457468,https://oglobo.globo.com/fato-ou-fake/e-fake-que-mais-de-500-mil-votos-em-trump-tenham-sido-desviados-para-biden-na-eleicao-dos-eua-1-24745018,unrelated
+144,25340,>0.7,0.7037239,https://www.usatoday.com/story/news/factcheck/2020/11/04/fact-check-no-fraud-wisconsin-overnight-vote-spike/6167188002/,unrelated
+145,28658,0.5-0.6,0.5408598,https://apnews.com/article/fact-checking-9627635199,"same topic, different claim"
+146,31262,>0.7,0.7368707,https://leadstories.com/hoax-alert/2020/11/fact-check-photo-dc-trump-protest-dallas-immigration-2006.html,"same topic, different claim"
+147,7747,>0.7,0.7692753,https://politifact.com/factchecks/2020/sep/22/ron-johnson/johnson-flip-flops-scotus-nominations-presidential/,"same topic, different claim"
+148,16617,0.5-0.6,0.5289737,https://www.snopes.com/fact-check/kamala-harris-pearls-election-day/,unrelated
+149,931,>0.7,0.7135006,https://www.washingtonpost.com/politics/2020/09/18/trumps-social-security-illegal-immigration-attack-biden-misses-its-mark/,unrelated
+150,64730,0.4-0.5,0.44743955,https://leadstories.com/hoax-alert/2020/10/the-three-red-lines-on-biden-harris-campaign-logo-are-not-a-reference-to-chinese-socialism.html,unrelated

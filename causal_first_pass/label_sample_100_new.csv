@@ -1,0 +1,101 @@
+pair_id,cluster_id,band,best_sim,fc_url,label
+201,11372,>0.7,0.7642375,https://factly.in/these-are-not-actual-statistics-related-to-registered-voters-in-american-states/,unrelated
+202,16213,0.6-0.7,0.6562567,https://factcheck.afp.com/trump-ad-misleadingly-uses-footage-fauci,"same topic, different claim"
+203,42610,0.6-0.7,0.6260745,https://oglobo.globo.com/fato-ou-fake/e-fake-que-mais-de-500-mil-votos-em-trump-tenham-sido-desviados-para-biden-na-eleicao-dos-eua-1-24745018,unrelated
+204,6834,0.6-0.7,0.67377484,https://www.snopes.com/fact-check/emily-murphy-feelings-trump-shirt/,unrelated
+205,12469,0.5-0.6,0.5738272,https://www.aosfatos.org/noticias/e-falso-que-cedulas-utilizadas-em-eleicoes-dos-estados-unidos-foram-queimadas/,unrelated
+206,70,0.6-0.7,0.69095945,https://www.misbar.com/en/factcheck/2020/10/17/satire-twitter-shut-down-because-of-biden,"same topic, different claim"
+207,64186,0.5-0.6,0.5996692,https://www.washingtonpost.com/politics/2020/10/07/trump-tweets-video-mask-protest-claiming-it-is-church-service/,unrelated
+208,17903,0.6-0.7,0.6879867,https://www.snopes.com/fact-check/2020-election-over/,unrelated
+209,21123,0.6-0.7,0.65128493,https://www.factcheck.org/2020/10/nothing-untoward-about-counting-ballots-after-election-day/,same claim
+210,90,0.5-0.6,0.58264124,https://www.boomlive.in/fake-news/7-year-old-photo-of-a-mexican-politician-viral-with-misleading-context-10198,unrelated
+211,107,>0.7,0.7759125,https://www.factcheck.org/2020/10/trump-revives-false-narrative-on-biden-and-ukraine/,same claim
+212,1307,>0.7,0.7022935,https://www.boomlive.in/world/this-video-of-joe-biden-partying-was-shot-before-the-covid-19-pandemic-10800,"same topic, different claim"
+213,24,>0.7,0.7121974,https://oglobo.globo.com/fato-ou-fake/e-fake-que-mais-de-500-mil-votos-em-trump-tenham-sido-desviados-para-biden-na-eleicao-dos-eua-1-24745018,unrelated
+214,45991,0.5-0.6,0.5845281,https://www.voanews.com/a/obama-russia-super-power/6742677.html,unrelated
+215,24069,0.5-0.6,0.5639258,https://www.boomlive.in/world/no-a-nazi-flag-was-not-seen-at-a-pro-trump-rally-in-washington-dc-10684,unrelated
+216,23867,0.6-0.7,0.6083889,https://oglobo.globo.com/fato-ou-fake/e-fake-foto-que-mostra-caetano-veloso-segurando-camiseta-com-frase-ofensiva-ao-presidente-24648062,unrelated
+217,3510,0.5-0.6,0.57992756,https://factcheck.afp.com/misleads-attendance-trump-biden-campaign-events,unrelated
+218,4322,0.6-0.7,0.66868746,https://politifact.com/factchecks/2020/nov/04/viral-image/no-these-fivethirtyeight-graphs-dont-prove-voter-f/,unrelated
+219,201,>0.7,0.74489725,https://www.factcheck.org/2020/11/biden-did-indeed-get-more-votes-than-obama/,unrelated
+220,61835,>0.7,0.75549626,https://politifact.com/factchecks/2020/nov/01/jason-miller/trump-spokesman-jason-miller-paints-dubious-pictur/,"same topic, different claim"
+221,11890,0.6-0.7,0.6525507,https://www.washingtonpost.com/politics/2020/10/07/trump-tweets-video-mask-protest-claiming-it-is-church-service/,unrelated
+222,1418,0.5-0.6,0.58239836,https://www.aosfatos.org/noticias/e-falso-que-cedulas-utilizadas-em-eleicoes-dos-estados-unidos-foram-queimadas/,unrelated
+223,14,>0.7,0.7407825,https://www.snopes.com/fact-check/ice-cube-work-with-trump/,same claim
+224,7773,0.6-0.7,0.6888191,https://politifact.com/factchecks/2020/oct/14/facebook-posts/facebook-video-edits-joe-bidens-comments-running-s/,unrelated
+225,27636,>0.7,0.717645,https://www.factcheck.org/2020/10/nothing-untoward-about-counting-ballots-after-election-day/,"same topic, different claim"
+226,5242,0.5-0.6,0.56839234,https://politifact.com/factchecks/2020/nov/04/tweets/no-sign-outside-pennsylvania-poll-isnt-voting-scam/,unrelated
+227,47050,0.6-0.7,0.66133565,https://politifact.com/factchecks/2020/nov/01/jason-miller/trump-spokesman-jason-miller-paints-dubious-pictur/,unrelated
+228,3955,>0.7,0.7296999,https://apnews.com/article/fact-checking-9668211110,"same topic, different claim"
+229,68285,>0.7,0.7614418,https://oglobo.globo.com/fato-ou-fake/e-fake-que-mais-de-500-mil-votos-em-trump-tenham-sido-desviados-para-biden-na-eleicao-dos-eua-1-24745018,unrelated
+230,11005,>0.7,0.75590444,https://factly.in/these-are-not-actual-statistics-related-to-registered-voters-in-american-states/,unrelated
+231,494,>0.7,0.70917517,https://politifact.com/factchecks/2020/nov/12/facebook-posts/trump-does-not-have-more-electoral-votes-biden/,"same topic, different claim"
+232,215,0.5-0.6,0.5328034,https://www.misbar.com/en/factcheck/2020/09/17/trump-town-hall-special-%E2%80%93-race-crime,unrelated
+233,65246,0.5-0.6,0.5611572,https://www.misbar.com/en/factcheck/2020/11/07/false-ballots-stuffing-in-michigan,unrelated
+234,81069,0.6-0.7,0.66090083,https://www.boomlive.in/world/as-world-leaders-congratulate-biden-trump-tweets-he-won-10572,"same topic, different claim"
+235,42932,0.6-0.7,0.62409914,https://observador.pt/factchecks/fact-check-fotografias-mostram-enchentes-nas-manifestacoes-pro-trump/,unrelated
+236,28109,>0.7,0.7092869,https://leadstories.com/hoax-alert/2020/11/fact-check-there-is-no-election-night-coup-detat-plot-coordinated-by-sunrise-movement-blm-dems.html,"same topic, different claim"
+237,20562,0.5-0.6,0.5532032,https://leadstories.com/hoax-alert/2020/10/fact-check-coyotes-not-an-xenophobic-term-and-it-does-not-imply-children-crossed-border-on-actual-coyotes.html,unrelated
+238,60387,>0.7,0.72482985,https://observador.pt/factchecks/fact-check-video-mostra-autoridades-a-recuperarem-votos-abandonados-das-eleicoes-dos-eua/,"same topic, different claim"
+239,36173,>0.7,0.72816336,https://politifact.com/factchecks/2020/oct/31/joe-biden/yes-joe-biden-has-released-22-years-tax-returns-on/,same claim
+240,31304,0.5-0.6,0.5635012,https://www.snopes.com/fact-check/emily-murphy-feelings-trump-shirt/,unrelated
+241,24161,0.5-0.6,0.598251,https://politifact.com/article/2020/nov/20/giuliani-trump-legal-team-push-conspiracy-theories/,unrelated
+242,9819,0.6-0.7,0.6845188,https://www.misbar.com/en/factcheck/2020/10/23/trade-deficit-with-china-decreased-under-trump,same claim
+243,13850,>0.7,0.73831093,https://oglobo.globo.com/fato-ou-fake/e-fake-que-mais-de-500-mil-votos-em-trump-tenham-sido-desviados-para-biden-na-eleicao-dos-eua-1-24745018,"same topic, different claim"
+244,14297,0.6-0.7,0.6446353,https://www.usatoday.com/story/news/factcheck/2020/09/14/fact-check-list-10-donald-trump-accomplishments-3-true/3438025001/,unrelated
+245,21174,>0.7,0.7754477,https://www.misbar.com/en/factcheck/2020/11/18/biden-has-more-votes-than-any-previous-president,"same topic, different claim"
+246,13642,0.6-0.7,0.65372914,https://www.misbar.com/en/factcheck/2020/11/08/trump-didnt-tweet-hell-leave-the-usa,same claim
+247,24877,0.5-0.6,0.5864063,https://www.snopes.com/fact-check/jeff-foxworthy-democrats-trump/,unrelated
+248,17643,0.6-0.7,0.62123924,https://www.misbar.com/en/factcheck/2020/09/26/amy-coney-barrett-is-not-a-member-of-a-cult,unrelated
+249,12591,>0.7,0.7394488,https://leadstories.com/hoax-alert/2020/09/fact-check-cbs-news-did-not-take-a-photo-from-a-trump-rally-for-latinos-show-it-as-a-biden-rally.html,"same topic, different claim"
+250,4350,0.6-0.7,0.6795655,https://www.snopes.com/fact-check/could-trump-defy-popular-vote/,"same topic, different claim"
+251,11946,0.5-0.6,0.57360387,https://factcheck.afp.com/video-contains-no-credible-report-turkey-ready-crush-france-after-french-leader-insulted-islam,"same topic, different claim"
+252,16797,>0.7,0.7030513,https://www.snopes.com/fact-check/stop-the-count-chant/,unrelated
+253,12378,0.5-0.6,0.5513207,https://www.aosfatos.org/noticias/e-falso-que-cedulas-utilizadas-em-eleicoes-dos-estados-unidos-foram-queimadas/,unrelated
+254,4853,0.6-0.7,0.62505054,https://politifact.com/factchecks/2020/nov/10/blog-posting/no-video-doesnt-show-election-worker-destroying-tr/,unrelated
+255,257,0.6-0.7,0.60025,https://apnews.com/article/fact-checking-9567626221,unrelated
+256,35821,0.6-0.7,0.60895205,https://www.washingtonpost.com/politics/2020/09/24/three-trump-ads-spanish-many-distortions/,unrelated
+257,2831,>0.7,0.7653385,https://www.factcheck.org/2020/11/trump-misinformation-on-georgia-ballot-rejections/,"same topic, different claim"
+258,2040,0.6-0.7,0.69678634,https://apnews.com/article/fact-checking-9545480195,same claim
+259,1053,>0.7,0.7042918,https://factly.in/old-images-of-farmers-protest-are-being-shared-as-those-of-the-current-protest/,unrelated
+260,16594,0.5-0.6,0.5809306,https://www.washingtonpost.com/politics/2020/09/18/trumps-social-security-illegal-immigration-attack-biden-misses-its-mark/,unrelated
+261,2261,>0.7,0.7237518,https://leadstories.com/hoax-alert/2020/11/fact-check-there-is-no-election-night-coup-detat-plot-coordinated-by-sunrise-movement-blm-dems.html,"same topic, different claim"
+262,44496,>0.7,0.7149644,https://www.factcheck.org/2020/11/bogus-posts-claim-poll-worker-tossed-ballots-in-pennsylvania/,unrelated
+263,3663,>0.7,0.7283063,https://politifact.com/article/2020/oct/19/fact-checking-claims-about-hunter-biden-joe-biden/,same claim
+264,6987,>0.7,0.71083987,https://www.factcheck.org/2020/10/bogus-claims-of-debate-moderator-bias/,"same topic, different claim"
+265,53636,>0.7,0.7704685,https://oglobo.globo.com/fato-ou-fake/e-fake-que-mais-de-500-mil-votos-em-trump-tenham-sido-desviados-para-biden-na-eleicao-dos-eua-1-24745018,unrelated
+266,4036,>0.7,0.7143028,https://www.usatoday.com/story/news/factcheck/2020/11/04/fact-check-no-fraud-wisconsin-overnight-vote-spike/6167188002/,unrelated
+267,64409,0.6-0.7,0.6185384,https://observador.pt/factchecks/fact-check-80-votos-em-trump-foram-queimados-na-virginia-como-disse-eric-trump/,unrelated
+268,37399,0.6-0.7,0.635509,https://www.washingtonpost.com/politics/2020/10/07/trump-tweets-video-mask-protest-claiming-it-is-church-service/,unrelated
+269,36839,>0.7,0.8225849,https://www.usatoday.com/story/news/factcheck/2020/10/24/fact-check-trumps-coyote-remark-debate-taken-out-context/6008809002/,same claim
+270,62579,>0.7,0.8749883,https://www.snopes.com/fact-check/madame-tussauds-dump-trump/,same claim
+271,18998,>0.7,0.8020591,https://factly.in/these-are-not-actual-statistics-related-to-registered-voters-in-american-states/,"same topic, different claim"
+272,35183,0.6-0.7,0.6495795,https://politifact.com/factchecks/2020/oct/07/facebook-posts/no-evidence-christie-told-trump-exploit-bidens-stu/,unrelated
+273,78244,>0.7,0.7175821,https://factcheck.afp.com/photo-does-not-show-trump-supporter-blocking-polling-site-election-day,"same topic, different claim"
+274,11853,>0.7,0.75125957,https://apnews.com/article/fact-checking-9658291055,same claim
+275,34866,>0.7,0.72616327,https://www.misbar.com/en/factcheck/2020/11/04/armed-man-arrested-for-voter-intimidation,"same topic, different claim"
+276,7743,0.6-0.7,0.62187606,https://www.snopes.com/fact-check/did-trump-call-mccain-a-loser/,unrelated
+277,7361,0.6-0.7,0.6344353,https://politifact.com/factchecks/2020/oct/31/blog-posting/no-joe-biden-didnt-say-america-dead/,unrelated
+278,812,0.6-0.7,0.69626784,https://www.snopes.com/fact-check/biden-muslim-ad/,"same topic, different claim"
+279,2270,0.6-0.7,0.68631035,https://factcheck.afp.com/old-us-election-map-misleads-voting-trend-2020-election,"same topic, different claim"
+280,24867,0.6-0.7,0.648287,https://apnews.com/article/fact-checking-9458967050,unrelated
+281,9470,0.5-0.6,0.58971035,https://factly.in/the-tweet-about-indian-media-by-joe-biden-is-from-a-parody-account/,"same topic, different claim"
+282,16529,>0.7,0.71838534,https://apnews.com/article/fact-checking-9664466177,"same topic, different claim"
+283,12685,0.6-0.7,0.6156508,https://www.misbar.com/en/factcheck/2020/09/30/eric-trump-didnt-come-out-as-lgbt,unrelated
+284,16896,0.6-0.7,0.6107722,https://www.snopes.com/fact-check/emily-murphy-feelings-trump-shirt/,unrelated
+285,30536,0.6-0.7,0.6841884,https://www.snopes.com/fact-check/biden-abolish-second-amendment/,same claim
+286,3403,0.6-0.7,0.6509022,https://politifact.com/factchecks/2020/nov/05/tiktok-posts/social-media-posts-falsely-claim-40000-votes-jo-jo/,unrelated
+287,1703,>0.7,0.75562257,https://www.usatoday.com/story/news/factcheck/2020/11/18/fact-check-fake-map-shows-trump-with-410-electoral-votes/3767048001/,unrelated
+288,29895,0.6-0.7,0.6672116,https://factcheck.afp.com/misleads-attendance-trump-biden-campaign-events,"same topic, different claim"
+289,16123,>0.7,0.7413405,https://factcheck.afp.com/nevada-has-not-stopped-counting-votes,"same topic, different claim"
+290,17767,>0.7,0.7470033,https://politifact.com/factchecks/2020/oct/30/viral-image/biden-called-trump-supporters-disrupting-his-rally/,"same topic, different claim"
+291,2456,0.6-0.7,0.61793673,https://www.snopes.com/fact-check/stop-the-count-chant/,unrelated
+292,24227,0.6-0.7,0.6394092,https://www.factcheck.org/2020/11/bogus-posts-claim-poll-worker-tossed-ballots-in-pennsylvania/,unrelated
+293,5215,0.5-0.6,0.5830773,https://www.snopes.com/fact-check/stop-the-count-chant/,unrelated
+294,63506,>0.7,0.7143765,https://www.misbar.com/en/factcheck/2020/11/07/false-ballots-stuffing-in-michigan,unrelated
+295,78,>0.7,0.7192689,https://oglobo.globo.com/fato-ou-fake/e-fake-que-mais-de-500-mil-votos-em-trump-tenham-sido-desviados-para-biden-na-eleicao-dos-eua-1-24745018,unrelated
+296,3522,0.6-0.7,0.65634775,https://oglobo.globo.com/fato-ou-fake/e-fake-que-mais-de-500-mil-votos-em-trump-tenham-sido-desviados-para-biden-na-eleicao-dos-eua-1-24745018,unrelated
+297,1495,0.6-0.7,0.6575385,https://observador.pt/factchecks/fact-check-80-votos-em-trump-foram-queimados-na-virginia-como-disse-eric-trump/,unrelated
+298,66713,>0.7,0.7857824,https://politifact.com/factchecks/2020/nov/01/facebook-posts/video-clip-joe-biden-saying-hello-minnesota-was-do/,same claim
+299,4685,0.5-0.6,0.55533373,https://factcheck.afp.com/video-contains-no-credible-report-turkey-ready-crush-france-after-french-leader-insulted-islam,"same topic, different claim"
+300,6321,0.6-0.7,0.64334047,https://www.factcheck.org/2020/10/trump-on-the-stump-2/,"same topic, different claim"

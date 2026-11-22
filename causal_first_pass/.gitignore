@@ -1,0 +1,8 @@
+# Tweet text stays local: the public release carries tweet IDs only (narrative_tweet_ids.csv).
+narrative_texts_first10.parquet
+tweet_id_text_map.parquet
+*/calls.jsonl
+# Large or reproducible intermediates
+emb_parts/
+factchecks/google_raw.jsonl
+factchecks/.cache/

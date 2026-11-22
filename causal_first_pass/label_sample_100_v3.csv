@@ -1,0 +1,101 @@
+pair_id,cluster_id,band,best_sim,fc_url,label
+301,5183,>0.7,0.810797,https://apnews.com/article/archive-fact-checking-9421740138,unrelated
+302,26716,>0.7,0.7196095,https://www.snopes.com/fact-check/trump-covid-19-deadlier-than-flu/,"related, not covered"
+303,28592,0.5-0.6,0.5060777,https://apnews.com/article/fact-checking-9641005132,unrelated
+304,9953,>0.7,0.73010284,https://www.snopes.com/fact-check/did-trump-call-mccain-a-loser/,unrelated
+305,110,>0.7,0.7637515,https://oglobo.globo.com/fato-ou-fake/e-fake-que-mais-de-500-mil-votos-em-trump-tenham-sido-desviados-para-biden-na-eleicao-dos-eua-1-24745018,unrelated
+306,50620,>0.7,0.70600766,https://politifact.com/factchecks/2020/nov/01/jason-miller/trump-spokesman-jason-miller-paints-dubious-pictur/,unrelated
+307,11617,>0.7,0.70056474,https://politifact.com/factchecks/2020/nov/01/jason-miller/trump-spokesman-jason-miller-paints-dubious-pictur/,unrelated
+308,11031,0.6-0.7,0.629739,https://www.washingtonpost.com/politics/2020/10/13/bidens-claim-that-trump-is-pushing-slash-medicare-benefits/,"related, not covered"
+309,2743,0.6-0.7,0.684209,https://www.aosfatos.org/noticias/e-falso-que-cedulas-utilizadas-em-eleicoes-dos-estados-unidos-foram-queimadas/,unrelated
+310,2196,0.5-0.6,0.595395,https://www.misbar.com/en/factcheck/2020/10/19/fewer-u-s-troops-in-afghanistan,"related, not covered"
+311,19423,>0.7,0.71525973,https://www.aosfatos.org/noticias/e-falso-que-cedulas-utilizadas-em-eleicoes-dos-estados-unidos-foram-queimadas/,unrelated
+312,27192,0.5-0.6,0.55408835,https://politifact.com/factchecks/2020/oct/31/joe-biden/yes-joe-biden-has-released-22-years-tax-returns-on/,unrelated
+313,33137,>0.7,0.7146319,https://politifact.com/factchecks/2020/sep/22/ron-johnson/johnson-flip-flops-scotus-nominations-presidential/,"related, not covered"
+314,70144,>0.7,0.7480494,https://apnews.com/article/fact-checking-9651233692,covered
+315,175,0.6-0.7,0.68581045,https://www.aosfatos.org/noticias/e-falso-que-cedulas-utilizadas-em-eleicoes-dos-estados-unidos-foram-queimadas/,unrelated
+316,12565,>0.7,0.7355991,https://www.snopes.com/fact-check/biden-property-tax-3/,covered
+317,50,>0.7,0.7424414,https://www.factcheck.org/2020/10/trump-revives-false-narrative-on-biden-and-ukraine/,covered
+318,1073,0.6-0.7,0.6171216,https://www.washingtonpost.com/politics/2020/11/04/bogus-vote-fraud-claims-proliferate-social-media/,unrelated
+319,12395,0.6-0.7,0.626126,https://factcheck.afp.com/photo-2018-swiss-music-festival-falsely-shared-florida-trump-rally,unrelated
+320,14661,0.6-0.7,0.6903787,https://oglobo.globo.com/fato-ou-fake/e-fake-que-mais-de-500-mil-votos-em-trump-tenham-sido-desviados-para-biden-na-eleicao-dos-eua-1-24745018,unrelated
+321,23881,>0.7,0.70864844,https://oglobo.globo.com/fato-ou-fake/e-fake-que-mais-de-500-mil-votos-em-trump-tenham-sido-desviados-para-biden-na-eleicao-dos-eua-1-24745018,unrelated
+322,79353,0.5-0.6,0.5345611,https://www.washingtonpost.com/politics/2020/10/07/trump-tweets-video-mask-protest-claiming-it-is-church-service/,unrelated
+323,7895,0.5-0.6,0.5570662,https://politifact.com/factchecks/2020/dec/01/tammy-baldwin/yes-americans-pay-more-remdesivir-no-trump-adminis/,unrelated
+324,20733,0.5-0.6,0.59899855,https://politifact.com/factchecks/2020/oct/14/facebook-posts/facebook-video-edits-joe-bidens-comments-running-s/,unrelated
+325,28721,>0.7,0.71692204,https://checamos.afp.com/o-candidato-presidencia-dos-eua-joe-biden-nao-estava-usando-um-ponto-eletronico-no-debate-com-trump,"related, not covered"
+326,20077,>0.7,0.7836628,https://oglobo.globo.com/fato-ou-fake/e-fake-que-mais-de-500-mil-votos-em-trump-tenham-sido-desviados-para-biden-na-eleicao-dos-eua-1-24745018,"related, not covered"
+327,8506,0.5-0.6,0.5736989,https://politifact.com/factchecks/2020/oct/01/brit-hume/geriatrics-experts-say-brit-humes-claim-joe-biden/,unrelated
+328,42,>0.7,0.7201986,https://leadstories.com/hoax-alert/2020/11/fact-check-twitter-did-not-censor-this-philadelphia-gop-tweet.html,"related, not covered"
+329,4619,0.6-0.7,0.6320529,https://politifact.com/factchecks/2020/oct/14/facebook-posts/facebook-video-edits-joe-bidens-comments-running-s/,unrelated
+330,233,0.6-0.7,0.61068094,https://politifact.com/factchecks/2020/nov/04/viral-image/no-whitmer-didnt-say-she-wouldnt-certify-election/,"related, not covered"
+331,7415,0.6-0.7,0.6608398,https://www.aosfatos.org/noticias/e-falso-que-cedulas-utilizadas-em-eleicoes-dos-estados-unidos-foram-queimadas/,unrelated
+332,371,0.5-0.6,0.5664489,https://www.voanews.com/a/did-chinese-diplomats-assault-taiwan-counterparts-in-fiji-/6742631.html,"related, not covered"
+333,20807,0.5-0.6,0.5538167,https://apnews.com/article/fact-checking-9599370002,"related, not covered"
+334,40952,0.6-0.7,0.60997367,https://politifact.com/factchecks/2020/oct/14/facebook-posts/facebook-video-edits-joe-bidens-comments-running-s/,unrelated
+335,11921,>0.7,0.7032732,https://apnews.com/article/archive-fact-checking-9421740138,unrelated
+336,48185,0.5-0.6,0.5334404,https://www.aosfatos.org/noticias/e-falso-que-cedulas-utilizadas-em-eleicoes-dos-estados-unidos-foram-queimadas/,unrelated
+337,11643,0.6-0.7,0.68903303,https://oglobo.globo.com/fato-ou-fake/e-fake-que-mais-de-500-mil-votos-em-trump-tenham-sido-desviados-para-biden-na-eleicao-dos-eua-1-24745018,unrelated
+338,7768,>0.7,0.7183179,https://politifact.com/factchecks/2020/oct/14/facebook-posts/facebook-video-edits-joe-bidens-comments-running-s/,unrelated
+339,9064,0.6-0.7,0.6634464,https://www.voanews.com/a/did-chinese-diplomats-assault-taiwan-counterparts-in-fiji-/6742631.html,"related, not covered"
+340,26729,0.6-0.7,0.65424865,https://oglobo.globo.com/fato-ou-fake/e-fake-que-mais-de-500-mil-votos-em-trump-tenham-sido-desviados-para-biden-na-eleicao-dos-eua-1-24745018,unrelated
+341,26152,0.5-0.6,0.5186137,https://www.usatoday.com/story/news/factcheck/2020/10/01/fact-check-joe-biden-friendly-fire-over-age-pot-prisons/3518767001/,unrelated
+342,37983,0.6-0.7,0.6317514,https://www.washingtonpost.com/politics/2020/10/02/bidens-claim-that-trump-will-be-first-president-with-negative-jobs-record/,"related, not covered"
+343,4265,0.6-0.7,0.6063559,https://www.misbar.com/en/factcheck/2020/11/07/false-ballots-stuffing-in-michigan,unrelated
+344,4985,0.6-0.7,0.69221735,https://oglobo.globo.com/fato-ou-fake/e-fake-que-mais-de-500-mil-votos-em-trump-tenham-sido-desviados-para-biden-na-eleicao-dos-eua-1-24745018,unrelated
+345,49078,>0.7,0.70589876,https://www.factcheck.org/2020/11/bogus-posts-claim-poll-worker-tossed-ballots-in-pennsylvania/,unrelated
+346,8617,>0.7,0.7006489,https://www.boomlive.in/world/fact-checking-the-final-debate-between-donald-trump-and-joe-biden-10332,"related, not covered"
+347,6724,>0.7,0.7281853,https://politifact.com/factchecks/2020/oct/14/facebook-posts/facebook-video-edits-joe-bidens-comments-running-s/,unrelated
+348,53047,>0.7,0.7092358,https://checamos.afp.com/o-candidato-presidencia-dos-eua-joe-biden-nao-estava-usando-um-ponto-eletronico-no-debate-com-trump,unrelated
+349,20554,>0.7,0.70524526,https://politifact.com/factchecks/2020/oct/14/facebook-posts/facebook-video-edits-joe-bidens-comments-running-s/,unrelated
+350,16068,0.6-0.7,0.6468486,https://www.aosfatos.org/noticias/e-falso-que-cedulas-utilizadas-em-eleicoes-dos-estados-unidos-foram-queimadas/,unrelated
+351,25343,0.6-0.7,0.6151619,https://politifact.com/factchecks/2020/nov/01/jason-miller/trump-spokesman-jason-miller-paints-dubious-pictur/,unrelated
+352,6528,>0.7,0.7510034,https://www.snopes.com/fact-check/biden-tweet-pandemic/,"related, not covered"
+353,5254,>0.7,0.7248447,https://www.misbar.com/en/factcheck/2020/09/17/trump-town-hall-special-%E2%80%93-race-crime,unrelated
+354,1712,>0.7,0.70729446,https://oglobo.globo.com/fato-ou-fake/e-fake-que-mais-de-500-mil-votos-em-trump-tenham-sido-desviados-para-biden-na-eleicao-dos-eua-1-24745018,unrelated
+355,2168,0.5-0.6,0.5783488,https://oglobo.globo.com/fato-ou-fake/e-fake-foto-que-mostra-caetano-veloso-segurando-camiseta-com-frase-ofensiva-ao-presidente-24648062,unrelated
+356,8127,>0.7,0.71031237,https://politifact.com/factchecks/2020/nov/01/jason-miller/trump-spokesman-jason-miller-paints-dubious-pictur/,unrelated
+357,3634,0.6-0.7,0.6010639,https://www.snopes.com/fact-check/biden-trump-dregs-society/,"related, not covered"
+358,12629,>0.7,0.708701,https://oglobo.globo.com/fato-ou-fake/e-fake-que-mais-de-500-mil-votos-em-trump-tenham-sido-desviados-para-biden-na-eleicao-dos-eua-1-24745018,unrelated
+359,8218,0.6-0.7,0.6601292,https://oglobo.globo.com/fato-ou-fake/e-fake-que-mais-de-500-mil-votos-em-trump-tenham-sido-desviados-para-biden-na-eleicao-dos-eua-1-24745018,unrelated
+360,1543,0.6-0.7,0.62872833,https://www.misbar.com/en/factcheck/2020/09/30/false-donald-trump-has-paid-millions-of-dollars-in-taxes,unrelated
+361,401,0.6-0.7,0.6734173,https://www.boomlive.in/world/fake-donald-trump-account-promises-to-drain-the-swamp-in-60-days-9680,"related, not covered"
+362,2292,0.6-0.7,0.6574131,https://oglobo.globo.com/fato-ou-fake/e-fake-que-mais-de-500-mil-votos-em-trump-tenham-sido-desviados-para-biden-na-eleicao-dos-eua-1-24745018,unrelated
+363,78657,>0.7,0.7288749,https://www.usatoday.com/story/news/factcheck/2020/11/04/fact-check-no-fraud-wisconsin-overnight-vote-spike/6167188002/,covered
+364,5096,>0.7,0.76640636,https://www.snopes.com/fact-check/trump-promise-vaccine-election-day/,"related, not covered"
+365,17105,0.6-0.7,0.6037549,https://politifact.com/factchecks/2020/nov/04/tweets/no-sign-outside-pennsylvania-poll-isnt-voting-scam/,"related, not covered"
+366,2957,>0.7,0.7178772,https://oglobo.globo.com/fato-ou-fake/e-fake-que-mais-de-500-mil-votos-em-trump-tenham-sido-desviados-para-biden-na-eleicao-dos-eua-1-24745018,unrelated
+367,8959,0.6-0.7,0.6085328,https://checamos.afp.com/video-em-que-guga-chacra-aparece-chorando-e-de-marco-quando-falava-do-novo-coronavirus,unrelated
+368,10131,0.6-0.7,0.6311112,https://www.factcheck.org/2020/11/posts-misinterpret-video-of-north-carolina-voter-rally/,unrelated
+369,9882,0.6-0.7,0.68789166,https://www.misbar.com/en/factcheck/2020/09/17/trump-town-hall-special-%E2%80%93-covid,"related, not covered"
+370,17148,0.6-0.7,0.66557395,https://apnews.com/article/fact-checking-9567626221,unrelated
+371,5247,0.5-0.6,0.5756518,https://www.misbar.com/en/factcheck/2020/09/30/false-donald-trump-has-paid-millions-of-dollars-in-taxes,"related, not covered"
+372,25588,>0.7,0.7153554,https://www.poynter.org/tfcn/2020/is-kanye-polling-ahead-of-biden-and-trump-in-kentucky/,"related, not covered"
+373,1318,>0.7,0.71325934,https://oglobo.globo.com/fato-ou-fake/e-fake-que-mais-de-500-mil-votos-em-trump-tenham-sido-desviados-para-biden-na-eleicao-dos-eua-1-24745018,unrelated
+374,6811,0.6-0.7,0.69552565,https://oglobo.globo.com/fato-ou-fake/e-fake-que-mais-de-500-mil-votos-em-trump-tenham-sido-desviados-para-biden-na-eleicao-dos-eua-1-24745018,unrelated
+375,6663,>0.7,0.7948246,https://www.misbar.com/en/factcheck/2020/11/05/trumps-social-media-posts-are-being-flagged,"related, not covered"
+376,54659,0.6-0.7,0.6071542,https://www.washingtonpost.com/politics/2020/10/07/trump-tweets-video-mask-protest-claiming-it-is-church-service/,unrelated
+377,24542,0.5-0.6,0.5923088,https://www.boomlive.in/world/fact-checking-the-final-debate-between-donald-trump-and-joe-biden-10332,"related, not covered"
+378,5010,>0.7,0.72605556,https://www.boomlive.in/world/no-a-nazi-flag-was-not-seen-at-a-pro-trump-rally-in-washington-dc-10684,"related, not covered"
+379,9452,>0.7,0.70041144,https://oglobo.globo.com/fato-ou-fake/e-fake-que-mais-de-500-mil-votos-em-trump-tenham-sido-desviados-para-biden-na-eleicao-dos-eua-1-24745018,unrelated
+380,38554,0.5-0.6,0.5794387,https://www.indiatoday.in/fact-check/story/fact-check-morphed-screengrab-of-rana-ayyub-s-old-interview-goes-viral-with-false-claims-1736910-2020-10-31,"related, not covered"
+381,5287,>0.7,0.72196805,https://apnews.com/article/fact-checking-9641005132,"related, not covered"
+382,3422,0.6-0.7,0.6272517,https://www.snopes.com/fact-check/biden-hat-trump-maga/,unrelated
+383,28226,>0.7,0.70653343,https://www.snopes.com/fact-check/2020-election-over/,unrelated
+384,33470,0.6-0.7,0.63661206,https://www.aosfatos.org/noticias/e-falso-que-cedulas-utilizadas-em-eleicoes-dos-estados-unidos-foram-queimadas/,unrelated
+385,4816,0.5-0.6,0.5571425,https://politifact.com/factchecks/2020/nov/10/blog-posting/no-video-doesnt-show-election-worker-destroying-tr/,unrelated
+386,18973,0.6-0.7,0.61552227,https://www.boomlive.in/world/fact-checking-the-final-debate-between-donald-trump-and-joe-biden-10332,"related, not covered"
+387,21261,0.6-0.7,0.6184271,https://www.boomlive.in/world/photos-from-cavs-2016-nba-title-celebration-shared-as-pro-trump-rally-10683,unrelated
+388,7886,0.6-0.7,0.65547365,https://apnews.com/article/fact-checking-9641005132,unrelated
+389,7046,0.6-0.7,0.6066927,https://www.snopes.com/fact-check/emily-murphy-feelings-trump-shirt/,unrelated
+390,5580,>0.7,0.765911,https://oglobo.globo.com/fato-ou-fake/e-fake-que-mais-de-500-mil-votos-em-trump-tenham-sido-desviados-para-biden-na-eleicao-dos-eua-1-24745018,unrelated
+391,27725,0.5-0.6,0.5097573,https://www.misbar.com/en/factcheck/2020/09/12/npr-didn%E2%80%99t-compare-trump-to-mussolini,unrelated
+392,631,0.6-0.7,0.6420911,https://politifact.com/factchecks/2020/nov/20/viral-image/no-passage-about-defeat-isnt-donald-trumps-art-dea/,"related, not covered"
+393,11129,>0.7,0.8144674,https://politifact.com/factchecks/2020/nov/01/donald-trump/no-biden-did-not-call-black-youth-super-predators/,covered
+394,22640,0.5-0.6,0.57450765,https://politifact.com/article/2020/oct/19/fact-checking-claims-about-hunter-biden-joe-biden/,"related, not covered"
+395,30549,0.6-0.7,0.696862,https://oglobo.globo.com/fato-ou-fake/e-fake-que-mais-de-500-mil-votos-em-trump-tenham-sido-desviados-para-biden-na-eleicao-dos-eua-1-24745018,unrelated
+396,15148,0.5-0.6,0.5920621,https://factly.in/old-images-of-farmers-protest-are-being-shared-as-those-of-the-current-protest/,unrelated
+397,21260,>0.7,0.7213447,https://factly.in/these-are-not-actual-statistics-related-to-registered-voters-in-american-states/,"related, not covered"
+398,4546,0.6-0.7,0.61199856,https://www.washingtonpost.com/politics/2020/10/07/trump-tweets-video-mask-protest-claiming-it-is-church-service/,unrelated
+399,2320,0.5-0.6,0.59446603,https://www.washingtonpost.com/politics/2020/10/07/trump-tweets-video-mask-protest-claiming-it-is-church-service/,unrelated
+400,30424,0.6-0.7,0.6679356,https://www.snopes.com/fact-check/2020-election-over/,unrelated
